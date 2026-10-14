@@ -9,22 +9,26 @@
         {
           "name": "Warm-up walk",
           "detail": "5 minutes · 3.2–3.6 mph",
-          "seconds": 300
+          "seconds": 300,
+          "image": "images/warmup.svg"
         },
         {
           "name": "Jog (repeat 5 times)",
           "detail": "5.2 mph · 2 minutes each · repeat 5 times",
-          "seconds": 120
+          "seconds": 120,
+          "image": "images/jog.svg"
         },
         {
           "name": "Recovery walk (repeat 5 times)",
           "detail": "3.6–3.8 mph · 2 minutes each · repeat 5 times",
-          "seconds": 120
+          "seconds": 120,
+          "image": "images/warmup.svg"
         },
         {
           "name": "Cool-down walk",
           "detail": "5 minutes · 3.2 mph",
-          "seconds": 300
+          "seconds": 300,
+          "image": "images/warmup.svg"
         }
       ]
     },
@@ -33,29 +37,35 @@
       "items": [
         {
           "name": "Dumbbell floor press",
-          "detail": "25 lb each · 8–10 reps · 2–3 rounds"
+          "detail": "25 lb each · 8–10 reps · 2–3 rounds",
+          "image": "images/floor-press.svg"
         },
         {
           "name": "Supported dumbbell row",
-          "detail": "25 lb · 10 per side · 2–3 rounds"
+          "detail": "25 lb · 10 per side · 2–3 rounds",
+          "image": "images/supported-row.svg"
         },
         {
           "name": "Lateral raises",
-          "detail": "10 lb each · 12 reps · 2–3 rounds"
+          "detail": "10 lb each · 12 reps · 2–3 rounds",
+          "image": "images/lateral-raise.svg"
         },
         {
           "name": "Pallof press",
-          "detail": "18 lb · 10 per side · 3 rounds"
+          "detail": "18 lb · 10 per side · 3 rounds",
+          "image": "images/pallof-press.svg"
         },
         {
           "name": "Forearm plank",
           "detail": "30–45 seconds · 3 rounds",
-          "seconds": 30
+          "seconds": 30,
+          "image": "images/forearm-plank.svg"
         },
         {
           "name": "Rest between exercises",
           "detail": "45–60 seconds",
-          "seconds": 60
+          "seconds": 60,
+          "image": "images/breathing.svg"
         }
       ]
     },
@@ -65,27 +75,32 @@
         {
           "name": "Weight shifts",
           "detail": "Gentle controlled movements",
-          "seconds": 60
+          "seconds": 60,
+          "image": "images/weight-shifts.svg"
         },
         {
           "name": "Arm raises",
           "detail": "Relax shoulders",
-          "seconds": 60
+          "seconds": 60,
+          "image": "images/arm-raises.svg"
         },
         {
           "name": "Small side steps",
           "detail": "Stay comfortable",
-          "seconds": 60
+          "seconds": 60,
+          "image": "images/side-steps.svg"
         },
         {
           "name": "Cloud hands",
           "detail": "Easy weight transfer",
-          "seconds": 60
+          "seconds": 60,
+          "image": "images/cloud-hands.svg"
         },
         {
           "name": "Standing breathing",
           "detail": "Slow and relaxed",
-          "seconds": 60
+          "seconds": 60,
+          "image": "images/breathing.svg"
         }
       ]
     }
