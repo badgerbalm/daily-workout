@@ -1,35 +1,35 @@
 {
-  "date": "2026-10-14",
+  "date": "2026-10-13",
   "title": "Daily Workout",
-  "note": "Starter workout based on the last confirmed running session. Confirm today's plan in ChatGPT before exercising.",
+  "note": "Workout from today's /plan. Keep effort manageable and stop any movement that causes pain.",
   "sections": [
     {
-      "title": "Treadmill",
+      "title": "Treadmill · 30 minutes",
       "items": [
         {
           "name": "Warm-up walk",
-          "detail": "3.2–3.6 mph",
+          "detail": "5 minutes · 3.2–3.6 mph",
           "seconds": 300
         },
         {
           "name": "Jog (repeat 5 times)",
-          "detail": "5.2 mph, relaxed stride",
-          "seconds": 90
+          "detail": "5.2 mph · 2 minutes each · repeat 5 times",
+          "seconds": 120
         },
         {
           "name": "Recovery walk (repeat 5 times)",
-          "detail": "3.6–3.8 mph",
-          "seconds": 150
+          "detail": "3.6–3.8 mph · 2 minutes each · repeat 5 times",
+          "seconds": 120
         },
         {
           "name": "Cool-down walk",
-          "detail": "3.2 mph",
+          "detail": "5 minutes · 3.2 mph",
           "seconds": 300
         }
       ]
     },
     {
-      "title": "Strength and core",
+      "title": "Strength and core · 20–25 minutes",
       "items": [
         {
           "name": "Dumbbell floor press",
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "title": "Tai Chi",
+      "title": "Tai Chi · 10 minutes",
       "items": [
         {
           "name": "Weight shifts",
