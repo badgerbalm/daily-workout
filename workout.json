@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-14",
+  "title": "Daily Workout",
+  "note": "Starter workout based on the last confirmed running session. Confirm today's plan in ChatGPT before exercising.",
+  "sections": [
+    {
+      "title": "Treadmill",
+      "items": [
+        {
+          "name": "Warm-up walk",
+          "detail": "3.2–3.6 mph",
+          "seconds": 300
+        },
+        {
+          "name": "Jog (repeat 5 times)",
+          "detail": "5.2 mph, relaxed stride",
+          "seconds": 90
+        },
+        {
+          "name": "Recovery walk (repeat 5 times)",
+          "detail": "3.6–3.8 mph",
+          "seconds": 150
+        },
+        {
+          "name": "Cool-down walk",
+          "detail": "3.2 mph",
+          "seconds": 300
+        }
+      ]
+    },
+    {
+      "title": "Strength and core",
+      "items": [
+        {
+          "name": "Dumbbell floor press",
+          "detail": "25 lb each · 8–10 reps · 2–3 rounds"
+        },
+        {
+          "name": "Supported dumbbell row",
+          "detail": "25 lb · 10 per side · 2–3 rounds"
+        },
+        {
+          "name": "Lateral raises",
+          "detail": "10 lb each · 12 reps · 2–3 rounds"
+        },
+        {
+          "name": "Pallof press",
+          "detail": "18 lb · 10 per side · 3 rounds"
+        },
+        {
+          "name": "Forearm plank",
+          "detail": "30–45 seconds · 3 rounds",
+          "seconds": 30
+        },
+        {
+          "name": "Rest between exercises",
+          "detail": "45–60 seconds",
+          "seconds": 60
+        }
+      ]
+    },
+    {
+      "title": "Tai Chi",
+      "items": [
+        {
+          "name": "Weight shifts",
+          "detail": "Gentle controlled movements",
+          "seconds": 60
+        },
+        {
+          "name": "Arm raises",
+          "detail": "Relax shoulders",
+          "seconds": 60
+        },
+        {
+          "name": "Small side steps",
+          "detail": "Stay comfortable",
+          "seconds": 60
+        },
+        {
+          "name": "Cloud hands",
+          "detail": "Easy weight transfer",
+          "seconds": 60
+        },
+        {
+          "name": "Standing breathing",
+          "detail": "Slow and relaxed",
+          "seconds": 60
+        }
+      ]
+    }
+  ]
+}
