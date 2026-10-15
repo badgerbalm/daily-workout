@@ -1,7 +1,7 @@
 {
-  "date": "2026-10-13",
-  "title": "Daily Workout · October 13",
-  "note": "Today's /plan: 30-minute treadmill intervals, 20–25 minutes of strength and core, and 10 minutes of Tai Chi. Use comfortable effort and stop if discomfort develops.",
+  "date": "2026-10-15",
+  "title": "Daily Workout · October 15",
+  "note": "Thursday, October 15 · 60–65 minutes. No workout on October 14. Progress from five 90-second jogs to five 2-minute jogs if recovered. Reduce to 90 seconds if breathing is unusually difficult. Stop for groin or back pain, chest pain, dizziness, or unusual palpitations.",
   "sections": [
     {
       "title": "Treadmill · 30 minutes",
@@ -26,7 +26,7 @@
         },
         {
           "name": "Cool-down walk",
-          "detail": "5 minutes · 3.2 mph",
+          "detail": "5 minutes · 3.0–3.2 mph",
           "seconds": 300,
           "image": "images/warmup.svg"
         }
@@ -57,7 +57,7 @@
         },
         {
           "name": "Forearm plank",
-          "detail": "30–45 seconds · 3 rounds",
+          "detail": "30–45 seconds · 3 sets · stop if groin or back discomfort",
           "seconds": 30,
           "image": "images/forearm-plank.svg"
         },
@@ -74,31 +74,31 @@
       "items": [
         {
           "name": "Weight shifts",
-          "detail": "Gentle controlled movements",
+          "detail": "1 minute per round · repeat 2 rounds · Gentle controlled movements",
           "seconds": 60,
           "image": "images/weight-shifts.svg"
         },
         {
           "name": "Arm raises",
-          "detail": "Relax shoulders",
+          "detail": "1 minute per round · repeat 2 rounds · Relax shoulders",
           "seconds": 60,
           "image": "images/arm-raises.svg"
         },
         {
           "name": "Small side steps",
-          "detail": "Stay comfortable",
+          "detail": "1 minute per round · repeat 2 rounds · Stay comfortable",
           "seconds": 60,
           "image": "images/side-steps.svg"
         },
         {
           "name": "Cloud hands",
-          "detail": "Easy weight transfer",
+          "detail": "1 minute per round · repeat 2 rounds · Easy weight transfer",
           "seconds": 60,
           "image": "images/cloud-hands.svg"
         },
         {
           "name": "Standing breathing",
-          "detail": "Slow and relaxed",
+          "detail": "1 minute per round · repeat 2 rounds · Slow and relaxed",
           "seconds": 60,
           "image": "images/breathing.svg"
         }
