@@ -13,16 +13,74 @@
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg"
         },
         {
-          "name": "Jog (repeat 5 times)",
-          "detail": "5.2 mph · 2 minutes each · repeat 5 times",
+          "name": "Jog · Round 1 of 5",
+          "detail": "2 minutes · 5.2 mph",
           "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
+          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
         },
         {
-          "name": "Recovery walk (repeat 5 times)",
-          "detail": "3.6–3.8 mph · 2 minutes each · repeat 5 times",
+          "name": "Recovery walk · Round 1 of 5",
+          "detail": "2 minutes · 3.6–3.8 mph",
           "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk until breathing settles before the next jog."
+        },
+        {
+          "name": "Jog · Round 2 of 5",
+          "detail": "2 minutes · 5.2 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
+          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
+        },
+        {
+          "name": "Recovery walk · Round 2 of 5",
+          "detail": "2 minutes · 3.6–3.8 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk until breathing settles before the next jog."
+        },
+        {
+          "name": "Jog · Round 3 of 5",
+          "detail": "2 minutes · 5.2 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
+          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
+        },
+        {
+          "name": "Recovery walk · Round 3 of 5",
+          "detail": "2 minutes · 3.6–3.8 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk until breathing settles before the next jog."
+        },
+        {
+          "name": "Jog · Round 4 of 5",
+          "detail": "2 minutes · 5.2 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
+          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
+        },
+        {
+          "name": "Recovery walk · Round 4 of 5",
+          "detail": "2 minutes · 3.6–3.8 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk until breathing settles before the next jog."
+        },
+        {
+          "name": "Jog · Round 5 of 5",
+          "detail": "2 minutes · 5.2 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
+          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
+        },
+        {
+          "name": "Recovery walk · Round 5 of 5",
+          "detail": "2 minutes · 3.6–3.8 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk until breathing settles before the next jog."
         },
         {
           "name": "Cool-down walk",
