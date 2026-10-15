@@ -91,39 +91,112 @@
       ]
     },
     {
-      "title": "Strength and core · 20–25 minutes",
+      "title": "Strength and core · 3 rounds",
       "items": [
         {
-          "name": "Dumbbell floor press",
-          "detail": "25 lb each · 8–10 reps · 2–3 rounds",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg"
+          "name": "Dumbbell floor press · Round 1 of 3",
+          "detail": "25 lb each · 8–10 reps",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg",
+          "instructions": "Keep your movements controlled and breathe normally."
         },
         {
-          "name": "Supported dumbbell row",
-          "detail": "25 lb · 10 per side · 2–3 rounds",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg"
+          "name": "Supported dumbbell row · Round 1 of 3",
+          "detail": "25 lb · 10 per side",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg",
+          "instructions": "Keep your movements controlled and breathe normally."
         },
         {
-          "name": "Lateral raises",
-          "detail": "10 lb each · 12 reps · 2–3 rounds",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg"
+          "name": "Lateral raises · Round 1 of 3",
+          "detail": "10 lb each · 12 reps",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg",
+          "instructions": "Keep your movements controlled and breathe normally."
         },
         {
-          "name": "Pallof press",
-          "detail": "18 lb · 10 per side · 3 rounds",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pallof_Press/0.jpg"
+          "name": "Pallof press · Round 1 of 3",
+          "detail": "18 lb · 10 per side",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pallof_Press/0.jpg",
+          "instructions": "Resist twisting and breathe normally."
         },
         {
-          "name": "Forearm plank",
-          "detail": "60 seconds · 3 sets",
+          "name": "Forearm plank · Round 1 of 3",
+          "detail": "60 seconds",
           "seconds": 60,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
+          "instructions": "Hold 60 seconds. Keep a neutral back; stop if groin or back discomfort develops."
         },
         {
-          "name": "Rest between exercises",
-          "detail": "45–60 seconds",
-          "seconds": 60,
+          "name": "Rest · After round 1",
+          "detail": "75–90 seconds before the next round",
+          "seconds": 90,
           "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480"
+        },
+        {
+          "name": "Dumbbell floor press · Round 2 of 3",
+          "detail": "25 lb each · 8–10 reps",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg",
+          "instructions": "Keep your movements controlled and breathe normally."
+        },
+        {
+          "name": "Supported dumbbell row · Round 2 of 3",
+          "detail": "25 lb · 10 per side",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg",
+          "instructions": "Keep your movements controlled and breathe normally."
+        },
+        {
+          "name": "Lateral raises · Round 2 of 3",
+          "detail": "10 lb each · 12 reps",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg",
+          "instructions": "Keep your movements controlled and breathe normally."
+        },
+        {
+          "name": "Pallof press · Round 2 of 3",
+          "detail": "18 lb · 10 per side",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pallof_Press/0.jpg",
+          "instructions": "Resist twisting and breathe normally."
+        },
+        {
+          "name": "Forearm plank · Round 2 of 3",
+          "detail": "60 seconds",
+          "seconds": 60,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
+          "instructions": "Hold 60 seconds. Keep a neutral back; stop if groin or back discomfort develops."
+        },
+        {
+          "name": "Rest · After round 2",
+          "detail": "75–90 seconds before the next round",
+          "seconds": 90,
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480"
+        },
+        {
+          "name": "Dumbbell floor press · Round 3 of 3",
+          "detail": "25 lb each · 8–10 reps · Optional third set",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg",
+          "instructions": "Optional third set if form and energy are good. Keep your movements controlled and breathe normally."
+        },
+        {
+          "name": "Supported dumbbell row · Round 3 of 3",
+          "detail": "25 lb · 10 per side · Optional third set",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg",
+          "instructions": "Optional third set if form and energy are good. Keep your movements controlled and breathe normally."
+        },
+        {
+          "name": "Lateral raises · Round 3 of 3",
+          "detail": "10 lb each · 12 reps · Optional third set",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg",
+          "instructions": "Optional third set if form and energy are good. Keep your movements controlled and breathe normally."
+        },
+        {
+          "name": "Pallof press · Round 3 of 3",
+          "detail": "18 lb · 10 per side",
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pallof_Press/0.jpg",
+          "instructions": "Resist twisting and breathe normally."
+        },
+        {
+          "name": "Forearm plank · Round 3 of 3",
+          "detail": "60 seconds",
+          "seconds": 60,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
+          "instructions": "Hold 60 seconds. Keep a neutral back; stop if groin or back discomfort develops."
         }
       ]
     },
