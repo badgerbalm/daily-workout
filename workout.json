@@ -10,25 +10,25 @@
           "name": "Warm-up walk",
           "detail": "5 minutes · 3.2–3.6 mph",
           "seconds": 300,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20woman%20exercising%20on%20a%20treadmill.jpg?width=480"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg"
         },
         {
           "name": "Jog (repeat 5 times)",
           "detail": "5.2 mph · 2 minutes each · repeat 5 times",
           "seconds": 120,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Young%20man%20running%20on%20treadmill%20during%20sports%20training%20in%20a%20gym.jpg?width=480"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg"
         },
         {
           "name": "Recovery walk (repeat 5 times)",
           "detail": "3.6–3.8 mph · 2 minutes each · repeat 5 times",
           "seconds": 120,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20woman%20exercising%20on%20a%20treadmill.jpg?width=480"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg"
         },
         {
           "name": "Cool-down walk",
           "detail": "5 minutes · 3.0–3.2 mph",
           "seconds": 300,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Young%20man%20running%20on%20treadmill%20during%20sports%20training%20in%20a%20gym.jpg?width=480"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg"
         }
       ]
     },
