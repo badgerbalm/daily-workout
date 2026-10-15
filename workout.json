@@ -10,25 +10,25 @@
           "name": "Warm-up walk",
           "detail": "5 minutes · 3.2–3.6 mph",
           "seconds": 300,
-          "image": "images/warmup.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20woman%20exercising%20on%20a%20treadmill.jpg?width=480"
         },
         {
           "name": "Jog (repeat 5 times)",
           "detail": "5.2 mph · 2 minutes each · repeat 5 times",
           "seconds": 120,
-          "image": "images/jog.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Young%20man%20running%20on%20treadmill%20during%20sports%20training%20in%20a%20gym.jpg?width=480"
         },
         {
           "name": "Recovery walk (repeat 5 times)",
           "detail": "3.6–3.8 mph · 2 minutes each · repeat 5 times",
           "seconds": 120,
-          "image": "images/warmup.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/A%20woman%20exercising%20on%20a%20treadmill.jpg?width=480"
         },
         {
           "name": "Cool-down walk",
           "detail": "5 minutes · 3.0–3.2 mph",
           "seconds": 300,
-          "image": "images/warmup.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Young%20man%20running%20on%20treadmill%20during%20sports%20training%20in%20a%20gym.jpg?width=480"
         }
       ]
     },
@@ -38,34 +38,34 @@
         {
           "name": "Dumbbell floor press",
           "detail": "25 lb each · 8–10 reps · 2–3 rounds",
-          "image": "images/floor-press.svg"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg"
         },
         {
           "name": "Supported dumbbell row",
           "detail": "25 lb · 10 per side · 2–3 rounds",
-          "image": "images/supported-row.svg"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg"
         },
         {
           "name": "Lateral raises",
           "detail": "10 lb each · 12 reps · 2–3 rounds",
-          "image": "images/lateral-raise.svg"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg"
         },
         {
           "name": "Pallof press",
           "detail": "18 lb · 10 per side · 3 rounds",
-          "image": "images/pallof-press.svg"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pallof_Press/0.jpg"
         },
         {
           "name": "Forearm plank",
           "detail": "30–45 seconds · 3 sets · stop if groin or back discomfort",
           "seconds": 30,
-          "image": "images/forearm-plank.svg"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg"
         },
         {
           "name": "Rest between exercises",
           "detail": "45–60 seconds",
           "seconds": 60,
-          "image": "images/breathing.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480"
         }
       ]
     },
@@ -76,31 +76,36 @@
           "name": "Weight shifts",
           "detail": "1 minute per round · repeat 2 rounds · Gentle controlled movements",
           "seconds": 60,
-          "image": "images/weight-shifts.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480",
+          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
         },
         {
           "name": "Arm raises",
           "detail": "1 minute per round · repeat 2 rounds · Relax shoulders",
           "seconds": 60,
-          "image": "images/arm-raises.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Practicing%20Tai%20Chi%20in%20the%20park.jpg?width=480",
+          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
         },
         {
           "name": "Small side steps",
           "detail": "1 minute per round · repeat 2 rounds · Stay comfortable",
           "seconds": 60,
-          "image": "images/side-steps.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20the%20Park-1.jpg?width=480",
+          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
         },
         {
           "name": "Cloud hands",
           "detail": "1 minute per round · repeat 2 rounds · Easy weight transfer",
           "seconds": 60,
-          "image": "images/cloud-hands.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20chi%20in%20the%20park.jpg?width=480",
+          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
         },
         {
           "name": "Standing breathing",
           "detail": "1 minute per round · repeat 2 rounds · Slow and relaxed",
           "seconds": 60,
-          "image": "images/breathing.svg"
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480",
+          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
         }
       ]
     }
