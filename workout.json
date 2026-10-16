@@ -1,202 +1,69 @@
 {
-  "date": "2026-10-15",
-  "title": "Daily Workout · October 15",
-  "note": "Thursday, October 15 · 60–65 minutes. No workout on October 14. Progress from five 90-second jogs to five 2-minute jogs if recovered. Reduce to 90 seconds if breathing is unusually difficult. Stop for groin or back pain, chest pain, dizziness, or unusual palpitations.",
+  "date": "2026-10-16",
+  "title": "Daily Workout · October 16",
+  "note": "Friday, October 16 · Recovery-focused day after workouts recorded October 15. Keep effort conversational. Avoid jogging intervals or heavy strength today. Stop for groin/back pain, chest pain, dizziness, or unusual palpitations. Apple Watch timer syncing remains unresolved; existing iPhone timer buttons are unchanged.",
   "sections": [
     {
-      "title": "Treadmill · 30 minutes",
+      "title": "Treadmill · 30 minutes easy",
       "items": [
         {
           "name": "Warm-up walk",
-          "detail": "5 minutes · 3.2–3.6 mph",
+          "detail": "5 minutes · 3.0–3.3 mph",
           "seconds": 300,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg"
-        },
-        {
-          "name": "Jog · Round 1 of 5",
-          "detail": "2 minutes · 5.2 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
-          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
-        },
-        {
-          "name": "Recovery walk · Round 1 of 5",
-          "detail": "2 minutes · 3.6–3.8 mph",
-          "seconds": 120,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk until breathing settles before the next jog."
+          "instructions": "Start gently and breathe comfortably."
         },
         {
-          "name": "Jog · Round 2 of 5",
-          "detail": "2 minutes · 5.2 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
-          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
-        },
-        {
-          "name": "Recovery walk · Round 2 of 5",
-          "detail": "2 minutes · 3.6–3.8 mph",
-          "seconds": 120,
+          "name": "Easy steady walk · Part 1",
+          "detail": "10 minutes · 3.3–3.7 mph",
+          "seconds": 600,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk until breathing settles before the next jog."
+          "instructions": "Keep a conversational pace, no jogging today."
         },
         {
-          "name": "Jog · Round 3 of 5",
-          "detail": "2 minutes · 5.2 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
-          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
-        },
-        {
-          "name": "Recovery walk · Round 3 of 5",
-          "detail": "2 minutes · 3.6–3.8 mph",
-          "seconds": 120,
+          "name": "Easy steady walk · Part 2",
+          "detail": "10 minutes · 3.3–3.7 mph",
+          "seconds": 600,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk until breathing settles before the next jog."
-        },
-        {
-          "name": "Jog · Round 4 of 5",
-          "detail": "2 minutes · 5.2 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
-          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
-        },
-        {
-          "name": "Recovery walk · Round 4 of 5",
-          "detail": "2 minutes · 3.6–3.8 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk until breathing settles before the next jog."
-        },
-        {
-          "name": "Jog · Round 5 of 5",
-          "detail": "2 minutes · 5.2 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Running_Treadmill/0.jpg",
-          "instructions": "Jog with a relaxed stride and steady breathing. Keep effort manageable."
-        },
-        {
-          "name": "Recovery walk · Round 5 of 5",
-          "detail": "2 minutes · 3.6–3.8 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk until breathing settles before the next jog."
+          "instructions": "Stay comfortable; reduce speed if legs feel fatigued."
         },
         {
           "name": "Cool-down walk",
-          "detail": "5 minutes · 3.0–3.2 mph",
+          "detail": "5 minutes · 2.8–3.2 mph",
           "seconds": 300,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg"
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Ease the pace down gradually."
         }
       ]
     },
     {
-      "title": "Strength and core · 3 rounds",
+      "title": "Gentle mobility · 8 minutes",
       "items": [
         {
-          "name": "Dumbbell floor press · Round 1 of 3",
-          "detail": "25 lb each · 8–10 reps",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg",
-          "instructions": "Keep your movements controlled and breathe normally."
+          "name": "Standing shoulder rolls",
+          "detail": "2 minutes · Slow, relaxed",
+          "seconds": 120,
+          "instructions": "Roll shoulders slowly without forcing range of motion."
         },
         {
-          "name": "Supported dumbbell row · Round 1 of 3",
-          "detail": "25 lb · 10 per side",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg",
-          "instructions": "Keep your movements controlled and breathe normally."
+          "name": "Gentle standing calf raises",
+          "detail": "2 minutes · Controlled",
+          "seconds": 120,
+          "instructions": "Hold a stable support if needed. Breathe naturally."
         },
         {
-          "name": "Lateral raises · Round 1 of 3",
-          "detail": "10 lb each · 12 reps",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg",
-          "instructions": "Keep your movements controlled and breathe normally."
+          "name": "Easy standing weight shifts",
+          "detail": "2 minutes · Comfortable range",
+          "seconds": 120,
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480",
+          "instructions": "Shift weight side to side without twisting or straining the groin."
         },
         {
-          "name": "Pallof press · Round 1 of 3",
-          "detail": "18 lb · 10 per side",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pallof_Press/0.jpg",
-          "instructions": "Resist twisting and breathe normally."
-        },
-        {
-          "name": "Forearm plank · Round 1 of 3",
-          "detail": "60 seconds",
-          "seconds": 60,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
-          "instructions": "Hold 60 seconds. Keep a neutral back; stop if groin or back discomfort develops."
-        },
-        {
-          "name": "Rest · After round 1",
-          "detail": "75–90 seconds before the next round",
-          "seconds": 90,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480"
-        },
-        {
-          "name": "Dumbbell floor press · Round 2 of 3",
-          "detail": "25 lb each · 8–10 reps",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg",
-          "instructions": "Keep your movements controlled and breathe normally."
-        },
-        {
-          "name": "Supported dumbbell row · Round 2 of 3",
-          "detail": "25 lb · 10 per side",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg",
-          "instructions": "Keep your movements controlled and breathe normally."
-        },
-        {
-          "name": "Lateral raises · Round 2 of 3",
-          "detail": "10 lb each · 12 reps",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg",
-          "instructions": "Keep your movements controlled and breathe normally."
-        },
-        {
-          "name": "Pallof press · Round 2 of 3",
-          "detail": "18 lb · 10 per side",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pallof_Press/0.jpg",
-          "instructions": "Resist twisting and breathe normally."
-        },
-        {
-          "name": "Forearm plank · Round 2 of 3",
-          "detail": "60 seconds",
-          "seconds": 60,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
-          "instructions": "Hold 60 seconds. Keep a neutral back; stop if groin or back discomfort develops."
-        },
-        {
-          "name": "Rest · After round 2",
-          "detail": "75–90 seconds before the next round",
-          "seconds": 90,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480"
-        },
-        {
-          "name": "Dumbbell floor press · Round 3 of 3",
-          "detail": "25 lb each · 8–10 reps · Optional third set",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Floor_Press/0.jpg",
-          "instructions": "Optional third set if form and energy are good. Keep your movements controlled and breathe normally."
-        },
-        {
-          "name": "Supported dumbbell row · Round 3 of 3",
-          "detail": "25 lb · 10 per side · Optional third set",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg",
-          "instructions": "Optional third set if form and energy are good. Keep your movements controlled and breathe normally."
-        },
-        {
-          "name": "Lateral raises · Round 3 of 3",
-          "detail": "10 lb each · 12 reps · Optional third set",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg",
-          "instructions": "Optional third set if form and energy are good. Keep your movements controlled and breathe normally."
-        },
-        {
-          "name": "Pallof press · Round 3 of 3",
-          "detail": "18 lb · 10 per side",
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pallof_Press/0.jpg",
-          "instructions": "Resist twisting and breathe normally."
-        },
-        {
-          "name": "Forearm plank · Round 3 of 3",
-          "detail": "60 seconds",
-          "seconds": 60,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg",
-          "instructions": "Hold 60 seconds. Keep a neutral back; stop if groin or back discomfort develops."
+          "name": "Relaxed standing breathing",
+          "detail": "2 minutes · No breath-holding",
+          "seconds": 120,
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480",
+          "instructions": "Breathe normally and relax shoulders."
         }
       ]
     },
