@@ -1,109 +1,66 @@
 {
-  "date": "2026-10-16",
-  "title": "Daily Workout · October 16",
-  "note": "Friday, October 16 · Recovery-focused day after workouts recorded October 15. Keep effort conversational. Avoid jogging intervals or heavy strength today. Stop for groin/back pain, chest pain, dizziness, or unusual palpitations. Apple Watch timer syncing remains unresolved; existing iPhone timer buttons are unchanged.",
+  "date": "2026-10-17",
+  "title": "Saturday Walking Workout · October 17",
+  "note": "Saturday morning · 30-minute treadmill walking workout. Flat incline to start. Keep effort conversational; power walking should be moderately challenging, not jogging. If 3.9–4.1 mph disrupts natural walking stride, slow down. Stop for chest discomfort, dizziness, unusual palpitations, or groin/back pain.",
   "sections": [
     {
-      "title": "Treadmill · 30 minutes easy",
+      "title": "Treadmill walking intervals · 30 minutes",
       "items": [
         {
           "name": "Warm-up walk",
           "detail": "5 minutes · 3.0–3.3 mph",
           "seconds": 300,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Start gently and breathe comfortably."
+          "instructions": "Walk tall, keep shoulders relaxed, and breathe comfortably."
         },
         {
-          "name": "Easy steady walk · Part 1",
-          "detail": "10 minutes · 3.3–3.7 mph",
-          "seconds": 600,
+          "name": "Brisk walk · Round 1",
+          "detail": "4 minutes · 3.6–3.8 mph",
+          "seconds": 240,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Keep a conversational pace, no jogging today."
+          "instructions": "Walk tall, keep shoulders relaxed, and breathe comfortably."
         },
         {
-          "name": "Easy steady walk · Part 2",
-          "detail": "10 minutes · 3.3–3.7 mph",
-          "seconds": 600,
+          "name": "Power walk · Round 1",
+          "detail": "2 minutes · 3.9–4.1 mph",
+          "seconds": 120,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Stay comfortable; reduce speed if legs feel fatigued."
+          "instructions": "Walk briskly without breaking into a jog; slow down if stride feels unnatural."
+        },
+        {
+          "name": "Brisk walk · Round 2",
+          "detail": "4 minutes · 3.6–3.8 mph",
+          "seconds": 240,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk tall, keep shoulders relaxed, and breathe comfortably."
+        },
+        {
+          "name": "Power walk · Round 2",
+          "detail": "2 minutes · 3.9–4.1 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk briskly without breaking into a jog; slow down if stride feels unnatural."
+        },
+        {
+          "name": "Brisk walk · Round 3",
+          "detail": "4 minutes · 3.6–3.8 mph",
+          "seconds": 240,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk tall, keep shoulders relaxed, and breathe comfortably."
+        },
+        {
+          "name": "Power walk · Round 3",
+          "detail": "2 minutes · 3.9–4.1 mph",
+          "seconds": 120,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk briskly without breaking into a jog; slow down if stride feels unnatural."
         },
         {
           "name": "Cool-down walk",
-          "detail": "5 minutes · 2.8–3.2 mph",
-          "seconds": 300,
+          "detail": "7 minutes · 3.0–3.4 mph",
+          "seconds": 420,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Ease the pace down gradually."
-        }
-      ]
-    },
-    {
-      "title": "Gentle mobility · 8 minutes",
-      "items": [
-        {
-          "name": "Standing shoulder rolls",
-          "detail": "2 minutes · Slow, relaxed",
-          "seconds": 120,
-          "instructions": "Roll shoulders slowly without forcing range of motion."
-        },
-        {
-          "name": "Gentle standing calf raises",
-          "detail": "2 minutes · Controlled",
-          "seconds": 120,
-          "instructions": "Hold a stable support if needed. Breathe naturally."
-        },
-        {
-          "name": "Easy standing weight shifts",
-          "detail": "2 minutes · Comfortable range",
-          "seconds": 120,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480",
-          "instructions": "Shift weight side to side without twisting or straining the groin."
-        },
-        {
-          "name": "Relaxed standing breathing",
-          "detail": "2 minutes · No breath-holding",
-          "seconds": 120,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480",
-          "instructions": "Breathe normally and relax shoulders."
-        }
-      ]
-    },
-    {
-      "title": "Tai Chi · 10 minutes",
-      "items": [
-        {
-          "name": "Weight shifts",
-          "detail": "1 minute per round · repeat 2 rounds · Gentle controlled movements",
-          "seconds": 60,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480",
-          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
-        },
-        {
-          "name": "Arm raises",
-          "detail": "1 minute per round · repeat 2 rounds · Relax shoulders",
-          "seconds": 60,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Practicing%20Tai%20Chi%20in%20the%20park.jpg?width=480",
-          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
-        },
-        {
-          "name": "Small side steps",
-          "detail": "1 minute per round · repeat 2 rounds · Stay comfortable",
-          "seconds": 60,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20the%20Park-1.jpg?width=480",
-          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
-        },
-        {
-          "name": "Cloud hands",
-          "detail": "1 minute per round · repeat 2 rounds · Easy weight transfer",
-          "seconds": 60,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20chi%20in%20the%20park.jpg?width=480",
-          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
-        },
-        {
-          "name": "Standing breathing",
-          "detail": "1 minute per round · repeat 2 rounds · Slow and relaxed",
-          "seconds": 60,
-          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Tai%20Chi%20in%20a%20park.JPG?width=480",
-          "instructions": " Photo shows general Tai Chi practice; follow the written movement instructions."
+          "instructions": "Gradually reduce pace and let breathing settle."
         }
       ]
     }
