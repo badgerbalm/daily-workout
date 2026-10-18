@@ -1,66 +1,54 @@
 {
-  "date": "2026-10-17",
-  "title": "Saturday Walking Workout · October 17",
-  "note": "Saturday morning · 30-minute treadmill walking workout. Flat incline to start. Keep effort conversational; power walking should be moderately challenging, not jogging. If 3.9–4.1 mph disrupts natural walking stride, slow down. Stop for chest discomfort, dizziness, unusual palpitations, or groin/back pain.",
+  "date": "2026-10-18",
+  "title": "Sunday Recovery Walk · October 18",
+  "note": "Sunday, October 18 · Recovery day after only 3 hours of sleep and three glasses of wine last night. Optional gentle walk if alert, steady, and feeling well. No jogging, power-walking intervals, heavy strength, or strenuous core work today. Hydrate normally, eat, and prioritize sleep tonight. Skip exercise if dizzy, unusually fatigued, unsteady, or experiencing palpitations. Stop for chest pain or other concerning symptoms.",
   "sections": [
     {
-      "title": "Treadmill walking intervals · 30 minutes",
+      "title": "Optional gentle treadmill walk · 20 minutes",
       "items": [
         {
-          "name": "Warm-up walk",
-          "detail": "5 minutes · 3.0–3.3 mph",
+          "name": "Easy warm-up",
+          "detail": "5 minutes · 2.5–3.0 mph · flat",
           "seconds": 300,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk tall, keep shoulders relaxed, and breathe comfortably."
+          "instructions": "Start slowly. Only continue if you feel alert and steady."
         },
         {
-          "name": "Brisk walk · Round 1",
-          "detail": "4 minutes · 3.6–3.8 mph",
+          "name": "Comfortable walk",
+          "detail": "10 minutes · 3.0–3.4 mph · flat",
+          "seconds": 600,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Easy conversational pace; slow down whenever needed."
+        },
+        {
+          "name": "Cool-down",
+          "detail": "5 minutes · 2.5–2.9 mph · flat",
+          "seconds": 300,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Gradually ease down and stop if you feel lightheaded."
+        }
+      ]
+    },
+    {
+      "title": "Optional relaxed mobility · 10 minutes",
+      "items": [
+        {
+          "name": "Gentle shoulder rolls and arm circles",
+          "detail": "3 minutes · comfortable range",
+          "seconds": 180,
+          "instructions": "Move slowly and comfortably."
+        },
+        {
+          "name": "Easy side-to-side weight shifts",
+          "detail": "3 minutes · no deep bending",
+          "seconds": 180,
+          "instructions": "Use support if balance feels off."
+        },
+        {
+          "name": "Relaxed standing breathing and light stretching",
+          "detail": "4 minutes · no breath holding",
           "seconds": 240,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk tall, keep shoulders relaxed, and breathe comfortably."
-        },
-        {
-          "name": "Power walk · Round 1",
-          "detail": "2 minutes · 3.9–4.1 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk briskly without breaking into a jog; slow down if stride feels unnatural."
-        },
-        {
-          "name": "Brisk walk · Round 2",
-          "detail": "4 minutes · 3.6–3.8 mph",
-          "seconds": 240,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk tall, keep shoulders relaxed, and breathe comfortably."
-        },
-        {
-          "name": "Power walk · Round 2",
-          "detail": "2 minutes · 3.9–4.1 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk briskly without breaking into a jog; slow down if stride feels unnatural."
-        },
-        {
-          "name": "Brisk walk · Round 3",
-          "detail": "4 minutes · 3.6–3.8 mph",
-          "seconds": 240,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk tall, keep shoulders relaxed, and breathe comfortably."
-        },
-        {
-          "name": "Power walk · Round 3",
-          "detail": "2 minutes · 3.9–4.1 mph",
-          "seconds": 120,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk briskly without breaking into a jog; slow down if stride feels unnatural."
-        },
-        {
-          "name": "Cool-down walk",
-          "detail": "7 minutes · 3.0–3.4 mph",
-          "seconds": 420,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Gradually reduce pace and let breathing settle."
+          "instructions": "Keep breathing naturally; skip if you feel unwell."
         }
       ]
     }
