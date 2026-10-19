@@ -1,8 +1,43 @@
 {
   "date": "2026-10-19",
   "title": "Daily Workout · October 19",
-  "note": "Start treadmill in New Balance shoes; if foot tingling begins, stop and change to comfortable HOKA shoes after symptoms resolve. Strength and active Tai Chi follow walking.",
+  "note": "57-minute workout. Begin with 5 minutes of stretching. Start treadmill walking in New Balance shoes; if tingling starts, stop and switch to HOKAs after it resolves.",
   "sections": [
+    {
+      "title": "Opening stretches · 5 minutes",
+      "items": [
+        {
+          "name": "Shoulder rolls and arm circles",
+          "detail": "1 minute",
+          "seconds": 60,
+          "instructions": "Gentle movement."
+        },
+        {
+          "name": "Standing calf stretch",
+          "detail": "1 minute",
+          "seconds": 60,
+          "instructions": "30 seconds per leg."
+        },
+        {
+          "name": "Standing hamstring stretch",
+          "detail": "1 minute",
+          "seconds": 60,
+          "instructions": "30 seconds per leg."
+        },
+        {
+          "name": "Hip mobility",
+          "detail": "1 minute",
+          "seconds": 60,
+          "instructions": "Small comfortable circles."
+        },
+        {
+          "name": "Ankle circles",
+          "detail": "1 minute",
+          "seconds": 60,
+          "instructions": "Gentle ankle movement."
+        }
+      ]
+    },
     {
       "title": "Treadmill walk · 30 minutes",
       "items": [
