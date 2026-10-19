@@ -1,54 +1,102 @@
 {
-  "date": "2026-10-18",
-  "title": "Sunday Recovery Walk · October 18",
-  "note": "Sunday, October 18 · Recovery day after only 3 hours of sleep and three glasses of wine last night. Optional gentle walk if alert, steady, and feeling well. No jogging, power-walking intervals, heavy strength, or strenuous core work today. Hydrate normally, eat, and prioritize sleep tonight. Skip exercise if dizzy, unusually fatigued, unsteady, or experiencing palpitations. Stop for chest pain or other concerning symptoms.",
+  "date": "2026-10-19",
+  "title": "Daily Workout · October 19",
+  "note": "Start treadmill in New Balance shoes; if foot tingling begins, stop and change to comfortable HOKA shoes after symptoms resolve. Strength and active Tai Chi follow walking.",
   "sections": [
     {
-      "title": "Optional gentle treadmill walk · 20 minutes",
+      "title": "Treadmill walk · 30 minutes",
       "items": [
         {
-          "name": "Easy warm-up",
-          "detail": "5 minutes · 2.5–3.0 mph · flat",
+          "name": "Warm-up",
+          "detail": "5 min · 2.8–3.2 mph",
           "seconds": 300,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Start slowly. Only continue if you feel alert and steady."
+          "instructions": "Walk at a comfortable effort; stop if foot tingling starts."
         },
         {
-          "name": "Comfortable walk",
-          "detail": "10 minutes · 3.0–3.4 mph · flat",
+          "name": "Brisk walk",
+          "detail": "10 min · 3.3–3.7 mph",
           "seconds": 600,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Easy conversational pace; slow down whenever needed."
+          "instructions": "Walk at a comfortable effort; stop if foot tingling starts."
+        },
+        {
+          "name": "Steady walk",
+          "detail": "10 min · 3.3–3.7 mph",
+          "seconds": 600,
+          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
+          "instructions": "Walk at a comfortable effort; stop if foot tingling starts."
         },
         {
           "name": "Cool-down",
-          "detail": "5 minutes · 2.5–2.9 mph · flat",
+          "detail": "5 min · 2.7–3.0 mph",
           "seconds": 300,
           "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Gradually ease down and stop if you feel lightheaded."
+          "instructions": "Walk at a comfortable effort; stop if foot tingling starts."
         }
       ]
     },
     {
-      "title": "Optional relaxed mobility · 10 minutes",
+      "title": "Light upper-body strength · 12 minutes",
       "items": [
         {
-          "name": "Gentle shoulder rolls and arm circles",
-          "detail": "3 minutes · comfortable range",
+          "name": "Dumbbell floor press",
+          "detail": "2 sets · 8–10 reps",
           "seconds": 180,
-          "instructions": "Move slowly and comfortably."
+          "instructions": "Use comfortable weights."
         },
         {
-          "name": "Easy side-to-side weight shifts",
-          "detail": "3 minutes · no deep bending",
-          "seconds": 180,
-          "instructions": "Use support if balance feels off."
-        },
-        {
-          "name": "Relaxed standing breathing and light stretching",
-          "detail": "4 minutes · no breath holding",
+          "name": "Supported dumbbell row",
+          "detail": "2 sets · 10 per side",
           "seconds": 240,
-          "instructions": "Keep breathing naturally; skip if you feel unwell."
+          "instructions": "Keep back neutral."
+        },
+        {
+          "name": "Lateral raises",
+          "detail": "2 sets · 10–12 reps",
+          "seconds": 180,
+          "instructions": "Use light weights."
+        },
+        {
+          "name": "Rest between sets",
+          "detail": "2 minutes total",
+          "seconds": 120,
+          "instructions": "Recover as needed."
+        }
+      ]
+    },
+    {
+      "title": "Active Tai Chi-inspired movements · 10 minutes",
+      "items": [
+        {
+          "name": "Side steps with arm swings",
+          "detail": "2 minutes",
+          "seconds": 120,
+          "instructions": "Step gently and swing arms naturally."
+        },
+        {
+          "name": "Cloud hands",
+          "detail": "2 minutes",
+          "seconds": 120,
+          "instructions": "Slow flowing arm sweeps with side steps."
+        },
+        {
+          "name": "Alternating forward steps",
+          "detail": "2 minutes",
+          "seconds": 120,
+          "instructions": "Controlled steps and relaxed arms."
+        },
+        {
+          "name": "Parting the horse's mane",
+          "detail": "2 minutes",
+          "seconds": 120,
+          "instructions": "Alternate gentle forward steps and flowing arm motions."
+        },
+        {
+          "name": "Brush knee and push",
+          "detail": "2 minutes",
+          "seconds": 120,
+          "instructions": "Slow coordinated steps and arms."
         }
       ]
     }
