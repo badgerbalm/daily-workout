@@ -1,7 +1,7 @@
 {
   "date": "2026-10-19",
   "title": "Daily Workout · October 19",
-  "note": "57-minute workout. Begin with 5 minutes of stretching. Start treadmill walking in New Balance shoes; if tingling starts, stop and switch to HOKAs after it resolves.",
+  "note": "35-minute workout: 5 minutes stretching, 20 minutes treadmill, 5 minutes upper-body strength, and 5 minutes active Tai Chi. Start treadmill in New Balance shoes; stop if tingling begins, and change into Hokas after it resolves.",
   "sections": [
     {
       "title": "Opening stretches · 5 minutes",
@@ -39,99 +39,83 @@
       ]
     },
     {
-      "title": "Treadmill walk · 30 minutes",
+      "title": "Treadmill walk · 20 minutes",
       "items": [
         {
           "name": "Warm-up",
-          "detail": "5 min · 2.8–3.2 mph",
-          "seconds": 300,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk at a comfortable effort; stop if foot tingling starts."
+          "detail": "4 min · 2.8–3.2 mph",
+          "seconds": 240,
+          "instructions": "Start with New Balance shoes; stop if tingling begins."
         },
         {
           "name": "Brisk walk",
-          "detail": "10 min · 3.3–3.7 mph",
-          "seconds": 600,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk at a comfortable effort; stop if foot tingling starts."
-        },
-        {
-          "name": "Steady walk",
-          "detail": "10 min · 3.3–3.7 mph",
-          "seconds": 600,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk at a comfortable effort; stop if foot tingling starts."
+          "detail": "12 min · 3.3–3.7 mph",
+          "seconds": 720,
+          "instructions": "Walk at a comfortable pace. If tingling develops, stop and change into Hokas after symptoms resolve."
         },
         {
           "name": "Cool-down",
-          "detail": "5 min · 2.7–3.0 mph",
-          "seconds": 300,
-          "image": "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Walking_Treadmill/0.jpg",
-          "instructions": "Walk at a comfortable effort; stop if foot tingling starts."
+          "detail": "4 min · 2.7–3.0 mph",
+          "seconds": 240,
+          "instructions": "Slow down gradually."
         }
       ]
     },
     {
-      "title": "Light upper-body strength · 12 minutes",
+      "title": "Upper-body strength · 5 minutes",
       "items": [
         {
           "name": "Dumbbell floor press",
-          "detail": "2 sets · 8–10 reps",
-          "seconds": 180,
-          "instructions": "Use comfortable weights."
+          "detail": "2 min · comfortable weight",
+          "seconds": 120,
+          "instructions": "Controlled repetitions and normal breathing."
         },
         {
           "name": "Supported dumbbell row",
-          "detail": "2 sets · 10 per side",
-          "seconds": 240,
-          "instructions": "Keep back neutral."
+          "detail": "2 min · alternate sides",
+          "seconds": 120,
+          "instructions": "Maintain a neutral back."
         },
         {
           "name": "Lateral raises",
-          "detail": "2 sets · 10–12 reps",
-          "seconds": 180,
-          "instructions": "Use light weights."
-        },
-        {
-          "name": "Rest between sets",
-          "detail": "2 minutes total",
-          "seconds": 120,
-          "instructions": "Recover as needed."
+          "detail": "1 min · light weights",
+          "seconds": 60,
+          "instructions": "Smooth controlled movements."
         }
       ]
     },
     {
-      "title": "Active Tai Chi-inspired movements · 10 minutes",
+      "title": "Active Tai Chi-inspired movement · 5 minutes",
       "items": [
         {
           "name": "Side steps with arm swings",
-          "detail": "2 minutes",
-          "seconds": 120,
-          "instructions": "Step gently and swing arms naturally."
+          "detail": "1 min",
+          "seconds": 60,
+          "instructions": "Relaxed flowing steps."
         },
         {
           "name": "Cloud hands",
-          "detail": "2 minutes",
-          "seconds": 120,
-          "instructions": "Slow flowing arm sweeps with side steps."
+          "detail": "1 min",
+          "seconds": 60,
+          "instructions": "Slow arm sweeps while side stepping."
         },
         {
           "name": "Alternating forward steps",
-          "detail": "2 minutes",
-          "seconds": 120,
-          "instructions": "Controlled steps and relaxed arms."
+          "detail": "1 min",
+          "seconds": 60,
+          "instructions": "Gentle coordinated steps."
         },
         {
           "name": "Parting the horse's mane",
-          "detail": "2 minutes",
-          "seconds": 120,
-          "instructions": "Alternate gentle forward steps and flowing arm motions."
+          "detail": "1 min",
+          "seconds": 60,
+          "instructions": "Smooth alternating arm movements."
         },
         {
           "name": "Brush knee and push",
-          "detail": "2 minutes",
-          "seconds": 120,
-          "instructions": "Slow coordinated steps and arms."
+          "detail": "1 min",
+          "seconds": 60,
+          "instructions": "Controlled flowing movement."
         }
       ]
     }
