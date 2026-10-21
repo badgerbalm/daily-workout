@@ -16,19 +16,28 @@
           "name": "Butterfly stretch",
           "detail": "40 seconds + 20 seconds to transition",
           "seconds": 60,
-          "instructions": "Sit with soles together and knees comfortably out to the sides. Do not force the knees down."
+          "instructions": "Sit with soles together and knees comfortably out to the sides. Do not force the knees down.",
+          "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Baddha%20konasana.jpg",
+          "imageCredit": "Joseph RENGER · CC BY-SA 3.0",
+          "imageSource": "https://commons.wikimedia.org/wiki/File:Baddha%20konasana.jpg"
         },
         {
           "name": "Seated spinal twist",
           "detail": "30 sec per side · 1 minute",
           "seconds": 60,
-          "instructions": "Sit upright and rotate gently within a comfortable range. Avoid forcing the twist."
+          "instructions": "Sit upright and rotate gently within a comfortable range. Avoid forcing the twist.",
+          "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ardha%20Matsyendr%C4%81sana%20%E2%97%A6%20Half%20Spinal%20Twist%20I%20yoga%20%C4%81sana.jpg",
+          "imageCredit": "Adishankaracharya108 · CC BY-SA 4.0",
+          "imageSource": "https://commons.wikimedia.org/wiki/File:Ardha%20Matsyendr%C4%81sana%20%E2%97%A6%20Half%20Spinal%20Twist%20I%20yoga%20%C4%81sana.jpg"
         },
         {
           "name": "Plow Pose (Halasana)",
           "detail": "20 sec per side + 20 sec transition",
           "seconds": 60,
-          "instructions": "Only perform within your comfortable, established range. Avoid pressure on the neck or forcing the feet to the floor."
+          "instructions": "Only perform within your comfortable, established range. Avoid pressure on the neck or forcing the feet to the floor.",
+          "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Udi%20demonstrating%20Halasana%20(plough%20pose)-%202016.jpg",
+          "imageCredit": "Ron Borkin · CC BY-SA 3.0",
+          "imageSource": "https://commons.wikimedia.org/wiki/File:Udi%20demonstrating%20Halasana%20(plough%20pose)-%202016.jpg"
         },
         {
           "name": "Easy reset and position changes",
@@ -86,13 +95,19 @@
           "name": "Lateral raises",
           "detail": "3 minutes · 2 sets of 10–12",
           "seconds": 180,
-          "instructions": "Light weights; smooth lifts."
+          "instructions": "Light weights; smooth lifts.",
+          "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/DumbbellLateralRaise.JPG",
+          "imageCredit": "GeorgeStepanek · Wikimedia Commons license",
+          "imageSource": "https://commons.wikimedia.org/wiki/File:DumbbellLateralRaise.JPG"
         },
         {
           "name": "Forearm plank",
           "detail": "2 minutes · 2 sets of 40–60 seconds with rest",
           "seconds": 120,
-          "instructions": "Keep a straight line and stop if groin or back discomfort occurs."
+          "instructions": "Keep a straight line and stop if groin or back discomfort occurs.",
+          "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Forearm%20Plank%20Phalakasana%20variant%20(outdoor%20class).jpg",
+          "imageCredit": "Andrea Coach G · CC BY-SA 4.0",
+          "imageSource": "https://commons.wikimedia.org/wiki/File:Forearm%20Plank%20Phalakasana%20variant%20(outdoor%20class).jpg"
         }
       ]
     },
