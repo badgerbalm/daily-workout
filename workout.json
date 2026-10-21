@@ -4,37 +4,37 @@
   "note": "57-minute workout. Begin with five minutes of gentle mobility. Start the treadmill in New Balance shoes if comfortable; stop at any tingling and change to Hokas only after symptoms resolve. Walking and strength should remain comfortable and controlled.",
   "sections": [
     {
-      "title": "Opening stretches and mobility · 5 minutes",
+      "title": "Your regular opening stretches · 5 minutes",
       "items": [
         {
-          "name": "Shoulder rolls and arm circles",
-          "detail": "1 minute",
+          "name": "Lying quad stretch",
+          "detail": "30 sec per side · 1 minute",
           "seconds": 60,
-          "instructions": "Smooth easy circles."
+          "instructions": "Lie on your side, gently bend the upper knee and bring the heel toward your glutes. Change sides halfway."
         },
         {
-          "name": "Standing calf stretch",
-          "detail": "1 minute · 30 seconds each leg",
+          "name": "Butterfly stretch",
+          "detail": "40 seconds + 20 seconds to transition",
           "seconds": 60,
-          "instructions": "Gently stretch each calf."
+          "instructions": "Sit with soles together and knees comfortably out to the sides. Do not force the knees down."
         },
         {
-          "name": "Standing hamstring stretch",
-          "detail": "1 minute · 30 seconds each leg",
+          "name": "Seated spinal twist",
+          "detail": "30 sec per side · 1 minute",
           "seconds": 60,
-          "instructions": "Hinge slightly with knees soft."
+          "instructions": "Sit upright and rotate gently within a comfortable range. Avoid forcing the twist."
         },
         {
-          "name": "Hip circles and weight shifts",
-          "detail": "1 minute",
+          "name": "Pigeon pose",
+          "detail": "20 sec per side + 20 sec transition",
           "seconds": 60,
-          "instructions": "Stay upright and move comfortably."
+          "instructions": "Ease into each side without forcing the hip or groin; use support if needed."
         },
         {
-          "name": "Ankle circles and gentle marching",
-          "detail": "1 minute",
+          "name": "Easy reset and position changes",
+          "detail": "1 minute · unhurried transitions",
           "seconds": 60,
-          "instructions": "Warm up feet and ankles."
+          "instructions": "Take your time rising and getting ready for the treadmill."
         }
       ]
     },
