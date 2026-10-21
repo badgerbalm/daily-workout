@@ -1,0 +1,369 @@
+{
+  "version": 1,
+  "exercises": {
+    "lying-quad-stretch": {
+      "name": "Lying quad stretch",
+      "aliases": [
+        "Side-lying quad stretch",
+        "Side lying quadriceps stretch"
+      ],
+      "status": "missing",
+      "photos": [],
+      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose."
+    },
+    "butterfly-stretch": {
+      "name": "Butterfly stretch",
+      "aliases": [
+        "Baddha Konasana"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/butterfly-stretch.jpg",
+          "alt": "Person seated upright with soles together and knees open",
+          "caption": "",
+          "title": "Baddha konasana",
+          "author": "Joseph RENGER",
+          "source": "https://commons.wikimedia.org/wiki/File:Baddha_konasana.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "changes": "JPEG optimized",
+          "width": 582,
+          "height": 518,
+          "sha256": "54bf659eb2bcb99f9d1bb94345f0b46fc606d8106b527a2983e5fd7a072dfa61"
+        }
+      ]
+    },
+    "seated-spinal-twist": {
+      "name": "Seated spinal twist",
+      "aliases": [
+        "Ardha Matsyendrasana"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/seated-spinal-twist.jpg",
+          "alt": "Seated person demonstrating a spinal twist with upright torso",
+          "caption": "",
+          "title": "Ardha matsyendrasana",
+          "author": "Joseph RENGER",
+          "source": "https://commons.wikimedia.org/wiki/File:Ardha_matsyendrasana.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "changes": "JPEG optimized",
+          "width": 721,
+          "height": 600,
+          "sha256": "d60eeeead7208637701cd35ed9dcd42ef1d3b63035d6b0854c8624da2cadc220"
+        }
+      ]
+    },
+    "plow-pose": {
+      "name": "Plow Pose (Halasana)",
+      "aliases": [
+        "Halasana",
+        "Plow pose",
+        "Plough pose"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/plow-pose.jpg",
+          "alt": "Person lying on shoulders with legs overhead in Halasana",
+          "caption": "",
+          "title": "Udi demonstrating Halasana (plough pose)- 2016",
+          "author": "Ron Borkin (רון בורקין)",
+          "source": "https://commons.wikimedia.org/wiki/File:Udi_demonstrating_Halasana_(plough_pose)-_2016.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "changes": "Resized; JPEG optimized",
+          "width": 1000,
+          "height": 668,
+          "sha256": "483c713f3bb851370d38e5fb7d1e0adf2a889bf2af0dd8ea3856a6391133cd34"
+        }
+      ]
+    },
+    "easy-warm-up": {
+      "name": "Easy warm-up",
+      "aliases": [],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/treadmill-walk.jpg",
+          "alt": "Person walking upright on a treadmill",
+          "caption": "Treadmill walking; follow the pace on this card",
+          "title": "Girl walking on treadmill",
+          "author": "Tyler  Read",
+          "source": "https://commons.wikimedia.org/wiki/File:Girl_walking_on_treadmill.jpg",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "changes": "Resized; JPEG optimized",
+          "width": 1000,
+          "height": 667,
+          "sha256": "83489435fbdf2903fe14214eae3c5abdf93be9ebf04900177a9c0d308def21f0",
+          "attributionUrl": "https://www.ptpioneer.com/"
+        }
+      ]
+    },
+    "steady-walk": {
+      "name": "Steady walk",
+      "aliases": [],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/treadmill-walk.jpg",
+          "alt": "Person walking upright on a treadmill",
+          "caption": "Treadmill walking; follow the pace on this card",
+          "title": "Girl walking on treadmill",
+          "author": "Tyler  Read",
+          "source": "https://commons.wikimedia.org/wiki/File:Girl_walking_on_treadmill.jpg",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "changes": "Resized; JPEG optimized",
+          "width": 1000,
+          "height": 667,
+          "sha256": "83489435fbdf2903fe14214eae3c5abdf93be9ebf04900177a9c0d308def21f0",
+          "attributionUrl": "https://www.ptpioneer.com/"
+        }
+      ]
+    },
+    "brisk-walk": {
+      "name": "Brisk walk",
+      "aliases": [],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/treadmill-walk.jpg",
+          "alt": "Person walking upright on a treadmill",
+          "caption": "Treadmill walking; follow the pace on this card",
+          "title": "Girl walking on treadmill",
+          "author": "Tyler  Read",
+          "source": "https://commons.wikimedia.org/wiki/File:Girl_walking_on_treadmill.jpg",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "changes": "Resized; JPEG optimized",
+          "width": 1000,
+          "height": 667,
+          "sha256": "83489435fbdf2903fe14214eae3c5abdf93be9ebf04900177a9c0d308def21f0",
+          "attributionUrl": "https://www.ptpioneer.com/"
+        }
+      ]
+    },
+    "cool-down": {
+      "name": "Cool-down",
+      "aliases": [],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/treadmill-walk.jpg",
+          "alt": "Person walking upright on a treadmill",
+          "caption": "Treadmill walking; follow the pace on this card",
+          "title": "Girl walking on treadmill",
+          "author": "Tyler  Read",
+          "source": "https://commons.wikimedia.org/wiki/File:Girl_walking_on_treadmill.jpg",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "changes": "Resized; JPEG optimized",
+          "width": 1000,
+          "height": 667,
+          "sha256": "83489435fbdf2903fe14214eae3c5abdf93be9ebf04900177a9c0d308def21f0",
+          "attributionUrl": "https://www.ptpioneer.com/"
+        }
+      ]
+    },
+    "dumbbell-floor-press": {
+      "name": "Dumbbell floor press",
+      "aliases": [],
+      "status": "missing",
+      "photos": [],
+      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose."
+    },
+    "supported-row": {
+      "name": "Supported one-arm dumbbell row",
+      "aliases": [
+        "Supported dumbbell row",
+        "One-arm dumbbell row",
+        "Supported single-arm dumbbell row"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/supported-row-start.jpg",
+          "alt": "Hand and knee supported on a bench, dumbbell hanging below shoulder",
+          "caption": "Start",
+          "title": "DumbbellBentOverRow",
+          "author": "No machine-readable author provided. GeorgeStepanek assumed (based on copyright claims).",
+          "source": "https://commons.wikimedia.org/wiki/File:DumbbellBentOverRow.JPG",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "changes": "Cropped from original composite; JPEG optimized",
+          "width": 256,
+          "height": 364,
+          "sha256": "ced58862719163999628395d12bd86fc7217b8ed9371717de065384f65095e87"
+        },
+        {
+          "src": "images/supported-row-finish.jpg",
+          "alt": "Hand and knee supported on bench, dumbbell pulled toward hip",
+          "caption": "Finish",
+          "title": "DumbbellBentOverRow",
+          "author": "No machine-readable author provided. GeorgeStepanek assumed (based on copyright claims).",
+          "source": "https://commons.wikimedia.org/wiki/File:DumbbellBentOverRow.JPG",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "changes": "Cropped from original composite; JPEG optimized",
+          "width": 256,
+          "height": 364,
+          "sha256": "ff2b2177e3493365c6dcbf0b4d6f963b4573d21e0271bb0cb11ebce3f6e4e1e6"
+        }
+      ]
+    },
+    "lateral-raises": {
+      "name": "Lateral raises",
+      "aliases": [
+        "Dumbbell lateral raise",
+        "Dumbbell lateral raises",
+        "Lateral raise"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/lateral-raise-start.jpg",
+          "alt": "Standing person with dumbbells lowered beside body",
+          "caption": "Start",
+          "title": "DumbbellLateralRaise",
+          "author": "No machine-readable author provided. GeorgeStepanek assumed (based on copyright claims).",
+          "source": "https://commons.wikimedia.org/wiki/File:DumbbellLateralRaise.JPG",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "changes": "Cropped from original composite; JPEG optimized",
+          "width": 288,
+          "height": 472,
+          "sha256": "ec825b432e44b7006f9cad56bb3a8f2fec78941b018f5f971acf34a761e5c21e"
+        },
+        {
+          "src": "images/lateral-raise-finish.jpg",
+          "alt": "Standing person raising dumbbells sideways to shoulder height",
+          "caption": "Finish",
+          "title": "DumbbellLateralRaise",
+          "author": "No machine-readable author provided. GeorgeStepanek assumed (based on copyright claims).",
+          "source": "https://commons.wikimedia.org/wiki/File:DumbbellLateralRaise.JPG",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "changes": "Cropped from original composite; JPEG optimized",
+          "width": 288,
+          "height": 472,
+          "sha256": "e134a081d466f8275e2a7d930482c5268afbb18eb6da15763b22c33d29962caf"
+        }
+      ]
+    },
+    "forearm-plank": {
+      "name": "Forearm plank",
+      "aliases": [
+        "Elbow plank"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/forearm-plank.jpg",
+          "alt": "People supported on forearms and toes with straight torsos in a forearm plank",
+          "caption": "",
+          "title": "Forearm Plank Phalakasana variant (outdoor class)",
+          "author": "Andrea Coach G",
+          "source": "https://commons.wikimedia.org/wiki/File:Forearm_Plank_Phalakasana_variant_(outdoor_class).jpg",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+          "changes": "Resized; JPEG optimized",
+          "width": 1000,
+          "height": 760,
+          "sha256": "e40901f6fe5a95d2f44bfffe1e3e568cdd765d5421a1819019793202e04aca48"
+        }
+      ]
+    },
+    "side-steps-arm-swings": {
+      "name": "Side steps with arm swings",
+      "aliases": [],
+      "status": "missing",
+      "photos": [],
+      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose."
+    },
+    "cloud-hands": {
+      "name": "Cloud hands",
+      "aliases": [
+        "Wave hands like clouds",
+        "Waving hands like clouds"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/cloud-hands.jpg",
+          "alt": "Tai Chi class demonstrating Wave Hands Like Clouds",
+          "caption": "Cloud Hands posture",
+          "title": "Taoist Tai Chi class",
+          "author": "Diana from tampa, usa",
+          "source": "https://commons.wikimedia.org/wiki/File:Taoist_Tai_Chi_class.jpg",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+          "changes": "Resized; JPEG optimized",
+          "width": 701,
+          "height": 1000,
+          "sha256": "80be25c9d8bb9d87f8425ab7374887fb1c4fa8d9a607b2022659f0c52d007e55"
+        }
+      ]
+    },
+    "alternating-forward-steps": {
+      "name": "Alternating forward steps",
+      "aliases": [],
+      "status": "missing",
+      "photos": [],
+      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose."
+    },
+    "parting-horse-mane": {
+      "name": "Parting the horse's mane",
+      "aliases": [
+        "Parting the wild horse’s mane",
+        "Part the wild horse's mane"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/parting-horse-mane-start.jpg",
+          "alt": "Practitioner demonstrating beginning of sequence of Parting the Horse's Mane",
+          "caption": "Beginning of sequence",
+          "title": "Wild horses’ mane parting, Figure 3",
+          "author": "Juan Huang",
+          "source": "https://www.extrica.com/article/24240",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "changes": "Cropped photographic panel from Figure 3",
+          "width": 267,
+          "height": 216,
+          "sha256": "f6e8417060243a655a17c79fb155c88b9a710ef308fa83fd701ee31da1854d56",
+          "citation": "Huang J. Journal of Vibroengineering 26(8):1783–1790 (2024). doi:10.21595/jve.2024.24240"
+        },
+        {
+          "src": "images/parting-horse-mane-finish.jpg",
+          "alt": "Practitioner demonstrating end of sequence of Parting the Horse's Mane",
+          "caption": "End of sequence",
+          "title": "Wild horses’ mane parting, Figure 3",
+          "author": "Juan Huang",
+          "source": "https://www.extrica.com/article/24240",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "changes": "Cropped photographic panel from Figure 3",
+          "width": 265,
+          "height": 216,
+          "sha256": "757417f17d6921dad617601088e5d382dd105b9889c46c94fd046c2479289ab0",
+          "citation": "Huang J. Journal of Vibroengineering 26(8):1783–1790 (2024). doi:10.21595/jve.2024.24240"
+        }
+      ]
+    },
+    "brush-knee-push": {
+      "name": "Brush knee and push",
+      "aliases": [
+        "Brush knee and twist step"
+      ],
+      "status": "missing",
+      "photos": [],
+      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose."
+    }
+  }
+}
