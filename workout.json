@@ -118,7 +118,12 @@
           "name": "Cloud hands",
           "detail": "2 minutes",
           "seconds": 120,
-          "instructions": "Side-step slowly with sweeping hands."
+          "instructions": "Side-step slowly with sweeping hands.",
+          "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Taoist%20Tai%20Chi%20class.jpg",
+          "image2": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Manuel%20Schr%C3%B6der%20Taiji%20Wolkenh%C3%A4nde.jpg",
+          "imageCredit": "Diana from Tampa (CC BY 2.0); Manuel Schröder (see source license)",
+          "imageSource": "https://commons.wikimedia.org/wiki/File:Taoist_Tai_Chi_class.jpg",
+          "imageSource2": "https://commons.wikimedia.org/wiki/File:Manuel_Schr%C3%B6der_Taiji_Wolkenh%C3%A4nde.jpg"
         },
         {
           "name": "Alternating forward steps",
