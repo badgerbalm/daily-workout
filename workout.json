@@ -96,9 +96,15 @@
           "imageCredit": "Andrea Coach G · CC BY-SA 4.0",
           "imageSource": "https://commons.wikimedia.org/wiki/File:Forearm%20Plank%20Phalakasana%20variant%20(outdoor%20class).jpg",
           "name": "Forearm plank",
-          "detail": "3 minutes · 2 sets of 45–60 seconds",
-          "seconds": 180,
-          "instructions": "Keep a neutral spine and breathe normally; rest between sets. Stop if groin or back discomfort develops."
+          "detail": "Set 1 of 2 · 1-minute hold",
+          "seconds": 60,
+          "instructions": "Keep a neutral spine and breathe normally. Stop if groin or back discomfort develops. After this hold, rest for 60 seconds before starting set 2."
+        },
+        {
+          "name": "Forearm plank",
+          "detail": "Set 2 of 2 · 1-minute hold",
+          "seconds": 60,
+          "instructions": "Begin after your 60-second rest. Keep a neutral spine and breathe normally. Stop if groin or back discomfort develops."
         }
       ]
     },
