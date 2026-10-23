@@ -33,5 +33,24 @@ function getPhotoLibrary(){
     .catch(error=>{console.warn(error);photoLibraryPromise=null;return {exercises:{}}});
 }
 async function load(){try{const photoLibrary=await getPhotoLibrary();const r=await fetch('./workout.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();document.querySelector('#status').textContent='Workout dated '+d.date+' · '+(d.sections?.[1]?.items?.length||0)+' strength steps';document.querySelector('#notice').textContent=d.note||'';const main=document.querySelector('#workout');const saved=JSON.parse(localStorage.getItem('workout-checks-'+d.date)||'{}');main.replaceChildren();for(const [sectionIndex,section] of d.sections.entries()){const card=document.createElement('section');card.className='card';const h=document.createElement('h2');h.textContent=section.title;card.append(h);if(section.title==='Strength and core'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Complete one set of each exercise per round. Rest 45–60 seconds between exercises and 75–90 seconds between rounds.';card.append(tip)}if(section.title==='Tai Chi'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Two gentle rounds of five movements, about 10 minutes total.';card.append(tip)}for(const [itemIndex,item] of section.items.entries()){const row=document.createElement('div');row.className='item';const left=document.createElement('label');left.className='left';const check=document.createElement('input');check.type='checkbox';check.className='check';const checkKey=sectionIndex+'-'+itemIndex;check.checked=!!saved[checkKey];check.onchange=()=>{saved[checkKey]=check.checked;localStorage.setItem('workout-checks-'+d.date,JSON.stringify(saved))};const body=document.createElement('div');const name=document.createElement('div');name.className='name';name.textContent=item.name;const detail=document.createElement('div');detail.className='detail';detail.textContent=item.detail||'';body.append(name,detail);const info=guidance[item.name.toLowerCase()];const instruction=document.createElement('div');instruction.className='instructions';instruction.textContent=item.instructions||info?.[1]||'Use a controlled, comfortable range of motion.';body.append(instruction);const demo=item.demo||demos[item.name.toLowerCase()];if(demo){const link=document.createElement('a');link.className='demo';link.href=demo;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View movement demonstration ↗';body.append(link)}left.append(check,body);const art=document.createElement('div');art.className='art';renderExercisePhotos(art,body,item,photoLibrary);row.append(art,left);if(item.seconds){const b=document.createElement('button');b.textContent='▶ '+time(item.seconds);b.onclick=()=>{try{location.href=timerURL(item.seconds,timerMode.value,walkBoundary(section,itemIndex).start)}catch(e){alert(e.message)}};row.append(b)}const next=document.createElement('button');next.className='next-exercise';next.textContent='✓ Done · Next ↓';next.setAttribute('aria-label','Mark '+item.name+' complete and scroll to next exercise');next.onclick=()=>{const endWalk=timerMode.value==='watch'&&walkBoundary(section,itemIndex).end;check.checked=true;saved[checkKey]=true;localStorage.setItem('workout-checks-'+d.date,JSON.stringify(saved));const following=row.nextElementSibling||card.nextElementSibling?.querySelector('.item');if(following){following.scrollIntoView({behavior:'smooth',block:'start'});}else{next.textContent='✓ Workout complete';next.disabled=true;}if(endWalk)location.href=shortcutURL('Workout Walk End');};row.append(next);card.append(row)}main.append(card)}}catch(e){document.querySelector('#status').textContent='Unable to load workout: '+e.message}}
-load();document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});window.addEventListener('pageshow',()=>load());window.addEventListener('focus',()=>load());
+// Safari may restore its own scroll position after returning from Shortcuts.
+// Resume only after the refreshed cards and their saved checkboxes are ready.
+if ('scrollRestoration' in history) history.scrollRestoration='manual';
+let refreshInProgress=null;
+function refreshWorkout(){
+  if(refreshInProgress)return refreshInProgress;
+  refreshInProgress=load().then(()=>new Promise(resolve=>{
+    requestAnimationFrame(()=>{
+      const rows=Array.from(document.querySelector('#workout').querySelectorAll('.item'));
+      const next=rows.find(row=>!row.querySelector('.check').checked)||rows[rows.length-1];
+      next?.scrollIntoView({behavior:'auto',block:'start'});
+      resolve();
+    });
+  })).finally(()=>{refreshInProgress=null});
+  return refreshInProgress;
+}
+refreshWorkout();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshWorkout()});
+window.addEventListener('pageshow',refreshWorkout);
+window.addEventListener('focus',refreshWorkout);
 </script></body></html>

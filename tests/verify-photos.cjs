@@ -27,21 +27,26 @@ class Element{
  get nextElementSibling(){const a=this.parentElement?.children||[];return a[a.indexOf(this)+1]}
  querySelector(selector){return this.querySelectorAll(selector)[0]}
  querySelectorAll(selector){return this.children.flatMap(n=>[(selector[0]==='.'?n.className?.split(' ').includes(selector.slice(1)):n.tagName===selector)?n:null,...(n.querySelectorAll?.(selector)||[])]).filter(Boolean)}
- scrollIntoView(){this.scrolled=true}
+ scrollIntoView(options){this.scrolled=true;this.scrollOptions=options}
 }
-const doc={createElement:tag=>new Element(tag,doc),createTextNode:text=>({textContent:text}),addEventListener:()=>{}};
+const events={document:{},window:{}};
+const doc={createElement:tag=>new Element(tag,doc),createTextNode:text=>({textContent:text}),addEventListener:(name,handler)=>events.document[name]=handler};
 const elements=Object.fromEntries(['timer-mode','status','notice','workout'].map(id=>['#'+id,new Element('div',doc)]));doc.querySelector=s=>elements[s];
 const art=doc.createElement('div'),body=doc.createElement('div');
 api.renderExercisePhotos(art,body,{name:'Lateral raises'},lib);assert.equal(art.children.length,2);
 art.children[0].querySelector('img').onerror();assert.equal(art.children.length,1);assert.equal(body.children.length,1);
 art.children[0].querySelector('img').onerror();assert.equal(art.children[0].textContent,'Photo unavailable');assert.equal(body.children.length,0);
 const missing=doc.createElement('div');api.renderExercisePhotos(missing,body,{name:'Unknown',image:'images/x.svg'},lib);assert.equal(missing.children[0].textContent,'Photo unavailable');
-const storage={};const context=vm.createContext({document:doc,console,localStorage:{getItem:k=>storage[k]??null,setItem:(k,v)=>storage[k]=v},location:{},window:{addEventListener:()=>{}},fetch:async url=>({ok:true,json:async()=>url.includes('exercise-photos')?lib:workout}),renderExercisePhotos:api.renderExercisePhotos,alert:msg=>{throw Error(msg)}});
+let workoutFetches=0;
+const storage={};const context=vm.createContext({document:doc,console,history:{scrollRestoration:'auto'},requestAnimationFrame:callback=>setImmediate(callback),localStorage:{getItem:k=>storage[k]??null,setItem:(k,v)=>storage[k]=v},location:{},window:{addEventListener:(name,handler)=>events.window[name]=handler},fetch:async url=>{if(url.includes('workout.json'))workoutFetches++;return {ok:true,json:async()=>url.includes('exercise-photos')?lib:workout}},renderExercisePhotos:api.renderExercisePhotos,alert:msg=>{throw Error(msg)}});
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
 new vm.Script(script).runInContext(context);
 (async()=>{
- await vm.runInContext('load()',context);
- const rows=elements['#workout'].querySelectorAll('.item');assert.equal(rows.length,17);
+ await vm.runInContext('refreshWorkout()',context);
+ const itemCount=workout.sections.reduce((count,section)=>count+section.items.length,0);
+ const rows=elements['#workout'].querySelectorAll('.item');assert.equal(rows.length,itemCount);
+ assert(rows[0].scrolled,'A new workout starts at the first unchecked exercise');
+ assert.equal(context.history.scrollRestoration,'manual');
  let index=0;
  for(const section of workout.sections){for(let i=0;i<section.items.length;i++){
   const item=section.items[i],row=rows[index++],timer=row.querySelectorAll('button')[0];
@@ -51,7 +56,31 @@ new vm.Script(script).runInContext(context);
  elements['#timer-mode'].value='iphone';rows[4].querySelector('button').onclick();assert.equal(new URL(context.location.href).searchParams.get('name'),'Workout Timer');
  elements['#timer-mode'].value='watch';rows[0].querySelector('.next-exercise').onclick();assert(rows[0].querySelector('input').checked);assert(rows[1].scrolled);
  rows[7].querySelector('.next-exercise').onclick();assert.equal(new URL(context.location.href).searchParams.get('name'),'Workout Walk End');
- rows[16].querySelector('.next-exercise').onclick();assert(rows[16].querySelector('.next-exercise').disabled);
+ rows[itemCount-1].querySelector('.next-exercise').onclick();assert(rows[itemCount-1].querySelector('.next-exercise').disabled);
+ // Refreshes must read saved checks, skip completed exercises, and coalesce
+ // Safari's overlapping pageshow, visibilitychange and focus notifications.
+ const checkStorageKey='workout-checks-'+workout.date;
+ storage[checkStorageKey]=JSON.stringify({'0-0':true,'0-1':true,'1-0':true});
+ const beforeRefresh=workoutFetches;
+ const refreshing=events.window.pageshow();
+ assert.equal(events.window.focus(),refreshing);
+ doc.hidden=false;events.document.visibilitychange();
+ await refreshing;
+ assert.equal(workoutFetches,beforeRefresh+1,'One reload per overlapping return event burst');
+ let refreshedRows=elements['#workout'].querySelectorAll('.item');
+ assert(refreshedRows[2].scrolled,'Return to the earliest unchecked item, even with later checks');
+ assert.equal(refreshedRows[2].scrollOptions.behavior,'auto');
+ assert(!refreshedRows[0].scrolled,'Do not return to the completed first exercise');
+ doc.hidden=true;const beforeHidden=workoutFetches;events.document.visibilitychange();
+ assert.equal(workoutFetches,beforeHidden,'Leaving Safari must not refresh');doc.hidden=false;
+ const allChecked={};workout.sections.forEach((section,s)=>section.items.forEach((_,i)=>allChecked[s+'-'+i]=true));
+ storage[checkStorageKey]=JSON.stringify(allChecked);await events.window.focus();
+ refreshedRows=elements['#workout'].querySelectorAll('.item');
+ assert(refreshedRows[itemCount-1].scrolled,'A completed workout stays at the final item');
+ delete storage[checkStorageKey];await events.window.pageshow();
+ refreshedRows=elements['#workout'].querySelectorAll('.item');
+ assert(refreshedRows[0].scrolled,'With no saved progress, resume at the first item');
+ assert(!refreshedRows[0].querySelector('.check').checked,'Returning does not complete a running timer');
  assert(!html.includes('function drawing('));assert(!html.includes('photo.src=item.image'));
- console.log(`PASS: ${ready}/17 mapped exercises, all local assets/hashes/credits, aliases, missing/broken image handling, 17 variable timers, iPhone fallback, walking boundaries, checkboxes, Done/Next scrolling and final completion.`);
+ console.log(`PASS: ${ready} photo-library entries, all local assets/hashes/credits, aliases, missing/broken image handling, ${itemCount} variable timers, iPhone fallback, walking boundaries, checkboxes, Done/Next, return-to-next-unchecked scrolling, overlapping return events and completed-workout scrolling.`);
 })().catch(e=>{console.error(e);process.exitCode=1});
