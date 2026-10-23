@@ -1,16 +1,16 @@
 {
-  "date": "2026-10-21",
-  "title": "Daily Workout · October 21",
-  "note": "55-minute workout. Begin with your regular four stretches, including Plow Pose (Halasana), with no extra reset exercise. Flat treadmill walking. Use New Balance shoes if comfortable; if right forefoot tingling develops, stop and allow it to resolve before changing to HOKAs. Keep hip hinges and core work controlled and stop if back or groin discomfort occurs.",
+  "date": "2026-10-23",
+  "title": "Daily Workout · October 23",
+  "note": "55-minute workout. Use HOKA Clifton 9 rather than New Balance 1080v15 due to reported right-foot tingling with the New Balance. Flat treadmill. Stop if tingling returns. Keep Plow Pose gentle without loading the neck, and stop core work if groin or back pain occurs.",
   "sections": [
     {
-      "title": "Your regular opening stretches · 4 minutes",
+      "title": "Opening stretches · 4 minutes",
       "items": [
         {
           "name": "Lying quad stretch",
-          "detail": "30 seconds per side · 1 minute",
+          "detail": "30 seconds per side",
           "seconds": 60,
-          "instructions": "Lie on your side and gently draw your top heel toward your glutes. Switch sides halfway."
+          "instructions": "Lie on your side and gently draw your upper heel toward your glutes. Switch sides after 30 seconds."
         },
         {
           "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Baddha%20konasana.jpg",
@@ -19,25 +19,25 @@
           "name": "Butterfly stretch",
           "detail": "1 minute",
           "seconds": 60,
-          "instructions": "Sit with the soles of your feet together and allow knees to fall outward comfortably; do not force them down."
+          "instructions": "Sit tall with soles of feet together; allow knees to relax outward without forcing them down."
         },
         {
           "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ardha%20Matsyendr%C4%81sana%20%E2%97%A6%20Half%20Spinal%20Twist%20I%20yoga%20%C4%81sana.jpg",
           "imageCredit": "Adishankaracharya108 · CC BY-SA 4.0",
           "imageSource": "https://commons.wikimedia.org/wiki/File:Ardha%20Matsyendr%C4%81sana%20%E2%97%A6%20Half%20Spinal%20Twist%20I%20yoga%20%C4%81sana.jpg",
           "name": "Seated spinal twist",
-          "detail": "30 seconds per side · 1 minute",
+          "detail": "30 seconds per side",
           "seconds": 60,
-          "instructions": "Sit tall and rotate gently within your comfortable range, without forcing the twist."
+          "instructions": "Sit tall and rotate gently within a comfortable range; switch sides halfway."
         },
         {
           "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Udi%20demonstrating%20Halasana%20(plough%20pose)-%202016.jpg",
           "imageCredit": "Ron Borkin · CC BY-SA 3.0",
           "imageSource": "https://commons.wikimedia.org/wiki/File:Udi%20demonstrating%20Halasana%20(plough%20pose)-%202016.jpg",
           "name": "Plow Pose (Halasana)",
-          "detail": "20–30 seconds with gentle entry and exit · 1 minute",
+          "detail": "1 minute including entry and exit",
           "seconds": 60,
-          "instructions": "Stay within your established comfortable range. Avoid forcing feet to the floor or putting pressure on your neck."
+          "instructions": "Enter and exit gently. Avoid pressure on the neck and do not force the feet toward the floor."
         }
       ]
     },
@@ -46,50 +46,50 @@
       "items": [
         {
           "name": "Easy warm-up",
-          "detail": "5 minutes · 2.8–3.2 mph · flat",
+          "detail": "5 minutes · 2.8–3.2 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Begin at an easy comfortable pace."
+          "instructions": "Start at a comfortable pace in HOKA Clifton 9 shoes."
         },
         {
           "name": "Steady walk",
-          "detail": "10 minutes · 3.4–3.7 mph · flat",
+          "detail": "10 minutes · 3.4–3.7 mph · 0% incline",
           "seconds": 600,
-          "instructions": "Walk at a conversational pace. Stop if forefoot tingling develops."
+          "instructions": "Maintain a natural stride and conversational effort. Stop if foot tingling returns."
         },
         {
           "name": "Brisk walk",
-          "detail": "10 minutes · 3.7–4.0 mph · flat",
+          "detail": "10 minutes · 3.7–4.0 mph · 0% incline",
           "seconds": 600,
-          "instructions": "Walk briskly without jogging; adjust speed for comfort."
+          "instructions": "Walk briskly, without jogging, adjusting speed for comfort."
         },
         {
           "name": "Cool-down",
-          "detail": "5 minutes · 2.8–3.1 mph · flat",
+          "detail": "5 minutes · 2.8–3.1 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Gradually slow to an easy walk."
+          "instructions": "Ease down gradually to a comfortable pace."
         }
       ]
     },
     {
-      "title": "Strength and core · 15 minutes",
+      "title": "Upper body and core · 13 minutes",
       "items": [
         {
-          "name": "Dumbbell Romanian deadlift",
-          "detail": "3 minutes · 2 sets of 10",
-          "seconds": 180,
-          "instructions": "Hinge at your hips with soft knees and a neutral back. Keep weights close to legs and use a controlled range."
-        },
-        {
           "name": "Dumbbell floor press",
-          "detail": "3 minutes · 2 sets of 10",
+          "detail": "3 minutes · 2 sets of 10 reps",
           "seconds": 180,
-          "instructions": "Lie on your back with knees bent. Lower elbows gently toward the floor and press weights upward without holding your breath."
+          "instructions": "Lie with knees bent, lower elbows under control, and press weights upward without arching your back or holding your breath."
         },
         {
           "name": "Supported one-arm dumbbell row",
-          "detail": "4 minutes · 2 sets of 10 per side",
+          "detail": "4 minutes · 2 sets of 10 reps per side",
           "seconds": 240,
-          "instructions": "Support one hand on a stable surface, maintain a neutral back, and row the dumbbell toward your hip."
+          "instructions": "Brace one hand on a stable support, maintain a neutral back, and pull the dumbbell toward your hip."
+        },
+        {
+          "name": "Lateral raises",
+          "detail": "3 minutes · 2 sets of 12 reps",
+          "seconds": 180,
+          "instructions": "Raise dumbbells toward shoulder height with soft elbows and without shrugging."
         },
         {
           "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Forearm%20Plank%20Phalakasana%20variant%20(outdoor%20class).jpg",
@@ -98,18 +98,12 @@
           "name": "Forearm plank",
           "detail": "3 minutes · 2 sets of 45–60 seconds",
           "seconds": 180,
-          "instructions": "Keep body aligned, breathe steadily, and rest between sets. Stop for groin or back discomfort."
-        },
-        {
-          "name": "Dead bugs",
-          "detail": "2 minutes · 2 sets of 6 per side",
-          "seconds": 120,
-          "instructions": "Lie on your back with knees bent and arms up. Extend opposite arm and leg only as far as you can without arching your back or causing discomfort."
+          "instructions": "Keep a neutral spine and breathe normally; rest between sets. Stop if groin or back discomfort develops."
         }
       ]
     },
     {
-      "title": "Tai Chi-inspired movement · 6 minutes",
+      "title": "Tai Chi-inspired movement · 8 minutes",
       "items": [
         {
           "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Taoist%20Tai%20Chi%20class.jpg",
@@ -120,19 +114,25 @@
           "name": "Cloud hands",
           "detail": "2 minutes",
           "seconds": 120,
-          "instructions": "Side-step slowly as hands sweep across the body in a relaxed flowing rhythm."
+          "instructions": "Take slow side steps while hands sweep smoothly across the body."
         },
         {
           "name": "Parting the horse's mane",
           "detail": "2 minutes",
           "seconds": 120,
-          "instructions": "Coordinate gentle steps with a smooth separating motion of the arms."
+          "instructions": "Step gently forward while separating the arms in a flowing motion."
         },
         {
           "name": "Brush knee and push",
           "detail": "2 minutes",
           "seconds": 120,
-          "instructions": "Sweep one hand past the knee as the other pushes gently forward, changing sides slowly."
+          "instructions": "Brush one hand past the knee while the other pushes gently forward; alternate sides."
+        },
+        {
+          "name": "Side steps with arm swings",
+          "detail": "2 minutes",
+          "seconds": 120,
+          "instructions": "Step side to side and swing arms gently in a relaxed rhythm."
         }
       ]
     }
