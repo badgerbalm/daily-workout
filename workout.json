@@ -1,7 +1,7 @@
 {
-  "date": "2026-10-23",
-  "title": "Daily Workout · October 23",
-  "note": "55-minute workout. Use HOKA Clifton 9 rather than New Balance 1080v15 due to reported right-foot tingling with the New Balance. Flat treadmill. Stop if tingling returns. Keep Plow Pose gentle without loading the neck, and stop core work if groin or back pain occurs.",
+  "date": "2026-10-24",
+  "title": "Daily Workout · October 24",
+  "note": "55 minutes. Walking intervals, glute strengthening and obliques. HOKA Clifton 9 or New Balance 1080v15 with loose midfoot laces if comfortable; stop if tingling returns. No Tai Chi.",
   "sections": [
     {
       "title": "Opening stretches · 4 minutes",
@@ -19,7 +19,7 @@
           "name": "Butterfly stretch",
           "detail": "1 minute",
           "seconds": 60,
-          "instructions": "Sit tall with soles of feet together; allow knees to relax outward without forcing them down."
+          "instructions": "Sit with soles together, let knees relax outward, and keep your spine comfortable."
         },
         {
           "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Ardha%20Matsyendr%C4%81sana%20%E2%97%A6%20Half%20Spinal%20Twist%20I%20yoga%20%C4%81sana.jpg",
@@ -28,117 +28,169 @@
           "name": "Seated spinal twist",
           "detail": "30 seconds per side",
           "seconds": 60,
-          "instructions": "Sit tall and rotate gently within a comfortable range; switch sides halfway."
+          "instructions": "Sit tall and rotate gently without forcing your lower back."
         },
         {
           "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Udi%20demonstrating%20Halasana%20(plough%20pose)-%202016.jpg",
           "imageCredit": "Ron Borkin · CC BY-SA 3.0",
           "imageSource": "https://commons.wikimedia.org/wiki/File:Udi%20demonstrating%20Halasana%20(plough%20pose)-%202016.jpg",
           "name": "Plow Pose (Halasana)",
-          "detail": "1 minute including entry and exit",
+          "detail": "1 minute including gentle entry and exit",
           "seconds": 60,
-          "instructions": "Enter and exit gently. Avoid pressure on the neck and do not force the feet toward the floor."
+          "instructions": "Only use your comfortable established range; avoid forcing feet to floor or putting pressure on neck."
         }
       ]
     },
     {
-      "title": "Treadmill walk · 30 minutes",
+      "title": "Treadmill walking intervals · 30 minutes",
       "items": [
         {
           "name": "Easy warm-up",
-          "detail": "5 minutes · 2.8–3.2 mph · 0% incline",
+          "detail": "5 min · 2.8–3.2 mph · flat",
           "seconds": 300,
-          "instructions": "Start at a comfortable pace in HOKA Clifton 9 shoes."
+          "instructions": "Walk comfortably and gradually increase speed."
         },
         {
-          "name": "Steady walk",
-          "detail": "10 minutes · 3.4–3.7 mph · 0% incline",
-          "seconds": 600,
-          "instructions": "Maintain a natural stride and conversational effort. Stop if foot tingling returns."
+          "name": "Brisk walking interval",
+          "detail": "Round 1/7 · 1 min · 3.8–4.0 mph · flat",
+          "seconds": 60,
+          "instructions": "Walk briskly at a pace you can control; keep breathing comfortably."
         },
         {
-          "name": "Brisk walk",
-          "detail": "10 minutes · 3.7–4.0 mph · 0% incline",
-          "seconds": 600,
-          "instructions": "Walk briskly, without jogging, adjusting speed for comfort."
+          "name": "Recovery walking interval",
+          "detail": "Round 1/7 · 2 min · 3.2–3.5 mph · flat",
+          "seconds": 120,
+          "instructions": "Ease back to a comfortable walking pace."
+        },
+        {
+          "name": "Brisk walking interval",
+          "detail": "Round 2/7 · 1 min · 3.8–4.0 mph · flat",
+          "seconds": 60,
+          "instructions": "Walk briskly at a pace you can control; keep breathing comfortably."
+        },
+        {
+          "name": "Recovery walking interval",
+          "detail": "Round 2/7 · 2 min · 3.2–3.5 mph · flat",
+          "seconds": 120,
+          "instructions": "Ease back to a comfortable walking pace."
+        },
+        {
+          "name": "Brisk walking interval",
+          "detail": "Round 3/7 · 1 min · 3.8–4.0 mph · flat",
+          "seconds": 60,
+          "instructions": "Walk briskly at a pace you can control; keep breathing comfortably."
+        },
+        {
+          "name": "Recovery walking interval",
+          "detail": "Round 3/7 · 2 min · 3.2–3.5 mph · flat",
+          "seconds": 120,
+          "instructions": "Ease back to a comfortable walking pace."
+        },
+        {
+          "name": "Brisk walking interval",
+          "detail": "Round 4/7 · 1 min · 3.8–4.0 mph · flat",
+          "seconds": 60,
+          "instructions": "Walk briskly at a pace you can control; keep breathing comfortably."
+        },
+        {
+          "name": "Recovery walking interval",
+          "detail": "Round 4/7 · 2 min · 3.2–3.5 mph · flat",
+          "seconds": 120,
+          "instructions": "Ease back to a comfortable walking pace."
+        },
+        {
+          "name": "Brisk walking interval",
+          "detail": "Round 5/7 · 1 min · 3.8–4.0 mph · flat",
+          "seconds": 60,
+          "instructions": "Walk briskly at a pace you can control; keep breathing comfortably."
+        },
+        {
+          "name": "Recovery walking interval",
+          "detail": "Round 5/7 · 2 min · 3.2–3.5 mph · flat",
+          "seconds": 120,
+          "instructions": "Ease back to a comfortable walking pace."
+        },
+        {
+          "name": "Brisk walking interval",
+          "detail": "Round 6/7 · 1 min · 3.8–4.0 mph · flat",
+          "seconds": 60,
+          "instructions": "Walk briskly at a pace you can control; keep breathing comfortably."
+        },
+        {
+          "name": "Recovery walking interval",
+          "detail": "Round 6/7 · 2 min · 3.2–3.5 mph · flat",
+          "seconds": 120,
+          "instructions": "Ease back to a comfortable walking pace."
+        },
+        {
+          "name": "Brisk walking interval",
+          "detail": "Round 7/7 · 1 min · 3.8–4.0 mph · flat",
+          "seconds": 60,
+          "instructions": "Walk briskly at a pace you can control; keep breathing comfortably."
+        },
+        {
+          "name": "Recovery walking interval",
+          "detail": "Round 7/7 · 2 min · 3.2–3.5 mph · flat",
+          "seconds": 120,
+          "instructions": "Ease back to a comfortable walking pace."
         },
         {
           "name": "Cool-down",
-          "detail": "5 minutes · 2.8–3.1 mph · 0% incline",
-          "seconds": 300,
-          "instructions": "Ease down gradually to a comfortable pace."
-        }
-      ]
-    },
-    {
-      "title": "Upper body and core · 13 minutes",
-      "items": [
-        {
-          "name": "Dumbbell floor press",
-          "detail": "3 minutes · 2 sets of 10 reps",
-          "seconds": 180,
-          "instructions": "Lie with knees bent, lower elbows under control, and press weights upward without arching your back or holding your breath."
-        },
-        {
-          "name": "Supported one-arm dumbbell row",
-          "detail": "4 minutes · 2 sets of 10 reps per side",
+          "detail": "4 min · 2.7–3.0 mph · flat",
           "seconds": 240,
-          "instructions": "Brace one hand on a stable support, maintain a neutral back, and pull the dumbbell toward your hip."
-        },
-        {
-          "name": "Lateral raises",
-          "detail": "3 minutes · 2 sets of 12 reps",
-          "seconds": 180,
-          "instructions": "Raise dumbbells toward shoulder height with soft elbows and without shrugging."
-        },
-        {
-          "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Forearm%20Plank%20Phalakasana%20variant%20(outdoor%20class).jpg",
-          "imageCredit": "Andrea Coach G · CC BY-SA 4.0",
-          "imageSource": "https://commons.wikimedia.org/wiki/File:Forearm%20Plank%20Phalakasana%20variant%20(outdoor%20class).jpg",
-          "name": "Forearm plank",
-          "detail": "Set 1 of 2 · 1-minute hold",
-          "seconds": 60,
-          "instructions": "Keep a neutral spine and breathe normally. Stop if groin or back discomfort develops. After this hold, rest for 60 seconds before starting set 2."
-        },
-        {
-          "name": "Forearm plank",
-          "detail": "Set 2 of 2 · 1-minute hold",
-          "seconds": 60,
-          "instructions": "Begin after your 60-second rest. Keep a neutral spine and breathe normally. Stop if groin or back discomfort develops."
+          "instructions": "Gradually slow down and finish comfortably."
         }
       ]
     },
     {
-      "title": "Tai Chi-inspired movement · 8 minutes",
+      "title": "Glute strengthening · 11 minutes",
       "items": [
         {
-          "image": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Taoist%20Tai%20Chi%20class.jpg",
-          "image2": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Manuel%20Schr%C3%B6der%20Taiji%20Wolkenh%C3%A4nde.jpg",
-          "imageCredit": "Diana from Tampa (CC BY 2.0); Manuel Schröder (see source license)",
-          "imageSource": "https://commons.wikimedia.org/wiki/File:Taoist_Tai_Chi_class.jpg",
-          "imageSource2": "https://commons.wikimedia.org/wiki/File:Manuel_Schr%C3%B6der_Taiji_Wolkenh%C3%A4nde.jpg",
-          "name": "Cloud hands",
-          "detail": "2 minutes",
-          "seconds": 120,
-          "instructions": "Take slow side steps while hands sweep smoothly across the body."
+          "name": "Glute bridges",
+          "detail": "3 min · 2 sets × 15 reps",
+          "seconds": 180,
+          "instructions": "Lie with knees bent, lift hips by squeezing glutes for 2 seconds at the top; avoid arching lower back. Rest as needed."
         },
         {
-          "name": "Parting the horse's mane",
-          "detail": "2 minutes",
-          "seconds": 120,
-          "instructions": "Step gently forward while separating the arms in a flowing motion."
+          "name": "Dumbbell Romanian deadlifts",
+          "detail": "4 min · 2 sets × 10 reps",
+          "seconds": 240,
+          "instructions": "Hold dumbbells, hinge at hips with soft knees and neutral back; stand by squeezing glutes. Use comfortable weight and range."
         },
         {
-          "name": "Brush knee and push",
-          "detail": "2 minutes",
-          "seconds": 120,
-          "instructions": "Brush one hand past the knee while the other pushes gently forward; alternate sides."
+          "name": "Resistance-band lateral steps",
+          "detail": "4 min · 2 sets × 12 steps each direction",
+          "seconds": 240,
+          "instructions": "Keep knees slightly bent and hips level; step sideways against light band resistance, then return. Rest between sets."
+        }
+      ]
+    },
+    {
+      "title": "Belly and obliques · 10 minutes",
+      "items": [
+        {
+          "name": "Side planks",
+          "detail": "3 min · 2 × 30 sec each side with rest",
+          "seconds": 180,
+          "instructions": "Hold a straight body line on your forearm, switching sides and resting between holds. Modify with knees down if needed."
         },
         {
-          "name": "Side steps with arm swings",
-          "detail": "2 minutes",
+          "name": "Suitcase carries",
+          "detail": "3 min · 2 × 30 sec each side with rest",
+          "seconds": 180,
+          "instructions": "Hold one dumbbell at your side and walk slowly without leaning. Switch hands; rest between carries."
+        },
+        {
+          "name": "Bent-knee leg raises",
+          "detail": "2 min · 2 sets × 10 reps",
           "seconds": 120,
-          "instructions": "Step side to side and swing arms gently in a relaxed rhythm."
+          "instructions": "Lie on your back and slowly raise bent knees while keeping your lower back controlled. Stop if groin or back discomfort occurs."
+        },
+        {
+          "name": "Dead bugs",
+          "detail": "2 min · 2 sets × 6 per side",
+          "seconds": 120,
+          "instructions": "Extend opposite arm and leg slowly while maintaining a neutral, controlled trunk."
         }
       ]
     }
