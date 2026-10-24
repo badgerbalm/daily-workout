@@ -10,9 +10,14 @@
 .photo-credit{display:block;font-size:11px;line-height:1.4;margin-top:6px;color:#526475}
 .photo-credit a{display:inline;overflow-wrap:anywhere}
 @media(max-width:580px){.art{height:auto;min-height:108px}}
+#photo-viewer{width:min(960px,calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);box-sizing:border-box;padding:14px;border:0;border-radius:14px;background:#fff;overflow:auto}
+#photo-viewer::backdrop{background:#152235cc}
+#photo-viewer button{display:block;margin-bottom:12px;white-space:normal}
+#photo-viewer img{display:block;width:auto;height:auto;max-width:100%;max-height:calc(100dvh - 130px);object-fit:contain;margin:auto}
 </style></head>
 <body><h1>🏃 Daily Workout</h1><p class="muted" id="status">Loading latest workout…</p><p class="notice" id="notice">This page is public. Avoid putting medical details here.</p><p><label for="timer-mode">Timer: </label><select id="timer-mode" style="font:inherit;padding:8px;border-radius:8px"><option value="watch">Apple Watch · MultiTimer</option><option value="iphone">iPhone Clock · original</option></select></p><p class="muted">Start a timer, then lock your iPhone for Watch alerts. MultiTimer’s TIMER must have Use as System Alarm enabled.</p><main id="workout"></main>
 <p class="muted">For treadmill or indoor walking sections, the first timer starts Indoor Walk and the last Done ends it. Other timers use Workout Timer Watch. Choose iPhone Clock above to use the original Workout Timer Shortcut. Use Safari to avoid the Edge permission prompt.</p>
+<dialog id="photo-viewer" aria-label="Expanded exercise photograph"><button type="button" autofocus>← Back to workout</button><img alt=""></dialog>
 <script src="./exercise-photos.js"></script>
 <script>
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

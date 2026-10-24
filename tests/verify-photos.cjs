@@ -36,6 +36,12 @@ const doc={createElement:tag=>new Element(tag,doc),createTextNode:text=>({textCo
 const elements=Object.fromEntries(['timer-mode','status','notice','workout'].map(id=>['#'+id,new Element('div',doc)]));doc.querySelector=s=>elements[s];
 const art=doc.createElement('div'),body=doc.createElement('div');
 api.renderExercisePhotos(art,body,{name:'Lateral raises'},lib);assert.equal(art.children.length,2);
+const viewer=doc.createElement('dialog');viewer.append(doc.createElement('button'),doc.createElement('img'));
+viewer.showModal=()=>viewer.open=true;viewer.close=()=>viewer.open=false;elements['#photo-viewer']=viewer;
+let prevented=false;art.querySelector('a').onclick({preventDefault:()=>prevented=true});
+assert(prevented&&viewer.open,'Photo expands in a dialog without navigating away');
+assert.equal(viewer.querySelector('img').src,art.querySelector('img').src);
+viewer.querySelector('button').onclick();assert(!viewer.open,'Back to workout closes the image');
 art.children[0].querySelector('img').onerror();assert.equal(art.children.length,1);assert.equal(body.children.length,1);
 art.children[0].querySelector('img').onerror();assert.equal(art.children[0].textContent,'Photo unavailable');assert.equal(body.children.length,0);
 const missing=doc.createElement('div');api.renderExercisePhotos(missing,body,{name:'Unknown',image:'images/x.svg'},lib);assert.equal(missing.children[0].textContent,'Photo unavailable');

@@ -30,7 +30,15 @@
     if(!photos.length){placeholder();return}
     for(const p of photos){
       const figure=doc.createElement('figure'),link=doc.createElement('a'),img=doc.createElement('img');
-      link.href='./'+p.src;link.target='_blank';link.rel='noopener';link.title='Open full photograph';
+      link.href='./'+p.src;link.target='_blank';link.rel='noopener';link.title='Expand photograph';
+      link.onclick=event=>{
+        const viewer=doc.querySelector('#photo-viewer');
+        if(!viewer?.showModal)return;
+        event.preventDefault();
+        const full=viewer.querySelector('img');full.src='./'+p.src;full.alt=p.alt||item.name+' demonstration';
+        viewer.querySelector('button').onclick=()=>viewer.close();
+        viewer.showModal();
+      };
       img.alt=p.alt||item.name+' demonstration';img.loading='lazy';img.decoding='async';
       if(p.width&&p.height){img.width=p.width;img.height=p.height}
       const credit=doc.createElement('div');credit.className='photo-credit';
