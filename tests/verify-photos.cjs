@@ -58,7 +58,12 @@ new vm.Script(script).runInContext(context);
  const carryRow=rows.find(row=>row.querySelector('.name').textContent==='Suitcase carries');
  if(carryRow){assert.equal(carryRow.querySelector('.demo').href,'https://www.youtube.com/watch?v=rFIUiO-P1jo');assert.equal(carryRow.querySelector('img').src,'./images/suitcase-carry-comparison.png')}
  const legRaiseRow=rows.find(row=>row.querySelector('.name').textContent==='Bent-knee leg raises');
- if(legRaiseRow){assert.equal(legRaiseRow.querySelector('.demo').href,'https://www.youtube.com/watch?v=T31_qyE7Xqw');assert.equal(legRaiseRow.querySelectorAll('img').length,2)}
+ if(legRaiseRow){
+  const demos=legRaiseRow.querySelectorAll('.demo');
+  assert(demos.some(link=>link.href==='https://www.youtube.com/watch?v=T31_qyE7Xqw'));
+  assert(demos.some(link=>link.href==='https://www.calixpert.com/exercises/laying-bent-leg-raises'));
+  assert.equal(legRaiseRow.querySelectorAll('img').length,2);
+ }
  assert(rows[0].scrolled,'A new workout starts at the first unchecked exercise');
  assert.equal(context.history.scrollRestoration,'manual');
  let index=0;

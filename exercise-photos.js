@@ -22,6 +22,10 @@
   }
   function renderExercisePhotos(art,body,item,library){
     const doc=art.ownerDocument,entry=findExercise(library,item.name);
+    if(/^https:\/\//.test(entry?.animationPage||'')){
+      const link=externalLink(doc,'Animated demonstration & form guide ↗',entry.animationPage);
+      link.className='demo';body.append(link);
+    }
     const photos=(entry?.photos||[]).filter(p=>localPhotoPath(p.src)).slice(0,2);
     function placeholder(){
       const span=doc.createElement('span');span.className='image-missing';

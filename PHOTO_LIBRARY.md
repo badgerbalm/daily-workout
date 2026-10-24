@@ -66,3 +66,9 @@ The site owner supplied `images/suitcase-carry-comparison.png` and selected http
 The optional `demo` field in a library entry supplies a permanent HTTPS demonstration link for all its aliases. It takes precedence over a daily workout’s `demo`, so future `/update` publishes reuse the selected video automatically. Workout data and timer behavior are unchanged.
 
 The owner supplied clearer bent-knee leg raise photographs, replacing the initial thumbnail with low and raised positions. Both uploaded files are stored locally unchanged. The owner-selected motion demonstration is linked from the card: https://www.youtube.com/watch?v=T31_qyE7Xqw. The third uploaded frame shows a higher pelvic curl and was not substituted for the controlled leg raise. Original creators and reuse licenses remain unspecified; no open license is claimed. Current coverage is 26 of 27 cards, with only lying quad stretch missing.
+
+## Animated demonstration references
+
+An optional HTTPS `animationPage` field adds an Animated demonstration & form guide link to the exercise card, independently of the current workout. Bent-knee leg raises link to https://www.calixpert.com/exercises/laying-bent-leg-raises alongside the selected YouTube video. The source page uses an 80-frame, 480 × 480 GIF hosted by Giphy. The uploaded PNG has one frame. No open reuse license for the source animation was verified, so the GIF is not copied into this repository or hotlinked as a card image.
+
+Calixpert may be consulted as a demonstration reference for future additions; this does not automatically add exercises to a workout or establish permission to redistribute its media.
