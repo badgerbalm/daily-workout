@@ -141,6 +141,17 @@ new vm.Script(script).runInContext(context);
  assert(elements['#timer-stop-prompt'].hidden,'Starting another timer clears the old stop fallback');
  refreshedRows[1].querySelector('.next-exercise').onclick();
  assert(!storage[activeKey],'Manual Done cancels pending automatic completion');
+ assert.equal(new URL(context.location.href).searchParams.get('name'),'Workout Timer Stop','Manual Done stops the matching MultiTimer');
+ assert(refreshedRows[1].querySelector('.check').checked,'Save manual completion before leaving Safari');
+ context.location.href='https://badgerbalm.github.io/daily-workout/';await events.window.focus();
+ assert.equal(context.location.href,'https://badgerbalm.github.io/daily-workout/','Manual stop must not loop on return');
+ refreshedRows=elements['#workout'].querySelectorAll('.item');
+ refreshedRows[2].querySelector('button').onclick();
+ context.location.href='https://badgerbalm.github.io/daily-workout/';
+ refreshedRows[1].querySelector('.next-exercise').onclick();
+ assert.equal(context.location.href,'https://badgerbalm.github.io/daily-workout/','Done on another card must not reset the active timer');
+ assert(storage[activeKey],'Keep the other card’s active timer');
+
  refreshedRows[2].querySelector('button').onclick();
  const stale=JSON.parse(storage[activeKey]);stale.workout='an older workout';stale.endsAt=0;
  storage[activeKey]=JSON.stringify(stale);await events.window.focus();
