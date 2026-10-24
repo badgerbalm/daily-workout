@@ -4,7 +4,9 @@ Personal workout viewer at https://badgerbalm.github.io/daily-workout/.
 
 Daily workout data lives in `workout.json`. Continue publishing it with `/update`; exercise photos are selected automatically from the permanent name/alias library.
 
-For `/plan` and `/update`, publish each timed plank set as its own exercise card. Keep the canonical name `Forearm plank`, identify the set in `detail`, and set `seconds` to the hold duration only. List the rest between sets in the instructions. Two one-minute holds with a one-minute rest take three minutes overall.
+For `/plan` and `/update`, publish each timed plank set as its own exercise card. Keep the canonical name `Forearm plank`, identify the set in `detail`, and set `seconds` to the hold duration only. List the rest between sets in the instructions. Two one-minute holds with a one-minute rest take three minutes overall. Side planks follow the same behavior: one card and hold-only timer for each side of each set, with the side and set in `detail` and canonical name `Side planks`. Never combine multiple plank holds in one timer. Preserve the prescribed hold times and overall block duration, including rest.
+
+When splitting cards within an already published workout, optional `progressKey` preserves existing checkbox identities for following exercises. Optional `legacyProgressKey` lets split holds inherit a previously completed combined card; a hold’s own saved checkbox value takes precedence. The October 24 side plank split uses four 30-second holds with 20 seconds of manual rest after each of the first three holds, retaining the three-minute block.
 
 See [PHOTO_LIBRARY.md](PHOTO_LIBRARY.md) for coverage, missing photos, daily publishing compatibility, and how to add exercises. See [images/ATTRIBUTION.md](images/ATTRIBUTION.md) for photo sources and reuse licenses.
 

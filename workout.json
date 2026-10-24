@@ -170,27 +170,56 @@
       "items": [
         {
           "name": "Side planks",
-          "detail": "3 min · 2 × 30 sec each side with rest",
-          "seconds": 180,
-          "instructions": "Hold a straight body line on your forearm, switching sides and resting between holds. Modify with knees down if needed."
+          "detail": "Set 1 of 2 · Left side · 30-second hold",
+          "seconds": 30,
+          "instructions": "Hold a straight body line on your forearm. Modify with knees down if needed. Rest 20 seconds before the next hold.",
+          "progressKey": "3-0-side-left-1",
+          "legacyProgressKey": "3-0"
+        },
+        {
+          "name": "Side planks",
+          "detail": "Set 1 of 2 · Right side · 30-second hold",
+          "seconds": 30,
+          "instructions": "Hold a straight body line on your forearm. Modify with knees down if needed. Rest 20 seconds before the next hold.",
+          "progressKey": "3-0-side-right-1",
+          "legacyProgressKey": "3-0"
+        },
+        {
+          "name": "Side planks",
+          "detail": "Set 2 of 2 · Left side · 30-second hold",
+          "seconds": 30,
+          "instructions": "Hold a straight body line on your forearm. Modify with knees down if needed. Rest 20 seconds before the next hold.",
+          "progressKey": "3-0-side-left-2",
+          "legacyProgressKey": "3-0"
+        },
+        {
+          "name": "Side planks",
+          "detail": "Set 2 of 2 · Right side · 30-second hold",
+          "seconds": 30,
+          "instructions": "Hold a straight body line on your forearm. Modify with knees down if needed.",
+          "progressKey": "3-0-side-right-2",
+          "legacyProgressKey": "3-0"
         },
         {
           "name": "Suitcase carries",
           "detail": "3 min · 2 × 30 sec each side with rest",
           "seconds": 180,
-          "instructions": "Hold one dumbbell at your side and walk slowly without leaning. Switch hands; rest between carries."
+          "instructions": "Hold one dumbbell at your side and walk slowly without leaning. Switch hands; rest between carries.",
+          "progressKey": "3-1"
         },
         {
           "name": "Bent-knee leg raises",
           "detail": "2 min · 2 sets × 10 reps",
           "seconds": 120,
-          "instructions": "Lie on your back and slowly raise bent knees while keeping your lower back controlled. Stop if groin or back discomfort occurs."
+          "instructions": "Lie on your back and slowly raise bent knees while keeping your lower back controlled. Stop if groin or back discomfort occurs.",
+          "progressKey": "3-2"
         },
         {
           "name": "Dead bugs",
           "detail": "2 min · 2 sets × 6 per side",
           "seconds": 120,
-          "instructions": "Extend opposite arm and leg slowly while maintaining a neutral, controlled trunk."
+          "instructions": "Extend opposite arm and leg slowly while maintaining a neutral, controlled trunk.",
+          "progressKey": "3-3"
         }
       ]
     }
