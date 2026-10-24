@@ -177,3 +177,17 @@ Examined exercises, Figure 1F: dead bug by Ioannis Tsartsapakis, Maria Gerou, Ag
 Changes: Cropped photographic panel F from Figure 1; JPEG optimized.
 
 Transversus Abdominis Ultrasound Thickness during Popular Trunk–Pilates Exercises in Young and Middle-Aged Women (2023).
+
+## Suitcase carry comparison (owner-supplied)
+
+- File: `suitcase-carry-comparison.png`, original uploaded image unchanged.
+- Supplied by the site owner on October 24, 2026, with an explicit request to publish it as the suitcase carry image. Original creator not identified; no open reuse license verified. Do not represent this asset as Creative Commons or public domain.
+- Owner-selected demonstration/reference: https://www.youtube.com/watch?v=rFIUiO-P1jo. This association does not establish the image creator or grant a video license. The video is linked, not downloaded or redistributed.
+- Caption identifies the suitcase carry on the left; the right-hand example is farmer’s carry.
+
+## Bent-knee leg raise reference (owner-selected)
+
+- File: `bent-knee-leg-raise-start.jpg`, original linked thumbnail unchanged.
+- Selected by the site owner on October 24, 2026 for this exercise. Creator not identified; no open reuse license verified. Do not represent this asset as Creative Commons or public domain.
+- Supplied URL: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyPWL-avdwNBwxN70_vHOOBPLy36eizDR8bCpxVZOnHQ&s=10
+- Shows the low position with knees bent, not a complete movement sequence.

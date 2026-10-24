@@ -49,12 +49,20 @@ No workout instruction, duration, set, rep, or exercise was changed by this inte
 
 ## October 24 additions
 
-The October 24 workout has 27 cards. Photos cover 24 cards after adding explicit walking-interval aliases and five additional movements: glute bridges, dumbbell Romanian deadlifts, resistance-band lateral steps, side planks, and dead bugs.
+The October 24 workout has 27 cards. Photos cover 26 cards after adding explicit walking-interval aliases and five additional movements: glute bridges, dumbbell Romanian deadlifts, resistance-band lateral steps, side planks, and dead bugs.
 
 - Glute bridges, dumbbell Romanian deadlifts, and side planks have two real photographic positions each.
 - Resistance-band lateral steps use photographic panel I from de Carvalho et al. (2026), licensed CC BY 4.0. The band-walk video initially researched carries additional copyright restrictions and was not used.
 - Dead bugs use the photographed starting position from Tsartsapakis et al. (2023), licensed CC BY 4.0. This is explicitly captioned as the start, not a complete movement sequence.
 - The Romanian deadlift photographs are stills from a public-domain U.S. Marine Corps demonstration, with author credit, source, extraction timestamps, and the required non-endorsement notice. No Navy videos carrying third-party copyright restrictions were used.
-- Lying quad stretch, suitcase carries, and bent-knee leg raises still lack a verified reusable photograph of the exact exercise. They remain honest text placeholders. A therapist-assisted stretch, unrelated carry, straight-leg raise, or illustration must not be substituted.
+- Lying quad stretch still lacks a verified reusable photograph of the exact exercise and retains a text placeholder. A therapist-assisted stretch, unrelated carry, straight-leg raise, or illustration must not be substituted.
 
 The October 24 workout data, timing, saved-progress behavior, and Shortcut links were not edited for these photo additions. The regression check now derives the last walking card from the current section length so interval workouts also receive the walking-end check.
+
+## Owner-supplied suitcase carry reference
+
+The site owner supplied `images/suitcase-carry-comparison.png` and selected https://www.youtube.com/watch?v=rFIUiO-P1jo on October 24, 2026. The original image is preserved unchanged, and its caption identifies the suitcase carry on the left, distinct from the farmer’s carry on the right. The image is recorded as user-supplied with an unspecified reuse license, not as Creative Commons or public domain.
+
+The optional `demo` field in a library entry supplies a permanent HTTPS demonstration link for all its aliases. It takes precedence over a daily workout’s `demo`, so future `/update` publishes reuse the selected video automatically. Workout data and timer behavior are unchanged.
+
+The owner also selected a bent-knee leg raise thumbnail. It is stored locally, unchanged, and captioned as the low position only. Its original creator and reuse license are unspecified; the Google thumbnail URL is preserved as the supplied reference. Current coverage is 26 of 27 cards, with only lying quad stretch missing.

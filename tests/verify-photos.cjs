@@ -10,12 +10,14 @@ for(const entry of Object.values(lib.exercises)){
  for(const p of entry.photos){
   assert(api.localPhotoPath(p.src));const bytes=fs.readFileSync(path.join(root,p.src));
   assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),p.sha256);
-  assert(p.author&&p.source&&p.license&&p.licenseUrl&&p.alt&&p.changes);
+  assert(p.author&&p.source&&p.license&&(p.licenseUrl||p.permissionBasis)&&p.alt&&p.changes);
   assert(p.width>0&&p.height>0);
  }
 }
 for(const section of workout.sections)for(const item of section.items)assert(api.findExercise(lib,item.name),'Unregistered exercise '+item.name);
 assert(api.findExercise(lib,"Parting the horse’s mane").photos.length===2);
+assert.equal(api.exerciseDemo(lib,'Suitcase carry'),'https://www.youtube.com/watch?v=rFIUiO-P1jo');
+assert.equal(api.exerciseDemo({exercises:{unsafe:{name:'Unsafe',demo:'javascript:alert(1)'}}},'Unsafe'),undefined);
 for(const bad of ['https://x/a.jpg','images/x.svg','images/../x.jpg','//x/a.jpg','images/x.jpg?foo'])assert(!api.localPhotoPath(bad));
 // Minimal DOM for deterministic renderer and existing control regression tests.
 class Element{
@@ -38,13 +40,15 @@ art.children[0].querySelector('img').onerror();assert.equal(art.children.length,
 art.children[0].querySelector('img').onerror();assert.equal(art.children[0].textContent,'Photo unavailable');assert.equal(body.children.length,0);
 const missing=doc.createElement('div');api.renderExercisePhotos(missing,body,{name:'Unknown',image:'images/x.svg'},lib);assert.equal(missing.children[0].textContent,'Photo unavailable');
 let workoutFetches=0;
-const storage={};const context=vm.createContext({document:doc,console,history:{scrollRestoration:'auto'},requestAnimationFrame:callback=>setImmediate(callback),localStorage:{getItem:k=>storage[k]??null,setItem:(k,v)=>storage[k]=v},location:{},window:{addEventListener:(name,handler)=>events.window[name]=handler},fetch:async url=>{if(url.includes('workout.json'))workoutFetches++;return {ok:true,json:async()=>url.includes('exercise-photos')?lib:workout}},renderExercisePhotos:api.renderExercisePhotos,alert:msg=>{throw Error(msg)}});
+const storage={};const context=vm.createContext({document:doc,console,history:{scrollRestoration:'auto'},requestAnimationFrame:callback=>setImmediate(callback),localStorage:{getItem:k=>storage[k]??null,setItem:(k,v)=>storage[k]=v},location:{},window:{addEventListener:(name,handler)=>events.window[name]=handler},fetch:async url=>{if(url.includes('workout.json'))workoutFetches++;return {ok:true,json:async()=>url.includes('exercise-photos')?lib:workout}},renderExercisePhotos:api.renderExercisePhotos,exerciseDemo:api.exerciseDemo,alert:msg=>{throw Error(msg)}});
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
 new vm.Script(script).runInContext(context);
 (async()=>{
  await vm.runInContext('refreshWorkout()',context);
  const itemCount=workout.sections.reduce((count,section)=>count+section.items.length,0);
  const rows=elements['#workout'].querySelectorAll('.item');assert.equal(rows.length,itemCount);
+ const carryRow=rows.find(row=>row.querySelector('.name').textContent==='Suitcase carries');
+ if(carryRow){assert.equal(carryRow.querySelector('.demo').href,'https://www.youtube.com/watch?v=rFIUiO-P1jo');assert.equal(carryRow.querySelector('img').src,'./images/suitcase-carry-comparison.png')}
  assert(rows[0].scrolled,'A new workout starts at the first unchecked exercise');
  assert.equal(context.history.scrollRestoration,'manual');
  let index=0;

@@ -549,9 +549,25 @@
         "Suitcase carry",
         "Dumbbell suitcase carry"
       ],
-      "status": "missing",
-      "photos": [],
-      "missingReason": "An accurate photograph with verified permission to reuse was not found. Do not substitute a drawing or another exercise."
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/suitcase-carry-comparison.png",
+          "alt": "Comparison photograph: suitcase carry with one weight on the left; farmer’s carry with two weights on the right.",
+          "caption": "Suitcase carry is on the LEFT: one weight in one hand.",
+          "title": "Suitcase carry comparison (owner-supplied image)",
+          "author": "Creator not identified; image supplied by site owner",
+          "source": "https://www.youtube.com/watch?v=rFIUiO-P1jo",
+          "license": "User-supplied; reuse license unspecified",
+          "licenseUrl": "",
+          "permissionBasis": "Site owner explicitly supplied this image for publication on October 24, 2026. No open reuse license verified.",
+          "changes": "Original uploaded image, unchanged",
+          "width": 640,
+          "height": 480,
+          "sha256": "92020ef7351ed72491ab3802f511fb2fade13d9a17ef7e1d77928bf491c86abf"
+        }
+      ],
+      "demo": "https://www.youtube.com/watch?v=rFIUiO-P1jo"
     },
     "bent-knee-leg-raise": {
       "name": "Bent-knee leg raises",
@@ -559,9 +575,24 @@
         "Bent knee leg raises",
         "Bent-knee leg raise"
       ],
-      "status": "missing",
-      "photos": [],
-      "missingReason": "An accurate photograph with verified permission to reuse was not found. Do not substitute a drawing or another exercise."
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/bent-knee-leg-raise-start.jpg",
+          "alt": "Woman lying on a mat with knees bent and heels near the floor, showing the low position for a bent-knee leg raise.",
+          "caption": "Low position with knees bent; this photo does not show the full raise.",
+          "title": "Bent-knee leg raise reference (owner-selected image)",
+          "author": "Creator not identified; image selected by site owner",
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyPWL-avdwNBwxN70_vHOOBPLy36eizDR8bCpxVZOnHQ&s=10",
+          "license": "User-selected; reuse license unspecified",
+          "licenseUrl": "",
+          "permissionBasis": "Site owner explicitly selected this image for publication on October 24, 2026. No open reuse license verified.",
+          "changes": "Original linked thumbnail, unchanged",
+          "width": 447,
+          "height": 447,
+          "sha256": "90b16edbbcfbccc1c1d514c834eacdb2724e9194ca922c6615b83c65217ce78a"
+        }
+      ]
     }
   }
 }

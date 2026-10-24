@@ -11,6 +11,10 @@
   function localPhotoPath(path){
     return typeof path==='string'&&/^images\/[a-z0-9/_-]+\.(jpe?g|png|webp)$/i.test(path)&&!path.includes('..');
   }
+  function exerciseDemo(library,name){
+    const url=findExercise(library,name)?.demo;
+    return typeof url==='string'&&/^https:\/\//.test(url)?url:undefined;
+  }
   function externalLink(doc,text,url){
     const a=doc.createElement('a');a.textContent=text;
     if(/^https:\/\//.test(url||'')){a.href=url;a.target='_blank';a.rel='noopener noreferrer'}
@@ -44,5 +48,6 @@
     }
   }
   root.renderExercisePhotos=renderExercisePhotos;
-  if(typeof module!=='undefined')module.exports={normalize,findExercise,localPhotoPath,renderExercisePhotos};
+  root.exerciseDemo=exerciseDemo;
+  if(typeof module!=='undefined')module.exports={normalize,findExercise,localPhotoPath,exerciseDemo,renderExercisePhotos};
 })(typeof window==='undefined'?globalThis:window);
