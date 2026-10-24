@@ -12,7 +12,9 @@ Verify repository assets and control regressions with:
 
 Non-treadmill timers track the requested duration from the Start button tap. When that duration expires, the page marks the started exercise complete and advances, either while Safari runs or on the next return/refresh. Treadmill and indoor-walk sections retain manual completion and the existing Walk Start/End shortcuts. Manual Done clears pending automatic completion. Starting another timer replaces the previous tracked timer, and changing the workout invalidates stale timers. The next exercise's timer is never started automatically.
 
-The website cannot inspect, cancel, or dismiss MultiTimer/iPhone Clock alarms. Changes or cancellations in those apps are not reflected in the page's requested-duration tracking; an additional Shortcut integration would be needed for external timer control.
+In Apple Watch mode, expiration outside walking sections launches the tested `Workout Timer Stop` shortcut (MultiTimer Reset TIMER, then Open Safari). Completion is saved before the launch, so returning to Safari never triggers it twice. If Safari is hidden, the launch waits for the next visible refresh. A Stop timer · return to Safari button provides a user-tap fallback when automatic external-app navigation is blocked; starting any new timer clears the old fallback. iPhone Clock mode never invokes this MultiTimer reset shortcut.
+
+The page cannot verify that the shortcut ran or inspect external timer status. Requested-duration tracking does not reflect timers canceled or changed in MultiTimer. Locked/background Safari does not provide a guaranteed timer-end trigger; the page catches up on return.
 
 ```sh
 node tests/verify-photos.cjs
