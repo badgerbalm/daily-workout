@@ -38,12 +38,26 @@ const doc={createElement:tag=>new Element(tag,doc),createTextNode:text=>({textCo
 const elements=Object.fromEntries(['timer-mode','status','notice','workout','timer-stop-prompt','timer-stop-button'].map(id=>['#'+id,new Element('div',doc)]));doc.querySelector=s=>elements[s];
 const art=doc.createElement('div'),body=doc.createElement('div');
 api.renderExercisePhotos(art,body,{name:'Lateral raises'},lib);assert.equal(art.children.length,2);
-const viewer=doc.createElement('dialog');viewer.append(doc.createElement('button'),doc.createElement('img'));
+const viewer=doc.createElement('dialog');
+for(const [tag,cls] of [['button','photo-back'],['div','photo-stage'],['span','photo-position'],['p','photo-caption'],['div','photo-nav'],['button','photo-previous'],['button','photo-next']]){const node=doc.createElement(tag);node.className=cls;viewer.append(node)}
+viewer.querySelector('.photo-stage').append(doc.createElement('img'));
 viewer.showModal=()=>viewer.open=true;viewer.close=()=>viewer.open=false;elements['#photo-viewer']=viewer;
 let prevented=false;art.querySelector('a').onclick({preventDefault:()=>prevented=true});
 assert(prevented&&viewer.open,'Photo expands in a dialog without navigating away');
 assert.equal(viewer.querySelector('img').src,art.querySelector('img').src);
+const stage=viewer.querySelector('.photo-stage'),full=viewer.querySelector('img');
+const swipe=(x1,y1,x2,y2)=>{stage.ontouchstart({touches:[{clientX:x1,clientY:y1}]});stage.ontouchend({changedTouches:[{clientX:x2,clientY:y2}]})};
+swipe(220,100,50,110);assert.equal(full.src,art.children[1].querySelector('img').src,'Swipe left advances');
+swipe(50,100,220,110);assert.equal(full.src,art.children[0].querySelector('img').src,'Swipe right goes back');
+swipe(100,220,110,50);assert.equal(full.src,art.children[0].querySelector('img').src,'Vertical gestures do not change photographs');
+viewer.querySelector('.photo-next').onclick();assert.equal(full.src,art.children[1].querySelector('img').src);
+full.onerror();assert(full.hidden);viewer.querySelector('.photo-previous').onclick();assert(!full.hidden,'Navigate away from a failed image');
+viewer.onkeydown({key:'ArrowRight',preventDefault:()=>{}});assert.equal(full.src,art.children[1].querySelector('img').src);
 viewer.querySelector('button').onclick();assert(!viewer.open,'Back to workout closes the image');
+art.children[1].querySelector('a').onclick({preventDefault:()=>{}});assert.equal(full.src,art.children[1].querySelector('img').src,'Open the photo actually tapped');
+const singleArt=doc.createElement('div');api.renderExercisePhotos(singleArt,doc.createElement('div'),{name:'Butterfly stretch'},lib);
+singleArt.querySelector('a').onclick({preventDefault:()=>{}});assert(viewer.querySelector('.photo-nav').hidden,'Single image hides navigation');
+viewer.querySelector('button').onclick();
 art.children[0].querySelector('img').onerror();assert.equal(art.children.length,1);assert.equal(body.children.length,1);
 art.children[0].querySelector('img').onerror();assert.equal(art.children[0].textContent,'Photo unavailable');assert.equal(body.children.length,0);
 const missing=doc.createElement('div');api.renderExercisePhotos(missing,body,{name:'Unknown',image:'images/x.svg'},lib);assert.equal(missing.children[0].textContent,'Photo unavailable');
