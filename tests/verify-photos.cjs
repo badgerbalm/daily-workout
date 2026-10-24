@@ -48,7 +48,7 @@ art.children[0].querySelector('img').onerror();assert.equal(art.children.length,
 art.children[0].querySelector('img').onerror();assert.equal(art.children[0].textContent,'Photo unavailable');assert.equal(body.children.length,0);
 const missing=doc.createElement('div');api.renderExercisePhotos(missing,body,{name:'Unknown',image:'images/x.svg'},lib);assert.equal(missing.children[0].textContent,'Photo unavailable');
 let workoutFetches=0;
-const storage={};const context=vm.createContext({document:doc,console,history:{scrollRestoration:'auto'},requestAnimationFrame:callback=>setImmediate(callback),localStorage:{getItem:k=>storage[k]??null,setItem:(k,v)=>storage[k]=v},location:{},window:{addEventListener:(name,handler)=>events.window[name]=handler},fetch:async url=>{if(url.includes('workout.json'))workoutFetches++;return {ok:true,json:async()=>url.includes('exercise-photos')?lib:workout}},renderExercisePhotos:api.renderExercisePhotos,exerciseDemo:api.exerciseDemo,alert:msg=>{throw Error(msg)}});
+const storage={};const context=vm.createContext({document:doc,console,history:{scrollRestoration:'auto'},requestAnimationFrame:callback=>setImmediate(callback),setTimeout:()=>1,clearTimeout:()=>{},localStorage:{removeItem:k=>delete storage[k],getItem:k=>storage[k]??null,setItem:(k,v)=>storage[k]=v},location:{},window:{addEventListener:(name,handler)=>events.window[name]=handler},fetch:async url=>{if(url.includes('workout.json'))workoutFetches++;return {ok:true,json:async()=>url.includes('exercise-photos')?lib:workout}},renderExercisePhotos:api.renderExercisePhotos,exerciseDemo:api.exerciseDemo,alert:msg=>{throw Error(msg)}});
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8'),script=html.match(/<script>([\s\S]*?)<\/script>/)[1];
 new vm.Script(script).runInContext(context);
 (async()=>{
@@ -102,6 +102,29 @@ new vm.Script(script).runInContext(context);
  refreshedRows=elements['#workout'].querySelectorAll('.item');
  assert(refreshedRows[0].scrolled,'With no saved progress, resume at the first item');
  assert(!refreshedRows[0].querySelector('.check').checked,'Returning does not complete a running timer');
+ // Only an explicitly started, expired non-walking timer may complete a card.
+ refreshedRows[0].querySelector('button').onclick();
+ const activeKey='workout-active-exercise-timer';
+ assert.equal(JSON.parse(storage[activeKey]).key,'0-0');
+ await events.window.focus();
+ refreshedRows=elements['#workout'].querySelectorAll('.item');
+ assert(!refreshedRows[0].querySelector('.check').checked,'Do not finish before the requested duration');
+ const expired=JSON.parse(storage[activeKey]);expired.endsAt=Date.now()-1000;
+ storage[activeKey]=JSON.stringify(expired);await events.window.focus();
+ refreshedRows=elements['#workout'].querySelectorAll('.item');
+ assert(refreshedRows[0].querySelector('.check').checked,'Expired timer completes its exercise after returning');
+ assert(refreshedRows[1].scrolled,'Expired timer advances to the next exercise');
+ assert(!storage[activeKey],'Consume expiry once');
+ refreshedRows[1].querySelector('button').onclick();
+ refreshedRows[1].querySelector('.next-exercise').onclick();
+ assert(!storage[activeKey],'Manual Done cancels pending automatic completion');
+ refreshedRows[2].querySelector('button').onclick();
+ const stale=JSON.parse(storage[activeKey]);stale.workout='an older workout';stale.endsAt=0;
+ storage[activeKey]=JSON.stringify(stale);await events.window.focus();
+ refreshedRows=elements['#workout'].querySelectorAll('.item');
+ assert(!refreshedRows[2].querySelector('.check').checked,'Ignore timers belonging to a changed workout');
+ refreshedRows[4].querySelector('button').onclick();
+ assert(!storage[activeKey],'Walking timers never register automatic completion');
  assert(!html.includes('function drawing('));assert(!html.includes('photo.src=item.image'));
  console.log(`PASS: ${ready} photo-library entries, all local assets/hashes/credits, aliases, missing/broken image handling, ${itemCount} variable timers, iPhone fallback, walking boundaries, checkboxes, Done/Next, return-to-next-unchecked scrolling, overlapping return events and completed-workout scrolling.`);
 })().catch(e=>{console.error(e);process.exitCode=1});
