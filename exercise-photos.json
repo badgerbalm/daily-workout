@@ -579,20 +579,36 @@
       "photos": [
         {
           "src": "images/bent-knee-leg-raise-start.jpg",
-          "alt": "Woman lying on a mat with knees bent and heels near the floor, showing the low position for a bent-knee leg raise.",
-          "caption": "Low position with knees bent; this photo does not show the full raise.",
-          "title": "Bent-knee leg raise reference (owner-selected image)",
-          "author": "Creator not identified; image selected by site owner",
-          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyPWL-avdwNBwxN70_vHOOBPLy36eizDR8bCpxVZOnHQ&s=10",
-          "license": "User-selected; reuse license unspecified",
+          "alt": "Woman lying on a mat, knees bent and heels near the floor.",
+          "caption": "Low position: knees bent, heels near the floor.",
+          "title": "Bent-knee leg raise: start position (owner-supplied)",
+          "author": "Creator not identified; image supplied by site owner",
+          "source": "https://www.youtube.com/watch?v=T31_qyE7Xqw",
+          "license": "User-supplied; reuse license unspecified",
           "licenseUrl": "",
-          "permissionBasis": "Site owner explicitly selected this image for publication on October 24, 2026. No open reuse license verified.",
-          "changes": "Original linked thumbnail, unchanged",
-          "width": 447,
-          "height": 447,
-          "sha256": "90b16edbbcfbccc1c1d514c834eacdb2724e9194ca922c6615b83c65217ce78a"
+          "permissionBasis": "Site owner supplied this image for this exercise on October 24, 2026. No open reuse license verified.",
+          "changes": "Original uploaded photograph, unchanged",
+          "width": 1320,
+          "height": 1330,
+          "sha256": "0a05abe59143ee037de6b4b0b60d78defe96b0091146919117c754ba0b07c22c"
+        },
+        {
+          "src": "images/bent-knee-leg-raise-raised.jpg",
+          "alt": "Woman lying on a mat with bent knees raised above the hips and shins approximately level.",
+          "caption": "Raised position: knees bent, shins approximately level.",
+          "title": "Bent-knee leg raise: raised position (owner-supplied)",
+          "author": "Creator not identified; image supplied by site owner",
+          "source": "https://www.youtube.com/watch?v=T31_qyE7Xqw",
+          "license": "User-supplied; reuse license unspecified",
+          "licenseUrl": "",
+          "permissionBasis": "Site owner supplied this image for this exercise on October 24, 2026. No open reuse license verified.",
+          "changes": "Original uploaded photograph, unchanged",
+          "width": 1320,
+          "height": 1330,
+          "sha256": "876fad95152a24cdf4723c9b639dcb6581c6ed6a27e56ad39c81676797080aa2"
         }
-      ]
+      ],
+      "demo": "https://www.youtube.com/watch?v=T31_qyE7Xqw"
     }
   }
 }

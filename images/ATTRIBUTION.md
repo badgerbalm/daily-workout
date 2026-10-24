@@ -185,9 +185,9 @@ Transversus Abdominis Ultrasound Thickness during Popular Trunk–Pilates Exerci
 - Owner-selected demonstration/reference: https://www.youtube.com/watch?v=rFIUiO-P1jo. This association does not establish the image creator or grant a video license. The video is linked, not downloaded or redistributed.
 - Caption identifies the suitcase carry on the left; the right-hand example is farmer’s carry.
 
-## Bent-knee leg raise reference (owner-selected)
+## Bent-knee leg raise photographs (owner-supplied)
 
-- File: `bent-knee-leg-raise-start.jpg`, original linked thumbnail unchanged.
-- Selected by the site owner on October 24, 2026 for this exercise. Creator not identified; no open reuse license verified. Do not represent this asset as Creative Commons or public domain.
-- Supplied URL: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyPWL-avdwNBwxN70_vHOOBPLy36eizDR8bCpxVZOnHQ&s=10
-- Shows the low position with knees bent, not a complete movement sequence.
+- Files: `bent-knee-leg-raise-start.jpg` (IMG_7841.jpeg) and `bent-knee-leg-raise-raised.jpg` (IMG_7842.jpeg). Original uploaded files unchanged. They replace the previously linked Google thumbnail.
+- Supplied by the site owner on October 24, 2026 for this exercise. Creator not identified; no open reuse license verified. Do not represent these assets as Creative Commons or public domain.
+- Owner-selected motion demonstration/reference: https://www.youtube.com/watch?v=T31_qyE7Xqw. This association does not establish image authorship or grant a video license. The video is linked, not downloaded or redistributed.
+- Captions distinguish low and raised positions. The third uploaded frame (IMG_7840.jpeg) shows a higher pelvic curl and is not included as the prescribed movement's endpoint.

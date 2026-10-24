@@ -17,6 +17,8 @@ for(const entry of Object.values(lib.exercises)){
 for(const section of workout.sections)for(const item of section.items)assert(api.findExercise(lib,item.name),'Unregistered exercise '+item.name);
 assert(api.findExercise(lib,"Parting the horse’s mane").photos.length===2);
 assert.equal(api.exerciseDemo(lib,'Suitcase carry'),'https://www.youtube.com/watch?v=rFIUiO-P1jo');
+assert.equal(api.exerciseDemo(lib,'Bent knee leg raises'),'https://www.youtube.com/watch?v=T31_qyE7Xqw');
+assert.equal(api.findExercise(lib,'Bent-knee leg raise').photos.length,2);
 assert.equal(api.exerciseDemo({exercises:{unsafe:{name:'Unsafe',demo:'javascript:alert(1)'}}},'Unsafe'),undefined);
 for(const bad of ['https://x/a.jpg','images/x.svg','images/../x.jpg','//x/a.jpg','images/x.jpg?foo'])assert(!api.localPhotoPath(bad));
 // Minimal DOM for deterministic renderer and existing control regression tests.
@@ -55,6 +57,8 @@ new vm.Script(script).runInContext(context);
  const rows=elements['#workout'].querySelectorAll('.item');assert.equal(rows.length,itemCount);
  const carryRow=rows.find(row=>row.querySelector('.name').textContent==='Suitcase carries');
  if(carryRow){assert.equal(carryRow.querySelector('.demo').href,'https://www.youtube.com/watch?v=rFIUiO-P1jo');assert.equal(carryRow.querySelector('img').src,'./images/suitcase-carry-comparison.png')}
+ const legRaiseRow=rows.find(row=>row.querySelector('.name').textContent==='Bent-knee leg raises');
+ if(legRaiseRow){assert.equal(legRaiseRow.querySelector('.demo').href,'https://www.youtube.com/watch?v=T31_qyE7Xqw');assert.equal(legRaiseRow.querySelectorAll('img').length,2)}
  assert(rows[0].scrolled,'A new workout starts at the first unchecked exercise');
  assert.equal(context.history.scrollRestoration,'manual');
  let index=0;
