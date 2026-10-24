@@ -198,3 +198,10 @@ Transversus Abdominis Ultrasound Thickness during Popular Trunk–Pilates Exerci
 - Supplied by the site owner on October 24, 2026 for the lying quad stretch. Visible watermark: StretchCoach. Photographer not identified; no open reuse license verified. Do not represent the asset as Creative Commons or public domain.
 - Source website identified by the watermark: https://stretchcoach.com/. Exact original image page not supplied.
 - Watermark retained and visible.
+
+## Dead bug step-by-step guide (owner-supplied)
+
+- Active file: `dead-bug-guide.jpg`, original upload `IMG_7844.jpeg` unchanged (1320 × 1255).
+- Supplied by the site owner on October 24, 2026 for the dead bug exercise. Creator and original source URL not supplied; no open reuse license verified. Do not represent the guide as Creative Commons or public domain.
+- Shows the setup, opposite arm and leg extension, and return, with accompanying form cues.
+- Replaces `dead-bug-start.jpg` in the active mapping. The earlier starting-position photograph and its CC BY 4.0 attribution remain archived.

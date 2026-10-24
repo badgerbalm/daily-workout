@@ -53,7 +53,7 @@ The October 24 workout has 27 cards. Photos cover all 27 cards after adding expl
 
 - Glute bridges, dumbbell Romanian deadlifts, and side planks have two real photographic positions each.
 - Resistance-band lateral steps use photographic panel I from de Carvalho et al. (2026), licensed CC BY 4.0. The band-walk video initially researched carries additional copyright restrictions and was not used.
-- Dead bugs use the photographed starting position from Tsartsapakis et al. (2023), licensed CC BY 4.0. This is explicitly captioned as the start, not a complete movement sequence.
+- Dead bugs now use the owner-supplied step-by-step guide showing starting position, opposite arm and leg extension, and return. The earlier CC BY 4.0 starting-position photograph remains archived with its attribution.
 - The Romanian deadlift photographs are stills from a public-domain U.S. Marine Corps demonstration, with author credit, source, extraction timestamps, and the required non-endorsement notice. No Navy videos carrying third-party copyright restrictions were used.
 - Lying quad stretch uses an owner-supplied StretchCoach photograph, with its watermark retained and its reuse license recorded as unspecified.
 
@@ -78,3 +78,7 @@ Owner-provided exercise directory: https://www.calixpert.com/exercises (added Oc
 ## Owner-supplied lying quad stretch
 
 The owner supplied `images/lying-quad-stretch.png` on October 24, 2026. The original PNG is stored unchanged with the StretchCoach watermark visible. The watermark is credited, the source website is linked, and no open reuse license is claimed. All 27 current workout cards now have local photographs; other exercises in the broader library may still have missing entries.
+
+## Owner-supplied dead bug movement guide
+
+`images/dead-bug-guide.jpg` replaces the single starting-position thumbnail in the active dead bug entry. The uploaded JPEG is preserved unchanged, including its text and form cues, and expands in the existing photo viewer. Original creator and reuse license were not supplied; no open license is claimed. The earlier `dead-bug-start.jpg` remains available with its original source/license record. Exercise instructions, repetitions, durations, and controls are unchanged.

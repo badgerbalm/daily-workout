@@ -542,19 +542,19 @@
       "status": "ready",
       "photos": [
         {
-          "src": "images/dead-bug-start.jpg",
-          "alt": "Person lying on back with arms raised and hips and knees bent to 90 degrees in the dead bug starting position",
-          "caption": "Start: arms up, knees bent to 90°",
-          "title": "Examined exercises, Figure 1F: dead bug",
-          "author": "Ioannis Tsartsapakis, Maria Gerou, Aglaia Zafeiroudi and Eleftherios Kellis",
-          "source": "https://doi.org/10.3390/jfmk8030110",
-          "license": "CC BY 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
-          "changes": "Cropped photographic panel F from Figure 1; JPEG optimized",
-          "width": 265,
-          "height": 158,
-          "sha256": "00f9dfc28ce4c33324027598795874c1e6235b0290d9c0b11a01618982a7a5cf",
-          "citation": "Transversus Abdominis Ultrasound Thickness during Popular Trunk–Pilates Exercises in Young and Middle-Aged Women (2023)."
+          "src": "images/dead-bug-guide.jpg",
+          "alt": "Dead bug exercise guide showing the starting position, opposite arm and leg extension, and return to start, with form cues.",
+          "caption": "Dead bug movement sequence · tap to enlarge.",
+          "title": "Dead bug step-by-step guide (owner-supplied)",
+          "author": "Creator not identified; guide supplied by site owner",
+          "source": "Owner upload: IMG_7844.jpeg",
+          "license": "User-supplied; reuse license unspecified",
+          "licenseUrl": "",
+          "permissionBasis": "Site owner explicitly supplied this guide for the dead bug exercise on October 24, 2026. No open reuse license verified.",
+          "changes": "Original uploaded JPEG unchanged",
+          "width": 1320,
+          "height": 1255,
+          "sha256": "2243690a50b6ff74640cc1ca9e7c257337d6ac00b1ff4a163ee236ace661405e"
         }
       ]
     },
