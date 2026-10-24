@@ -7,9 +7,24 @@
         "Side-lying quad stretch",
         "Side lying quadriceps stretch"
       ],
-      "status": "missing",
-      "photos": [],
-      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose."
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/lying-quad-stretch.png",
+          "alt": "Man reclining on his side with one knee bent and the heel drawn toward his glutes to stretch the quadriceps; StretchCoach watermark visible.",
+          "caption": "Lying quad stretch · demonstrate on both sides.",
+          "title": "Lying quadriceps stretch (owner-supplied photograph)",
+          "author": "StretchCoach (visible watermark); photographer not identified",
+          "source": "https://stretchcoach.com/",
+          "license": "User-supplied; reuse license unspecified",
+          "licenseUrl": "",
+          "permissionBasis": "Site owner explicitly supplied this image for the lying quad stretch on October 24, 2026. No open reuse license verified.",
+          "changes": "Original uploaded PNG unchanged; StretchCoach watermark retained",
+          "width": 720,
+          "height": 425,
+          "sha256": "5e12d98b6c429caee0734abc829f8b45585c6b37bd977b5147c6d774422c8ccb"
+        }
+      ]
     },
     "butterfly-stretch": {
       "name": "Butterfly stretch",

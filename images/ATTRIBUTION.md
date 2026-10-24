@@ -191,3 +191,10 @@ Transversus Abdominis Ultrasound Thickness during Popular Trunk–Pilates Exerci
 - Supplied by the site owner on October 24, 2026 for this exercise. Creator not identified; no open reuse license verified. Do not represent these assets as Creative Commons or public domain.
 - Owner-selected motion demonstration/reference: https://www.youtube.com/watch?v=T31_qyE7Xqw. This association does not establish image authorship or grant a video license. The video is linked, not downloaded or redistributed.
 - Captions distinguish low and raised positions. The third uploaded frame (IMG_7840.jpeg) shows a higher pelvic curl and is not included as the prescribed movement's endpoint.
+
+## Lying quadriceps stretch (owner-supplied)
+
+- File: `lying-quad-stretch.png`, original uploaded PNG unchanged.
+- Supplied by the site owner on October 24, 2026 for the lying quad stretch. Visible watermark: StretchCoach. Photographer not identified; no open reuse license verified. Do not represent the asset as Creative Commons or public domain.
+- Source website identified by the watermark: https://stretchcoach.com/. Exact original image page not supplied.
+- Watermark retained and visible.
