@@ -55,7 +55,9 @@ new vm.Script(script).runInContext(context);
  }}
  elements['#timer-mode'].value='iphone';rows[4].querySelector('button').onclick();assert.equal(new URL(context.location.href).searchParams.get('name'),'Workout Timer');
  elements['#timer-mode'].value='watch';rows[0].querySelector('.next-exercise').onclick();assert(rows[0].querySelector('input').checked);assert(rows[1].scrolled);
- rows[7].querySelector('.next-exercise').onclick();assert.equal(new URL(context.location.href).searchParams.get('name'),'Workout Walk End');
+ const walkingSectionIndex=workout.sections.findIndex(section=>section.title.includes('Treadmill'));
+ const lastWalkingRow=workout.sections.slice(0,walkingSectionIndex+1).reduce((count,section)=>count+section.items.length,0)-1;
+ rows[lastWalkingRow].querySelector('.next-exercise').onclick();assert.equal(new URL(context.location.href).searchParams.get('name'),'Workout Walk End');
  rows[itemCount-1].querySelector('.next-exercise').onclick();assert(rows[itemCount-1].querySelector('.next-exercise').disabled);
  // Refreshes must read saved checks, skip completed exercises, and coalesce
  // Safari's overlapping pageshow, visibilitychange and focus notifications.

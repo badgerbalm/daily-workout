@@ -26,7 +26,7 @@
           "author": "Joseph RENGER",
           "source": "https://commons.wikimedia.org/wiki/File:Baddha_konasana.jpg",
           "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
           "changes": "JPEG optimized",
           "width": 582,
           "height": 518,
@@ -49,7 +49,7 @@
           "author": "Joseph RENGER",
           "source": "https://commons.wikimedia.org/wiki/File:Ardha_matsyendrasana.jpg",
           "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
           "changes": "JPEG optimized",
           "width": 721,
           "height": 600,
@@ -106,7 +106,12 @@
     },
     "steady-walk": {
       "name": "Steady walk",
-      "aliases": [],
+      "aliases": [
+        "Recovery walking interval",
+        "Recovery walking intervals",
+        "Recovery walk",
+        "Steady walking"
+      ],
       "status": "ready",
       "photos": [
         {
@@ -128,7 +133,10 @@
     },
     "brisk-walk": {
       "name": "Brisk walk",
-      "aliases": [],
+      "aliases": [
+        "Brisk walking interval",
+        "Brisk walking intervals"
+      ],
       "status": "ready",
       "photos": [
         {
@@ -194,7 +202,7 @@
           "author": "No machine-readable author provided. GeorgeStepanek assumed (based on copyright claims).",
           "source": "https://commons.wikimedia.org/wiki/File:DumbbellBentOverRow.JPG",
           "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
           "changes": "Cropped from original composite; JPEG optimized",
           "width": 256,
           "height": 364,
@@ -208,7 +216,7 @@
           "author": "No machine-readable author provided. GeorgeStepanek assumed (based on copyright claims).",
           "source": "https://commons.wikimedia.org/wiki/File:DumbbellBentOverRow.JPG",
           "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
           "changes": "Cropped from original composite; JPEG optimized",
           "width": 256,
           "height": 364,
@@ -233,7 +241,7 @@
           "author": "No machine-readable author provided. GeorgeStepanek assumed (based on copyright claims).",
           "source": "https://commons.wikimedia.org/wiki/File:DumbbellLateralRaise.JPG",
           "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
           "changes": "Cropped from original composite; JPEG optimized",
           "width": 288,
           "height": 472,
@@ -247,7 +255,7 @@
           "author": "No machine-readable author provided. GeorgeStepanek assumed (based on copyright claims).",
           "source": "https://commons.wikimedia.org/wiki/File:DumbbellLateralRaise.JPG",
           "license": "CC BY-SA 3.0",
-          "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
           "changes": "Cropped from original composite; JPEG optimized",
           "width": 288,
           "height": 472,
@@ -364,6 +372,196 @@
       "status": "missing",
       "photos": [],
       "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose."
+    },
+    "glute-bridge": {
+      "name": "Glute bridges",
+      "aliases": [
+        "Glute bridge",
+        "Supine bridge"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/glute-bridge-start.jpg",
+          "alt": "Person lying on back with knees bent and feet on floor before a glute bridge",
+          "caption": "Start",
+          "title": "Glute-bridge",
+          "author": "Marianne Gilbak",
+          "source": "https://commons.wikimedia.org/wiki/File:Glute-bridge.png",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "changes": "Cropped photographic panel from composite; white background; JPEG optimized",
+          "width": 710,
+          "height": 355,
+          "sha256": "03ef787026f9010a35ee840fd1dfb96245d60ce75ad495a6f6243dc407bd74d1"
+        },
+        {
+          "src": "images/glute-bridge-raised.jpg",
+          "alt": "Person lifting hips with shoulders and feet supported in a glute bridge",
+          "caption": "Hips raised",
+          "title": "Glute-bridge",
+          "author": "Marianne Gilbak",
+          "source": "https://commons.wikimedia.org/wiki/File:Glute-bridge.png",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "changes": "Cropped photographic panel from composite; white background; JPEG optimized",
+          "width": 710,
+          "height": 420,
+          "sha256": "8b9d0558cc674bf6f3e8571d18b224ff9fd4d0dde721b940a094a9d33ae840f3"
+        }
+      ]
+    },
+    "side-plank": {
+      "name": "Side planks",
+      "aliases": [
+        "Side plank",
+        "Forearm side plank",
+        "Forearm side planks"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/side-plank-start.jpg",
+          "alt": "Person lying on side with elbow below shoulder and legs stacked",
+          "caption": "Set up on your forearm",
+          "title": "Side Plank",
+          "author": "Jaykayfit",
+          "source": "https://commons.wikimedia.org/wiki/File:Side_Plank.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "changes": "Cropped photographic panel from composite; JPEG optimized",
+          "width": 952,
+          "height": 461,
+          "sha256": "ef85e5ae98ac41c9dabd25356de31685391c7ba8d3f95f6bf1508b88b7666261"
+        },
+        {
+          "src": "images/side-plank-hold.jpg",
+          "alt": "Person holding hips raised in a forearm side plank with feet stacked",
+          "caption": "Raise hips and hold",
+          "title": "Side Plank",
+          "author": "Jaykayfit",
+          "source": "https://commons.wikimedia.org/wiki/File:Side_Plank.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "changes": "Cropped photographic panel from composite; JPEG optimized",
+          "width": 952,
+          "height": 475,
+          "sha256": "0025546d684f579d48e944f2e96e77ce295573ac5eae8fa8c6d777b09786a282"
+        }
+      ]
+    },
+    "dumbbell-rdl": {
+      "name": "Dumbbell Romanian deadlifts",
+      "aliases": [
+        "Dumbbell Romanian deadlift",
+        "DB RDL",
+        "Dumbbell RDL"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/dumbbell-rdl-start.jpg",
+          "alt": "Person standing tall holding two dumbbells beside thighs before a Romanian deadlift",
+          "caption": "Start: stand tall",
+          "title": "Dumbbell Romanian Deadlift",
+          "author": "Cpl. Amber Jennings / U.S. Marine Corps; published by Joshua Pena",
+          "source": "https://www.dvidshub.net/video/517516/dumbbell-romanian-deadlift",
+          "license": "Public domain (U.S. government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Photographic still at 00:12 of public-domain video; cropped; JPEG optimized",
+          "width": 300,
+          "height": 520,
+          "sha256": "da9f6c4c16d6a2a60e23f167e06d72ba9486c982069235975bc7db8c1beca6fe",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement."
+        },
+        {
+          "src": "images/dumbbell-rdl-hinge.jpg",
+          "alt": "Person hinging hips backward with soft knees and dumbbells near knees",
+          "caption": "Hip hinge with a neutral back",
+          "title": "Dumbbell Romanian Deadlift",
+          "author": "Cpl. Amber Jennings / U.S. Marine Corps; published by Joshua Pena",
+          "source": "https://www.dvidshub.net/video/517516/dumbbell-romanian-deadlift",
+          "license": "Public domain (U.S. government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Photographic still at 00:27 of public-domain video; cropped; JPEG optimized",
+          "width": 300,
+          "height": 520,
+          "sha256": "5945e87a7c5e653a5fb5e4a9f58716260fca6ce0ed0a44a230d5b6037deda942",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement."
+        }
+      ]
+    },
+    "band-lateral-steps": {
+      "name": "Resistance-band lateral steps",
+      "aliases": [
+        "Lateral band walk",
+        "Lateral band walks",
+        "Banded lateral steps",
+        "Resistance band lateral steps"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/band-lateral-steps.jpg",
+          "alt": "Person taking a wide lateral step with a resistance band above knees",
+          "caption": "Lateral band step",
+          "title": "Strengthening program, Figure 1I",
+          "author": "Raphael Augusto Gir de Carvalho et al.",
+          "source": "https://doi.org/10.3390/jfmk11020225",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "changes": "Cropped photographic panel I from Figure 1; JPEG optimized",
+          "width": 167,
+          "height": 319,
+          "sha256": "76612f77720cb1eb587443918d3d059a850334689e67fdfa9524eac1891fd597",
+          "citation": "The Strengthening of Quadriceps, Abductors, and External Rotator Muscles of the Hip to Alter Axial Alignment of the Lower Limbs in University Students with Patellofemoral Pain Syndrome (2026)."
+        }
+      ]
+    },
+    "dead-bug": {
+      "name": "Dead bugs",
+      "aliases": [
+        "Dead bug",
+        "Dead-bug exercise"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/dead-bug-start.jpg",
+          "alt": "Person lying on back with arms raised and hips and knees bent to 90 degrees in the dead bug starting position",
+          "caption": "Start: arms up, knees bent to 90°",
+          "title": "Examined exercises, Figure 1F: dead bug",
+          "author": "Ioannis Tsartsapakis, Maria Gerou, Aglaia Zafeiroudi and Eleftherios Kellis",
+          "source": "https://doi.org/10.3390/jfmk8030110",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "changes": "Cropped photographic panel F from Figure 1; JPEG optimized",
+          "width": 265,
+          "height": 158,
+          "sha256": "00f9dfc28ce4c33324027598795874c1e6235b0290d9c0b11a01618982a7a5cf",
+          "citation": "Transversus Abdominis Ultrasound Thickness during Popular Trunk–Pilates Exercises in Young and Middle-Aged Women (2023)."
+        }
+      ]
+    },
+    "suitcase-carry": {
+      "name": "Suitcase carries",
+      "aliases": [
+        "Suitcase carry",
+        "Dumbbell suitcase carry"
+      ],
+      "status": "missing",
+      "photos": [],
+      "missingReason": "An accurate photograph with verified permission to reuse was not found. Do not substitute a drawing or another exercise."
+    },
+    "bent-knee-leg-raise": {
+      "name": "Bent-knee leg raises",
+      "aliases": [
+        "Bent knee leg raises",
+        "Bent-knee leg raise"
+      ],
+      "status": "missing",
+      "photos": [],
+      "missingReason": "An accurate photograph with verified permission to reuse was not found. Do not substitute a drawing or another exercise."
     }
   }
 }

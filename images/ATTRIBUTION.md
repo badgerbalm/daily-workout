@@ -103,3 +103,77 @@ Wild horses’ mane parting, Figure 3 by Juan Huang
 Changes: Cropped photographic panel from Figure 3.
 
 Huang J. Journal of Vibroengineering 26(8):1783–1790 (2024). doi:10.21595/jve.2024.24240
+
+# Library additions reviewed October 24, 2026
+
+## images/glute-bridge-start.jpg
+
+Glute-bridge by Marianne Gilbak
+
+[Source](https://commons.wikimedia.org/wiki/File:Glute-bridge.png) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+
+Changes: Cropped photographic panel from composite; white background; JPEG optimized.
+
+## images/glute-bridge-raised.jpg
+
+Glute-bridge by Marianne Gilbak
+
+[Source](https://commons.wikimedia.org/wiki/File:Glute-bridge.png) · [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+
+Changes: Cropped photographic panel from composite; white background; JPEG optimized.
+
+## images/side-plank-start.jpg
+
+Side Plank by Jaykayfit
+
+[Source](https://commons.wikimedia.org/wiki/File:Side_Plank.jpg) · [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)
+
+Changes: Cropped photographic panel from composite; JPEG optimized.
+
+## images/side-plank-hold.jpg
+
+Side Plank by Jaykayfit
+
+[Source](https://commons.wikimedia.org/wiki/File:Side_Plank.jpg) · [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)
+
+Changes: Cropped photographic panel from composite; JPEG optimized.
+
+## images/dumbbell-rdl-start.jpg
+
+Dumbbell Romanian Deadlift by Cpl. Amber Jennings / U.S. Marine Corps; published by Joshua Pena
+
+[Source](https://www.dvidshub.net/video/517516/dumbbell-romanian-deadlift) · [Public domain (U.S. government)](https://www.dvidshub.net/about/copyright)
+
+Changes: Photographic still at 00:12 of public-domain video; cropped; JPEG optimized.
+
+The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.
+
+## images/dumbbell-rdl-hinge.jpg
+
+Dumbbell Romanian Deadlift by Cpl. Amber Jennings / U.S. Marine Corps; published by Joshua Pena
+
+[Source](https://www.dvidshub.net/video/517516/dumbbell-romanian-deadlift) · [Public domain (U.S. government)](https://www.dvidshub.net/about/copyright)
+
+Changes: Photographic still at 00:27 of public-domain video; cropped; JPEG optimized.
+
+The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.
+
+## images/band-lateral-steps.jpg
+
+Strengthening program, Figure 1I by Raphael Augusto Gir de Carvalho et al.
+
+[Source](https://doi.org/10.3390/jfmk11020225) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+Changes: Cropped photographic panel I from Figure 1; JPEG optimized.
+
+The Strengthening of Quadriceps, Abductors, and External Rotator Muscles of the Hip to Alter Axial Alignment of the Lower Limbs in University Students with Patellofemoral Pain Syndrome (2026).
+
+## images/dead-bug-start.jpg
+
+Examined exercises, Figure 1F: dead bug by Ioannis Tsartsapakis, Maria Gerou, Aglaia Zafeiroudi and Eleftherios Kellis
+
+[Source](https://doi.org/10.3390/jfmk8030110) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+Changes: Cropped photographic panel F from Figure 1; JPEG optimized.
+
+Transversus Abdominis Ultrasound Thickness during Popular Trunk–Pilates Exercises in Young and Middle-Aged Women (2023).

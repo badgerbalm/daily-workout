@@ -46,3 +46,15 @@ The original workout had 7 remote image references on 6 entries and 11 entries w
 6. Run `node tests/verify-photos.cjs` and visually inspect desktop and mobile widths. The checks verify registered current exercises and every local file's SHA-256, as well as timer and completion behavior.
 
 No workout instruction, duration, set, rep, or exercise was changed by this integration. `workout.json` remains byte-for-byte unchanged.
+
+## October 24 additions
+
+The October 24 workout has 27 cards. Photos cover 24 cards after adding explicit walking-interval aliases and five additional movements: glute bridges, dumbbell Romanian deadlifts, resistance-band lateral steps, side planks, and dead bugs.
+
+- Glute bridges, dumbbell Romanian deadlifts, and side planks have two real photographic positions each.
+- Resistance-band lateral steps use photographic panel I from de Carvalho et al. (2026), licensed CC BY 4.0. The band-walk video initially researched carries additional copyright restrictions and was not used.
+- Dead bugs use the photographed starting position from Tsartsapakis et al. (2023), licensed CC BY 4.0. This is explicitly captioned as the start, not a complete movement sequence.
+- The Romanian deadlift photographs are stills from a public-domain U.S. Marine Corps demonstration, with author credit, source, extraction timestamps, and the required non-endorsement notice. No Navy videos carrying third-party copyright restrictions were used.
+- Lying quad stretch, suitcase carries, and bent-knee leg raises still lack a verified reusable photograph of the exact exercise. They remain honest text placeholders. A therapist-assisted stretch, unrelated carry, straight-leg raise, or illustration must not be substituted.
+
+The October 24 workout data, timing, saved-progress behavior, and Shortcut links were not edited for these photo additions. The regression check now derives the last walking card from the current section length so interval workouts also receive the walking-end check.
