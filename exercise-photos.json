@@ -99,7 +99,9 @@
     },
     "easy-warm-up": {
       "name": "Easy warm-up",
-      "aliases": [],
+      "aliases": [
+        "Gentle warm-up walk"
+      ],
       "status": "ready",
       "photos": [
         {
@@ -125,7 +127,9 @@
         "Recovery walking interval",
         "Recovery walking intervals",
         "Recovery walk",
-        "Steady walking"
+        "Steady walking",
+        "Comfortable treadmill walk",
+        "Easy steady walk"
       ],
       "status": "ready",
       "photos": [
@@ -173,7 +177,9 @@
     },
     "cool-down": {
       "name": "Cool-down",
-      "aliases": [],
+      "aliases": [
+        "Gentle cool-down"
+      ],
       "status": "ready",
       "photos": [
         {
