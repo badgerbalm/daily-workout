@@ -1,34 +1,169 @@
 {
-  "date": "2026-10-26",
-  "title": "Daily Workout · October 26",
-  "note": "Recovery day after flu and COVID vaccines yesterday. Mild headache improving, sore arms. Optional easy walk only; skip jogging, steep inclines, strength and core today. Stop if headache worsens or you feel unwell.",
+  "date": "2026-11-02",
+  "title": "Daily Workout · November 2",
+  "note": "Moderate restart after several days away. Only do this workout if headache and post-vaccination symptoms have resolved and energy is normal. Walk instead of jog if needed. Stop for chest discomfort, dizziness, unusual palpitations or breathlessness.",
   "sections": [
     {
-      "title": "Easy recovery treadmill walk · 25 minutes",
+      "title": "Opening stretches · 4 minutes",
       "items": [
         {
-          "name": "Gentle warm-up walk",
-          "detail": "5 min · 2.8–3.0 mph · 0% incline",
-          "seconds": 300,
-          "instructions": "Start at an easy, comfortable pace. Skip workout if feeling unwell."
+          "name": "Lying quad stretch",
+          "detail": "30 sec each side",
+          "seconds": 60,
+          "instructions": "Lie on your side, draw your heel toward your glutes without forcing."
         },
         {
-          "name": "Comfortable treadmill walk",
-          "detail": "10 min · 3.0–3.3 mph · 0–1% incline",
-          "seconds": 600,
-          "instructions": "Keep effort easy enough for normal conversation. No jogging."
+          "name": "Butterfly stretch",
+          "detail": "1 minute",
+          "seconds": 60,
+          "instructions": "Sit upright, soles together, knees relaxed."
         },
         {
-          "name": "Easy steady walk",
-          "detail": "5 min · 3.0–3.4 mph · 0–2% incline",
-          "seconds": 300,
-          "instructions": "Stay comfortable; reduce speed or incline if headache increases."
+          "name": "Seated spinal twist",
+          "detail": "30 sec each side",
+          "seconds": 60,
+          "instructions": "Rotate gently without forcing the low back."
         },
         {
-          "name": "Gentle cool-down",
-          "detail": "5 min · 2.7–3.0 mph · 0% incline",
+          "name": "Plow Pose (Halasana)",
+          "detail": "1 minute including entry and exit",
+          "seconds": 60,
+          "instructions": "Use only comfortable range, no force on neck. Skip if neck or back discomfort."
+        }
+      ]
+    },
+    {
+      "title": "Treadmill walk/jog and incline · 30 minutes",
+      "items": [
+        {
+          "name": "Easy warm-up",
+          "detail": "5 min · 3.0–3.3 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Slow down gradually. Stop if symptoms worsen."
+          "instructions": "Walk comfortably to warm up."
+        },
+        {
+          "name": "Jog interval",
+          "detail": "Round 1/5 · 1 min · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 60,
+          "instructions": "Jog at conversational effort; switch to brisk walking if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 1/5 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at an easy walking pace."
+        },
+        {
+          "name": "Jog interval",
+          "detail": "Round 2/5 · 1 min · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 60,
+          "instructions": "Jog at conversational effort; switch to brisk walking if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 2/5 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at an easy walking pace."
+        },
+        {
+          "name": "Jog interval",
+          "detail": "Round 3/5 · 1 min · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 60,
+          "instructions": "Jog at conversational effort; switch to brisk walking if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 3/5 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at an easy walking pace."
+        },
+        {
+          "name": "Jog interval",
+          "detail": "Round 4/5 · 1 min · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 60,
+          "instructions": "Jog at conversational effort; switch to brisk walking if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 4/5 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at an easy walking pace."
+        },
+        {
+          "name": "Jog interval",
+          "detail": "Round 5/5 · 1 min · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 60,
+          "instructions": "Jog at conversational effort; switch to brisk walking if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 5/5 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at an easy walking pace."
+        },
+        {
+          "name": "Incline walk",
+          "detail": "6 min · 3.0–3.3 mph · 3–5% incline",
+          "seconds": 360,
+          "instructions": "Walk uphill steadily, keeping effort moderate."
+        },
+        {
+          "name": "Cool-down",
+          "detail": "4 min · 2.7–3.0 mph · 0% incline",
+          "seconds": 240,
+          "instructions": "Gradually lower pace and breathe normally."
+        }
+      ]
+    },
+    {
+      "title": "Glute strengthening · 11 minutes",
+      "items": [
+        {
+          "name": "Dumbbell Romanian deadlifts",
+          "detail": "4 min · 2 × 10 reps",
+          "seconds": 240,
+          "instructions": "Use manageable dumbbells, e.g. 15–20 lb each if comfortable; hinge at hips and maintain neutral spine."
+        },
+        {
+          "name": "Weighted glute bridges",
+          "detail": "3 min · 2 × 12 reps",
+          "seconds": 180,
+          "instructions": "Secure a padded dumbbell across hips, squeeze at top for two seconds without arching."
+        },
+        {
+          "name": "Resistance-band lateral steps",
+          "detail": "4 min · 2 × 12 steps each direction",
+          "seconds": 240,
+          "instructions": "Keep knees slightly bent and band under tension."
+        }
+      ]
+    },
+    {
+      "title": "Abs and obliques · 10 minutes",
+      "items": [
+        {
+          "name": "Side planks",
+          "detail": "3 min · 2 × 30 sec each side, with rest",
+          "seconds": 180,
+          "instructions": "Keep hips lifted and torso aligned."
+        },
+        {
+          "name": "Suitcase carries",
+          "detail": "3 min · 2 × 30 sec each side, with rest",
+          "seconds": 180,
+          "instructions": "Hold one dumbbell and walk upright without leaning."
+        },
+        {
+          "name": "Bent-knee leg raises",
+          "detail": "2 min · 2 × 10 reps",
+          "seconds": 120,
+          "instructions": "Lower slowly without arching the back."
+        },
+        {
+          "name": "Dead bugs",
+          "detail": "2 min · 2 × 6 each side",
+          "seconds": 120,
+          "instructions": "Extend opposite arm and leg slowly while maintaining trunk control."
         }
       ]
     }
