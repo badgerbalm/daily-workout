@@ -129,7 +129,8 @@
         "Recovery walk",
         "Steady walking",
         "Comfortable treadmill walk",
-        "Easy steady walk"
+        "Easy steady walk",
+        "Incline walk"
       ],
       "status": "ready",
       "photos": [
@@ -154,7 +155,8 @@
       "name": "Brisk walk",
       "aliases": [
         "Brisk walking interval",
-        "Brisk walking intervals"
+        "Brisk walking intervals",
+        "Jog interval"
       ],
       "status": "ready",
       "photos": [
@@ -398,7 +400,8 @@
       "name": "Glute bridges",
       "aliases": [
         "Glute bridge",
-        "Supine bridge"
+        "Supine bridge",
+        "Weighted glute bridges"
       ],
       "status": "ready",
       "photos": [
