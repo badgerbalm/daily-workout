@@ -130,7 +130,10 @@
         "Steady walking",
         "Comfortable treadmill walk",
         "Easy steady walk",
-        "Incline walk"
+        "Incline walk",
+        "Hill walk 3 percent",
+        "Hill walk 5 percent",
+        "Hill walk 6–7 percent"
       ],
       "status": "ready",
       "photos": [
