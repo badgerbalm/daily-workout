@@ -1,127 +1,181 @@
 {
-  "date": "2026-11-04",
-  "title": "Daily Workout · November 4",
-  "note": "Incline walking and the glute/core exercises missed yesterday. No jogging today. Work at moderate effort and reduce incline if legs are sore.",
+  "date": "2026-11-05",
+  "title": "Daily Workout · November 5",
+  "note": "5K progression: 6 × 90-second jogs, upper body, glutes, abs and obliques. Test New Balance 1080v15 with thinner Skechers socks and unchanged lacing; compare warmth afterward.",
   "sections": [
     {
       "title": "Opening stretches · 4 minutes",
       "items": [
         {
           "name": "Lying quad stretch",
-          "detail": "30 seconds per side",
+          "detail": "30 sec each side",
           "seconds": 60,
-          "instructions": "Lie on your side and gently bring your heel toward your glutes."
+          "instructions": "Lie on your side and gently bring heel toward glutes."
         },
         {
           "name": "Butterfly stretch",
-          "detail": "1 minute",
+          "detail": "1 min",
           "seconds": 60,
-          "instructions": "Sit upright with soles together; relax knees."
+          "instructions": "Sit upright with soles together and knees relaxed."
         },
         {
           "name": "Seated spinal twist",
-          "detail": "30 seconds per side",
+          "detail": "30 sec each side",
           "seconds": 60,
-          "instructions": "Rotate gently, avoiding forceful low-back twisting."
+          "instructions": "Rotate gently without forcing your lower back."
         },
         {
           "name": "Plow Pose (Halasana)",
-          "detail": "1 minute including gentle entry and exit",
+          "detail": "1 min including gentle entry and exit",
           "seconds": 60,
-          "instructions": "Use only comfortable range; avoid neck pressure. Skip if neck or back discomfort."
+          "instructions": "Avoid loading neck or forcing position; skip if uncomfortable."
         }
       ]
     },
     {
-      "title": "Incline treadmill walk · 25 minutes",
+      "title": "Treadmill walk/jog · 30 minutes",
       "items": [
         {
           "name": "Easy warm-up",
-          "detail": "5 min · 3.0–3.3 mph · 0–1% incline",
+          "detail": "5 min · 3.0–3.3 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Walk easily to warm up."
+          "instructions": "Walk comfortably."
         },
         {
-          "name": "Hill walk 3 percent",
-          "detail": "5 min · 3.1–3.4 mph · 3% incline",
-          "seconds": 300,
-          "instructions": "Maintain a steady, conversational effort."
+          "name": "Jog interval",
+          "detail": "Round 1/6 · 90 sec · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 90,
+          "instructions": "Jog at conversational pace; shorten to 60 sec if needed."
         },
         {
-          "name": "Hill walk 5 percent",
-          "detail": "5 min · 3.0–3.3 mph · 5% incline",
-          "seconds": 300,
-          "instructions": "Walk tall and avoid gripping the rails."
+          "name": "Recovery walk",
+          "detail": "Round 1/6 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at easy walking pace."
         },
         {
-          "name": "Hill walk 6–7 percent",
-          "detail": "5 min · 2.8–3.2 mph · 6–7% incline",
-          "seconds": 300,
-          "instructions": "Reduce incline if legs are sore or breathing becomes difficult."
+          "name": "Jog interval",
+          "detail": "Round 2/6 · 90 sec · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 90,
+          "instructions": "Jog at conversational pace; shorten to 60 sec if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 2/6 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at easy walking pace."
+        },
+        {
+          "name": "Jog interval",
+          "detail": "Round 3/6 · 90 sec · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 90,
+          "instructions": "Jog at conversational pace; shorten to 60 sec if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 3/6 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at easy walking pace."
+        },
+        {
+          "name": "Jog interval",
+          "detail": "Round 4/6 · 90 sec · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 90,
+          "instructions": "Jog at conversational pace; shorten to 60 sec if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 4/6 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at easy walking pace."
+        },
+        {
+          "name": "Jog interval",
+          "detail": "Round 5/6 · 90 sec · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 90,
+          "instructions": "Jog at conversational pace; shorten to 60 sec if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 5/6 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at easy walking pace."
+        },
+        {
+          "name": "Jog interval",
+          "detail": "Round 6/6 · 90 sec · 4.3–4.8 mph · 0–1% incline",
+          "seconds": 90,
+          "instructions": "Jog at conversational pace; shorten to 60 sec if needed."
+        },
+        {
+          "name": "Recovery walk",
+          "detail": "Round 6/6 · 2 min · 3.2–3.5 mph · 0–1% incline",
+          "seconds": 120,
+          "instructions": "Recover at easy walking pace."
         },
         {
           "name": "Cool-down",
-          "detail": "5 min · 2.7–3.0 mph · 0% incline",
-          "seconds": 300,
-          "instructions": "Slow down gradually."
+          "detail": "4 min · 2.7–3.0 mph · 0% incline",
+          "seconds": 240,
+          "instructions": "Gradually slow down."
         }
       ]
     },
     {
-      "title": "Glutes and strength · 14 minutes",
+      "title": "Upper body and glutes · 11 minutes",
       "items": [
         {
-          "name": "Dumbbell Romanian deadlifts",
-          "detail": "4 min · 2 × 12 reps",
-          "seconds": 240,
-          "instructions": "Start around 15–20 lb per hand if comfortable; maintain neutral back and hinge at hips."
+          "name": "Dumbbell floor press",
+          "detail": "3 min · 2 × 12 reps",
+          "seconds": 180,
+          "instructions": "Choose a challenging but controlled weight."
+        },
+        {
+          "name": "Supported dumbbell rows",
+          "detail": "3 min · 2 × 10 reps per arm",
+          "seconds": 180,
+          "instructions": "Support one hand on a stable surface and keep back neutral."
         },
         {
           "name": "Weighted glute bridges",
-          "detail": "4 min · 2 × 15 reps",
-          "seconds": 240,
-          "instructions": "Hold the top contraction for 2 seconds without arching the back."
+          "detail": "3 min · 2 × 15 reps",
+          "seconds": 180,
+          "instructions": "Squeeze at top for two seconds without arching."
         },
         {
-          "name": "Resistance-band lateral steps",
-          "detail": "3 min · 2 × 12 steps each direction",
-          "seconds": 180,
-          "instructions": "Keep tension on the band and knees slightly bent."
-        },
-        {
-          "name": "Bodyweight squats",
-          "detail": "3 min · 2 × 12 reps",
-          "seconds": 180,
-          "instructions": "Descend with control and stand tall, squeezing glutes."
+          "name": "Dumbbell lateral raises",
+          "detail": "2 min · 2 × 10 reps",
+          "seconds": 120,
+          "instructions": "Use light weights and avoid shrugging."
         }
       ]
     },
     {
-      "title": "Abs and obliques · 12 minutes",
+      "title": "Abs and obliques · 10 minutes",
       "items": [
         {
           "name": "Side planks",
           "detail": "3 min · 2 × 35 sec each side, with rest",
           "seconds": 180,
-          "instructions": "Keep hips lifted and torso aligned."
-        },
-        {
-          "name": "Suitcase carries",
-          "detail": "3 min · 2 × 35 sec each side, with rest",
-          "seconds": 180,
-          "instructions": "Carry one dumbbell and avoid leaning."
-        },
-        {
-          "name": "Bent-knee leg raises",
-          "detail": "3 min · 2 × 12 reps",
-          "seconds": 180,
-          "instructions": "Lower slowly without arching lower back."
+          "instructions": "Keep hips elevated and torso aligned."
         },
         {
           "name": "Dead bugs",
-          "detail": "3 min · 2 × 8 reps per side",
+          "detail": "3 min · 2 × 8 reps each side",
           "seconds": 180,
-          "instructions": "Move opposite arm and leg slowly while maintaining core control."
+          "instructions": "Extend opposite arm and leg slowly, maintaining core stability."
+        },
+        {
+          "name": "Suitcase carries",
+          "detail": "2 min · 2 × 30 sec each side",
+          "seconds": 120,
+          "instructions": "Walk upright holding one dumbbell without leaning."
+        },
+        {
+          "name": "Bent-knee leg raises",
+          "detail": "2 min · 2 × 10 reps",
+          "seconds": 120,
+          "instructions": "Lower slowly without arching lower back."
         }
       ]
     }
