@@ -179,14 +179,26 @@ document.querySelector('#refresh-workout').addEventListener('click',async()=>{
   }catch(error){feedback.textContent='Refresh failed: '+error.message}
   finally{button.disabled=false}
 });
-// Initial load always opens at the header, regardless of saved progress.
+// iOS Home Screen Safari may restore scroll *after* the initial paint.
+// Reinforce the top position briefly on a fresh page load only.
+function resetInitialScroll(){
+  window.scrollTo(0,0);
+}
+resetInitialScroll();
 refreshWorkout('top').then(()=>{
+  resetInitialScroll();
   requestAnimationFrame(()=>{
-    window.scrollTo(0,0);
+    resetInitialScroll();
     initialPageLoadComplete=true;
   });
 });
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAfterShortcut()});
-window.addEventListener('pageshow',refreshAfterShortcut);
-window.addEventListener('focus',refreshAfterShortcut);
+window.addEventListener('load',resetInitialScroll,{once:true});
+[100,350,900].forEach(delay=>setTimeout(()=>{
+  if(!shortcutReturnPending)resetInitialScroll();
+},delay));
+// Returning from a Shortcut resumes the next exercise. Ordinary foregrounding
+// preserves the user's current position without a second automatic scroll.
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&shortcutReturnPending)refreshAfterShortcut()});
+window.addEventListener('pageshow',()=>{if(shortcutReturnPending)refreshAfterShortcut()});
+window.addEventListener('focus',()=>{if(shortcutReturnPending)refreshAfterShortcut()});
 </script></body></html>
