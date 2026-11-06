@@ -109,20 +109,19 @@ function trackExerciseTimer(section,item,key,workout){
   finishExpiredTimer();
 }
 async function load(){try{const photoLibrary=await getPhotoLibrary();const r=await fetch('./workout.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();document.querySelector('#status').textContent='Workout dated '+d.date+' · '+(d.sections?.[1]?.items?.length||0)+' strength steps';document.querySelector('#notice').textContent=d.note||'';const main=document.querySelector('#workout');const saved=JSON.parse(localStorage.getItem('workout-checks-'+d.date)||'{}');currentWorkoutSignature=JSON.stringify(d);timerRows=new Map();main.replaceChildren();for(const [sectionIndex,section] of d.sections.entries()){const card=document.createElement('section');card.className='card';const h=document.createElement('h2');h.textContent=section.title;card.append(h);if(section.title==='Strength and core'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Complete one set of each exercise per round. Rest 45–60 seconds between exercises and 75–90 seconds between rounds.';card.append(tip)}if(section.title==='Tai Chi'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Two gentle rounds of five movements, about 10 minutes total.';card.append(tip)}for(const [itemIndex,item] of section.items.entries()){const row=document.createElement('div');row.className='item';const left=document.createElement('label');left.className='left';const check=document.createElement('input');check.type='checkbox';check.className='check';const checkKey=item.progressKey||sectionIndex+'-'+itemIndex;check.checked=!!(Object.prototype.hasOwnProperty.call(saved,checkKey)?saved[checkKey]:saved[item.legacyProgressKey]);check.onchange=()=>{saved[checkKey]=check.checked;localStorage.setItem('workout-checks-'+d.date,JSON.stringify(saved))};const body=document.createElement('div');const name=document.createElement('div');name.className='name';name.textContent=item.name;const detail=document.createElement('div');detail.className='detail';detail.textContent=item.detail||'';body.append(name,detail);const info=guidance[item.name.toLowerCase()];const instruction=document.createElement('div');instruction.className='instructions';instruction.textContent=item.instructions||info?.[1]||'Use a controlled, comfortable range of motion.';body.append(instruction);const demo=exerciseDemo(photoLibrary,item.name)||item.demo||demos[item.name.toLowerCase()];if(demo){const link=document.createElement('a');link.className='demo';link.href=demo;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View movement demonstration ↗';body.append(link)}left.append(check,body);const art=document.createElement('div');art.className='art';renderExercisePhotos(art,body,item,photoLibrary);row.append(art,left);if(item.seconds){const b=document.createElement('button');b.textContent='▶ '+time(item.seconds);b.onclick=()=>{try{const url=timerURL(item.seconds,timerMode.value,walkBoundary(section,itemIndex).start);const previous=readActiveTimer();
-const strengthOrCore=/\b(?:strength|core|glutes|upper body|abs|obliques)\b/i.test(section.title);
-if(strengthOrCore){
-  const last=readLastStarted();
-  if(last?.date===d.date&&last.key!==checkKey&&last.workout===currentWorkoutSignature){
-    const prior=timerRows.get(last.key);
-    if(prior&&!prior.walking)saveExerciseComplete(d.date,last.key,prior.check);
-  }
-  const preceding=row.previousElementSibling;
-  const precedingCheck=preceding?.querySelector('.check');
-  if(precedingCheck&&itemIndex>0){
-    const precedingItem=section.items[itemIndex-1];
-    const precedingKey=precedingItem.progressKey||sectionIndex+'-'+(itemIndex-1);
-    if(!precedingCheck.checked)saveExerciseComplete(d.date,precedingKey,precedingCheck);
-  }
+// Starting the next step completes the preceding step in every section,
+// including treadmill and indoor-walk intervals. Do not stop the walk workout.
+const last=readLastStarted();
+if(last?.date===d.date&&last.key!==checkKey&&last.workout===currentWorkoutSignature){
+  const prior=timerRows.get(last.key);
+  if(prior)saveExerciseComplete(d.date,last.key,prior.check);
+}
+const preceding=row.previousElementSibling;
+const precedingCheck=preceding?.querySelector('.check');
+if(precedingCheck&&itemIndex>0){
+  const precedingItem=section.items[itemIndex-1];
+  const precedingKey=precedingItem.progressKey||sectionIndex+'-'+(itemIndex-1);
+  if(!precedingCheck.checked)saveExerciseComplete(d.date,precedingKey,precedingCheck);
 }
 if(previous&&previous.key!==checkKey&&previous.workout===currentWorkoutSignature){
   const prior=timerRows.get(previous.key);
