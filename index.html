@@ -136,8 +136,10 @@ trackExerciseTimer(section,item,checkKey,currentWorkoutSignature);row.scrollInto
 // Safari may restore its own scroll position after returning from Shortcuts.
 // Resume only after the refreshed cards and their saved checkboxes are ready.
 if ('scrollRestoration' in history) history.scrollRestoration='manual';
-const shortcutResumeKey='workout-return-from-shortcuts';
-function openWorkoutShortcut(url){sessionStorage.setItem(shortcutResumeKey,'1');location.href=url;}
+// Only resume after a shortcut launched in this live page session.
+// Session storage can survive closing/reopening the iOS Home Screen app.
+let shortcutReturnPending=false;
+function openWorkoutShortcut(url){shortcutReturnPending=true;location.href=url;}
 
 let refreshInProgress=null;
 function refreshWorkout(mode='preserve'){
@@ -159,9 +161,11 @@ function refreshWorkout(mode='preserve'){
   })).finally(()=>{refreshInProgress=null});
   return refreshInProgress;
 }
+let initialPageLoadComplete=false;
 function refreshAfterShortcut(){
-  const returning=sessionStorage.getItem(shortcutResumeKey)==='1';
-  if(returning)sessionStorage.removeItem(shortcutResumeKey);
+  if(!initialPageLoadComplete)return;
+  const returning=shortcutReturnPending;
+  shortcutReturnPending=false;
   return refreshWorkout(returning?'resume':'preserve');
 }
 document.querySelector('#refresh-workout').addEventListener('click',async()=>{
@@ -175,7 +179,13 @@ document.querySelector('#refresh-workout').addEventListener('click',async()=>{
   }catch(error){feedback.textContent='Refresh failed: '+error.message}
   finally{button.disabled=false}
 });
-refreshWorkout('top');
+// Initial load always opens at the header, regardless of saved progress.
+refreshWorkout('top').then(()=>{
+  requestAnimationFrame(()=>{
+    window.scrollTo(0,0);
+    initialPageLoadComplete=true;
+  });
+});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAfterShortcut()});
 window.addEventListener('pageshow',refreshAfterShortcut);
 window.addEventListener('focus',refreshAfterShortcut);
