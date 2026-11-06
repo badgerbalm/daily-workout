@@ -73,12 +73,12 @@ function updateStopPrompt(){
   document.querySelector('#timer-stop-prompt').hidden=!valid;
   if(!valid)localStorage.removeItem(stopReminderKey);
   document.querySelector('#timer-stop-button').onclick=()=>{
-    if(!document.querySelector('#timer-stop-prompt').hidden)location.href=shortcutURL('Workout Timer Stop');
+    if(!document.querySelector('#timer-stop-prompt').hidden)openWorkoutShortcut(shortcutURL('Workout Timer Stop'));
   };
 }
 function requestTimerStop(){
   localStorage.setItem(stopReminderKey,JSON.stringify({workout:currentWorkoutSignature}));
-  updateStopPrompt();location.href=shortcutURL('Workout Timer Stop');
+  updateStopPrompt();openWorkoutShortcut(shortcutURL('Workout Timer Stop'));
 }
 let expiryTimeout, timerRows=new Map(), currentWorkoutSignature='';
 function readActiveTimer(){try{return JSON.parse(localStorage.getItem(activeTimerKey)||'null')}catch{return null}}
@@ -132,22 +132,37 @@ if(previous&&previous.key!==checkKey&&previous.workout===currentWorkoutSignature
   }
 }
 localStorage.setItem(lastStartedKey,JSON.stringify({date:d.date,key:checkKey,workout:currentWorkoutSignature}));
-trackExerciseTimer(section,item,checkKey,currentWorkoutSignature);row.scrollIntoView({behavior:'smooth',block:'start'});location.href=url}catch(e){alert(e.message)}};row.append(b)}const next=document.createElement('button');next.className='next-exercise';next.textContent='✓ Done · Next ↓';next.setAttribute('aria-label','Mark '+item.name+' complete and scroll to next exercise');next.onclick=()=>{const active=readActiveTimer();const stopActive=active?.key===checkKey&&active.workout===currentWorkoutSignature&&active.mode==='watch'&&!timerRows.get(checkKey)?.walking;clearActiveTimer(checkKey);const endWalk=timerMode.value==='watch'&&walkBoundary(section,itemIndex).end;check.checked=true;saved[checkKey]=true;localStorage.setItem('workout-checks-'+d.date,JSON.stringify(saved));const following=row.nextElementSibling||card.nextElementSibling?.querySelector('.item');if(following){following.scrollIntoView({behavior:'smooth',block:'start'});}else{next.textContent='✓ Workout complete';next.disabled=true;}if(endWalk)location.href=shortcutURL('Workout Walk End');else if(stopActive)requestTimerStop();};row.append(next);timerRows.set(checkKey,{check,done:next,walking:/\b(?:treadmill|indoor)\b/i.test(section.title)});card.append(row)}main.append(card)}updateStopPrompt();finishExpiredTimer()}catch(e){document.querySelector('#status').textContent='Unable to load workout: '+e.message}}
+trackExerciseTimer(section,item,checkKey,currentWorkoutSignature);row.scrollIntoView({behavior:'smooth',block:'start'});openWorkoutShortcut(url)}catch(e){alert(e.message)}};row.append(b)}const next=document.createElement('button');next.className='next-exercise';next.textContent='✓ Done · Next ↓';next.setAttribute('aria-label','Mark '+item.name+' complete and scroll to next exercise');next.onclick=()=>{const active=readActiveTimer();const stopActive=active?.key===checkKey&&active.workout===currentWorkoutSignature&&active.mode==='watch'&&!timerRows.get(checkKey)?.walking;clearActiveTimer(checkKey);const endWalk=timerMode.value==='watch'&&walkBoundary(section,itemIndex).end;check.checked=true;saved[checkKey]=true;localStorage.setItem('workout-checks-'+d.date,JSON.stringify(saved));const following=row.nextElementSibling||card.nextElementSibling?.querySelector('.item');if(following){following.scrollIntoView({behavior:'smooth',block:'start'});}else{next.textContent='✓ Workout complete';next.disabled=true;}if(endWalk)openWorkoutShortcut(shortcutURL('Workout Walk End'));else if(stopActive)requestTimerStop();};row.append(next);timerRows.set(checkKey,{check,done:next,walking:/\b(?:treadmill|indoor)\b/i.test(section.title)});card.append(row)}main.append(card)}updateStopPrompt();finishExpiredTimer()}catch(e){document.querySelector('#status').textContent='Unable to load workout: '+e.message}}
 // Safari may restore its own scroll position after returning from Shortcuts.
 // Resume only after the refreshed cards and their saved checkboxes are ready.
 if ('scrollRestoration' in history) history.scrollRestoration='manual';
+const shortcutResumeKey='workout-return-from-shortcuts';
+function openWorkoutShortcut(url){sessionStorage.setItem(shortcutResumeKey,'1');location.href=url;}
+
 let refreshInProgress=null;
-function refreshWorkout(){
+function refreshWorkout(mode='preserve'){
   if(refreshInProgress)return refreshInProgress;
+  const oldScrollY=window.scrollY;
   refreshInProgress=load().then(()=>new Promise(resolve=>{
     requestAnimationFrame(()=>{
-      const rows=Array.from(document.querySelector('#workout').querySelectorAll('.item'));
-      const next=rows.find(row=>!row.querySelector('.check').checked)||rows[rows.length-1];
-      next?.scrollIntoView({behavior:'auto',block:'start'});
+      if(mode==='resume'){
+        const rows=Array.from(document.querySelector('#workout').querySelectorAll('.item'));
+        const next=rows.find(row=>!row.querySelector('.check').checked)||rows[rows.length-1];
+        next?.scrollIntoView({behavior:'auto',block:'start'});
+      }else if(mode==='top'){
+        window.scrollTo({top:0,behavior:'instant'});
+      }else{
+        window.scrollTo({top:oldScrollY,behavior:'instant'});
+      }
       resolve();
     });
   })).finally(()=>{refreshInProgress=null});
   return refreshInProgress;
+}
+function refreshAfterShortcut(){
+  const returning=sessionStorage.getItem(shortcutResumeKey)==='1';
+  if(returning)sessionStorage.removeItem(shortcutResumeKey);
+  return refreshWorkout(returning?'resume':'preserve');
 }
 document.querySelector('#refresh-workout').addEventListener('click',async()=>{
   const button=document.querySelector('#refresh-workout'),feedback=document.querySelector('#refresh-feedback');
@@ -160,8 +175,8 @@ document.querySelector('#refresh-workout').addEventListener('click',async()=>{
   }catch(error){feedback.textContent='Refresh failed: '+error.message}
   finally{button.disabled=false}
 });
-refreshWorkout();
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshWorkout()});
-window.addEventListener('pageshow',refreshWorkout);
-window.addEventListener('focus',refreshWorkout);
+refreshWorkout('top');
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshAfterShortcut()});
+window.addEventListener('pageshow',refreshAfterShortcut);
+window.addEventListener('focus',refreshAfterShortcut);
 </script></body></html>
