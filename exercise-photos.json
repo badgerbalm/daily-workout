@@ -405,7 +405,8 @@
       "aliases": [
         "Glute bridge",
         "Supine bridge",
-        "Weighted glute bridges"
+        "Weighted glute bridges",
+        "Bodyweight glute bridges"
       ],
       "status": "ready",
       "photos": [
@@ -638,6 +639,59 @@
       ],
       "demo": "https://www.youtube.com/watch?v=T31_qyE7Xqw",
       "animationPage": "https://www.calixpert.com/exercises/laying-bent-leg-raises"
+    },
+    "standing-calf-stretch": {
+      "name": "Standing calf stretch",
+      "aliases": [],
+      "status": "missing",
+      "reason": "No verified reusable photograph of the exact movement yet.",
+      "photos": []
+    },
+    "standing-hip-flexor-stretch": {
+      "name": "Standing hip flexor stretch",
+      "aliases": [],
+      "status": "missing",
+      "reason": "No verified reusable photograph of the exact movement yet.",
+      "photos": []
+    },
+    "supine-figure-four-stretch": {
+      "name": "Supine figure-four stretch",
+      "aliases": [],
+      "status": "missing",
+      "reason": "No verified reusable photograph of the exact movement yet.",
+      "photos": []
+    },
+    "shoulder-rolls-and-arm-circles": {
+      "name": "Shoulder rolls and arm circles",
+      "aliases": [],
+      "status": "missing",
+      "reason": "No verified reusable photograph of the exact movement yet.",
+      "photos": []
+    },
+    "bird-dogs": {
+      "name": "Bird dogs",
+      "aliases": [
+        "Bird dog",
+        "Bird-dog exercise"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/bird-dog.jpg",
+          "alt": "Woman on hands and knees extending the opposite arm and leg horizontally in a bird dog exercise.",
+          "caption": "Extend the opposite arm and leg; repeat on both sides.",
+          "title": "Bird dog exercise",
+          "author": "PTPioneer",
+          "source": "https://commons.wikimedia.org/wiki/File:Bird_dog_exercise.jpg",
+          "attributionUrl": "https://www.ptpioneer.com/",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+          "changes": "Resized to 1200 × 800 and JPEG optimized; no cropping.",
+          "width": 1200,
+          "height": 800,
+          "sha256": "6092e8f0388104e73982ee1ac056d482cbadf4f701907a9a3ff123d1fa5a868b"
+        }
+      ]
     }
   }
 }

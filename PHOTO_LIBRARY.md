@@ -82,3 +82,9 @@ The owner supplied `images/lying-quad-stretch.png` on October 24, 2026. The orig
 ## Owner-supplied dead bug movement guide
 
 `images/dead-bug-guide.jpg` replaces the single starting-position thumbnail in the active dead bug entry. The uploaded JPEG is preserved unchanged, including its text and form cues, and expands in the existing photo viewer. Original creator and reuse license were not supplied; no open license is claimed. The earlier `dead-bug-start.jpg` remains available with its original source/license record. Exercise instructions, repetitions, durations, and controls are unchanged.
+
+## November 2026 coverage audit
+
+Run `node scripts/audit-photos.cjs --strict` before claiming full photo coverage for a published plan. It reports unregistered names, registered missing entries, and broken local paths separately; missing photos fail strict mode. Continue running `node tests/verify-photos.cjs` for asset hashes, attribution and renderer regressions.
+
+The November 7 plan currently has photos for 8 of 13 exercise cards. Bodyweight glute bridges now resolve to the existing exact-movement photos. Bird dogs use a newly verified PTPioneer CC BY 2.0 photograph. Four previously unregistered mobility movements now have explicit missing entries; dumbbell floor press remains missing. These placeholders are not completed photo coverage. No exercise or prescription was changed to obtain a passing audit.

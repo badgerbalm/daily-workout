@@ -36,6 +36,7 @@ const {chromium}=require('playwright');
  await page.reload();await page.waitForSelector('#end-watch-section',{state:'visible'});
  await page.evaluate(()=>{window.launches=[];openWorkoutShortcut=url=>window.launches.push(url)});
  await page.locator('#end-watch-section').click();assert.deepEqual(await names(),['Workout Walk End']);
+ await page.locator('.settings summary').click();
  await page.selectOption('#timer-mode','iphone');await start(4);
  assert.equal((await names()).at(-1),'Workout Timer');
  assert.equal(await page.evaluate(()=>localStorage.getItem('workout-watch-section')),null);

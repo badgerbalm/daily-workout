@@ -205,3 +205,11 @@ Transversus Abdominis Ultrasound Thickness during Popular Trunk–Pilates Exerci
 - Supplied by the site owner on October 24, 2026 for the dead bug exercise. Creator and original source URL not supplied; no open reuse license verified. Do not represent the guide as Creative Commons or public domain.
 - Shows the setup, opposite arm and leg extension, and return, with accompanying form cues.
 - Replaces `dead-bug-start.jpg` in the active mapping. The earlier starting-position photograph and its CC BY 4.0 attribution remain archived.
+
+## Bird dog exercise (November 2026)
+
+- Local file: `bird-dog.jpg`, 1200 × 800, resized and JPEG optimized without cropping.
+- Author: [PTPioneer](https://www.ptpioneer.com/).
+- Source: [Bird dog exercise on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Bird_dog_exercise.jpg), originally published on Flickr by PTPioneer.
+- License: [Creative Commons Attribution 2.0](https://creativecommons.org/licenses/by/2.0/).
+- Visually inspected: quadruped opposite arm/leg extension; not a standing variation.

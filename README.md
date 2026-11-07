@@ -14,7 +14,7 @@ Verify repository assets and control regressions with:
 
 Non-treadmill timers track the requested duration from the Start button tap. When that duration expires, the page marks the started exercise complete and advances, either while Safari runs or on the next return/refresh. Treadmill and indoor-walk sections retain manual completion and the existing Walk Start/End shortcuts. Manual Done clears pending automatic completion and, for that exercise’s active Apple Watch/MultiTimer timer outside walking sections, launches Workout Timer Stop after saving the check and advancing. Completing a different card does not stop the active timer. Starting another timer replaces the previous tracked timer, and changing the workout invalidates stale timers. The next exercise's timer is never started automatically.
 
-In Apple Watch mode, expiration outside walking sections launches the tested `Workout Timer Stop` shortcut (MultiTimer Reset TIMER, then Open Safari). Completion is saved before the launch, so returning to Safari never triggers it twice. If Safari is hidden, the launch waits for the next visible refresh. A Stop timer · return to Safari button provides a user-tap fallback when automatic external-app navigation is blocked; starting any new timer clears the old fallback. iPhone Clock mode never invokes this MultiTimer reset shortcut.
+In Apple Watch mode, expiration outside walking sections launches the tested `Workout Timer Stop` shortcut (MultiTimer Reset TIMER, then Go to Home Screen). Completion is saved before the launch, so reopening the web app never triggers it twice. If Safari is hidden, the launch waits for the next visible refresh. A Stop timer button provides a user-tap fallback when automatic external-app navigation is blocked; starting any new timer clears the old fallback. iPhone Clock mode never invokes this MultiTimer reset shortcut.
 
 The page cannot verify that the shortcut ran or inspect external timer status. Requested-duration tracking does not reflect timers canceled or changed in MultiTimer. Locked/background Safari does not provide a guaranteed timer-end trigger; the page catches up on return.
 
@@ -29,3 +29,22 @@ Set `watchWorkout: "strength"` or `"core"` on the section during `/plan` and `/u
 In Watch mode, the first timer tapped in a section launches `Workout Strength Start` or `Workout Core Start` with that exercise's seconds. These shortcuts start Functional Strength Training/Core Training, start TIMER using the passed duration, and Go to Home Screen. Later timers use Workout Timer Watch without starting a new Watch workout. Final Done (including timer-expiry completion) consumes the section state and runs the shared `Workout Walk End` shortcut, which must Reset TIMER, End Workout, then Go to Home Screen. Do not end the Watch workout in Workout Timer Stop.
 
 End Watch section is available while a strength/core session is tracked, including after reopening the app or receiving a new plan. It ends the Watch recording early without marking unperformed exercises complete. Finish that tracked session before starting another section. Reopening never reruns start/end automatically. These are requested actions, not verified Watch state: if a Shortcut is canceled, use End Watch section to clear the tracked session and retry; if ending is canceled, run Workout Walk End manually. The app cannot query Watch recording state or automatically reopen the Home Screen web app. Existing iPhone timer mode and treadmill boundaries are preserved.
+
+## iPhone layout and photo validation
+
+The interface is designed for an iOS Home Screen web app, including safe-area spacing, large touch targets and expandable timer settings. Shortcuts finish with Go to Home Screen; tap the app icon to continue. The page cannot reopen itself or verify on-device actions.
+
+Run the independent checks:
+
+```sh
+node tests/verify-photos.cjs
+node tests/verify-watch-lifecycle.cjs
+node scripts/audit-photos.cjs --strict
+# With a local HTTP server on port 8765 and Playwright/Chromium available:
+node tests/verify-watch-sections.cjs
+node tests/verify-mobile.cjs
+```
+
+The strict photo audit intentionally fails if any prescribed movement lacks a photo. Do not bypass it when claiming complete photo coverage. The registry/renderer check accepts explicitly documented missing entries, while checking all existing file hashes and attribution. Mobile behavior tests use fixed synthetic plans rather than a particular day's workout.
+
+Current November 7 plan: 8 of 13 cards have photos. Bodyweight glute bridges now match the existing library; bird dogs have a verified CC BY 2.0 photo. Standing calf stretch, standing hip flexor stretch, supine figure-four stretch, shoulder rolls/arm circles, and dumbbell floor press still need verified exact-movement photos. The calf candidate inspected during this pass was rejected because it did not clearly demonstrate the movement.
