@@ -24,6 +24,7 @@ function harness(preview,storage={}){
 }
 (async()=>{
  const production=harness(false,{'workout-shortcut-profile':'safari-test'});await production.reload();production.start(0);assert.equal(production.name(),'Workout Timer Watch');assert(production.elements['#safari-preview'].hidden,'No test mode exposed on production');
+ const switching=harness(true,{'workout-shortcut-profile':'safari-test'});await switching.reload();switching.start(0);switching.start(1);assert.equal(switching.name(),'Workout Timer Watch Safari Test');assert.equal(new URL(switching.ctx.location.href).searchParams.get('text'),'30','Starting the next card passes its duration, not the previous 60 seconds');assert(switching.rows()[0].querySelector('.check').checked);assert.equal(vm.runInContext('readActiveTimer().key',switching.ctx),'0-1');
  const test=harness(true);await test.reload();test.elements['#shortcut-profile'].value='safari-test';test.elements['#shortcut-profile'].onchange();
  test.start(0);assert.equal(test.name(),'Workout Timer Watch Safari Test');assert.equal(new URL(test.ctx.location.href).searchParams.get('text'),'60');assert(test.storage['workout-navigation-position'],'Position is saved before launch');
  test.elements['#shortcut-profile'].value='normal';test.elements['#shortcut-profile'].onchange();assert.equal(test.elements['#shortcut-profile'].value,'safari-test','Cannot change profile mid-timer');
