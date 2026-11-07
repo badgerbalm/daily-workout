@@ -54,3 +54,13 @@ Current November 7 plan: 9 of 13 cards have complete photo coverage, one has par
 Start timer saves the selected exercise before leaving. Done saves the following exercise before any reset/end Shortcut. A full reopening restores that exercise for the exact same published plan; ordinary browsing also saves the visible card and offset when leaving. Remembering a position never checks an exercise or starts another timer. A changed plan ignores the old bookmark. The app still needs to fetch its plan: this is navigation persistence, not offline workout storage or the future private history system.
 
 Done names the next exercise but does not start its timer. Starting that next timer retains the established inferred-completion behavior. Checkbox and Done updates merge with saved checks so they cannot erase completions written by Start. The browser suite includes cold and warm reopening, merged checks, expired timers, manual browsing, and changed/corrupt bookmarks. Actual iOS Home Screen behavior still needs device testing.
+
+## Isolated Safari Shortcut preview
+
+`node scripts/build-preview.cjs /absolute/preview/dist` copies only the public app files and image library, then enables preview-only Shortcut routing. The regular app always uses original Shortcut names, even if a stale Safari-test preference exists in storage.
+
+The private preview is hosted with Sites at https://daily-workout-safari-preview.badgerbalm.chatgpt.site/ and includes a linked `safari-test.html` setup guide. It is a snapshot of the published prescription at build time; the existing 5 AM task does not update this separate preview. Sign in with the owning ChatGPT account if prompted. Preview checks and timer records are isolated from the live GitHub Pages origin.
+
+Append ` Safari Test` to each original Shortcut name, preserve all timer/Watch actions and supplied seconds, and replace the final Go to Home Screen with URL and Open URLs pointing to the preview root. Start with Workout Timer Watch Safari Test and Workout Timer Stop Safari Test on a mobility card. Duplicate the walk start/end, strength start, core start, and iPhone timer before testing those paths. The page pins the selected Shortcut set while a requested timer or Watch recording is tracked; timer-only Stop does not unlock an ongoing Watch section.
+
+Run `node tests/verify-safari-shortcuts.cjs` for deterministic routing/lifecycle coverage. On-device testing is still needed for Safari tab reuse, return navigation, actual MultiTimer resets and Watch recording. The website cannot control Safari tab reuse or inspect device actions. No private history synchronization is supplied by preview hosting.
