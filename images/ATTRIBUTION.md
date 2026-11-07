@@ -213,3 +213,21 @@ Transversus Abdominis Ultrasound Thickness during Popular Trunk–Pilates Exerci
 - Source: [Bird dog exercise on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Bird_dog_exercise.jpg), originally published on Flickr by PTPioneer.
 - License: [Creative Commons Attribution 2.0](https://creativecommons.org/licenses/by/2.0/).
 - Visually inspected: quadruped opposite arm/leg extension; not a standing variation.
+
+## images/standing-calf-stretch.jpg
+
+Running clinic helps speed up Airmen, by Staff Sgt. Christopher Ruano / U.S. Air Force.
+
+[Source and public-domain notice](https://commons.wikimedia.org/wiki/File:Running_clinic_helps_speed_up_Airmen_161006-F-VS255-2008.jpg) · [Original DVIDS record](https://www.dvidshub.net/image/2926446/running-clinic-helps-speed-up-airmen)
+
+Changes: resized to 1200 × 799; JPEG optimized; original framing retained. This is a close view of heel-down foot placement, not a full-body posture demonstration.
+
+## images/arm-circles.jpg
+
+Arm Circles, Capt. Matthew Holfinger / U.S. Marine Corps Training and Education Command, June 23, 2017.
+
+[Source and public-domain notice](https://www.dvidshub.net/video/551356/arm-circles) · [Reuse terms](https://www.dvidshub.net/about/copyright)
+
+Changes: still extracted at 00:13, JPEG optimized without cropping. This demonstrates only the arm-circle portion of the combined shoulder-roll/arm-circle card. Shoulder rolls are not pictured.
+
+The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.

@@ -209,7 +209,8 @@
       "aliases": [],
       "status": "missing",
       "photos": [],
-      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose."
+      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose.",
+      "demo": "https://na.physitrack.com/home-exercise-video/floor-press-with-dumbbells"
     },
     "supported-row": {
       "name": "Supported one-arm dumbbell row",
@@ -643,30 +644,64 @@
     "standing-calf-stretch": {
       "name": "Standing calf stretch",
       "aliases": [],
-      "status": "missing",
-      "reason": "No verified reusable photograph of the exact movement yet.",
-      "photos": []
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/standing-calf-stretch.jpg",
+          "alt": "Close view of staggered legs during a standing calf stretch with the rear heel grounded.",
+          "caption": "Heel-down foot placement; follow the written instructions for upper-body posture.",
+          "title": "Running clinic helps speed up Airmen · calf stretch",
+          "author": "Staff Sgt. Christopher Ruano / U.S. Air Force",
+          "source": "https://commons.wikimedia.org/wiki/File:Running_clinic_helps_speed_up_Airmen_161006-F-VS255-2008.jpg",
+          "license": "Public domain (U.S. federal government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Resized to 1200 × 799 and JPEG optimized; original framing retained.",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.",
+          "width": 1200,
+          "height": 799,
+          "sha256": "717f905575ff0751e7c7504525bd26b13b3147e12c2e0727ed3f33b873089833"
+        }
+      ]
     },
     "standing-hip-flexor-stretch": {
       "name": "Standing hip flexor stretch",
       "aliases": [],
       "status": "missing",
       "reason": "No verified reusable photograph of the exact movement yet.",
-      "photos": []
+      "photos": [],
+      "demo": "https://us.physitrack.com/home-exercise-video/hip-flexor-stretch-in-standing---version-2-%2528iliopsoas%2529"
     },
     "supine-figure-four-stretch": {
       "name": "Supine figure-four stretch",
       "aliases": [],
       "status": "missing",
       "reason": "No verified reusable photograph of the exact movement yet.",
-      "photos": []
+      "photos": [],
+      "demo": "https://na.physitrack.com/home-exercise-video/supine-figure-4-stretch"
     },
     "shoulder-rolls-and-arm-circles": {
       "name": "Shoulder rolls and arm circles",
       "aliases": [],
-      "status": "missing",
-      "reason": "No verified reusable photograph of the exact movement yet.",
-      "photos": []
+      "status": "partial",
+      "reason": "Photo demonstrates arm circles only; shoulder-roll photograph still needed.",
+      "photos": [
+        {
+          "src": "images/arm-circles.jpg",
+          "alt": "Marine standing upright with arms extended to the sides during arm circles.",
+          "caption": "Arm-circle portion only. Shoulder rolls are not pictured.",
+          "title": "Arm Circles · frame at 00:13",
+          "author": "Capt. Matthew Holfinger / U.S. Marine Corps",
+          "source": "https://www.dvidshub.net/video/551356/arm-circles",
+          "license": "Public domain (U.S. federal government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Still extracted at 00:13 from the public-domain demonstration; JPEG optimized; no cropping.",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.",
+          "width": 1024,
+          "height": 576,
+          "sha256": "4509b033684d05fdc4b19c71ac7ba583344f47c1f3a3707a4b13c124f2659a5a"
+        }
+      ],
+      "demo": "https://www.dvidshub.net/video/551356/arm-circles"
     },
     "bird-dogs": {
       "name": "Bird dogs",

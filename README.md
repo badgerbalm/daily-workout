@@ -39,12 +39,12 @@ Run the independent checks:
 ```sh
 node tests/verify-photos.cjs
 node tests/verify-watch-lifecycle.cjs
+node tests/verify-photo-audit.cjs
 node scripts/audit-photos.cjs --strict
-# With a local HTTP server on port 8765 and Playwright/Chromium available:
-node tests/verify-watch-sections.cjs
-node tests/verify-mobile.cjs
+# With Playwright and Chromium available (no separate server needed):
+node tests/run-browser.cjs
 ```
 
-The strict photo audit intentionally fails if any prescribed movement lacks a photo. Do not bypass it when claiming complete photo coverage. The registry/renderer check accepts explicitly documented missing entries, while checking all existing file hashes and attribution. Mobile behavior tests use fixed synthetic plans rather than a particular day's workout.
+The strict photo audit intentionally fails if any prescribed movement lacks a photo or has only partial coverage. Do not bypass it when claiming complete photo coverage. The registry/renderer check accepts explicitly documented missing entries, while checking all existing file hashes and attribution. Mobile behavior tests use fixed synthetic plans rather than a particular day's workout.
 
-Current November 7 plan: 8 of 13 cards have photos. Bodyweight glute bridges now match the existing library; bird dogs have a verified CC BY 2.0 photo. Standing calf stretch, standing hip flexor stretch, supine figure-four stretch, shoulder rolls/arm circles, and dumbbell floor press still need verified exact-movement photos. The calf candidate inspected during this pass was rejected because it did not clearly demonstrate the movement.
+Current November 7 plan: 9 of 13 cards have complete photo coverage, one has partial coverage, and three have no photos. Standing calf stretch now has a public-domain heel-placement photograph, and shoulder rolls/arm circles has an explicitly labeled arm-circle-only still. The shoulder-roll portion still needs a photo. Standing hip flexor stretch, supine figure-four stretch, and dumbbell floor press have verified external demonstration-page links, but their media remain copyrighted and are not copied or hotlinked. The strict audit still fails for these incomplete cards.
