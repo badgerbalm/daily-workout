@@ -82,7 +82,8 @@
           "seconds": 120,
           "instructions": "Controlled movement, avoid back arching and groin strain."
         }
-      ]
+      ],
+      "watchWorkout": "strength"
     },
     {
       "title": "Gentle core · 4 minutes",
@@ -99,7 +100,8 @@
           "seconds": 120,
           "instructions": "Keep knees bent and shorten reach if uncomfortable."
         }
-      ]
+      ],
+      "watchWorkout": "core"
     }
   ]
 }

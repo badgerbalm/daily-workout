@@ -26,8 +26,8 @@
 #timer-stop-prompt{position:fixed;bottom:12px;left:12px;right:12px;max-width:700px;margin:auto;padding:12px;background:#fff7e8;border:1px solid #c98a22;border-radius:12px;z-index:5;box-shadow:0 2px 10px #0003;font-size:.9rem}#timer-stop-prompt button{margin-top:6px}
 </style><!-- Pages redeploy trigger: 2026-11-06 workout buttons -->
 </head>
-<body><h1>🏃 Daily Workout</h1><p class="muted" id="status">Loading latest workout…</p><p class="notice" id="notice">This page is public. Avoid putting medical details here.</p><div class="workout-actions"><button type="button" id="refresh-workout">↻ Refresh Workout</button></div><p class="muted" id="refresh-feedback" role="status" aria-live="polite">Workout refreshes automatically when opened or resumed.</p><p><label for="timer-mode">Timer: </label><select id="timer-mode" style="font:inherit;padding:8px;border-radius:8px"><option value="watch">Apple Watch · MultiTimer</option><option value="iphone">iPhone Clock · original</option></select></p><p class="muted">Start a timer, then lock your iPhone for Watch alerts. MultiTimer’s TIMER must have Use as System Alarm enabled.</p><main id="workout"></main>
-<p class="muted">For treadmill or indoor walking sections, the first timer starts Indoor Walk and the last Done ends it. Other timers use Workout Timer Watch. Outside treadmill and indoor-walk sections, the requested duration automatically marks the exercise done and advances when Safari is active or you return. For Apple Watch mode, expired non-walking timers launch Workout Timer Stop to reset TIMER and return to Safari. If Safari blocks the launch, tap the Stop timer button. Choose iPhone Clock above to use the original Workout Timer Shortcut. Use Safari to avoid the Edge permission prompt.</p>
+<body><h1>🏃 Daily Workout</h1><p class="muted" id="status">Loading latest workout…</p><p class="notice" id="notice">This page is public. Avoid putting medical details here.</p><div class="workout-actions"><button type="button" id="refresh-workout">↻ Refresh Workout</button></div><p class="muted" id="refresh-feedback" role="status" aria-live="polite">Workout refreshes automatically when opened or resumed.</p><p><label for="timer-mode">Timer: </label><select id="timer-mode" style="font:inherit;padding:8px;border-radius:8px"><option value="watch">Apple Watch · MultiTimer</option><option value="iphone">iPhone Clock · original</option></select></p><p class="muted">Start a timer, then lock your iPhone for Watch alerts. MultiTimer’s TIMER must have Use as System Alarm enabled.</p><main id="workout"></main><p id="watch-section-controls" hidden><button id="end-watch-section" type="button">End Watch section</button></p>
+<p class="muted">For treadmill or indoor walking sections, the first timer starts Indoor Walk and the last Done ends it. The first timer in each strength or core section starts its Watch workout; its final Done ends it using Workout Walk End. Other exercise timers use Workout Timer Watch. Outside treadmill and indoor-walk sections, the requested duration automatically marks the exercise done and advances when Safari is active or you return. For Apple Watch mode, expired non-walking timers launch Workout Timer Stop to reset TIMER and return to Safari. If Safari blocks the launch, tap the Stop timer button. Choose iPhone Clock above to use the original Workout Timer Shortcut. Use Safari to avoid the Edge permission prompt.</p>
 <aside id="timer-stop-prompt" hidden role="status">If the finished timer is still ringing:<br><button id="timer-stop-button" type="button">Stop timer · return to Safari</button></aside>
 <dialog id="photo-viewer" aria-label="Expanded exercise photographs">
 <div class="photo-toolbar"><button class="photo-back" type="button" autofocus>← Back to workout</button></div>
@@ -53,6 +53,47 @@ function getPhotoLibrary(){
   return photoLibraryPromise??=fetch('./exercise-photos.json', {cache:'no-cache'})
     .then(r=>{if(!r.ok)throw Error('Photo library HTTP '+r.status);return r.json()})
     .catch(error=>{console.warn(error);photoLibraryPromise=null;return {exercises:{}}});
+}
+// Watch section lifecycle is separate from the individual exercise timers.
+const watchSectionKey='workout-watch-section';
+function watchSectionType(section){
+  if(section.watchWorkout==='none')return null;
+  if(['strength','core'].includes(section.watchWorkout))return section.watchWorkout;
+  const title=section.title.toLowerCase();
+  if(/treadmill|indoor|stretch|mobility|tai chi/.test(title))return null;
+  if(/strength/.test(title))return 'strength';
+  if(/core|abs|obliques/.test(title))return 'core';
+  if(/glutes|upper body|resistance/.test(title))return 'strength';
+  return null;
+}
+function readWatchSection(){try{return JSON.parse(localStorage.getItem(watchSectionKey)||'null')}catch{return null}}
+function updateWatchSectionControls(){
+  const active=readWatchSection();
+  document.querySelector('#watch-section-controls').hidden=!active;
+  document.querySelector('#end-watch-section').onclick=()=>endWatchSection();
+}
+function sectionTimerURL(section,sectionIndex,itemIndex,seconds){
+  const type=watchSectionType(section),active=readWatchSection();
+  if(timerMode.value!=='watch')return timerURL(seconds,timerMode.value,false);
+  if(active&&(active.workout!==currentWorkoutSignature||active.sectionIndex!==sectionIndex)){
+    throw Error('End the current Watch section with End Watch section before starting another section.');
+  }
+  const fallback=timerURL(seconds,'watch',walkBoundary(section,itemIndex).start);
+  if(!type||active)return fallback;
+  localStorage.setItem(watchSectionKey,JSON.stringify({workout:currentWorkoutSignature,sectionIndex,type}));
+  updateWatchSectionControls();
+  return shortcutURL(type==='core'?'Workout Core Start':'Workout Strength Start',Number(seconds));
+}
+function endWatchSection(){
+  if(!readWatchSection())return false;
+  // Consume before leaving so reopening the web app cannot end twice.
+  localStorage.removeItem(watchSectionKey);clearActiveTimer();
+  localStorage.removeItem(stopReminderKey);updateStopPrompt();updateWatchSectionControls();
+  openWorkoutShortcut(shortcutURL('Workout Walk End'));return true;
+}
+function finishWatchSection(sectionIndex,itemIndex,section){
+  const active=readWatchSection();
+  return !!(active&&active.workout===currentWorkoutSignature&&active.sectionIndex===sectionIndex&&itemIndex===section.items.length-1&&endWatchSection());
 }
 // Track the requested duration locally; MultiTimer does not send completion events.
 const activeTimerKey='workout-active-exercise-timer';
@@ -99,8 +140,8 @@ function finishExpiredTimer(){
   if(remaining>0){expiryTimeout=setTimeout(finishExpiredTimer,Math.min(remaining,2147483647));return}
   if(document.hidden)return;
   // Save completion before leaving Safari; returning must never re-launch Stop.
-  clearActiveTimer();row.done.onclick();
-  if(active.mode==='watch')requestTimerStop();
+  clearActiveTimer();const sectionEnded=row.done.onclick();
+  if(!sectionEnded&&active.mode==='watch')requestTimerStop();
 }
 function trackExerciseTimer(section,item,key,workout){
   clearActiveTimer();localStorage.removeItem(stopReminderKey);updateStopPrompt();
@@ -108,7 +149,7 @@ function trackExerciseTimer(section,item,key,workout){
   localStorage.setItem(activeTimerKey,JSON.stringify({key,workout,mode:timerMode.value,endsAt:Date.now()+Number(item.seconds)*1000}));
   finishExpiredTimer();
 }
-async function load(){try{const photoLibrary=await getPhotoLibrary();const r=await fetch('./workout.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();document.querySelector('#status').textContent='Workout dated '+d.date+' · '+(d.sections?.[1]?.items?.length||0)+' strength steps';document.querySelector('#notice').textContent=d.note||'';const main=document.querySelector('#workout');const saved=JSON.parse(localStorage.getItem('workout-checks-'+d.date)||'{}');currentWorkoutSignature=JSON.stringify(d);timerRows=new Map();main.replaceChildren();for(const [sectionIndex,section] of d.sections.entries()){const card=document.createElement('section');card.className='card';const h=document.createElement('h2');h.textContent=section.title;card.append(h);if(section.title==='Strength and core'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Complete one set of each exercise per round. Rest 45–60 seconds between exercises and 75–90 seconds between rounds.';card.append(tip)}if(section.title==='Tai Chi'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Two gentle rounds of five movements, about 10 minutes total.';card.append(tip)}for(const [itemIndex,item] of section.items.entries()){const row=document.createElement('div');row.className='item';const left=document.createElement('label');left.className='left';const check=document.createElement('input');check.type='checkbox';check.className='check';const checkKey=item.progressKey||sectionIndex+'-'+itemIndex;check.checked=!!(Object.prototype.hasOwnProperty.call(saved,checkKey)?saved[checkKey]:saved[item.legacyProgressKey]);check.onchange=()=>{saved[checkKey]=check.checked;localStorage.setItem('workout-checks-'+d.date,JSON.stringify(saved))};const body=document.createElement('div');const name=document.createElement('div');name.className='name';name.textContent=item.name;const detail=document.createElement('div');detail.className='detail';detail.textContent=item.detail||'';body.append(name,detail);const info=guidance[item.name.toLowerCase()];const instruction=document.createElement('div');instruction.className='instructions';instruction.textContent=item.instructions||info?.[1]||'Use a controlled, comfortable range of motion.';body.append(instruction);const demo=exerciseDemo(photoLibrary,item.name)||item.demo||demos[item.name.toLowerCase()];if(demo){const link=document.createElement('a');link.className='demo';link.href=demo;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View movement demonstration ↗';body.append(link)}left.append(check,body);const art=document.createElement('div');art.className='art';renderExercisePhotos(art,body,item,photoLibrary);row.append(art,left);if(item.seconds){const b=document.createElement('button');b.textContent='▶ '+time(item.seconds);b.onclick=()=>{try{const url=timerURL(item.seconds,timerMode.value,walkBoundary(section,itemIndex).start);const previous=readActiveTimer();
+async function load(){try{const photoLibrary=await getPhotoLibrary();const r=await fetch('./workout.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();document.querySelector('#status').textContent='Workout dated '+d.date+' · '+(d.sections?.[1]?.items?.length||0)+' strength steps';document.querySelector('#notice').textContent=d.note||'';const main=document.querySelector('#workout');const saved=JSON.parse(localStorage.getItem('workout-checks-'+d.date)||'{}');currentWorkoutSignature=JSON.stringify(d);timerRows=new Map();main.replaceChildren();for(const [sectionIndex,section] of d.sections.entries()){const card=document.createElement('section');card.className='card';const h=document.createElement('h2');h.textContent=section.title;card.append(h);if(section.title==='Strength and core'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Complete one set of each exercise per round. Rest 45–60 seconds between exercises and 75–90 seconds between rounds.';card.append(tip)}if(section.title==='Tai Chi'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Two gentle rounds of five movements, about 10 minutes total.';card.append(tip)}for(const [itemIndex,item] of section.items.entries()){const row=document.createElement('div');row.className='item';const left=document.createElement('label');left.className='left';const check=document.createElement('input');check.type='checkbox';check.className='check';const checkKey=item.progressKey||sectionIndex+'-'+itemIndex;check.checked=!!(Object.prototype.hasOwnProperty.call(saved,checkKey)?saved[checkKey]:saved[item.legacyProgressKey]);check.onchange=()=>{saved[checkKey]=check.checked;localStorage.setItem('workout-checks-'+d.date,JSON.stringify(saved))};const body=document.createElement('div');const name=document.createElement('div');name.className='name';name.textContent=item.name;const detail=document.createElement('div');detail.className='detail';detail.textContent=item.detail||'';body.append(name,detail);const info=guidance[item.name.toLowerCase()];const instruction=document.createElement('div');instruction.className='instructions';instruction.textContent=item.instructions||info?.[1]||'Use a controlled, comfortable range of motion.';body.append(instruction);const demo=exerciseDemo(photoLibrary,item.name)||item.demo||demos[item.name.toLowerCase()];if(demo){const link=document.createElement('a');link.className='demo';link.href=demo;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View movement demonstration ↗';body.append(link)}left.append(check,body);const art=document.createElement('div');art.className='art';renderExercisePhotos(art,body,item,photoLibrary);row.append(art,left);if(item.seconds){const b=document.createElement('button');b.textContent='▶ '+time(item.seconds);b.onclick=()=>{try{const url=sectionTimerURL(section,sectionIndex,itemIndex,item.seconds);const previous=readActiveTimer();
 // Starting the next step completes the preceding step in every section,
 // including treadmill and indoor-walk intervals. Do not stop the walk workout.
 const last=readLastStarted();
@@ -131,7 +172,7 @@ if(previous&&previous.key!==checkKey&&previous.workout===currentWorkoutSignature
   }
 }
 localStorage.setItem(lastStartedKey,JSON.stringify({date:d.date,key:checkKey,workout:currentWorkoutSignature}));
-trackExerciseTimer(section,item,checkKey,currentWorkoutSignature);row.scrollIntoView({behavior:'smooth',block:'start'});openWorkoutShortcut(url)}catch(e){alert(e.message)}};row.append(b)}const next=document.createElement('button');next.className='next-exercise';next.textContent='✓ Done · Next ↓';next.setAttribute('aria-label','Mark '+item.name+' complete and scroll to next exercise');next.onclick=()=>{const active=readActiveTimer();const stopActive=active?.key===checkKey&&active.workout===currentWorkoutSignature&&active.mode==='watch'&&!timerRows.get(checkKey)?.walking;clearActiveTimer(checkKey);const endWalk=timerMode.value==='watch'&&walkBoundary(section,itemIndex).end;check.checked=true;saved[checkKey]=true;localStorage.setItem('workout-checks-'+d.date,JSON.stringify(saved));const following=row.nextElementSibling||card.nextElementSibling?.querySelector('.item');if(following){following.scrollIntoView({behavior:'smooth',block:'start'});}else{next.textContent='✓ Workout complete';next.disabled=true;}if(endWalk)openWorkoutShortcut(shortcutURL('Workout Walk End'));else if(stopActive)requestTimerStop();};row.append(next);timerRows.set(checkKey,{check,done:next,walking:/\b(?:treadmill|indoor)\b/i.test(section.title)});card.append(row)}main.append(card)}updateStopPrompt();finishExpiredTimer()}catch(e){document.querySelector('#status').textContent='Unable to load workout: '+e.message}}
+trackExerciseTimer(section,item,checkKey,currentWorkoutSignature);row.scrollIntoView({behavior:'smooth',block:'start'});openWorkoutShortcut(url)}catch(e){alert(e.message)}};row.append(b)}const next=document.createElement('button');next.className='next-exercise';next.textContent='✓ Done · Next ↓';next.setAttribute('aria-label','Mark '+item.name+' complete and scroll to next exercise');next.onclick=()=>{const active=readActiveTimer();const stopActive=active?.key===checkKey&&active.workout===currentWorkoutSignature&&active.mode==='watch'&&!timerRows.get(checkKey)?.walking;clearActiveTimer(checkKey);const endWalk=timerMode.value==='watch'&&walkBoundary(section,itemIndex).end;check.checked=true;saved[checkKey]=true;localStorage.setItem('workout-checks-'+d.date,JSON.stringify(saved));const following=row.nextElementSibling||card.nextElementSibling?.querySelector('.item');if(following){following.scrollIntoView({behavior:'smooth',block:'start'});}else{next.textContent='✓ Workout complete';next.disabled=true;}if(finishWatchSection(sectionIndex,itemIndex,section))return true;if(endWalk)openWorkoutShortcut(shortcutURL('Workout Walk End'));else if(stopActive)requestTimerStop();return false;};row.append(next);timerRows.set(checkKey,{check,done:next,walking:/\b(?:treadmill|indoor)\b/i.test(section.title)});card.append(row)}main.append(card)}updateWatchSectionControls();updateStopPrompt();finishExpiredTimer()}catch(e){document.querySelector('#status').textContent='Unable to load workout: '+e.message}}
 // Safari may restore its own scroll position after returning from Shortcuts.
 // Resume only after the refreshed cards and their saved checkboxes are ready.
 if ('scrollRestoration' in history) history.scrollRestoration='manual';

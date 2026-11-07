@@ -21,3 +21,11 @@ The page cannot verify that the shortcut ran or inspect external timer status. R
 ```sh
 node tests/verify-photos.cjs
 ```
+
+## Watch strength and core sections
+
+Set `watchWorkout: "strength"` or `"core"` on the section during `/plan` and `/update`; `"none"` explicitly disables detection. Legacy titles have fallback recognition. A combined strength/core section records one strength workout; use separate sections for separate recordings. No timing or exercise changes are required.
+
+In Watch mode, the first timer tapped in a section launches `Workout Strength Start` or `Workout Core Start` with that exercise's seconds. These shortcuts start Functional Strength Training/Core Training, start TIMER using the passed duration, and Go to Home Screen. Later timers use Workout Timer Watch without starting a new Watch workout. Final Done (including timer-expiry completion) consumes the section state and runs the shared `Workout Walk End` shortcut, which must Reset TIMER, End Workout, then Go to Home Screen. Do not end the Watch workout in Workout Timer Stop.
+
+End Watch section is available while a strength/core session is tracked, including after reopening the app or receiving a new plan. It ends the Watch recording early without marking unperformed exercises complete. Finish that tracked session before starting another section. Reopening never reruns start/end automatically. These are requested actions, not verified Watch state: if a Shortcut is canceled, use End Watch section to clear the tracked session and retry; if ending is canceled, run Workout Walk End manually. The app cannot query Watch recording state or automatically reopen the Home Screen web app. Existing iPhone timer mode and treadmill boundaries are preserved.
