@@ -8,7 +8,8 @@
 <div class="workout-tools"><div><p class="eyebrow">TODAY’S SESSION</p><p class="muted tools-hint">Move at your own pace.</p></div><button type="button" id="refresh-workout" class="secondary">↻ Refresh Workout</button></div>
 <p class="muted" id="refresh-feedback" role="status" aria-live="polite">Updates automatically when opened or resumed.</p>
 <details class="settings"><summary>Workout settings · timer, Watch &amp; colors</summary><div class="settings-content"><label for="workout-theme">Workout colors</label><select id="workout-theme"><option value="game-day">Game day · navy &amp; orange</option><option value="steelers">Steelers · black &amp; gold</option><option value="bills">Bills · blue &amp; red</option><option value="giants">Giants · navy &amp; red</option><option value="colts">Colts · blue &amp; white</option><option value="classic">Classic · forest &amp; lime</option></select><p class="theme-help">Pick your colors. Your choice stays on this device.</p><label for="timer-mode">Send timers to</label><select id="timer-mode"><option value="watch">Apple Watch · MultiTimer</option><option value="iphone">iPhone Clock · original</option></select><p>MultiTimer’s TIMER needs Use as System Alarm enabled. After a Shortcut returns you to the Home Screen, tap this app’s icon to continue.</p><p>The first walking timer starts Indoor Walk; its last Done ends it. Strength and core start on the first timer and keep recording between exercises until the final Done.</p><p>Timers track the duration requested here, not verified device completion. Non-walking timers mark the card done when that duration expires and the app is visible. Timer-only stops do not end Watch recording.</p><div id="watch-recovery" hidden><p>The page has saved Watch tracking. If your Watch is not recording, clear that saved tracking below. This does not stop a device timer or change completed exercises.</p><button id="clear-watch-tracking" type="button">Watch is stopped · clear saved tracking</button></div><p id="watch-recovery-result" role="status" aria-live="polite"></p></div></details>
-<aside id="safari-preview" class="preview-panel" hidden><strong>Safari return test · preview</strong><p>Choose a Shortcut set before starting. Safari Test uses your duplicate Shortcuts. Your checks here are separate from the live app.</p><label for="shortcut-profile">Shortcut set</label><select id="shortcut-profile"><option value="normal">Existing · Go to Home Screen</option><option value="safari-test">Safari Test · return to this page</option></select><p id="shortcut-profile-status" role="status" aria-live="polite"></p><a href="./safari-test.html">Duplicate Shortcut names &amp; setup instructions →</a></aside>
+<aside id="safari-preview" class="preview-panel" hidden><strong>Safari return test · preview</strong><p>Choose a Shortcut set before starting. Safari Test uses your duplicate Shortcuts. Your checks here are separate from the live app.</p><label for="shortcut-profile">Shortcut set</label><select id="shortcut-profile"><option value="normal">Existing · Go to Home Screen</option><option value="safari-test">Safari Test · return to this page</option></select><p id="shortcut-profile-status" role="status" aria-live="polite"></p><a href="./safari-test.html">Duplicate Shortcut names &amp; setup instructions →</a><p><a href="./?scenario=side-planks">Try the one-tap side-plank practice →</a></p></aside>
+<section id="side-plank-practice" class="interval-practice" hidden><p class="eyebrow">ONE-TAP INTERVAL PRACTICE</p><h2>Side planks · two rounds</h2><p>30 sec left → 5 sec switch → 30 sec right → 30 sec rest → repeat the holds and switch once. MultiTimer runs the entire sequence, including when your phone is locked.</p><p>This requests interval alerts only. It does not start Watch workout recording. Your normal workout checks are separate.</p><button id="start-side-plank-block" type="button">Start side-plank block</button><p id="side-plank-block-status" role="status" aria-live="polite"></p><button id="confirm-side-plank-block" class="secondary" type="button" hidden>I finished all 4 holds</button><p><a href="./">Back to daily workout preview</a></p></section>
 <main id="workout" aria-label="Today’s exercises"></main>
 <footer class="app-footer">One session at a time.<span>Photos expand on tap · Your checks save on this device</span></footer>
 <dialog id="photo-viewer" aria-label="Expanded exercise photographs">
@@ -44,10 +45,12 @@ try{timerMode.value=localStorage.getItem('workout-timer-mode')==='iphone'?'iphon
 timerMode.onchange=()=>{try{localStorage.setItem('workout-timer-mode',timerMode.value)}catch{}};
 // Only the separately built preview exposes duplicate Shortcut routing.
 const safariPreview=document.documentElement?.getAttribute?.('data-preview')==='safari';
-const shortcutProfileKey='workout-shortcut-profile';
-const shortcutProfileLockKey='workout-shortcut-profile-lock';
-let shortcutProfile='normal';
-function readShortcutProfileLock(){try{const lock=JSON.parse(localStorage.getItem(shortcutProfileLockKey)||'null');if(lock?.kind==='timer'&&!localStorage.getItem('workout-active-exercise-timer')){localStorage.removeItem(shortcutProfileLockKey);return null}return lock}catch{return null}}
+const sidePlankPractice=(()=>{try{return safariPreview&&new URL(location.href).searchParams.get('scenario')==='side-planks'}catch{return false}})();
+const workoutStorageSuffix=sidePlankPractice?'-side-planks-practice':'';
+const shortcutProfileKey='workout-shortcut-profile'+workoutStorageSuffix;
+const shortcutProfileLockKey='workout-shortcut-profile-lock'+workoutStorageSuffix;
+let shortcutProfile=sidePlankPractice?'safari-test':'normal';
+function readShortcutProfileLock(){try{const lock=JSON.parse(localStorage.getItem(shortcutProfileLockKey)||'null');if(lock?.kind==='timer'&&!localStorage.getItem('workout-active-exercise-timer'+workoutStorageSuffix)){localStorage.removeItem(shortcutProfileLockKey);return null}return lock}catch{return null}}
 function currentShortcutProfile(){return safariPreview?(readShortcutProfileLock()?.profile||shortcutProfile):'normal'}
 function updateShortcutProfileControls(message){
   const panel=document.querySelector('#safari-preview');if(!panel)return;
@@ -55,10 +58,10 @@ function updateShortcutProfileControls(message){
   const select=document.querySelector('#shortcut-profile');if(!select)return;
   select.value=currentShortcutProfile();
   select.disabled=!!(readShortcutProfileLock()||readActiveTimer());
-  document.querySelector('#shortcut-profile-status').textContent=message||(select.disabled?'Finish or end the current Watch workout/timer before changing Shortcut sets.':shortcutProfile==='safari-test'?'Uses duplicate Shortcuts ending in Safari Test. Return-tab behavior still needs iPhone testing.':'Uses your existing Shortcuts. Tap the app icon after Go to Home Screen.');
+  document.querySelector('#shortcut-profile-status').textContent=message||(select.disabled?'Finish the current timer or workout before changing Shortcut sets.':shortcutProfile==='safari-test'?'Uses duplicate Shortcuts ending in Safari Test. Return-tab behavior still needs iPhone testing.':'Uses your existing Shortcuts. Tap the app icon after Go to Home Screen.');
 }
 if(safariPreview){
-  try{shortcutProfile=localStorage.getItem(shortcutProfileKey)==='safari-test'?'safari-test':'normal'}catch{}
+  try{shortcutProfile=localStorage.getItem(shortcutProfileKey)==='safari-test'||(sidePlankPractice&&!localStorage.getItem(shortcutProfileKey))?'safari-test':'normal'}catch{}
   const select=document.querySelector('#shortcut-profile');
   if(select)select.onchange=()=>{
     if(readShortcutProfileLock()||readActiveTimer()){updateShortcutProfileControls();return}
@@ -90,7 +93,7 @@ function getPhotoLibrary(){
     .catch(error=>{console.warn(error);photoLibraryPromise=null;return {exercises:{}}});
 }
 // Watch section lifecycle is separate from the individual exercise timers.
-const watchSectionKey='workout-watch-section';
+const watchSectionKey='workout-watch-section'+workoutStorageSuffix;
 function watchSectionType(section){
   if(section.watchWorkout==='none')return null;
   if(['strength','core'].includes(section.watchWorkout))return section.watchWorkout;
@@ -149,8 +152,8 @@ function finishWatchSection(sectionIndex,itemIndex,section){
   return !!(active&&active.workout===currentWorkoutSignature&&active.sectionIndex===sectionIndex&&itemIndex===section.items.length-1&&endWatchSection());
 }
 // Track the requested duration locally; MultiTimer does not send completion events.
-const activeTimerKey='workout-active-exercise-timer';
-const lastStartedKey='workout-last-started-exercise';
+const activeTimerKey='workout-active-exercise-timer'+workoutStorageSuffix;
+const lastStartedKey='workout-last-started-exercise'+workoutStorageSuffix;
 function readLastStarted(){try{return JSON.parse(localStorage.getItem(lastStartedKey)||'null')}catch{return null}}
 function saveExerciseCheck(workoutDate,key,value){
   const storageKey='workout-checks-'+workoutDate;
@@ -195,7 +198,7 @@ function trackExerciseTimer(section,item,key,workout){
   finishExpiredTimer();
 }
 // Photo presentation is local UI state, separate from exercise completion.
-const cardViewKey='workout-card-view';
+const cardViewKey='workout-card-view'+workoutStorageSuffix;
 function readCardView(){
   try{const saved=JSON.parse(localStorage.getItem(cardViewKey)||'null');if(saved?.workout===currentWorkoutSignature&&saved.collapsed&&typeof saved.collapsed==='object')return saved}catch{}
   return {workout:currentWorkoutSignature,collapsed:{},current:null};
@@ -209,7 +212,42 @@ function selectExerciseCard(key,collapsePhoto=false){
   const entry=timerRows.get(key);
   if(collapsePhoto&&entry?.media){entry.media.open=false;entry.mediaSummary.textContent='Show photo'}
 }
-async function load(){try{photoLibraryPromise=null;const photoLibrary=await getPhotoLibrary();const r=await fetch('./workout.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();document.querySelector('#status').textContent='Plan for '+d.date+' · '+d.sections.reduce((n,s)=>n+s.items.length,0)+' exercises';document.querySelector('#notice').textContent=d.note||'';const main=document.querySelector('#workout');const saved=JSON.parse(localStorage.getItem('workout-checks-'+d.date)||'{}');currentWorkoutSignature=JSON.stringify(d);const cardView=readCardView();let exerciseNumber=0;const exerciseCount=d.sections.reduce((n,section)=>n+section.items.length,0);timerRows=new Map();main.replaceChildren();for(const [sectionIndex,section] of d.sections.entries()){const card=document.createElement('section');card.className='card';const h=document.createElement('h2');h.textContent=section.title;h.setAttribute('data-section',String(sectionIndex+1).padStart(2,'0'));card.append(h);if(section.title==='Strength and core'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Complete one set of each exercise per round. Rest 45–60 seconds between exercises and 75–90 seconds between rounds.';card.append(tip)}if(section.title==='Tai Chi'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Two gentle rounds of five movements, about 10 minutes total.';card.append(tip)}for(const [itemIndex,item] of section.items.entries()){const row=document.createElement('div');row.className='item';const left=document.createElement('label');left.className='left';const check=document.createElement('input');check.type='checkbox';check.className='check';const checkKey=item.progressKey||sectionIndex+'-'+itemIndex;row.setAttribute('data-current',String(cardView.current===checkKey));check.checked=!!(Object.prototype.hasOwnProperty.call(saved,checkKey)?saved[checkKey]:saved[item.legacyProgressKey]);check.onchange=()=>{saveExerciseCheck(d.date,checkKey,check.checked)};const body=document.createElement('div');const name=document.createElement('div');name.className='name';name.textContent=item.name;const detail=document.createElement('div');detail.className='detail';detail.textContent=item.detail||'';const step=document.createElement('div');step.className='exercise-step';step.textContent=String(++exerciseNumber).padStart(2,'0')+' / '+String(exerciseCount).padStart(2,'0');body.append(step,name,detail);const infoBody=document.createElement('div');infoBody.className='exercise-info';const info=guidance[item.name.toLowerCase()];const instruction=document.createElement('div');instruction.className='instructions';instruction.textContent=item.instructions||info?.[1]||'Use a controlled, comfortable range of motion.';infoBody.append(instruction);const demo=exerciseDemo(photoLibrary,item.name)||item.demo||demos[item.name.toLowerCase()];if(demo){const link=document.createElement('a');link.className='demo';link.href=demo;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View movement demonstration ↗';infoBody.append(link)}left.append(check,body);const art=document.createElement('div');art.className='art';renderExercisePhotos(art,infoBody,item,photoLibrary);const media=document.createElement('details');media.className='exercise-media';media.open=!cardView.collapsed[checkKey];const mediaSummary=document.createElement('summary');mediaSummary.textContent=media.open?'Hide photo':'Show photo';media.append(mediaSummary,art);media.ontoggle=()=>{if(timerRows.get(checkKey)?.media!==media)return;const view=readCardView();view.collapsed[checkKey]=!media.open;saveCardView(view);mediaSummary.textContent=media.open?'Hide photo':'Show photo'};row.append(media,left,infoBody);if(item.seconds){const b=document.createElement('button');b.className='start-exercise';b.textContent='Start\n'+time(item.seconds);b.setAttribute('aria-label','Start timer for '+item.name+' · '+time(item.seconds));b.onclick=()=>{try{const url=sectionTimerURL(section,sectionIndex,itemIndex,item.seconds);if(!url)return;const previous=readActiveTimer();
+const sidePlankBlockKey='workout-interval-request'+workoutStorageSuffix;
+function readSidePlankBlock(){try{const block=JSON.parse(localStorage.getItem(sidePlankBlockKey)||'null');return block?.workout===currentWorkoutSignature?block:null}catch{return null}}
+function updateSidePlankPractice(workout){
+  const panel=document.querySelector('#side-plank-practice');if(!panel)return;
+  panel.hidden=!sidePlankPractice;if(!sidePlankPractice)return;
+  document.querySelector('#page-title').textContent='Side-plank practice';
+  document.querySelector('#status').textContent='4 holds · 30 seconds per side · two rounds';
+  const start=document.querySelector('#start-side-plank-block');
+  const confirm=document.querySelector('#confirm-side-plank-block');
+  const status=document.querySelector('#side-plank-block-status');
+  const requested=!!readSidePlankBlock();
+  confirm.hidden=!requested;
+  start.textContent=requested?'Restart side-plank block':'Start side-plank block';
+  if(requested)status.textContent='Sequence requested. Follow MultiTimer’s alerts. After the last hold, confirm below. Device completion is not verified by this page.';
+  start.onclick=()=>{
+    if(currentShortcutProfile()!=='safari-test'){
+      status.textContent='Select Safari Test under Shortcut set, then try again.';return;
+    }
+    // Save a separate practice attempt before handing off; never infer completion.
+    localStorage.setItem(sidePlankBlockKey,JSON.stringify({workout:currentWorkoutSignature,status:'requested'}));
+    localStorage.setItem(shortcutProfileLockKey,JSON.stringify({profile:'safari-test',kind:'block'}));
+    for(const [key,entry] of timerRows){saveExerciseCheck(workout.date,key,false);entry.check.checked=false;selectExerciseCard(key,true)}
+    selectExerciseCard(null);
+    saveWorkoutPosition(timerRows.keys().next().value);
+    updateSidePlankPractice(workout);
+    openWorkoutShortcut(shortcutURL('Workout Side Planks'));
+  };
+  confirm.onclick=()=>{
+    if(!readSidePlankBlock())return;
+    for(const [key,entry] of timerRows)saveExerciseComplete(workout.date,key,entry.check);
+    localStorage.removeItem(sidePlankBlockKey);localStorage.removeItem(shortcutProfileLockKey);
+    updateShortcutProfileControls();updateSidePlankPractice(workout);
+    status.textContent='You confirmed all four holds completed. No additional timer or Watch action was sent.';
+  };
+}
+async function load(){try{photoLibraryPromise=null;const photoLibrary=await getPhotoLibrary();const r=await fetch((sidePlankPractice?'./side-planks-practice.json':'./workout.json')+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();document.querySelector('#status').textContent='Plan for '+d.date+' · '+d.sections.reduce((n,s)=>n+s.items.length,0)+' exercises';document.querySelector('#notice').textContent=d.note||'';const main=document.querySelector('#workout');const saved=JSON.parse(localStorage.getItem('workout-checks-'+d.date)||'{}');currentWorkoutSignature=JSON.stringify(d);const cardView=readCardView();let exerciseNumber=0;const exerciseCount=d.sections.reduce((n,section)=>n+section.items.length,0);timerRows=new Map();main.replaceChildren();for(const [sectionIndex,section] of d.sections.entries()){const card=document.createElement('section');card.className='card';const h=document.createElement('h2');h.textContent=section.title;h.setAttribute('data-section',String(sectionIndex+1).padStart(2,'0'));card.append(h);if(section.title==='Strength and core'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Complete one set of each exercise per round. Rest 45–60 seconds between exercises and 75–90 seconds between rounds.';card.append(tip)}if(section.title==='Tai Chi'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Two gentle rounds of five movements, about 10 minutes total.';card.append(tip)}for(const [itemIndex,item] of section.items.entries()){const row=document.createElement('div');row.className='item';const left=document.createElement('label');left.className='left';const check=document.createElement('input');check.type='checkbox';check.className='check';const checkKey=item.progressKey||sectionIndex+'-'+itemIndex;row.setAttribute('data-current',String(cardView.current===checkKey));check.checked=!!(Object.prototype.hasOwnProperty.call(saved,checkKey)?saved[checkKey]:saved[item.legacyProgressKey]);check.onchange=()=>{saveExerciseCheck(d.date,checkKey,check.checked)};const body=document.createElement('div');const name=document.createElement('div');name.className='name';name.textContent=item.name;const detail=document.createElement('div');detail.className='detail';detail.textContent=item.detail||'';const step=document.createElement('div');step.className='exercise-step';step.textContent=String(++exerciseNumber).padStart(2,'0')+' / '+String(exerciseCount).padStart(2,'0');body.append(step,name,detail);const infoBody=document.createElement('div');infoBody.className='exercise-info';const info=guidance[item.name.toLowerCase()];const instruction=document.createElement('div');instruction.className='instructions';instruction.textContent=item.instructions||info?.[1]||'Use a controlled, comfortable range of motion.';infoBody.append(instruction);const demo=exerciseDemo(photoLibrary,item.name)||item.demo||demos[item.name.toLowerCase()];if(demo){const link=document.createElement('a');link.className='demo';link.href=demo;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View movement demonstration ↗';infoBody.append(link)}left.append(check,body);const art=document.createElement('div');art.className='art';renderExercisePhotos(art,infoBody,item,photoLibrary);const media=document.createElement('details');media.className='exercise-media';media.open=!cardView.collapsed[checkKey];const mediaSummary=document.createElement('summary');mediaSummary.textContent=media.open?'Hide photo':'Show photo';media.append(mediaSummary,art);media.ontoggle=()=>{if(timerRows.get(checkKey)?.media!==media)return;const view=readCardView();view.collapsed[checkKey]=!media.open;saveCardView(view);mediaSummary.textContent=media.open?'Hide photo':'Show photo'};row.append(media,left,infoBody);if(item.seconds&&!sidePlankPractice){const b=document.createElement('button');b.className='start-exercise';b.textContent='Start\n'+time(item.seconds);b.setAttribute('aria-label','Start timer for '+item.name+' · '+time(item.seconds));b.onclick=()=>{try{const url=sectionTimerURL(section,sectionIndex,itemIndex,item.seconds);if(!url)return;const previous=readActiveTimer();
 // Starting the next step completes the preceding step in every section,
 // including treadmill and indoor-walk intervals. Do not stop the walk workout.
 const last=readLastStarted();
@@ -232,12 +270,12 @@ if(previous&&previous.key!==checkKey&&previous.workout===currentWorkoutSignature
   }
 }
 localStorage.setItem(lastStartedKey,JSON.stringify({date:d.date,key:checkKey,workout:currentWorkoutSignature}));
-trackExerciseTimer(section,item,checkKey,currentWorkoutSignature);selectExerciseCard(checkKey,true);saveWorkoutPosition(checkKey);scrollToExercise(row);openWorkoutShortcut(url)}catch(e){alert(e.message)}};row.append(b)}const next=document.createElement('button');next.className='next-exercise';const nextItem=section.items[itemIndex+1]||d.sections[sectionIndex+1]?.items[0];next.textContent=nextItem?'✓ Done · Next: '+nextItem.name:'✓ Done · Finish';next.setAttribute('aria-label','Mark '+item.name+' complete and scroll to next exercise');next.onclick=()=>{const active=readActiveTimer();const stopActive=active?.key===checkKey&&active.workout===currentWorkoutSignature&&active.mode==='watch'&&!timerRows.get(checkKey)?.walking;clearActiveTimer(checkKey);const endWalk=timerMode.value==='watch'&&walkBoundary(section,itemIndex).end;saveExerciseComplete(d.date,checkKey,check);const following=row.nextElementSibling||card.nextElementSibling?.querySelector('.item');selectExerciseCard(following?.workoutProgressKey||checkKey);saveWorkoutPosition(following?.workoutProgressKey||checkKey);if(following){scrollToExercise(following);}else{next.textContent='✓ Workout complete';next.disabled=true;}if(finishWatchSection(sectionIndex,itemIndex,section))return true;if(endWalk)openWorkoutShortcut(shortcutURL('Workout Walk End'));else if(stopActive)requestTimerStop();return false;};row.append(next);row.workoutProgressKey=checkKey;timerRows.set(checkKey,{row,media,mediaSummary,check,done:next,walking:/\b(?:treadmill|indoor)\b/i.test(section.title)});card.append(row)}main.append(card)}updateWatchRecovery();finishExpiredTimer()}catch(e){document.querySelector('#status').textContent='Unable to load workout: '+e.message}}
+trackExerciseTimer(section,item,checkKey,currentWorkoutSignature);selectExerciseCard(checkKey,true);saveWorkoutPosition(checkKey);scrollToExercise(row);openWorkoutShortcut(url)}catch(e){alert(e.message)}};row.append(b)}const next=document.createElement('button');next.className='next-exercise';next.hidden=sidePlankPractice;const nextItem=section.items[itemIndex+1]||d.sections[sectionIndex+1]?.items[0];next.textContent=nextItem?'✓ Done · Next: '+nextItem.name:'✓ Done · Finish';next.setAttribute('aria-label','Mark '+item.name+' complete and scroll to next exercise');next.onclick=()=>{const active=readActiveTimer();const stopActive=active?.key===checkKey&&active.workout===currentWorkoutSignature&&active.mode==='watch'&&!timerRows.get(checkKey)?.walking;clearActiveTimer(checkKey);const endWalk=timerMode.value==='watch'&&walkBoundary(section,itemIndex).end;saveExerciseComplete(d.date,checkKey,check);const following=row.nextElementSibling||card.nextElementSibling?.querySelector('.item');selectExerciseCard(following?.workoutProgressKey||checkKey);saveWorkoutPosition(following?.workoutProgressKey||checkKey);if(following){scrollToExercise(following);}else{next.textContent='✓ Workout complete';next.disabled=true;}if(finishWatchSection(sectionIndex,itemIndex,section))return true;if(endWalk)openWorkoutShortcut(shortcutURL('Workout Walk End'));else if(stopActive)requestTimerStop();return false;};row.append(next);row.workoutProgressKey=checkKey;timerRows.set(checkKey,{row,media,mediaSummary,check,done:next,walking:/\b(?:treadmill|indoor)\b/i.test(section.title)});card.append(row)}main.append(card)}updateWatchRecovery();finishExpiredTimer();updateSidePlankPractice(d)}catch(e){document.querySelector('#status').textContent='Unable to load workout: '+e.message}}
 // Safari may restore its own scroll position after returning from Shortcuts.
 // Resume only after the refreshed cards and their saved checkboxes are ready.
 if ('scrollRestoration' in history) history.scrollRestoration='manual';
 // Keep navigation separate from completion: remembering a card never checks it.
-const workoutPositionKey='workout-navigation-position';
+const workoutPositionKey='workout-navigation-position'+workoutStorageSuffix;
 let shortcutReturnPending=false;
 function readWorkoutPosition(){
   try{const saved=JSON.parse(localStorage.getItem(workoutPositionKey)||'null');return saved?.workout===currentWorkoutSignature?saved:null}catch{return null}

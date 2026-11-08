@@ -1,0 +1,15 @@
+{
+  "date": "side-planks-practice-v1",
+  "title": "Side-plank interval practice",
+  "note": "One tap requests the saved Side Planks interval timer. Follow MultiTimer’s alerts: left 30 sec, switch 5 sec, right 30 sec, rest 30 sec, then left 30 sec, switch 5 sec, right 30 sec. If configured, the initial Get ready interval adds 5 seconds. This practice does not start Watch workout recording. Confirm completion after the final hold; the page cannot read MultiTimer state.",
+  "sections": [{
+    "title": "Side planks · 2 rounds",
+    "watchWorkout": "none",
+    "items": [
+      {"name":"Side planks","progressKey":"side-left-1","detail":"Round 1 · LEFT · 30 sec hold","seconds":30,"instructions":"Hold for 30 seconds. Then use the 5-second interval to switch sides."},
+      {"name":"Side planks","progressKey":"side-right-1","detail":"Round 1 · RIGHT · 30 sec hold","seconds":30,"instructions":"Hold for 30 seconds. Rest for 30 seconds before round 2."},
+      {"name":"Side planks","progressKey":"side-left-2","detail":"Round 2 · LEFT · 30 sec hold","seconds":30,"instructions":"Hold for 30 seconds. Then use the 5-second interval to switch sides."},
+      {"name":"Side planks","progressKey":"side-right-2","detail":"Round 2 · RIGHT · 30 sec hold","seconds":30,"instructions":"Hold for 30 seconds. The sequence finishes here; there is no final rest."}
+    ]
+  }]
+}

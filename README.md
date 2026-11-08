@@ -88,3 +88,9 @@ The reported opening sequence also includes **Plow pose with feet suspended** (s
 The user selected **Dumbbell bench press with feet on the floor**, replacing the floor press. The preview retains 2 × 10 and the existing 180-second timer; no actual weight or performance is inferred. Verified local demonstration stills show the selected setup.
 
 Photo-library metadata is refreshed alongside each workout reload, including returns from Shortcuts, so newly registered exercise photos do not remain missing in an already-open tab. Local photo assets and clean missing-photo placeholders are unchanged.
+
+## Side-plank interval practice
+
+The private preview supports `?scenario=side-planks`, with four separate 30-second side/set cards and one block launcher for **Workout Side Planks Safari Test**. The Shortcut should Reset TIMER, Reset Side Planks, Start Side Planks using its configured intervals, then Open Safari. It requests no Watch workout recording. The saved timer sequence is left 30s, switch 5s, right 30s, rest 30s, left 30s, switch 5s, right 30s; an optional Get ready 5s remains a device setting.
+
+Scenario timer/Watch/bookmark/card-state keys and checkbox date are isolated from the daily plan. Starting/restarting requests the sequence and leaves all four holds unfinished; reopening restores the pending request without relaunching. Only an explicit I finished all 4 holds confirms completion. There is no inferred per-interval completion or claimed device telemetry. If stopped early, the user stops the block in MultiTimer and leaves unfinished holds unchecked. The main workout prescription is unchanged.
