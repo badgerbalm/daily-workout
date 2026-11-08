@@ -12,8 +12,9 @@ class Element{
  scrollIntoView(){}
 }
 function harness(preview,storage={}){
- const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback','safari-preview','shortcut-profile','shortcut-profile-status'];
+ const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback','safari-preview','shortcut-profile','shortcut-profile-status','watch-recovery','clear-watch-tracking','watch-recovery-result'];
  const elements=Object.fromEntries(ids.map(id=>['#'+id,new Element('div')]));
+ elements['.settings']=new Element('details');
  const document={querySelector:id=>elements[id],createElement:tag=>new Element(tag),addEventListener(){},documentElement:{getAttribute:()=>preview?'safari':null}};
  const section=(title,watchWorkout)=>({title,watchWorkout,items:[{name:'Dead bugs',seconds:60},{name:'Side planks',seconds:30}]});
  const fixture={date:'2099-01-01',sections:[section('Mobility','none'),section('Treadmill walking'),section('Strength','strength'),section('Core','core')]};
@@ -39,5 +40,6 @@ function harness(preview,storage={}){
  vm.runInContext('const active=readActiveTimer();active.endsAt=0;localStorage.setItem(activeTimerKey,JSON.stringify(active));finishExpiredTimer()',reopened.ctx);
  assert(!reopened.elements['#shortcut-profile'].disabled,'iPhone expiry releases profile selection without MultiTimer reset');
  reopened.elements['#shortcut-profile'].value='normal';reopened.elements['#shortcut-profile'].onchange();reopened.elements['#timer-mode'].value='watch';reopened.start(1);assert.equal(reopened.name(),'Workout Timer Watch');reopened.done(1);assert.equal(reopened.name(),'Workout Timer Stop');
+ const stale=harness(true,{'workout-shortcut-profile':'safari-test'});await stale.reload();stale.start(4);const checksBefore=stale.storage['workout-checks-2099-01-01'];stale.ctx.location.href='https://example.com/';stale.start(6);assert.equal(stale.ctx.location.href,'https://example.com/','Conflict never launches an overlapping Watch workout');assert.equal(stale.elements['.settings'].open,true);assert.equal(stale.elements['#watch-recovery'].hidden,false);stale.elements['#clear-watch-tracking'].onclick();assert.equal(stale.elements['#watch-recovery'].hidden,true);assert(!stale.storage['workout-watch-section']);assert(!stale.storage['workout-shortcut-profile-lock']);assert(!stale.storage['workout-active-exercise-timer']);assert.equal(stale.storage['workout-checks-2099-01-01'],checksBefore,'Recovery preserves all completed exercises');assert.equal(stale.ctx.location.href,'https://example.com/','Clearing stale tracking launches no Shortcut');stale.start(6);assert.equal(stale.name(),'Workout Core Start Safari Test','Next explicit start works after recovery');
  console.log('PASS: preview-only Safari duplicate names, duration input, saved navigation, walking/strength/core lifecycle, pinned routing after reload, iPhone fallback, and original-name isolation.');
 })().catch(error=>{console.error(error);process.exitCode=1});

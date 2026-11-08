@@ -37,7 +37,7 @@ const reload=()=>vm.runInContext('refreshWorkout()',ctx);
  vm.runInContext('const a=readActiveTimer();a.endsAt=0;localStorage.setItem(activeTimerKey,JSON.stringify(a));finishExpiredTimer()',ctx);
  assert.deepEqual(launches.map(url=>new URL(url).searchParams.get('name')),['Workout Walk End'],'Final expiry ends once without extra Timer Stop');
  start(2);assert.equal(new URL(launches.at(-1)).searchParams.get('name'),'Workout Strength Start');const count=launches.length;
- start(4);assert.equal(launches.length,count);assert.equal(alerts.length,1,'Guard overlapping Watch sections');
+ start(4);assert.equal(launches.length,count);assert.equal(alerts.length,0,'Offer inline recovery without a blocking alert');
  await reload();done(3);assert(!storage['workout-watch-section'],'Final Done still ends the tracked section after reload');
  assert.equal(new URL(launches.at(-1)).searchParams.get('name'),'Workout Walk End');
  elements['#timer-mode'].value='iphone';start(4);assert.equal(new URL(launches.at(-1)).searchParams.get('name'),'Workout Timer');assert(!storage['workout-watch-section']);

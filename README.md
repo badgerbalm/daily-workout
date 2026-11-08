@@ -64,3 +64,7 @@ The private preview is hosted with Sites at https://daily-workout-safari-preview
 Append ` Safari Test` to each original Shortcut name, preserve all timer/Watch actions and supplied seconds, and replace the final Go to Home Screen with URL and Open URLs pointing to the preview root. Start with Workout Timer Watch Safari Test and Workout Timer Stop Safari Test on a mobility card. Duplicate the walk start/end, strength start, core start, and iPhone timer before testing those paths. The page pins the selected Shortcut set while a requested timer or Watch recording is tracked; timer-only Stop does not unlock an ongoing Watch section.
 
 Run `node tests/verify-safari-shortcuts.cjs` for deterministic routing/lifecycle coverage. On-device testing is still needed for Safari tab reuse, return navigation, actual MultiTimer resets and Watch recording. The website cannot control Safari tab reuse or inspect device actions. No private history synchronization is supplied by preview hosting.
+
+## Stale Watch tracking recovery
+
+If the Watch is no longer recording but a section remains saved, open Timer & Watch settings and select **Watch is stopped · clear saved tracking**. A conflicting section start opens this inline recovery instead of a blocking alert. Clearing tracking removes only the page’s pending Watch/timer routing state; it does not launch a Shortcut or change completed exercises. Tap Start timer again afterward. The page cannot verify actual Watch recording state. No floating End Watch or Stop timer controls are displayed.
