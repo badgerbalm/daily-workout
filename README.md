@@ -74,3 +74,5 @@ A compact Start timer button appears to the right of the exercise title in a two
 ## Compact cards during a workout
 
 Starting an exercise collapses that card’s photo, leaving more room for the next card. Show photo reopens it at any time, and the photo/expanded-view controls remain available. Photo visibility is saved locally for the exact plan and survives Shortcut returns; a changed plan starts expanded. This presentation state is separate from completion checks and does not confirm actual performance. Section numbers, exercise counts, a current-card accent and brighter timer controls make the sequence easier to scan. No floating controls are added.
+
+Workout settings includes Parley-inspired Game day, Steelers, Bills, Giants, Colts and Classic color themes. Selection is local to this browser. Done/Next remains a filled, high-contrast button in every palette.
