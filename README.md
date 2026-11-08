@@ -68,3 +68,5 @@ Run `node tests/verify-safari-shortcuts.cjs` for deterministic routing/lifecycle
 ## Stale Watch tracking recovery
 
 If the Watch is no longer recording but a section remains saved, open Timer & Watch settings and select **Watch is stopped · clear saved tracking**. A conflicting section start opens this inline recovery instead of a blocking alert. Clearing tracking removes only the page’s pending Watch/timer routing state; it does not launch a Shortcut or change completed exercises. Tap Start timer again afterward. The page cannot verify actual Watch recording state. No floating End Watch or Stop timer controls are displayed.
+
+Start timer now appears directly below the exercise name and prescription, before instructions, photo credits, and images. Done and Shortcut returns target that timer control rather than the card top. Starting the next timer remains an explicit tap; navigation alone does not start it. Ordinary browsing offsets are still preserved.

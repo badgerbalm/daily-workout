@@ -84,3 +84,6 @@ h1{font-family:Georgia,serif;font-size:clamp(38px,7vw,60px);font-weight:400;line
 
 
 .preview-panel{border:1px solid #c7b278;background:#fff6df;border-radius:16px;padding:18px;margin:0 0 24px;font-size:14px}.preview-panel[hidden]{display:none}.preview-panel label{display:block;font-weight:650;margin-bottom:8px}.preview-panel select{font:inherit;width:100%;min-height:48px;padding:10px;border:1px solid #b7bcb0;border-radius:10px;background:white;color:#20382f}.preview-panel select:disabled{opacity:.7}.preview-panel p{line-height:1.5}.setup-table{border-collapse:collapse;width:100%;font-size:14px}.setup-table th,.setup-table td{text-align:left;vertical-align:top;padding:12px 8px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}.setup-url{width:100%;font:inherit;font-size:16px;padding:12px;min-height:48px;border:1px solid var(--line);border-radius:12px}.setup-content{padding:24px 0}.setup-content li{margin:12px 0}.setup-content h2{margin-top:28px}
+
+/* Keep the primary timer above instructions, attribution and photos. */
+.item>.start-exercise{grid-column:1 / -1;grid-row:2}.exercise-info{grid-column:1 / -1;grid-row:3;min-width:0}.item>.art{grid-row:4}.item>.next-exercise{grid-column:1 / -1;grid-row:5}.exercise-info .instructions{margin-top:0}

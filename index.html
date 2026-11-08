@@ -112,7 +112,7 @@ function clearSavedWatchTracking(){
   updateWatchRecovery();updateShortcutProfileControls();
   const result=document.querySelector('#watch-recovery-result');
   if(result)result.textContent='Saved tracking cleared. Tap Start timer again when ready.';
-  if(blockedWatchExerciseKey)timerRows.get(blockedWatchExerciseKey)?.row.scrollIntoView({behavior:'smooth',block:'start'});
+  if(blockedWatchExerciseKey)scrollToExercise(timerRows.get(blockedWatchExerciseKey)?.row);
   blockedWatchExerciseKey=null;
 }
 function sectionTimerURL(section,sectionIndex,itemIndex,seconds){
@@ -182,7 +182,7 @@ function trackExerciseTimer(section,item,key,workout){
   localStorage.setItem(activeTimerKey,JSON.stringify({key,workout,mode:timerMode.value,endsAt:Date.now()+Number(item.seconds)*1000}));
   finishExpiredTimer();
 }
-async function load(){try{const photoLibrary=await getPhotoLibrary();const r=await fetch('./workout.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();document.querySelector('#status').textContent='Plan for '+d.date+' · '+d.sections.reduce((n,s)=>n+s.items.length,0)+' exercises';document.querySelector('#notice').textContent=d.note||'';const main=document.querySelector('#workout');const saved=JSON.parse(localStorage.getItem('workout-checks-'+d.date)||'{}');currentWorkoutSignature=JSON.stringify(d);timerRows=new Map();main.replaceChildren();for(const [sectionIndex,section] of d.sections.entries()){const card=document.createElement('section');card.className='card';const h=document.createElement('h2');h.textContent=section.title;card.append(h);if(section.title==='Strength and core'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Complete one set of each exercise per round. Rest 45–60 seconds between exercises and 75–90 seconds between rounds.';card.append(tip)}if(section.title==='Tai Chi'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Two gentle rounds of five movements, about 10 minutes total.';card.append(tip)}for(const [itemIndex,item] of section.items.entries()){const row=document.createElement('div');row.className='item';const left=document.createElement('label');left.className='left';const check=document.createElement('input');check.type='checkbox';check.className='check';const checkKey=item.progressKey||sectionIndex+'-'+itemIndex;check.checked=!!(Object.prototype.hasOwnProperty.call(saved,checkKey)?saved[checkKey]:saved[item.legacyProgressKey]);check.onchange=()=>{saveExerciseCheck(d.date,checkKey,check.checked)};const body=document.createElement('div');const name=document.createElement('div');name.className='name';name.textContent=item.name;const detail=document.createElement('div');detail.className='detail';detail.textContent=item.detail||'';body.append(name,detail);const info=guidance[item.name.toLowerCase()];const instruction=document.createElement('div');instruction.className='instructions';instruction.textContent=item.instructions||info?.[1]||'Use a controlled, comfortable range of motion.';body.append(instruction);const demo=exerciseDemo(photoLibrary,item.name)||item.demo||demos[item.name.toLowerCase()];if(demo){const link=document.createElement('a');link.className='demo';link.href=demo;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View movement demonstration ↗';body.append(link)}left.append(check,body);const art=document.createElement('div');art.className='art';renderExercisePhotos(art,body,item,photoLibrary);row.append(art,left);if(item.seconds){const b=document.createElement('button');b.textContent='Start timer · '+time(item.seconds);b.onclick=()=>{try{const url=sectionTimerURL(section,sectionIndex,itemIndex,item.seconds);if(!url)return;const previous=readActiveTimer();
+async function load(){try{const photoLibrary=await getPhotoLibrary();const r=await fetch('./workout.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();document.querySelector('#status').textContent='Plan for '+d.date+' · '+d.sections.reduce((n,s)=>n+s.items.length,0)+' exercises';document.querySelector('#notice').textContent=d.note||'';const main=document.querySelector('#workout');const saved=JSON.parse(localStorage.getItem('workout-checks-'+d.date)||'{}');currentWorkoutSignature=JSON.stringify(d);timerRows=new Map();main.replaceChildren();for(const [sectionIndex,section] of d.sections.entries()){const card=document.createElement('section');card.className='card';const h=document.createElement('h2');h.textContent=section.title;card.append(h);if(section.title==='Strength and core'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Complete one set of each exercise per round. Rest 45–60 seconds between exercises and 75–90 seconds between rounds.';card.append(tip)}if(section.title==='Tai Chi'){const tip=document.createElement('p');tip.className='tip';tip.textContent='Two gentle rounds of five movements, about 10 minutes total.';card.append(tip)}for(const [itemIndex,item] of section.items.entries()){const row=document.createElement('div');row.className='item';const left=document.createElement('label');left.className='left';const check=document.createElement('input');check.type='checkbox';check.className='check';const checkKey=item.progressKey||sectionIndex+'-'+itemIndex;check.checked=!!(Object.prototype.hasOwnProperty.call(saved,checkKey)?saved[checkKey]:saved[item.legacyProgressKey]);check.onchange=()=>{saveExerciseCheck(d.date,checkKey,check.checked)};const body=document.createElement('div');const name=document.createElement('div');name.className='name';name.textContent=item.name;const detail=document.createElement('div');detail.className='detail';detail.textContent=item.detail||'';body.append(name,detail);const infoBody=document.createElement('div');infoBody.className='exercise-info';const info=guidance[item.name.toLowerCase()];const instruction=document.createElement('div');instruction.className='instructions';instruction.textContent=item.instructions||info?.[1]||'Use a controlled, comfortable range of motion.';infoBody.append(instruction);const demo=exerciseDemo(photoLibrary,item.name)||item.demo||demos[item.name.toLowerCase()];if(demo){const link=document.createElement('a');link.className='demo';link.href=demo;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View movement demonstration ↗';infoBody.append(link)}left.append(check,body);const art=document.createElement('div');art.className='art';renderExercisePhotos(art,infoBody,item,photoLibrary);row.append(art,left,infoBody);if(item.seconds){const b=document.createElement('button');b.className='start-exercise';b.textContent='Start timer · '+time(item.seconds);b.onclick=()=>{try{const url=sectionTimerURL(section,sectionIndex,itemIndex,item.seconds);if(!url)return;const previous=readActiveTimer();
 // Starting the next step completes the preceding step in every section,
 // including treadmill and indoor-walk intervals. Do not stop the walk workout.
 const last=readLastStarted();
@@ -205,7 +205,7 @@ if(previous&&previous.key!==checkKey&&previous.workout===currentWorkoutSignature
   }
 }
 localStorage.setItem(lastStartedKey,JSON.stringify({date:d.date,key:checkKey,workout:currentWorkoutSignature}));
-trackExerciseTimer(section,item,checkKey,currentWorkoutSignature);saveWorkoutPosition(checkKey);row.scrollIntoView({behavior:'smooth',block:'start'});openWorkoutShortcut(url)}catch(e){alert(e.message)}};row.append(b)}const next=document.createElement('button');next.className='next-exercise';const nextItem=section.items[itemIndex+1]||d.sections[sectionIndex+1]?.items[0];next.textContent=nextItem?'✓ Done · Next: '+nextItem.name:'✓ Done · Finish';next.setAttribute('aria-label','Mark '+item.name+' complete and scroll to next exercise');next.onclick=()=>{const active=readActiveTimer();const stopActive=active?.key===checkKey&&active.workout===currentWorkoutSignature&&active.mode==='watch'&&!timerRows.get(checkKey)?.walking;clearActiveTimer(checkKey);const endWalk=timerMode.value==='watch'&&walkBoundary(section,itemIndex).end;saveExerciseComplete(d.date,checkKey,check);const following=row.nextElementSibling||card.nextElementSibling?.querySelector('.item');saveWorkoutPosition(following?.workoutProgressKey||checkKey);if(following){following.scrollIntoView({behavior:'smooth',block:'start'});}else{next.textContent='✓ Workout complete';next.disabled=true;}if(finishWatchSection(sectionIndex,itemIndex,section))return true;if(endWalk)openWorkoutShortcut(shortcutURL('Workout Walk End'));else if(stopActive)requestTimerStop();return false;};row.append(next);row.workoutProgressKey=checkKey;timerRows.set(checkKey,{row,check,done:next,walking:/\b(?:treadmill|indoor)\b/i.test(section.title)});card.append(row)}main.append(card)}updateWatchRecovery();finishExpiredTimer()}catch(e){document.querySelector('#status').textContent='Unable to load workout: '+e.message}}
+trackExerciseTimer(section,item,checkKey,currentWorkoutSignature);saveWorkoutPosition(checkKey);scrollToExercise(row);openWorkoutShortcut(url)}catch(e){alert(e.message)}};row.append(b)}const next=document.createElement('button');next.className='next-exercise';const nextItem=section.items[itemIndex+1]||d.sections[sectionIndex+1]?.items[0];next.textContent=nextItem?'✓ Done · Next: '+nextItem.name:'✓ Done · Finish';next.setAttribute('aria-label','Mark '+item.name+' complete and scroll to next exercise');next.onclick=()=>{const active=readActiveTimer();const stopActive=active?.key===checkKey&&active.workout===currentWorkoutSignature&&active.mode==='watch'&&!timerRows.get(checkKey)?.walking;clearActiveTimer(checkKey);const endWalk=timerMode.value==='watch'&&walkBoundary(section,itemIndex).end;saveExerciseComplete(d.date,checkKey,check);const following=row.nextElementSibling||card.nextElementSibling?.querySelector('.item');saveWorkoutPosition(following?.workoutProgressKey||checkKey);if(following){scrollToExercise(following);}else{next.textContent='✓ Workout complete';next.disabled=true;}if(finishWatchSection(sectionIndex,itemIndex,section))return true;if(endWalk)openWorkoutShortcut(shortcutURL('Workout Walk End'));else if(stopActive)requestTimerStop();return false;};row.append(next);row.workoutProgressKey=checkKey;timerRows.set(checkKey,{row,check,done:next,walking:/\b(?:treadmill|indoor)\b/i.test(section.title)});card.append(row)}main.append(card)}updateWatchRecovery();finishExpiredTimer()}catch(e){document.querySelector('#status').textContent='Unable to load workout: '+e.message}}
 // Safari may restore its own scroll position after returning from Shortcuts.
 // Resume only after the refreshed cards and their saved checkboxes are ready.
 if ('scrollRestoration' in history) history.scrollRestoration='manual';
@@ -215,10 +215,19 @@ let shortcutReturnPending=false;
 function readWorkoutPosition(){
   try{const saved=JSON.parse(localStorage.getItem(workoutPositionKey)||'null');return saved?.workout===currentWorkoutSignature?saved:null}catch{return null}
 }
+function timerScrollOffset(){return Math.min(140,(window.innerHeight||560)/4)}
+function scrollToExercise(row,behavior='smooth'){
+  if(!row)return;
+  const timer=row.querySelector('.start-exercise');
+  const rect=timer?.getBoundingClientRect?.();
+  if(rect)window.scrollTo({top:window.scrollY+rect.top-timerScrollOffset(),behavior});
+  else row.scrollIntoView({behavior,block:'start'});
+}
 function saveWorkoutPosition(key){
   if(!currentWorkoutSignature||document.querySelector('#photo-viewer')?.open)return;
   try{
-    let offset=16;
+    let offset=timerScrollOffset();
+    const anchor=key===undefined?'card':'timer';
     if(key===undefined){
       if(window.scrollY<80){key=null;offset=0}
       else{
@@ -227,14 +236,15 @@ function saveWorkoutPosition(key){
         key=visible[0];offset=visible[1].row.getBoundingClientRect().top;
       }
     }
-    localStorage.setItem(workoutPositionKey,JSON.stringify({workout:currentWorkoutSignature,key,offset}));
+    localStorage.setItem(workoutPositionKey,JSON.stringify({workout:currentWorkoutSignature,key,offset,anchor}));
   }catch{} // Navigation must still work if optional position storage is unavailable.
 }
 function restoreWorkoutPosition(){
   const saved=readWorkoutPosition();if(!saved)return false;
   if(saved.key===null){window.scrollTo({top:0,behavior:'instant'});return true}
   const row=timerRows.get(saved.key)?.row;if(!row)return false;
-  const rect=row.getBoundingClientRect?.();
+  const target=saved.anchor==='timer'?(row.querySelector('.start-exercise')||row):row;
+  const rect=target.getBoundingClientRect?.();
   if(rect)window.scrollTo({top:window.scrollY+rect.top-(Number.isFinite(saved.offset)?saved.offset:16),behavior:'instant'});
   else row.scrollIntoView({behavior:'auto',block:'start'});
   return true;
@@ -252,7 +262,7 @@ function refreshWorkout(mode='preserve'){
       }else if(mode==='resume'){
         const rows=Array.from(document.querySelector('#workout').querySelectorAll('.item'));
         const next=rows.find(row=>!row.querySelector('.check').checked)||rows[rows.length-1];
-        next?.scrollIntoView({behavior:'auto',block:'start'});
+        scrollToExercise(next,'instant');
       }else if(mode==='top'||mode==='restore'){
         window.scrollTo({top:0,behavior:'instant'});
       }else{
