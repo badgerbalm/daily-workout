@@ -84,7 +84,7 @@
       "photos": [
         {
           "src": "images/plow-pose.jpg",
-          "alt": "Person lying on shoulders with legs overhead in Halasana",
+          "alt": "Person supported on shoulders with legs overhead and feet resting on the floor in Plow Pose (Halasana).",
           "caption": "",
           "title": "Udi demonstrating Halasana (plough pose)- 2016",
           "author": "Ron Borkin (רון בורקין)",
@@ -726,6 +726,31 @@
           "width": 1200,
           "height": 800,
           "sha256": "6092e8f0388104e73982ee1ac056d482cbadf4f701907a9a3ff123d1fa5a868b"
+        }
+      ]
+    },
+    "plow-pose-feet-suspended": {
+      "name": "Plow pose with feet suspended",
+      "aliases": [
+        "Halasana with feet suspended",
+        "Suspended-feet plow pose"
+      ],
+      "status": "partial",
+      "reason": "Existing reference shows feet on the floor, not the prescribed feet-suspended variation.",
+      "photos": [
+        {
+          "src": "images/plow-pose.jpg",
+          "alt": "Person supported on shoulders with legs overhead and feet resting on the floor in Plow Pose (Halasana).",
+          "caption": "Reference only: this photo shows feet on the floor. This card specifies feet suspended; floor contact is not the goal.",
+          "title": "Udi demonstrating Halasana (plough pose)- 2016",
+          "author": "Ron Borkin (רון בורקין)",
+          "source": "https://commons.wikimedia.org/wiki/File:Udi_demonstrating_Halasana_(plough_pose)-_2016.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "changes": "Resized; JPEG optimized",
+          "width": 1000,
+          "height": 668,
+          "sha256": "483c713f3bb851370d38e5fb7d1e0adf2a889bf2af0dd8ea3856a6391133cd34"
         }
       ]
     }
