@@ -407,7 +407,7 @@ function openWorkoutShortcut(url){
   const launch=()=>{trackShortcutProfile(url);shortcutReturnPending=true;location.href=url};
   if(window.WorkoutLog){
     const name=new URL(url).searchParams.get('name')||'',ending=/\b(?:Stop|End)\b/.test(name);
-    return window.WorkoutLog.flush({allowFinished:ending}).then(launch).catch(error=>{
+    try{window.WorkoutLog.checkpoint({allowFinished:ending});launch();window.WorkoutLog.flush({allowFinished:ending}).catch(error=>{const status=document.querySelector('#workout-log-status');if(status)status.textContent='Recovery copy saved; database save will retry on reopening. '+error.message});return}catch(error){
       const status=document.querySelector('#workout-log-status');
       if(ending){if(status)status.textContent='Results could not be saved. Sending the stop/end request anyway. '+error.message;launch();return}
       clearActiveTimer();
@@ -416,7 +416,8 @@ function openWorkoutShortcut(url){
       if(readShortcutProfileLock()?.kind==='block')localStorage.removeItem(shortcutProfileLockKey);
       updateWatchRecovery();
       if(status)status.textContent='Could not save results; timer was not launched. '+error.message;
-    });
+      return;
+    }
   }
   launch();
 }

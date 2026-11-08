@@ -6,9 +6,10 @@ const root=path.resolve(__dirname,'..'),indexedDB=new IDBFactory();
 const original={date:'2099-03-01',title:'Synthetic workout',sections:[{title:'Strength',watchWorkout:'none',items:[{name:'Dumbbell bench press',seconds:60,detail:'2 × 10',progressKey:'press'}]},{title:'Treadmill walking',watchWorkout:'none',items:[{name:'Easy warm-up',seconds:60,progressKey:'walk'}]}]};
 class Resources extends ResourceLoader{fetch(url){const file=path.join(root,path.basename(new URL(url).pathname));return fs.existsSync(file)?Promise.resolve(fs.readFileSync(file)):null}}
 async function until(predicate,label){for(let i=0;i<300;i++){if(await predicate())return;await new Promise(resolve=>setTimeout(resolve,10))}throw Error('Timed out: '+label)}
-async function page(plan){
+async function page(plan,recovery){
  const errors=[],console=new VirtualConsole();console.on('jsdomError',error=>errors.push(error.message));
  const dom=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8'),{url:'https://workout.invalid/',resources:new Resources(),runScripts:'dangerously',pretendToBeVisual:true,virtualConsole:console,beforeParse(window){
+  if(recovery)window.localStorage.setItem('workout-result-recovery:daily',JSON.stringify(recovery));
   window.indexedDB=indexedDB;window.crypto.randomUUID=randomUUID;window.scrollTo=()=>{};window.HTMLElement.prototype.scrollIntoView=()=>{};
   window.fetch=async url=>({ok:true,json:async()=>String(url).includes('workout.json')?JSON.parse(JSON.stringify(plan)):JSON.parse(fs.readFileSync(path.join(root,'exercise-photos.json'),'utf8'))});
  }});
@@ -34,7 +35,8 @@ async function page(plan){
  const walk=first.rows()[1].querySelector('.actual-results');first.input(walk,'Actual seconds','240');first.input(walk,'Speed','4.2');first.input(walk,'Speed unit','km/h');first.input(walk,'Incline %','2');first.input(walk,'Distance','0.28');first.input(walk,'Distance unit','km');await first.w.WorkoutLog.flush();
  first.dom.window.close();
  const changed=structuredClone(original);changed.date='2099-03-02';changed.sections[0].items[0].detail='3 × 12';
- const reopened=await page(changed);assert(reopened.w.document.querySelector('#status').textContent.includes('Synthetic workout'));assert(reopened.rows()[0].querySelector('.detail').textContent.includes('2 × 10'),'Unfinished prescription snapshot survives regeneration');
+ const recoverSession=await store.active('daily');const recoveredActual=structuredClone(recoverSession.exercises.walk.actual);recoveredActual.treadmill.durationSeconds=241;
+ const reopened=await page(changed,{plan:original,sessionId:recoverSession.id,changes:{walk:{actual:recoveredActual}}});assert.equal((await store.active('daily')).exercises.walk.actual.treadmill.durationSeconds,241,'Uncommitted synchronous recovery copy is replayed on reopening');assert.equal(reopened.w.localStorage.getItem('workout-result-recovery:daily'),null,'Recovery copy clears after database commit');assert(reopened.w.document.querySelector('#status').textContent.includes('Synthetic workout'));assert(reopened.rows()[0].querySelector('.detail').textContent.includes('2 × 10'),'Unfinished prescription snapshot survives regeneration');
  const restored=reopened.rows()[0].querySelector('.actual-set');assert.equal([...restored.querySelectorAll('input')].find(i=>i.value==='9.5').value,'9.5');assert(reopened.rows()[0].querySelector('.check').checked);assert.equal((await store.listSessions()).length,1,'Reopening creates no duplicate session');
  const skip=[...reopened.rows()[1].querySelectorAll('.actual-results button')].find(button=>button.textContent==='Skip exercise');skip.click();await reopened.w.WorkoutLog.flush();assert.equal((await store.active('daily')).exercises.walk.status,'skipped');
  const review=reopened.w.document.querySelector('.finish-review');reopened.input(review,'Effort · 1 easy to 10 hardest','6');reopened.input(review,'Energy · 1 low to 5 high','4');reopened.input(review,'Discomfort · 0 none to 10 severe','0');const notes=review.querySelector('textarea');notes.value='Synthetic notes';notes.dispatchEvent(new reopened.w.Event('input',{bubbles:true}));await reopened.w.WorkoutLog.flush();

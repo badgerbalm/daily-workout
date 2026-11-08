@@ -3,13 +3,24 @@
  'use strict';
  const store=WorkoutHistoryStore.createStore();
  let plan,scope='',storageSuffix='',session=null,available=true,pending={},serial=Promise.resolve(),entries=new Map(),invalid=new Map(),outcomes=new Map();
+ let recovery={};
+ const recoveryKey=()=> 'workout-result-recovery:'+scope;
+ function checkpoint({allowFinished=false}={}){
+  if(!available||!plan)return;
+  if(session?.status==='finished'){if(allowFinished)return;throw Error('Start another workout log before starting a new timer.');}
+  localStorage.setItem(recoveryKey(),JSON.stringify({plan,sessionId:session?.id||null,changes:recovery}));
+ }
  const panel=document.querySelector('#workout-log');
  const status=document.querySelector('#workout-log-status');
  const feedback=text=>{if(status)status.textContent=text};
  const error=reason=>feedback('Not saved: '+reason.message);
  async function prepare(incoming,selectedScope){
   storageSuffix=selectedScope||'';scope=selectedScope||'daily';
-  try{session=await store.active(scope);plan=session?.plan||incoming;available=true;
+  try{session=await store.active(scope);const saved=JSON.parse(localStorage.getItem(recoveryKey())||'null');
+   if(saved?.sessionId){const prior=await store.getSession(saved.sessionId);if(prior?.status==='finished'){localStorage.removeItem(recoveryKey());}else if(session&&session.id!==saved.sessionId)throw Error('Another workout is active; saved recovery data was retained.');}
+   const restored=JSON.parse(localStorage.getItem(recoveryKey())||'null');
+   plan=session?.plan||restored?.plan||incoming;recovery=restored?.changes||{};pending={...recovery};available=true;
+   if(Object.keys(pending).length)await flush();
    if(panel)panel.hidden=false;
    feedback(session?(JSON.stringify(session.plan)!==JSON.stringify(incoming)?'Resuming your unfinished workout snapshot; the latest plan is held until you finish. Saved on this device · not synced.':'Resuming your saved workout. Saved on this device · not synced.'):'Results save on this device only · Google Sheet sync is not connected.');
    return plan;
@@ -17,7 +28,8 @@
  }
  function queue(key,change){
   if(!available||session?.status==='finished')return;
-  pending[key]={...(pending[key]||{}),...change};flush().catch(error);
+  pending[key]={...(pending[key]||{}),...change};recovery[key]={...(recovery[key]||{}),...change};
+  try{checkpoint()}catch(reason){error(reason)}flush().catch(error);
  }
  function flush({allowFinished=false}={}){
   serial=serial.catch(()=>{}).then(async()=>{
@@ -25,8 +37,9 @@
    if(session?.status==='finished'){if(allowFinished)return;throw Error('Start another workout log before starting a new timer.');}
    session=await store.ensure(plan,scope);
    if(JSON.stringify(session.plan)!==JSON.stringify(plan))throw Error('Another tab started a different workout. Refresh to resume that saved workout.');
-   const changes=pending;pending={};
+   const changes=pending;pending={};const recorded=JSON.stringify(recovery);
    try{if(Object.keys(changes).length)session=await store.save(session.id,changes)}catch(reason){for(const [key,value] of Object.entries(changes))pending[key]={...value,...pending[key]};throw reason}
+   if(recorded===JSON.stringify(recovery)){recovery={};localStorage.removeItem(recoveryKey());}
    feedback(invalid.size?'Draft saved on this device · correct incomplete fields before finishing · not synced.':'Saved on this device · not synced.');
   });return serial;
  }
@@ -115,7 +128,7 @@
   form.addEventListener('input',()=>{try{const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});invalid.delete('__reviewDraft');queue('__reviewDraft',{review})}catch(reason){invalid.set('__reviewDraft',reason.message);feedback('Review needs correction: '+reason.message)}});
   const finish=element('button','','Finish and save locally');finish.type='button';finish.onclick=async()=>{
    finish.disabled=true;
-   try{if(invalid.size)throw Error('Correct incomplete result fields before finishing.');const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});await flush();session=await store.finish(session.id,review);feedback('Workout finished and saved on this device · not synced.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
+   try{if(invalid.size)throw Error('Correct incomplete result fields before finishing.');const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});await flush();session=await store.finish(session.id,review);recovery={};localStorage.removeItem(recoveryKey());feedback('Workout finished and saved on this device · not synced.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
     await renderHistory();
     const another=element('button','secondary','Start another workout log');another.type='button';another.onclick=async()=>{const oldDate=session.plan.date;session=null;pending={};invalid.clear();localStorage.removeItem('workout-checks-'+oldDate);localStorage.removeItem('workout-navigation-position'+storageSuffix);localStorage.removeItem('workout-card-view'+storageSuffix);await window.refreshWorkout('top')};host.append(another);
     window.finishRequestedDeviceTracking?.();}
@@ -132,6 +145,6 @@
  }
  const exportButton=document.querySelector('#export-local-history');
  if(exportButton)exportButton.onclick=async()=>{try{await serial.catch(()=>{});const data={format:'daily-workout-local-backup',version:1,exportedAt:new Date().toISOString(),sessions:await store.listSessions(),pending:await store.pending()};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='daily-workout-private-backup-'+new Date().toISOString().slice(0,10)+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),30000)}catch(reason){error(reason)}};
- window.WorkoutLog={prepare,mount,flush,queueStatus};
+ window.WorkoutLog={prepare,mount,flush,checkpoint,queueStatus};
  window.addEventListener('pagehide',()=>{if(Object.keys(pending).length)flush().catch(error)});
 })();
