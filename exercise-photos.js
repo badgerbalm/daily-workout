@@ -70,6 +70,9 @@
       span.textContent='Photo unavailable';art.append(span);
     }
     if(!photos.length){placeholder();return}
+    const credits=doc.createElement('details');credits.className='photo-credits';
+    const creditSummary=doc.createElement('summary');creditSummary.textContent='Photo credits';
+    credits.append(creditSummary);body.append(credits);
     for(const p of photos){
       const figure=doc.createElement('figure'),link=doc.createElement('a'),img=doc.createElement('img');
       link.href='./'+p.src;link.target='_blank';link.rel='noopener';link.title='Expand photograph';
@@ -88,11 +91,12 @@
       if(p.citation)credit.append(doc.createTextNode(' · '+p.citation));
       img.onerror=()=>{
         figure.remove();credit.remove();
+        if(!credits.querySelector('.photo-credit'))credits.remove();
         if(!art.querySelector('figure')&&!art.querySelector('.image-missing'))placeholder();
       };
       link.append(img);figure.append(link);
       if(p.caption){const caption=doc.createElement('figcaption');caption.textContent=p.caption;figure.append(caption)}
-      art.append(figure);body.append(credit);img.src='./'+p.src;
+      art.append(figure);credits.append(credit);img.src='./'+p.src;
     }
   }
   root.renderExercisePhotos=renderExercisePhotos;

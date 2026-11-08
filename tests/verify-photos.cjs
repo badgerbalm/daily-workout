@@ -40,6 +40,7 @@ const doc={createElement:tag=>new Element(tag,doc),createTextNode:text=>({textCo
 const elements=Object.fromEntries(['timer-mode','status','notice','workout'].map(id=>['#'+id,new Element('div',doc)]));doc.querySelector=s=>elements[s];
 const art=doc.createElement('div'),body=doc.createElement('div');
 api.renderExercisePhotos(art,body,{name:'Lateral raises'},lib);assert.equal(art.children.length,2);
+const credits=body.querySelector('.photo-credits');assert(credits);assert(!credits.open,'Photo credits are collapsed by default');assert.equal(credits.querySelector('summary').textContent,'Photo credits');assert.equal(credits.querySelectorAll('.photo-credit').length,2,'All attribution stays accessible');
 const viewer=doc.createElement('dialog');
 for(const [tag,cls] of [['button','photo-back'],['div','photo-stage'],['span','photo-position'],['p','photo-caption'],['div','photo-nav'],['button','photo-previous'],['button','photo-next']]){const node=doc.createElement(tag);node.className=cls;viewer.append(node)}
 viewer.querySelector('.photo-stage').append(doc.createElement('img'));
