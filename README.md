@@ -80,3 +80,5 @@ Workout settings includes Parley-inspired Game day, Steelers, Bills, Giants, Col
 ## Established opening stretch
 
 The first stretch is **Single lean-back quad stretch**, shown in the owner-supplied StretchCoach photo at `images/lying-quad-stretch.png`: seated on the floor, one leg straight, the other foot beside the buttock, leaning back with support. Do not substitute a standing calf stretch. The legacy name Lying quad stretch resolves to this exact photo; side-lying quad aliases were removed because they describe a different movement. This correction does not prescribe new repetitions or hold durations.
+
+The second established opening stretch is **Butterfly stretch**, using its existing registered photograph. Do not substitute Standing hip flexor stretch. Keep the prescribed duration unless the user changes it.
