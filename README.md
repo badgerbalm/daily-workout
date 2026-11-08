@@ -76,3 +76,7 @@ A compact Start timer button appears to the right of the exercise title in a two
 Starting an exercise collapses that card’s photo, leaving more room for the next card. Show photo reopens it at any time, and the photo/expanded-view controls remain available. Photo visibility is saved locally for the exact plan and survives Shortcut returns; a changed plan starts expanded. This presentation state is separate from completion checks and does not confirm actual performance. Section numbers, exercise counts, a current-card accent and brighter timer controls make the sequence easier to scan. No floating controls are added.
 
 Workout settings includes Parley-inspired Game day, Steelers, Bills, Giants, Colts and Classic color themes. Selection is local to this browser. Done/Next remains a filled, high-contrast button in every palette.
+
+## Established opening stretch
+
+The first stretch is **Single lean-back quad stretch**, shown in the owner-supplied StretchCoach photo at `images/lying-quad-stretch.png`: seated on the floor, one leg straight, the other foot beside the buttock, leaning back with support. Do not substitute a standing calf stretch. The legacy name Lying quad stretch resolves to this exact photo; side-lying quad aliases were removed because they describe a different movement. This correction does not prescribe new repetitions or hold durations.

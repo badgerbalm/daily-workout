@@ -231,3 +231,7 @@ Arm Circles, Capt. Matthew Holfinger / U.S. Marine Corps Training and Education 
 Changes: still extracted at 00:13, JPEG optimized without cropping. This demonstrates only the arm-circle portion of the combined shoulder-roll/arm-circle card. Shoulder rolls are not pictured.
 
 The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.
+
+## Opening-stretch identification correction (November 8, 2026)
+
+The existing owner-supplied `lying-quad-stretch.png` depicts a **single lean-back quad stretch**, not a side-lying stretch. The owner confirmed the movement with a StretchCoach reference on November 8. The original image bytes, watermark, attribution and unspecified reuse-license record are unchanged. Only its descriptive metadata and matching exercise name were corrected.

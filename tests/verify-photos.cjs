@@ -21,6 +21,9 @@ assert.equal(api.exerciseDemo(lib,'Bent knee leg raises'),'https://www.youtube.c
 assert.equal(api.findExercise(lib,'Bent-knee leg raise').photos.length,2);
 assert.equal(api.findExercise(lib,'Bodyweight glute bridges'),api.findExercise(lib,'Glute bridges'));
 assert(api.findExercise(lib,'Bird dogs').photos.length>0);
+assert.equal(api.findExercise(lib,'Single lean-back quad stretch'),api.findExercise(lib,'Lying quad stretch'));
+assert.equal(api.findExercise(lib,'Single lean-back quad stretch').photos[0].src,'images/lying-quad-stretch.png');
+assert.equal(api.findExercise(lib,'Side-lying quad stretch'),undefined,'Do not conflate distinct stretch variations');
 assert.equal(api.exerciseDemo({exercises:{unsafe:{name:'Unsafe',demo:'javascript:alert(1)'}}},'Unsafe'),undefined);
 for(const bad of ['https://x/a.jpg','images/x.svg','images/../x.jpg','//x/a.jpg','images/x.jpg?foo'])assert(!api.localPhotoPath(bad));
 // Minimal DOM for deterministic renderer and existing control regression tests.
