@@ -1,0 +1,41 @@
+{
+  "date": "planks-practice-v1",
+  "title": "Plank interval practice",
+  "note": "Two 60-second forearm plank holds with 60 seconds of rest between them. There is no final rest or preparation interval in this 3-minute sequence. Start requests MultiTimer; completion requires your checkbox confirmation. This test does not start Watch workout recording.",
+  "sections": [
+    {
+      "title": "Forearm planks · 2 holds",
+      "watchWorkout": "none",
+      "items": [
+        {
+          "name": "Forearm plank",
+          "progressKey": "planks-whole-block",
+          "detail": "2 × 60 sec holds · 60 sec rest between holds",
+          "instructions": "Hold 60 sec → rest 60 sec → hold 60 sec, then finish. Keep breathing and maintain a comfortable, controlled position. Check the card after completing both holds.",
+          "intervalBlock": {
+            "type": "planks",
+            "stages": [
+              {
+                "label": "Hold 1",
+                "phase": "hold",
+                "set": 1,
+                "seconds": 60
+              },
+              {
+                "label": "Rest",
+                "phase": "rest",
+                "seconds": 60
+              },
+              {
+                "label": "Hold 2",
+                "phase": "hold",
+                "set": 2,
+                "seconds": 60
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
