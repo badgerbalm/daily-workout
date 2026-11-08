@@ -28,6 +28,7 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
  const before=requests;
  await page.evaluate(async()=>{lastForegroundRefreshAt=0;window.dispatchEvent(new Event('pageshow'));window.dispatchEvent(new Event('focus'));document.dispatchEvent(new Event('visibilitychange'));await refreshInProgress});
  assert.equal(requests,before+1);
+ await page.locator('.exercise-media').first().evaluate(node=>node.open=true);
  await page.locator('.item .art a').first().click();
  const back=page.locator('.photo-back');await back.waitFor({state:'visible'});
  const backBox=await back.boundingBox();assert(backBox.y>=0&&backBox.y+backBox.height<=844);await page.locator('.photo-next').click();assert.equal(await page.locator('.photo-position').textContent(),'Photo 2 of 2');

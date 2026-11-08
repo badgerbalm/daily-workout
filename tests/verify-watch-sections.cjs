@@ -43,6 +43,7 @@ const {chromium}=require('playwright');
  assert.equal(await page.evaluate(()=>localStorage.getItem('workout-watch-section')),null);
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Mobile viewport must not overflow');
  // Existing gallery still opens and returns to the workout.
+ await page.locator('.exercise-media').first().evaluate(node=>node.open=true);
  await page.locator('.item .art a').first().click();await page.locator('#photo-viewer').waitFor({state:'visible'});
  await page.locator('.photo-back').click();assert.equal(await page.locator('#photo-viewer').isVisible(),false);
  assert.deepEqual(errors,[]);
