@@ -1,15 +1,72 @@
 {
-  "date": "side-planks-practice-v1",
+  "date": "side-planks-practice-v2",
   "title": "Side-plank interval practice",
-  "note": "One tap requests the saved Side Planks interval timer. Follow MultiTimer’s alerts: left 30 sec, switch 5 sec, right 30 sec, rest 30 sec, then left 30 sec, switch 5 sec, right 30 sec. If configured, the initial Get ready interval adds 5 seconds. This practice does not start Watch workout recording. Confirm completion after the final hold; the page cannot read MultiTimer state.",
-  "sections": [{
-    "title": "Side planks · 2 rounds",
-    "watchWorkout": "none",
-    "items": [
-      {"name":"Side planks","progressKey":"side-left-1","detail":"Round 1 · LEFT · 30 sec hold","seconds":30,"instructions":"Hold for 30 seconds. Then use the 5-second interval to switch sides."},
-      {"name":"Side planks","progressKey":"side-right-1","detail":"Round 1 · RIGHT · 30 sec hold","seconds":30,"instructions":"Hold for 30 seconds. Rest for 30 seconds before round 2."},
-      {"name":"Side planks","progressKey":"side-left-2","detail":"Round 2 · LEFT · 30 sec hold","seconds":30,"instructions":"Hold for 30 seconds. Then use the 5-second interval to switch sides."},
-      {"name":"Side planks","progressKey":"side-right-2","detail":"Round 2 · RIGHT · 30 sec hold","seconds":30,"instructions":"Hold for 30 seconds. The sequence finishes here; there is no final rest."}
-    ]
-  }]
+  "note": "One card runs the entire saved Side Planks sequence. The displayed 2:45 includes a 5-second Get ready interval. MultiTimer handles all four holds, switches and the middle rest. This practice does not start Watch workout recording. Check the card only after completing the whole block; the page cannot read device completion.",
+  "sections": [
+    {
+      "title": "Side planks · 2 rounds",
+      "watchWorkout": "none",
+      "items": [
+        {
+          "name": "Side planks",
+          "progressKey": "side-planks-whole-block",
+          "detail": "2 rounds · 30 sec per side · 5 sec to get ready",
+          "instructions": "Left 30 sec → switch 5 sec → right 30 sec → rest 30 sec → left 30 sec → switch 5 sec → right 30 sec. After the final hold, check this card to confirm the entire block is complete.",
+          "intervalBlock": {
+            "type": "side-planks",
+            "stages": [
+              {
+                "label": "Get ready",
+                "phase": "prepare",
+                "seconds": 5
+              },
+              {
+                "label": "Left · round 1",
+                "phase": "hold",
+                "side": "left",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Switch sides",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 1",
+                "phase": "hold",
+                "side": "right",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Rest",
+                "phase": "rest",
+                "seconds": 30
+              },
+              {
+                "label": "Left · round 2",
+                "phase": "hold",
+                "side": "left",
+                "set": 2,
+                "seconds": 30
+              },
+              {
+                "label": "Switch sides",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 2",
+                "phase": "hold",
+                "side": "right",
+                "set": 2,
+                "seconds": 30
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
 }
