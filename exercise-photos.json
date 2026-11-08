@@ -753,6 +753,47 @@
           "sha256": "483c713f3bb851370d38e5fb7d1e0adf2a889bf2af0dd8ea3856a6391133cd34"
         }
       ]
+    },
+    "dumbbell-bench-press": {
+      "name": "Dumbbell bench press",
+      "aliases": [
+        "Flat dumbbell bench press",
+        "Dumbbell chest press on bench"
+      ],
+      "status": "ready",
+      "demo": "https://www.dvidshub.net/video/636920/dumbbell-bench-press",
+      "photos": [
+        {
+          "src": "images/dumbbell-bench-press-lowered.jpg",
+          "alt": "Two camera views of a Marine performing a flat dumbbell bench press with feet on the floor, elbows bent and weights lowered.",
+          "caption": "Lowered position · feet on the floor. Tap to enlarge.",
+          "title": "Dumbbell Bench Press · lowered position",
+          "author": "Capt. Matthew Holfinger / U.S. Marine Corps Training and Education Command",
+          "source": "https://www.dvidshub.net/video/636920/dumbbell-bench-press",
+          "license": "Public domain (U.S. federal government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Still extracted at 00:08 from the demonstration; no cropping.",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.",
+          "width": 1024,
+          "height": 576,
+          "sha256": "f1812d91bebfd4e249a8c26b64b13d8abd504cd05d54ba782d8bc13ba5fcc370"
+        },
+        {
+          "src": "images/dumbbell-bench-press-pressed.jpg",
+          "alt": "Two camera views of a Marine performing a flat dumbbell bench press with feet on the floor, arms extended and weights pressed upward.",
+          "caption": "Pressed position · feet on the floor. Tap to enlarge.",
+          "title": "Dumbbell Bench Press · pressed position",
+          "author": "Capt. Matthew Holfinger / U.S. Marine Corps Training and Education Command",
+          "source": "https://www.dvidshub.net/video/636920/dumbbell-bench-press",
+          "license": "Public domain (U.S. federal government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Still extracted at 00:10 from the demonstration; no cropping.",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.",
+          "width": 1024,
+          "height": 576,
+          "sha256": "8edc3c2e75dc68a9e9d4296ef607885de2a5ea0d4b3176f72c05d667ed656988"
+        }
+      ]
     }
   }
 }
