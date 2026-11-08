@@ -57,8 +57,6 @@ h1{font-family:Georgia,serif;font-size:clamp(38px,7vw,60px);font-weight:400;line
 #watch-section-controls{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:4}
 #watch-section-controls button{width:100%;box-shadow:0 4px 20px #20382f25}
 #watch-section-controls[hidden]{display:none}
-#timer-stop-prompt{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom,0px));left:12px;right:12px;max-width:700px;margin:auto;padding:16px;background:#fff4df;border:1px solid #c8a464;border-radius:16px;z-index:5;box-shadow:0 4px 20px #0002;font-size:14px}
-#timer-stop-prompt button{margin-top:8px;width:100%}
 #photo-viewer{width:min(960px,calc(100vw - 24px));max-width:calc(100vw - 24px);height:calc(100vh - 24px);height:calc(100dvh - 24px);max-height:100%;padding:14px;border:0;border-radius:18px;background:#fff;overflow:hidden}
 #photo-viewer[open]{display:flex;flex-direction:column;gap:10px}
 #photo-viewer::backdrop{background:#142a23dd}

@@ -10,14 +10,16 @@ class Element{
  get previousElementSibling(){return this.parentElement?.children[this.parentElement.children.indexOf(this)-1]}
  scrollIntoView(){this.scrolled=true}
 }
-const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback','timer-stop-prompt','timer-stop-button','watch-section-controls','end-watch-section'];
+const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback','watch-section-controls','end-watch-section'];
 const elements=Object.fromEntries(ids.map(id=>['#'+id,new Element('div')]));
 const doc={querySelector:id=>elements[id],createElement:tag=>new Element(tag),addEventListener(){}};
 const storage={},alerts=[];
 const section=(title,watchWorkout)=>({title,watchWorkout,items:[{name:'Dead bugs',seconds:60},{name:'Side planks',seconds:30}]});
 const fixture={date:'2099-01-01',sections:[section('Treadmill walking'),section('Upper body and glutes','strength'),section('Gentle core','core')]};
 const ctx=vm.createContext({console,document:doc,history:{},window:{scrollY:0,scrollTo(){},addEventListener(){}},localStorage:{getItem:k=>storage[k]||null,setItem:(k,v)=>storage[k]=v,removeItem:k=>delete storage[k]},location:{},setTimeout:()=>1,clearTimeout(){},requestAnimationFrame:fn=>setImmediate(fn),fetch:async url=>({ok:true,json:async()=>url.includes('workout.json')?fixture:{exercises:{}}}),renderExercisePhotos(){},exerciseDemo(){},alert:m=>alerts.push(m)});
-vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8').match(/<script>([\s\S]*?)<\/script>/)[1],ctx);
+const html=fs.readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8');
+assert(!html.includes('timer-stop-prompt'),'No timer-stop overlay is rendered');
+vm.runInContext(html.match(/<script>([\s\S]*?)<\/script>/)[1],ctx);
 const rows=()=>elements['#workout'].querySelectorAll('.item');
 const start=i=>rows()[i].querySelector('button').onclick();
 const done=i=>rows()[i].querySelector('.next-exercise').onclick();

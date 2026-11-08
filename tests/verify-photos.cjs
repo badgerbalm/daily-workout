@@ -37,7 +37,7 @@ class Element{
 }
 const events={document:{},window:{}};
 const doc={createElement:tag=>new Element(tag,doc),createTextNode:text=>({textContent:text}),addEventListener:(name,handler)=>events.document[name]=handler};
-const elements=Object.fromEntries(['timer-mode','status','notice','workout','timer-stop-prompt','timer-stop-button'].map(id=>['#'+id,new Element('div',doc)]));doc.querySelector=s=>elements[s];
+const elements=Object.fromEntries(['timer-mode','status','notice','workout'].map(id=>['#'+id,new Element('div',doc)]));doc.querySelector=s=>elements[s];
 const art=doc.createElement('div'),body=doc.createElement('div');
 api.renderExercisePhotos(art,body,{name:'Lateral raises'},lib);assert.equal(art.children.length,2);
 const viewer=doc.createElement('dialog');

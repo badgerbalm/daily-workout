@@ -12,7 +12,7 @@ class Element{
  scrollIntoView(){}
 }
 function harness(preview,storage={}){
- const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback','timer-stop-prompt','timer-stop-button','watch-section-controls','end-watch-section','safari-preview','shortcut-profile','shortcut-profile-status'];
+ const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback','watch-section-controls','end-watch-section','safari-preview','shortcut-profile','shortcut-profile-status'];
  const elements=Object.fromEntries(ids.map(id=>['#'+id,new Element('div')]));
  const document={querySelector:id=>elements[id],createElement:tag=>new Element(tag),addEventListener(){},documentElement:{getAttribute:()=>preview?'safari':null}};
  const section=(title,watchWorkout)=>({title,watchWorkout,items:[{name:'Dead bugs',seconds:60},{name:'Side planks',seconds:30}]});
