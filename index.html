@@ -25,7 +25,7 @@ const guidance={"warm-up walk":["🚶","Begin at a comfortable pace and graduall
 Object.assign(guidance,{"lying quad stretch":["quad","Gently stretch your quadriceps while lying on your side."],"butterfly stretch":["butterfly","Sit with soles of feet together and knees relaxed outward."],"seated spinal twist":["twist","Sit upright and rotate gently without forcing."],"pigeon pose":["pigeon","Ease into the hip stretch and avoid forcing the groin."],"easy reset and position changes":["steps","Move comfortably between stretches."]});
 const demos={"pallof press":"https://www.physitrack.com/exercise-library/how-to-perform-the-pallof-press-exercise","cloud hands":"https://www.cleartaichi.com/tai-chi-form/cloud-hands-3684.html"};
 const time=n=>Math.floor(n/60)+':'+String(n%60).padStart(2,'0');
-function shortcutURL(name,input){const routedName=name+(currentShortcutProfile()==='safari-test'?' Safari Test':'');return 'shortcuts://run-shortcut?name='+encodeURIComponent(routedName)+(input===undefined?'':'&input=text&text='+encodeURIComponent(input))}
+function shortcutURL(name,input){const profile=currentShortcutProfile();const baseName=profile==='safari-test'&&name==='Workout Walk End'?'Workout End':name;const routedName=baseName+(profile==='safari-test'?' Safari Test':'');return 'shortcuts://run-shortcut?name='+encodeURIComponent(routedName)+(input===undefined?'':'&input=text&text='+encodeURIComponent(input))}
 function walkBoundary(section,itemIndex){const walking=/\b(?:treadmill|indoor)\b/i.test(section.title)&&/\bwalk(?:ing)?\b/i.test(section.title);return {start:walking&&itemIndex===section.items.findIndex(item=>Number(item.seconds)>0),end:walking&&itemIndex===section.items.length-1}}
 function timerURL(seconds,mode,startWalk=false){const n=Number(seconds);if(!Number.isSafeInteger(n)||n<=0)throw Error('Timer duration must be a positive whole number of seconds.');const name=mode==='iphone'?'Workout Timer':startWalk?'Workout Walk Start':'Workout Timer Watch';return shortcutURL(name,n)}
 const workoutThemes=['game-day','steelers','bills','giants','colts','classic'];
@@ -88,7 +88,7 @@ function trackShortcutProfile(url){
     localStorage.setItem(shortcutProfileLockKey,JSON.stringify({profile:currentShortcutProfile(),kind:'workout'}));
   }else if(baseName==='Workout Timer Watch'&&!lock){
     localStorage.setItem(shortcutProfileLockKey,JSON.stringify({profile:currentShortcutProfile(),kind:'timer'}));
-  }else if(baseName==='Workout Walk End'||(baseName==='Workout Timer Stop'&&lock?.kind==='timer')){
+  }else if(['Workout Walk End','Workout End'].includes(baseName)||(baseName==='Workout Timer Stop'&&lock?.kind==='timer')){
     localStorage.removeItem(shortcutProfileLockKey);
   }
   updateShortcutProfileControls();
