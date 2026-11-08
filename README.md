@@ -86,3 +86,5 @@ The second established opening stretch is **Butterfly stretch**, using its exist
 The reported opening sequence also includes **Plow pose with feet suspended** (straight legs), replacing Supine figure-four stretch. This records the user’s movement, not a claim that it treats a back condition. The existing one-minute timer is retained. Its current photograph is explicitly marked as a floor-contact reference, and the registry flags partial photo coverage until an exact-variation photo is available. Do not progress toward floor contact or increase duration automatically.
 
 The user selected **Dumbbell bench press with feet on the floor**, replacing the floor press. The preview retains 2 × 10 and the existing 180-second timer; no actual weight or performance is inferred. Verified local demonstration stills show the selected setup.
+
+Photo-library metadata is refreshed alongside each workout reload, including returns from Shortcuts, so newly registered exercise photos do not remain missing in an already-open tab. Local photo assets and clean missing-photo placeholders are unchanged.
