@@ -1,0 +1,137 @@
+/* Entries remain in this origin's IndexedDB. No upload/sync endpoint is configured. */
+(function(){
+ 'use strict';
+ const store=WorkoutHistoryStore.createStore();
+ let plan,scope='',storageSuffix='',session=null,available=true,pending={},serial=Promise.resolve(),entries=new Map(),invalid=new Map(),outcomes=new Map();
+ const panel=document.querySelector('#workout-log');
+ const status=document.querySelector('#workout-log-status');
+ const feedback=text=>{if(status)status.textContent=text};
+ const error=reason=>feedback('Not saved: '+reason.message);
+ async function prepare(incoming,selectedScope){
+  storageSuffix=selectedScope||'';scope=selectedScope||'daily';
+  try{session=await store.active(scope);plan=session?.plan||incoming;available=true;
+   if(panel)panel.hidden=false;
+   feedback(session?(JSON.stringify(session.plan)!==JSON.stringify(incoming)?'Resuming your unfinished workout snapshot; the latest plan is held until you finish. Saved on this device · not synced.':'Resuming your saved workout. Saved on this device · not synced.'):'Results save on this device only · Google Sheet sync is not connected.');
+   return plan;
+  }catch(reason){available=false;plan=incoming;if(panel)panel.hidden=false;feedback('Workout history unavailable: '+reason.message+' Timers still work, but results cannot be saved.');return incoming}
+ }
+ function queue(key,change){
+  if(!available||session?.status==='finished')return;
+  pending[key]={...(pending[key]||{}),...change};flush().catch(error);
+ }
+ function flush({allowFinished=false}={}){
+  serial=serial.catch(()=>{}).then(async()=>{
+   if(!available||!plan)return;
+   if(session?.status==='finished'){if(allowFinished)return;throw Error('Start another workout log before starting a new timer.');}
+   session=await store.ensure(plan,scope);
+   if(JSON.stringify(session.plan)!==JSON.stringify(plan))throw Error('Another tab started a different workout. Refresh to resume that saved workout.');
+   const changes=pending;pending={};
+   try{if(Object.keys(changes).length)session=await store.save(session.id,changes)}catch(reason){for(const [key,value] of Object.entries(changes))pending[key]={...value,...pending[key]};throw reason}
+   feedback(invalid.size?'Draft saved on this device · correct incomplete fields before finishing · not synced.':'Saved on this device · not synced.');
+  });return serial;
+ }
+ function queueStatus(key,state,source='user'){
+  const actualState=state==='completed'&&source!=='user'?'inferred':state;
+  if(actualState==='inferred'&&['completed','skipped'].includes(outcomes.get(key)))return;
+  outcomes.set(key,actualState);
+  queue(key,{status:actualState,source});
+  const badge=entries.get(key)?.badge;if(badge)badge.textContent=labels[actualState];
+ }
+ const labels={unfinished:'Unfinished',completed:'Confirmed complete',skipped:'Skipped',inferred:'Needs confirmation · navigation/timer only'};
+ function element(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node}
+ function field(parent,label,type,value,attributes={}){
+  const wrapper=element('label','result-field'),input=element(type==='select'?'select':'input');wrapper.append(element('span','',label));
+  if(type==='select'){for(const [v,text] of attributes.options||[]){const option=element('option','',text);option.value=v;input.append(option)}}
+  else{input.type=type;input.inputMode=type==='number'?'decimal':'text';if(type==='number'){input.min='0';input.step='any'}}
+  for(const [key,val] of Object.entries(attributes))if(key!=='options')input.setAttribute(key,val);
+  input.value=value??'';wrapper.append(input);parent.append(wrapper);return input;
+ }
+ const units=[['lb','lb'],['kg','kg']];
+ async function mount(rowMap){
+  await serial.catch(()=>{});entries=new Map();invalid=new Map();outcomes=new Map();if(!available)return;
+  const previousSessions=(await store.listSessions()).filter(saved=>saved.id!==session?.id).sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt));
+  for(const [key,entry] of rowMap){
+   const saved=session?.exercises[key];
+   const savedActual=saved?.draft||saved?.actual;
+   if(saved?.draft){try{WorkoutHistoryStore.actualResult(saved.draft)}catch(reason){invalid.set(key,reason.message)}}
+   if(saved){outcomes.set(key,saved.status);entry.check.checked=['completed','inferred'].includes(saved.status);}
+   const details=element('details','actual-results'),summary=element('summary','','Record results');details.append(summary);
+   const badge=element('p','result-outcome',labels[saved?.status||'unfinished']);details.append(badge);entries.set(key,{badge,entry});
+   details.append(element('p','result-help','Actual performance only. Blank fields mean not recorded. Saving values does not confirm completion.'));
+   const form=element('div','results-form');details.append(form);
+   let setControls=[],treadmillControls;
+   const walking=/treadmill|walking/i.test(entry.section.title);
+   const update=()=>{
+    let actual;
+    if(walking){actual={sets:[],treadmill:Object.fromEntries(Object.entries(treadmillControls).map(([name,input])=>[name,input.value]))}}
+    else actual={sets:setControls.map(set=>({id:set.id,...Object.fromEntries(Object.entries(set.controls).map(([name,input])=>[name,input.value]))}))};
+    const draft=actual;
+    try{actual=WorkoutHistoryStore.actualResult(actual);invalid.delete(key);queue(key,{actual,draft:null});feedback('Saving on this device…');return true}catch(reason){invalid.set(key,reason.message);queue(key,{draft});feedback('Draft saved locally; '+reason.message);return false}
+   };
+   if(walking){
+    const t=savedActual?.treadmill||{};treadmillControls={};
+    for(const [name,label,type,options] of [['durationSeconds','Actual seconds','number'],['speed','Speed','number'],['speedUnit','Speed unit','select',[['mph','mph'],['km/h','km/h']]],['inclinePct','Incline %','number'],['distance','Distance','number'],['distanceUnit','Distance unit','select',[['mi','mi'],['km','km']]]]){
+     treadmillControls[name]=field(form,label,type,t[name]??(name==='speedUnit'?'mph':name==='distanceUnit'?'mi':''),options?{options}:{});if(name==='inclinePct')treadmillControls[name].min='-20';
+    }
+   }else{
+    const weighted=/dumbbell|row|press|raise|carr/i.test(entry.item.name);
+    const timed=/plank|carr|stretch|pose/i.test(entry.item.name);
+    function addSet(data={}){
+     const set=element('fieldset','actual-set'),legend=element('legend','','Set '+(setControls.length+1));set.append(legend);
+     const controls={};
+     if(!timed)controls.reps=field(set,'Actual reps','number',data.reps,{step:'1'});
+     if(weighted){controls.weight=field(set,'Actual weight','number',data.weight);controls.weightUnit=field(set,'Unit','select',data.weightUnit||'lb',{options:units});controls.weightBasis=field(set,'Weight basis','select',data.weightBasis||'',{options:[['','Choose if entering weight'],['per-dumbbell','Per dumbbell'],['single-hand','One hand'],['total','Total load']]})}
+     controls.side=field(set,'Side','select',data.side||'',{options:[['','Not specified'],['left','Left'],['right','Right'],['both','Both']]});
+     if(timed)controls.durationSeconds=field(set,'Actual hold/carry seconds','number',data.durationSeconds);
+     setControls.push({id:data.id||crypto.randomUUID(),controls});form.append(set);
+     if(weighted&&data.weight==null){
+      const match=previousSessions.flatMap(saved=>Object.values(saved.exercises)).filter(exercise=>exercise.name.toLowerCase()===entry.item.name.toLowerCase()).flatMap(exercise=>[...exercise.actual.sets].reverse()).find(previous=>previous.weight!==null);
+      if(match){const use=element('button','secondary','Use last weight: '+match.weight+' '+match.weightUnit+' · '+match.weightBasis);use.type='button';use.onclick=()=>{controls.weight.value=match.weight;controls.weightUnit.value=match.weightUnit;controls.weightBasis.value=match.weightBasis;update()};set.append(use)}
+     }
+    }
+    const savedSets=savedActual?.sets||[];
+    if(savedSets.length)savedSets.forEach(addSet);
+    else{const match=String(entry.item.detail||'').match(/(\d+)\s*[×x]/);for(let i=0;i<Math.min(Number(match?.[1])||1,10);i++)addSet()}
+    const add=element('button','secondary','+ Add set');add.type='button';add.onclick=()=>addSet();details.append(add);
+   }
+   form.addEventListener('input',update);form.addEventListener('change',update);
+   const actions=element('div','result-actions');
+   const confirm=element('button','','Confirm complete');confirm.type='button';confirm.onclick=()=>{if(!update())return;entry.check.checked=true;entry.check.onchange()};
+   const skip=element('button','secondary','Skip exercise');skip.type='button';skip.onclick=()=>{if(!allowStartingExercise(key))return;entry.done.onclick();entry.check.checked=false;saveExerciseCheck(plan.date,key,false,'skipped')};
+   actions.append(confirm,skip);details.append(actions);entry.row.querySelector('.exercise-info').append(details);
+  }
+  renderFinish();await renderHistory();
+ }
+ function renderFinish(){
+  const host=document.querySelector('#workout-finish');if(!host)return;host.replaceChildren();
+  const details=element('details','finish-review');details.append(element('summary','','Finish workout · short review'));
+  const form=element('div','results-form');details.append(form);
+  const draft=session?.reviewDraft||{};
+  const effort=field(form,'Effort · 1 easy to 10 hardest','number',draft.effort,{min:'1',max:'10',step:'1'});
+  const energy=field(form,'Energy · 1 low to 5 high','number',draft.energy,{min:'1',max:'5',step:'1'});
+  const discomfort=field(form,'Discomfort · 0 none to 10 severe','number',draft.discomfort,{min:'0',max:'10',step:'1'});
+  const label=element('label','result-field');label.append(element('span','','Notes · optional'));const notes=element('textarea');notes.maxLength=4000;notes.value=draft.notes||'';label.append(notes);form.append(label);
+  details.append(element('p','result-help','Unfinished and skipped exercises remain as recorded. Timer-inferred completions still need confirmation. Ratings are optional.'));
+  form.addEventListener('input',()=>{try{const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});invalid.delete('__reviewDraft');queue('__reviewDraft',{review})}catch(reason){invalid.set('__reviewDraft',reason.message);feedback('Review needs correction: '+reason.message)}});
+  const finish=element('button','','Finish and save locally');finish.type='button';finish.onclick=async()=>{
+   finish.disabled=true;
+   try{if(invalid.size)throw Error('Correct incomplete result fields before finishing.');const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});await flush();session=await store.finish(session.id,review);feedback('Workout finished and saved on this device · not synced.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
+    await renderHistory();
+    const another=element('button','secondary','Start another workout log');another.type='button';another.onclick=async()=>{const oldDate=session.plan.date;session=null;pending={};invalid.clear();localStorage.removeItem('workout-checks-'+oldDate);localStorage.removeItem('workout-navigation-position'+storageSuffix);localStorage.removeItem('workout-card-view'+storageSuffix);await window.refreshWorkout('top')};host.append(another);
+    window.finishRequestedDeviceTracking?.();}
+   catch(reason){error(reason);finish.disabled=false}
+  };details.append(finish);host.append(details);
+ }
+ async function renderHistory(){
+  const host=document.querySelector('#local-history-list');if(!host)return;
+  const sessions=(await store.listSessions()).sort((a,b)=>b.startedAt.localeCompare(a.startedAt)).slice(0,10);host.replaceChildren();
+  for(const saved of sessions){const details=element('details','saved-session');details.append(element('summary','',new Date(saved.startedAt).toLocaleDateString()+' · '+saved.plan.title+' · '+saved.status));
+   for(const exercise of Object.values(saved.exercises)){const p=element('p','',exercise.name+' — '+labels[exercise.status]);details.append(p);if(exercise.actual.sets.length||exercise.actual.treadmill){const values=element('ul','saved-actuals');exercise.actual.sets.forEach((set,index)=>{const parts=[set.side,set.reps===null?null:set.reps+' reps',set.weight===null?null:set.weight+' '+set.weightUnit+' '+set.weightBasis,set.durationSeconds===null?null:set.durationSeconds+' sec'].filter(Boolean);if(parts.length)values.append(element('li','','Set '+(index+1)+': '+parts.join(' · ')))});const t=exercise.actual.treadmill;if(t){const parts=[t.durationSeconds===null?null:t.durationSeconds+' sec',t.speed===null?null:t.speed+' '+t.speedUnit,t.inclinePct===null?null:t.inclinePct+'% incline',t.distance===null?null:t.distance+' '+t.distanceUnit].filter(Boolean);if(parts.length)values.append(element('li','',parts.join(' · ')))}details.append(values)}}
+   host.append(details);
+  }
+ }
+ const exportButton=document.querySelector('#export-local-history');
+ if(exportButton)exportButton.onclick=async()=>{try{await serial.catch(()=>{});const data={format:'daily-workout-local-backup',version:1,exportedAt:new Date().toISOString(),sessions:await store.listSessions(),pending:await store.pending()};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='daily-workout-private-backup-'+new Date().toISOString().slice(0,10)+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),30000)}catch(reason){error(reason)}};
+ window.WorkoutLog={prepare,mount,flush,queueStatus};
+ window.addEventListener('pagehide',()=>{if(Object.keys(pending).length)flush().catch(error)});
+})();

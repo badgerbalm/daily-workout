@@ -106,3 +106,13 @@ The Sites preview build serves `workout-practice.json` as its root workout.json;
 Blocks are only user-confirmed, never auto-completed by elapsed time or a different Start button. One pending block prevents starting a different exercise until it is confirmed or its tracking is cleared after stopping devices. Intermediate completion requests Workout Timer Stop; final section completion requests Workout Walk End. Both Safari-test Shortcuts must reset TIMER and all three named interval timers; only Walk End also ends Watch recording. The app cannot verify those on-device actions. Reopening never relaunches a requested block. Clearing saved tracking after stopping early leaves the block unfinished.
 
 The Safari-test shared end Shortcut is now **Workout End Safari Test**. The original non-test integration retains Workout Walk End for compatibility. Workout Timer Stop Safari Test remains timer-only and must not end Watch recording. The shared End sequence is all workout-timer resets, End Workout, then Open Safari.
+
+## Local workout results preview
+
+The results preview stores entries in IndexedDB on the current browser/device. It snapshots the prescribed plan when logging starts and resumes that snapshot even if the published plan changes. Actual reps, weights, weight basis, side and treadmill values start blank; previous entered weights are offered only through an explicit button. Timer expiry and next-start completion remain navigation inferences requiring confirmation. Skipped and unfinished exercises retain their own states.
+
+Finish Workout saves effort (1–10), energy (1–5), discomfort (0–10) and optional notes without converting unfinished exercises to completed. Entries and review drafts are saved before Shortcut handoff. Recent results and an Export local backup button are available on the same device. Clearing browser storage can remove these entries; Safari and a standalone app may use different storage contexts.
+
+There is **no Google sign-in, Google Sheet, cloud backup or synchronization yet**. The local outbox uses stable event IDs for future synchronization, but no history is transmitted. Do not add actual entries, exports, measurements or credentials to this repository or workout.json. Measurements, trends and history-informed generation remain future work.
+
+Run `npm ci` and `npm run test:history` for IndexedDB transaction and DOM workflow regressions. These use fake-indexeddb and jsdom, not real iPhone or Watch testing. On-device validation must cover entry, leaving for Shortcuts, reopening, confirming/skipping and finishing before this milestone is considered device-tested.
