@@ -12,7 +12,7 @@ class Element{
  scrollIntoView(){}
 }
 function harness(preview,storage={}){
- const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback','watch-section-controls','end-watch-section','safari-preview','shortcut-profile','shortcut-profile-status'];
+ const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback','safari-preview','shortcut-profile','shortcut-profile-status'];
  const elements=Object.fromEntries(ids.map(id=>['#'+id,new Element('div')]));
  const document={querySelector:id=>elements[id],createElement:tag=>new Element(tag),addEventListener(){},documentElement:{getAttribute:()=>preview?'safari':null}};
  const section=(title,watchWorkout)=>({title,watchWorkout,items:[{name:'Dead bugs',seconds:60},{name:'Side planks',seconds:30}]});
@@ -34,7 +34,7 @@ function harness(preview,storage={}){
  test.start(3);assert.equal(test.name(),'Workout Timer Watch Safari Test');test.done(3);assert.equal(test.name(),'Workout Walk End Safari Test');
  test.start(4);assert.equal(test.name(),'Workout Strength Start Safari Test');test.done(4);assert.equal(test.name(),'Workout Timer Stop Safari Test');assert(test.storage['workout-shortcut-profile-lock'],'Timer Stop retains strength routing lock');
  const reopened=harness(true,test.storage);await reopened.reload();reopened.start(5);assert.equal(reopened.name(),'Workout Timer Watch Safari Test');reopened.done(5);assert.equal(reopened.name(),'Workout Walk End Safari Test');assert(!test.storage['workout-shortcut-profile-lock']);
- reopened.start(6);assert.equal(reopened.name(),'Workout Core Start Safari Test');reopened.elements['#end-watch-section'].onclick();assert.equal(reopened.name(),'Workout Walk End Safari Test');
+ reopened.start(6);assert.equal(reopened.name(),'Workout Core Start Safari Test');reopened.done(7);assert.equal(reopened.name(),'Workout Walk End Safari Test');
  reopened.elements['#timer-mode'].value='iphone';reopened.start(6);assert.equal(reopened.name(),'Workout Timer Safari Test');
  vm.runInContext('const active=readActiveTimer();active.endsAt=0;localStorage.setItem(activeTimerKey,JSON.stringify(active));finishExpiredTimer()',reopened.ctx);
  assert(!reopened.elements['#shortcut-profile'].disabled,'iPhone expiry releases profile selection without MultiTimer reset');

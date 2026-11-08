@@ -10,7 +10,7 @@ class Element{
  get previousElementSibling(){return this.parentElement?.children[this.parentElement.children.indexOf(this)-1]}
  scrollIntoView(){this.scrolled=true}
 }
-const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback','watch-section-controls','end-watch-section'];
+const ids=['timer-mode','workout','notice','status','refresh-workout','refresh-feedback'];
 const elements=Object.fromEntries(ids.map(id=>['#'+id,new Element('div')]));
 const doc={querySelector:id=>elements[id],createElement:tag=>new Element(tag),addEventListener(){}};
 const storage={},alerts=[];
@@ -19,6 +19,7 @@ const fixture={date:'2099-01-01',sections:[section('Treadmill walking'),section(
 const ctx=vm.createContext({console,document:doc,history:{},window:{scrollY:0,scrollTo(){},addEventListener(){}},localStorage:{getItem:k=>storage[k]||null,setItem:(k,v)=>storage[k]=v,removeItem:k=>delete storage[k]},location:{},setTimeout:()=>1,clearTimeout(){},requestAnimationFrame:fn=>setImmediate(fn),fetch:async url=>({ok:true,json:async()=>url.includes('workout.json')?fixture:{exercises:{}}}),renderExercisePhotos(){},exerciseDemo(){},alert:m=>alerts.push(m)});
 const html=fs.readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8');
 assert(!html.includes('timer-stop-prompt'),'No timer-stop overlay is rendered');
+assert(!html.includes('id="end-watch-section"'),'No End Watch section button is rendered');
 vm.runInContext(html.match(/<script>([\s\S]*?)<\/script>/)[1],ctx);
 const rows=()=>elements['#workout'].querySelectorAll('.item');
 const start=i=>rows()[i].querySelector('button').onclick();
@@ -37,11 +38,11 @@ const reload=()=>vm.runInContext('refreshWorkout()',ctx);
  assert.deepEqual(launches.map(url=>new URL(url).searchParams.get('name')),['Workout Walk End'],'Final expiry ends once without extra Timer Stop');
  start(2);assert.equal(new URL(launches.at(-1)).searchParams.get('name'),'Workout Strength Start');const count=launches.length;
  start(4);assert.equal(launches.length,count);assert.equal(alerts.length,1,'Guard overlapping Watch sections');
- await reload();assert(!elements['#watch-section-controls'].hidden);elements['#end-watch-section'].onclick();assert(!storage['workout-watch-section']);
+ await reload();done(3);assert(!storage['workout-watch-section'],'Final Done still ends the tracked section after reload');
  assert.equal(new URL(launches.at(-1)).searchParams.get('name'),'Workout Walk End');
  elements['#timer-mode'].value='iphone';start(4);assert.equal(new URL(launches.at(-1)).searchParams.get('name'),'Workout Timer');assert(!storage['workout-watch-section']);
  assert.equal(vm.runInContext("watchSectionType({title:'Strength and core'})",ctx),'strength');
  assert.equal(vm.runInContext("watchSectionType({title:'Strength',watchWorkout:'none'})",ctx),null);
  assert.equal(elements['#status'].textContent.startsWith('Unable'),false);
- console.log('PASS: full page lifecycle with strength/core starts, timer-only intermediate stops, one final stop, reload persistence, overlap guard, early end, walking boundaries, iPhone fallback and legacy classification.');
+ console.log('PASS: full page lifecycle with strength/core starts, timer-only intermediate stops, one final stop, reload persistence, overlap guard, walking boundaries, iPhone fallback and legacy classification.');
 })().catch(e=>{console.error(e);process.exitCode=1});

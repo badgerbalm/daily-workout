@@ -54,9 +54,6 @@ h1{font-family:Georgia,serif;font-size:clamp(38px,7vw,60px);font-weight:400;line
 .item:has(.check:checked) .art{opacity:.75}
 .app-footer{text-align:center;padding:12px 0 28px;font-family:Georgia,serif;font-size:22px;color:#69806e}
 .app-footer span{display:block;margin-top:10px;font:11px -apple-system,BlinkMacSystemFont,sans-serif;color:var(--muted)}
-#watch-section-controls{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:4}
-#watch-section-controls button{width:100%;box-shadow:0 4px 20px #20382f25}
-#watch-section-controls[hidden]{display:none}
 #photo-viewer{width:min(960px,calc(100vw - 24px));max-width:calc(100vw - 24px);height:calc(100vh - 24px);height:calc(100dvh - 24px);max-height:100%;padding:14px;border:0;border-radius:18px;background:#fff;overflow:hidden}
 #photo-viewer[open]{display:flex;flex-direction:column;gap:10px}
 #photo-viewer::backdrop{background:#142a23dd}

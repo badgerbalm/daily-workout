@@ -30,12 +30,13 @@ const {chromium}=require('playwright');
  await start(5);assert.equal((await names()).at(-1),'Workout Timer Watch');
  await page.evaluate(()=>{const a=readActiveTimer();a.endsAt=Date.now()-1;localStorage.setItem(activeTimerKey,JSON.stringify(a));finishExpiredTimer()});
  assert.deepEqual(await names(),['Workout Timer Watch','Workout Walk End'],'Last timer ends section once without a second Timer Stop');
- // Reopen a section, block a competing session, and allow early ending.
+ // Reopen a section, block a competing session, and finish using its final card.
  await start(2);const before=(await names()).length;await start(4);
  assert.equal((await names()).length,before,'No overlapping Watch sections');
- await page.reload();await page.waitForSelector('#end-watch-section',{state:'visible'});
+ await page.reload();await page.waitForFunction(()=>document.querySelectorAll('.item').length===6);
+ assert.equal(await page.locator('#end-watch-section').count(),0);
  await page.evaluate(()=>{window.launches=[];openWorkoutShortcut=url=>window.launches.push(url)});
- await page.locator('#end-watch-section').click();assert.deepEqual(await names(),['Workout Walk End']);
+ await done(3);assert.deepEqual(await names(),['Workout Walk End']);
  await page.locator('.settings summary').click();
  await page.selectOption('#timer-mode','iphone');await start(4);
  assert.equal((await names()).at(-1),'Workout Timer');
@@ -45,6 +46,6 @@ const {chromium}=require('playwright');
  await page.locator('.item .art a').first().click();await page.locator('#photo-viewer').waitFor({state:'visible'});
  await page.locator('.photo-back').click();assert.equal(await page.locator('#photo-viewer').isVisible(),false);
  assert.deepEqual(errors,[]);
- console.log('PASS: mobile browser, walking boundaries, strength/core starts, exercise-only stops, manual/automatic section ends, reload persistence, overlap guard, early ending, iPhone mode, gallery.');
+ console.log('PASS: mobile browser, walking boundaries, strength/core starts, exercise-only stops, manual/automatic section ends, reload persistence, overlap guard, iPhone mode, gallery.');
  }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});
