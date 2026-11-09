@@ -8,6 +8,7 @@ const {chromium}=require('playwright');
  const section=(title,watchWorkout)=>({title,watchWorkout,items:[{name:'Dead bugs',seconds:60},{name:'Side planks',seconds:30}]});
  const fixture={date:'2099-01-01',sections:[section('Treadmill walking'),section('Upper body and glutes','strength'),section('Gentle core','core')]};
  await page.route('**/workout.json*',route=>route.fulfill({json:fixture}));
+ await page.addInitScript(()=>localStorage.setItem('workout-shortcut-profile','normal'));
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  page.on('dialog',d=>d.dismiss());
  const base=process.argv[2]||'http://127.0.0.1:8765/';

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Daily Workout</title><meta name="theme-color" content="#f5f4ee"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="stylesheet" href="./workout.css"><link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png"><link rel="icon" type="image/png" href="./images/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Daily Workout"><meta name="apple-mobile-web-app-capable" content="yes">
+<html lang="en" data-shortcuts="safari"><head><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Daily Workout</title><meta name="theme-color" content="#f5f4ee"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="stylesheet" href="./workout.css"><link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png"><link rel="icon" type="image/png" href="./images/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Daily Workout"><meta name="apple-mobile-web-app-capable" content="yes">
 <!-- Pages redeploy trigger: 2026-11-06 workout buttons -->
 </head>
 <body data-workout-theme="game-day">
@@ -8,8 +8,8 @@
 <div class="workout-tools"><div><p class="eyebrow">TODAY’S SESSION</p><p class="muted tools-hint">Move at your own pace.</p></div><button type="button" id="refresh-workout" class="secondary">↻ Refresh Workout</button></div>
 <p class="muted" id="refresh-feedback" role="status" aria-live="polite">Updates automatically when opened or resumed.</p>
 <details class="settings"><summary>Workout settings · timer, Watch &amp; colors</summary><div class="settings-content"><label for="workout-theme">Workout colors</label><select id="workout-theme"><option value="game-day">Game day · navy &amp; orange</option><option value="steelers">Steelers · black &amp; gold</option><option value="bills">Bills · blue &amp; red</option><option value="giants">Giants · navy &amp; red</option><option value="colts">Colts · blue &amp; white</option><option value="classic">Classic · forest &amp; lime</option></select><p class="theme-help">Pick your colors. Your choice stays on this device.</p><label for="timer-mode">Send timers to</label><select id="timer-mode"><option value="watch">Apple Watch · MultiTimer</option><option value="iphone">iPhone Clock · original</option></select><p>MultiTimer’s TIMER needs Use as System Alarm enabled. After a Shortcut returns you to the Home Screen, tap this app’s icon to continue.</p><p>The first walking timer starts Indoor Walk; its last Done ends it. Strength and core start on the first timer and keep recording between exercises until the final Done.</p><p>Timers track the duration requested here, not verified device completion. Non-walking timers mark the card done when that duration expires and the app is visible. Timer-only stops do not end Watch recording.</p><div id="watch-recovery" hidden><p>The page has saved Watch tracking. If your Watch and exercise timers have stopped, clear that saved tracking below. This does not stop a device timer or change completed exercises.</p><button id="clear-watch-tracking" type="button">Devices stopped · clear saved tracking</button></div><p id="watch-recovery-result" role="status" aria-live="polite"></p></div></details>
-<aside id="safari-preview" class="preview-panel" hidden><strong>Safari return test · preview</strong><p>Choose a Shortcut set before starting. Safari Test uses your duplicate Shortcuts. Your checks here are separate from the live app.</p><label for="shortcut-profile">Shortcut set</label><select id="shortcut-profile"><option value="normal">Existing · Go to Home Screen</option><option value="safari-test">Safari Test · return to this page</option></select><p id="shortcut-profile-status" role="status" aria-live="polite"></p><a href="./safari-test.html">Duplicate Shortcut names &amp; setup instructions →</a><p><a href="./?scenario=side-planks">Side-plank practice →</a></p><p><a href="./?scenario=planks">Regular plank practice →</a></p><p><a href="./?scenario=suitcase-carries">Suitcase-carry practice →</a></p></aside>
-<section id="interval-practice" class="interval-practice" hidden><p class="eyebrow">ONE-TAP INTERVAL PRACTICE</p><h2 id="interval-practice-title">Interval workout</h2><p>Use Start on the exercise card below. MultiTimer runs the complete saved sequence while your phone is locked. Check the card only after completing the entire block.</p><p>This test does not start Watch workout recording. Your daily workout checks are separate.</p><p id="interval-block-status" role="status" aria-live="polite"></p><p><a href="./">Back to daily workout preview</a></p></section>
+<aside id="safari-preview" class="preview-panel" hidden><strong>Safari & Shortcuts</strong><p>Use your Safari Shortcuts to return to this workout. Update their final Open URL action to this site before starting.</p><label for="shortcut-profile">Shortcut set</label><select id="shortcut-profile"><option value="normal">Existing · Go to Home Screen</option><option value="safari">Safari · return to this page</option></select><p id="shortcut-profile-status" role="status" aria-live="polite"></p><a href="./safari-setup.html">Shortcut names &amp; setup instructions →</a><p><a href="./?scenario=side-planks">Side-plank practice →</a></p><p><a href="./?scenario=planks">Regular plank practice →</a></p><p><a href="./?scenario=suitcase-carries">Suitcase-carry practice →</a></p></aside>
+<section id="interval-practice" class="interval-practice" hidden><p class="eyebrow">ONE-TAP INTERVAL PRACTICE</p><h2 id="interval-practice-title">Interval workout</h2><p>Use Start on the exercise card below. MultiTimer runs the complete saved sequence while your phone is locked. Check the card only after completing the entire block.</p><p>This practice does not start Watch workout recording. Your daily workout checks are separate.</p><p id="interval-block-status" role="status" aria-live="polite"></p><p><a href="./">Back to daily workout</a></p></section>
 <section id="workout-log" class="local-log" hidden><strong>Workout log</strong><p id="workout-log-status" role="status" aria-live="polite">Results stay on this device. Google Sheet sync is not connected.</p></section>
 <details id="google-sync" class="local-history"><summary>Google backup &amp; sync</summary><p>Connect onlinesny@gmail.com to back up finished daily workouts, results, ratings and notes to a private Google Sheet. Sync now also restores finished history to this device. Unfinished workouts and practice sessions stay local.</p><p>Google access is limited to files used with this app. Reconnect after reopening or when access expires.</p><div class="result-actions"><button id="google-connect" type="button">Connect Google</button><button id="google-sync-now" type="button" disabled>Sync now</button><button id="google-disconnect" type="button" class="secondary" hidden>Disconnect Google</button></div><p id="google-sync-status" role="status" aria-live="polite">Not connected. Local workout logging works without Google.</p><button id="google-create-sheet" type="button" hidden>Create private workout Sheet &amp; sync</button><p><a id="google-sheet-link" target="_blank" rel="noopener noreferrer" hidden>Open private workout Sheet ↗</a></p></details>
 <main id="workout" aria-label="Today’s exercises"></main>
@@ -32,7 +32,7 @@ const guidance={"warm-up walk":["🚶","Begin at a comfortable pace and graduall
 Object.assign(guidance,{"lying quad stretch":["quad","Gently stretch your quadriceps while lying on your side."],"butterfly stretch":["butterfly","Sit with soles of feet together and knees relaxed outward."],"seated spinal twist":["twist","Sit upright and rotate gently without forcing."],"pigeon pose":["pigeon","Ease into the hip stretch and avoid forcing the groin."],"easy reset and position changes":["steps","Move comfortably between stretches."]});
 const demos={"pallof press":"https://www.physitrack.com/exercise-library/how-to-perform-the-pallof-press-exercise","cloud hands":"https://www.cleartaichi.com/tai-chi-form/cloud-hands-3684.html"};
 const time=n=>Math.floor(n/60)+':'+String(n%60).padStart(2,'0');
-function shortcutURL(name,input){const profile=currentShortcutProfile();const baseName=profile==='safari-test'&&name==='Workout Walk End'?'Workout End':name;const routedName=baseName+(profile==='safari-test'?' Safari Test':'');return 'shortcuts://run-shortcut?name='+encodeURIComponent(routedName)+(input===undefined?'':'&input=text&text='+encodeURIComponent(input))}
+function shortcutURL(name,input){const profile=currentShortcutProfile();const baseName=profile==='safari'&&name==='Workout Walk End'?'Workout End':name;const routedName=baseName+(profile==='safari'?' Safari':'');return 'shortcuts://run-shortcut?name='+encodeURIComponent(routedName)+(input===undefined?'':'&input=text&text='+encodeURIComponent(input))}
 function walkBoundary(section,itemIndex){const walking=/\b(?:treadmill|indoor)\b/i.test(section.title)&&/\bwalk(?:ing)?\b/i.test(section.title);return {start:walking&&itemIndex===section.items.findIndex(item=>Number(item.seconds)>0),end:walking&&itemIndex===section.items.length-1}}
 function timerURL(seconds,mode,startWalk=false){const n=Number(seconds);if(!Number.isSafeInteger(n)||n<=0)throw Error('Timer duration must be a positive whole number of seconds.');const name=mode==='iphone'?'Workout Timer':startWalk?'Workout Walk Start':'Workout Timer Watch';return shortcutURL(name,n)}
 const workoutThemes=['game-day','steelers','bills','giants','colts','classic'];
@@ -50,45 +50,47 @@ if(workoutThemeSelect)workoutThemeSelect.onchange=()=>applyWorkoutTheme(workoutT
 const timerMode=document.querySelector('#timer-mode');
 try{timerMode.value=localStorage.getItem('workout-timer-mode')==='iphone'?'iphone':'watch'}catch{}
 timerMode.onchange=()=>{try{localStorage.setItem('workout-timer-mode',timerMode.value)}catch{}};
-// Only the separately built preview exposes duplicate Shortcut routing.
+// Production uses the owner's Safari Shortcuts. Legacy hosts can retain originals.
 const safariPreview=document.documentElement?.getAttribute?.('data-preview')==='safari';
+const safariProduction=document.documentElement?.getAttribute?.('data-shortcuts')==='safari';
+const safariShortcuts=safariPreview||safariProduction;
 const intervalPracticeConfigs={
   'side-planks':{file:'side-planks-practice.json',title:'Side-plank practice',summary:'4 holds · 30 seconds per side · two rounds',shortcut:'Workout Side Planks'},
   'planks':{file:'planks-practice.json',title:'Plank practice',summary:'2 holds · 60 seconds each · 60-second rest',shortcut:'Workout Planks'},
   'suitcase-carries':{file:'suitcase-carries-practice.json',title:'Suitcase-carry practice',summary:'4 carries · 30 seconds per side · two rounds',shortcut:'Workout Suitcase Carries'}
 };
-const intervalPracticeType=(()=>{try{const type=new URL(location.href).searchParams.get('scenario');return safariPreview&&Object.hasOwn(intervalPracticeConfigs,type)?type:null}catch{return null}})();
+const intervalPracticeType=(()=>{try{const type=new URL(location.href).searchParams.get('scenario');return safariShortcuts&&Object.hasOwn(intervalPracticeConfigs,type)?type:null}catch{return null}})();
 const intervalPracticeConfig=intervalPracticeConfigs[intervalPracticeType];
 const intervalPractice=!!intervalPracticeConfig;
 const workoutStorageSuffix=intervalPractice?'-'+intervalPracticeType+'-practice':'';
 const shortcutProfileKey='workout-shortcut-profile'+workoutStorageSuffix;
 const shortcutProfileLockKey='workout-shortcut-profile-lock'+workoutStorageSuffix;
-let shortcutProfile=intervalPractice?'safari-test':'normal';
+let shortcutProfile=intervalPractice||safariProduction?'safari':'normal';
 function readShortcutProfileLock(){try{const lock=JSON.parse(localStorage.getItem(shortcutProfileLockKey)||'null');if(lock?.kind==='timer'&&!localStorage.getItem('workout-active-exercise-timer'+workoutStorageSuffix)){localStorage.removeItem(shortcutProfileLockKey);return null}return lock}catch{return null}}
-function currentShortcutProfile(){return safariPreview?(readShortcutProfileLock()?.profile||shortcutProfile):'normal'}
+function currentShortcutProfile(){return safariShortcuts?(readShortcutProfileLock()?.profile||shortcutProfile):'normal'}
 function updateShortcutProfileControls(message){
   const panel=document.querySelector('#safari-preview');if(!panel)return;
-  panel.hidden=!safariPreview;
+  panel.hidden=!safariShortcuts;
   const select=document.querySelector('#shortcut-profile');if(!select)return;
   select.value=currentShortcutProfile();
   select.disabled=!!(readShortcutProfileLock()||readActiveTimer());
-  document.querySelector('#shortcut-profile-status').textContent=message||(select.disabled?'Finish the current timer or workout before changing Shortcut sets.':shortcutProfile==='safari-test'?'Uses duplicate Shortcuts ending in Safari Test. Return-tab behavior still needs iPhone testing.':'Uses your existing Shortcuts. Tap the app icon after Go to Home Screen.');
+  document.querySelector('#shortcut-profile-status').textContent=message||(select.disabled?'Finish the current timer or workout before changing Shortcut sets.':shortcutProfile==='safari'?'Uses Shortcuts ending in Safari. Each one returns to the workout URL saved in its final action.':'Uses your existing Shortcuts. Tap the app icon after Go to Home Screen.');
 }
-if(safariPreview){
-  try{shortcutProfile=localStorage.getItem(shortcutProfileKey)==='safari-test'||(intervalPractice&&!localStorage.getItem(shortcutProfileKey))?'safari-test':'normal'}catch{}
+if(safariShortcuts){
+  try{const saved=localStorage.getItem(shortcutProfileKey);shortcutProfile=saved==='normal'?'normal':saved==='safari'||intervalPractice||safariProduction?'safari':'normal'}catch{}
   const select=document.querySelector('#shortcut-profile');
   if(select)select.onchange=()=>{
     if(readShortcutProfileLock()||readActiveTimer()){updateShortcutProfileControls();return}
-    shortcutProfile=select.value==='safari-test'?'safari-test':'normal';
+    shortcutProfile=select.value==='safari'?'safari':'normal';
     try{localStorage.setItem(shortcutProfileKey,shortcutProfile)}catch{}
     updateShortcutProfileControls();
   };
   updateShortcutProfileControls();
 }
 function trackShortcutProfile(url){
-  if(!safariPreview)return;
+  if(!safariShortcuts)return;
   const name=new URL(url).searchParams.get('name');
-  const baseName=name.replace(/ Safari Test$/,'');
+  const baseName=name.replace(/ Safari$/,'');
   const lock=readShortcutProfileLock();
   // Lock requested Watch sessions across exercises; timer-only Stop must not end them.
   if(['Workout Walk Start','Workout Strength Start','Workout Core Start'].includes(baseName)){
@@ -245,12 +247,12 @@ function updateIntervalPractice(workout){
   start.textContent=(requested?'Restart\n':'Start\n')+time(duration);start.setAttribute('aria-label',requested?'Restart the entire interval block':'Start the entire interval block');
   if(requested)status.textContent='Sequence requested. Follow MultiTimer’s alerts. After the last hold, check the exercise card to confirm the entire block. Device completion is not verified by this page.';
   start.onclick=()=>{
-    if(currentShortcutProfile()!=='safari-test'){
-      status.textContent='Select Safari Test under Shortcut set, then try again.';return;
+    if(currentShortcutProfile()!=='safari'){
+      status.textContent='Select Safari under Shortcut set, then try again.';return;
     }
     // Save a separate practice attempt before handing off; never infer completion.
     localStorage.setItem(intervalBlockKey,JSON.stringify({workout:currentWorkoutSignature,status:'requested'}));
-    localStorage.setItem(shortcutProfileLockKey,JSON.stringify({profile:'safari-test',kind:'block'}));
+    localStorage.setItem(shortcutProfileLockKey,JSON.stringify({profile:'safari',kind:'block'}));
     for(const [key,entry] of timerRows){saveExerciseCheck(workout.date,key,false);entry.check.checked=false;selectExerciseCard(key,true)}
     selectExerciseCard(null);
     saveWorkoutPosition(timerRows.keys().next().value);
@@ -288,7 +290,7 @@ function wireWorkoutIntervalCards(workout){
     if(readIntervalBlock()?.key===key)entry.blockStatus.textContent='Sequence requested. Check this card after completing the whole block; device completion is not verified.';
     start.onclick=()=>{
       if(!allowStartingExercise(key))return;
-      if(currentShortcutProfile()!=='safari-test'){entry.blockStatus.textContent='Select Safari Test in Shortcut set to use the interval Shortcuts.';return}
+      if(currentShortcutProfile()!=='safari'){entry.blockStatus.textContent='Select Safari in Shortcut set to use the interval Shortcuts.';return}
       const tracked=readWatchSection(),type=watchSectionType(entry.section);
       if(timerMode.value==='watch'&&tracked&&(tracked.workout!==currentWorkoutSignature||tracked.sectionIndex!==entry.sectionIndex)){
         offerWatchRecovery(entry.sectionIndex,entry.itemIndex,entry.section);return;
@@ -301,7 +303,7 @@ function wireWorkoutIntervalCards(workout){
       clearActiveTimer();
       saveExerciseCheck(workout.date,key,false);entry.check.checked=false;
       localStorage.setItem(intervalBlockKey,JSON.stringify({workout:currentWorkoutSignature,key,status:'requested'}));
-      if(!tracked)localStorage.setItem(shortcutProfileLockKey,JSON.stringify({profile:'safari-test',kind:'block'}));
+      if(!tracked)localStorage.setItem(shortcutProfileLockKey,JSON.stringify({profile:'safari',kind:'block'}));
       selectExerciseCard(key,true);saveWorkoutPosition(key);scrollToExercise(entry.row);
       entry.blockStatus.textContent='Sequence requested. Follow MultiTimer’s alerts; check this card after the whole block.';
       updateShortcutProfileControls();openWorkoutShortcut(shortcutURL(config.shortcut));

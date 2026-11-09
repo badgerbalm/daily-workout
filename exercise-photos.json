@@ -754,6 +754,13 @@
         }
       ]
     },
+    "dumbbell-biceps-curls": {
+      "name": "Dumbbell biceps curls",
+      "aliases": ["Dumbbell biceps curl", "Dumbbell curls", "Biceps curls"],
+      "status": "missing",
+      "reason": "The November 9 plan includes this movement; a suitable licensed local photo has not been added.",
+      "photos": []
+    },
     "dumbbell-bench-press": {
       "name": "Dumbbell bench press",
       "aliases": [

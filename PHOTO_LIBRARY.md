@@ -6,7 +6,7 @@
 
 Continue using the existing workout structure and commands. For registered exercises, only the existing exercise `name` is needed. `/update` can replace `workout.json` without changing or searching for photos. Do not regenerate `index.html`, `exercise-photos.js`, `exercise-photos.json`, or `images/` during routine workout updates. Existing optional image fields remain compatible with the workout schema but do not control the displayed library photograph.
 
-An unrecognized new exercise displays a clean placeholder until a suitable licensed photo is added. Exercise names must match a canonical name or listed alias; case, repeated spaces, and straight/curly apostrophes are normalized.
+An unrecognized new exercise displays a clean placeholder until a suitable licensed photo is added. Exercise names must match a canonical name or listed alias; case, repeated spaces, and straight/curly apostrophes are normalized. The November 9 daily plan's Dumbbell biceps curls are registered as missing and show the clean placeholder; no mismatched exercise photo is substituted.
 
 ## Coverage as reviewed October 20, 2026
 

@@ -3,6 +3,7 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',headless:true,args:['--no-sandbox']});
  try{
  const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+ await page.addInitScript(()=>localStorage.setItem('workout-shortcut-profile','normal'));
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  const fixture={date:'2099-01-01',sections:[{title:'Mobility',watchWorkout:'none',items:[{name:'Side planks',detail:'Left · set 1',seconds:30,progressKey:'left-1',legacyProgressKey:'legacy'},{name:'Side planks',detail:'Right · set 1',seconds:45,progressKey:'right-1'},{name:'Unknown movement',seconds:60}]}]};
  let requests=0;await page.route('**/workout.json*',route=>{requests++;return route.fulfill({json:fixture})});

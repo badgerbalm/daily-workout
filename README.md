@@ -2,6 +2,8 @@
 
 Personal workout viewer at https://badgerbalm.github.io/daily-workout/.
 
+Production now uses the redesigned workout log, optional private Google Sheets sync and Safari-return Shortcuts with names ending in **Safari**. See [PRODUCTION_RELEASE.md](PRODUCTION_RELEASE.md) and the [Safari setup guide](safari-setup.html). The historical preview notes below describe development milestones; the live root always serves the daily `workout.json`, not the interval walkthrough.
+
 Daily workout data lives in `workout.json`. Continue publishing it with `/update`; exercise photos are selected automatically from the permanent name/alias library.
 
 For `/plan` and `/update`, publish each timed plank set as its own exercise card. Keep the canonical name `Forearm plank`, identify the set in `detail`, and set `seconds` to the hold duration only. List the rest between sets in the instructions. Two one-minute holds with a one-minute rest take three minutes overall. Side planks follow the same behavior: one card and hold-only timer for each side of each set, with the side and set in `detail` and canonical name `Side planks`. Never combine multiple plank holds in one timer. Preserve the prescribed hold times and overall block duration, including rest.

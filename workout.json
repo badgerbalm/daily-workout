@@ -1,107 +1,107 @@
 {
-  "date": "2026-11-07",
-  "title": "Daily Workout · November 7",
-  "note": "Recovery-focused 47-minute session after the prior interval day: comfortable walking, controlled upper-body and glute strength, and gentle core stability. No jogging today. Keep effort conversational and stop or modify any movement that causes groin, back, knee, or other discomfort.",
+  "date": "2026-11-09",
+  "title": "Daily Workout · November 9",
+  "note": "Monday · 48-minute moderate, controlled session after Sunday's recovery day. Prescribed effort is conversational; actual completion and recovery have not yet been synced. Avoid breath-holding and stop for chest discomfort, dizziness, unusual palpitations, or new groin, knee, neck, or back pain. Plow pose with feet suspended is a user-reported preference, not a clinically cleared movement; skip unless specifically cleared given spine history. Its current photo depicts feet touching the floor and is reference-only, not an exact demonstration.",
   "sections": [
     {
-      "title": "Opening mobility · 5 minutes",
+      "title": "Opening stretches · 4 minutes",
       "items": [
         {
           "name": "Single lean-back quad stretch",
-          "detail": "30 sec each side",
+          "detail": "1 min · gently alternate sides within the minute",
           "seconds": 60,
-          "instructions": "Sit on the floor with one leg straight. Bend the other knee and place that foot beside your buttock, then slowly lean back with support. Repeat on the other side without forcing the position."
+          "instructions": "Sit on the floor with one leg straight and the other foot beside the buttock; lean back with arm support only as comfortable. Avoid knee, groin, or back strain. Use the owner-supplied StretchCoach reference when the matching image is available."
         },
         {
           "name": "Butterfly stretch",
-          "detail": "Hold gently · 1 min",
+          "detail": "1 min · comfortable hold",
           "seconds": 60,
-          "instructions": "Sit with the soles of your feet together. Let your knees relax outward and keep your back comfortably upright. Do not force your knees down."
+          "instructions": "Sit upright with soles together. Hold gently for 60 seconds without forcing knees down."
         },
         {
           "name": "Seated spinal twist",
-          "detail": "30 sec each side",
+          "detail": "1 min · gentle movement",
           "seconds": 60,
-          "instructions": "Gentle upper-back rotation only."
+          "instructions": "Keep motion gentle and controlled; avoid painful lower-back rotation."
         },
         {
           "name": "Plow pose with feet suspended",
-          "detail": "Straight legs · feet suspended · 1 min",
+          "detail": "1 min timer · optional only if specifically cleared",
           "seconds": 60,
-          "instructions": "Use your usual straight-leg variation with feet suspended overhead. Do not force a deeper position or turn your head. Stop if uncomfortable."
-        },
-        {
-          "name": "Shoulder rolls and arm circles",
-          "detail": "1 min",
-          "seconds": 60,
-          "instructions": "Slow controlled circles."
+          "instructions": "Feet remain suspended, not resting on floor. Because this is an advanced inversion with neck and spine loading, skip unless a qualified clinician has cleared this exact variation. Never force the position or load the neck. Existing photograph shows floor contact and is reference-only, not the requested variation."
         }
       ]
     },
     {
-      "title": "Treadmill walk · 30 minutes",
+      "title": "Treadmill walk · 28 minutes",
       "items": [
         {
           "name": "Easy warm-up",
           "detail": "5 min · 2.8–3.1 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Ease into a comfortable pace."
+          "instructions": "Start at an easy pace and gradually warm up."
         },
         {
           "name": "Brisk walk",
-          "detail": "20 min · 3.1–3.5 mph · 0–1% incline",
-          "seconds": 1200,
-          "instructions": "Conversational effort, no jogging today. Slow down if needed."
+          "detail": "18 min · 3.1–3.5 mph · 0–1% incline",
+          "seconds": 1080,
+          "instructions": "Comfortable conversational pace; maintain easy breathing and reduce speed for any discomfort."
         },
         {
           "name": "Cool-down",
           "detail": "5 min · 2.7–3.0 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Gradually slow to comfortable pace."
+          "instructions": "Slow down gradually."
         }
       ]
     },
     {
-      "title": "Upper body and glutes · 8 minutes",
+      "title": "Upper body and glutes · 12 minutes",
+      "watchWorkout": "strength",
       "items": [
         {
-          "name": "Supported dumbbell rows",
-          "detail": "3 min · 2 × 10 per arm",
+          "name": "Dumbbell bench press",
+          "detail": "3 min · 2 × 10 reps",
           "seconds": 180,
-          "instructions": "Support torso and keep spine neutral."
+          "instructions": "Flat bench, both feet supported on the floor. Choose manageable weights, exhale while pressing, and avoid breath-holding. No assumed weight progression."
         },
         {
-          "name": "Dumbbell bench press",
-          "detail": "3 min · 2 × 10",
+          "name": "Supported dumbbell rows",
+          "detail": "3 min · 2 × 10 reps per arm",
           "seconds": 180,
-          "instructions": "Use a stable flat weight bench with feet supported on the floor. Keep wrists over elbows and elbows comfortably angled from your torso. Lower through a comfortable range, then press smoothly. Start lighter when switching from the floor."
+          "instructions": "Support your torso and maintain a neutral spine."
         },
         {
           "name": "Bodyweight glute bridges",
-          "detail": "2 min · 2 × 10",
-          "seconds": 120,
-          "instructions": "Controlled movement, avoid back arching and groin strain."
+          "detail": "3 min · 2 × 12 reps",
+          "seconds": 180,
+          "instructions": "Lift only as far as comfortable without arching the lower back or straining the groin."
+        },
+        {
+          "name": "Dumbbell biceps curls",
+          "detail": "3 min · 2 × 10 reps",
+          "seconds": 180,
+          "instructions": "Use light-to-moderate weights, avoid swinging, and skip if elbow discomfort occurs."
         }
-      ],
-      "watchWorkout": "strength"
+      ]
     },
     {
-      "title": "Gentle core · 4 minutes",
+      "title": "Core stability · 4 minutes",
+      "watchWorkout": "core",
       "items": [
         {
           "name": "Bird dogs",
-          "detail": "2 min · 2 × 6 each side",
+          "detail": "2 min · 2 × 6 reps per side",
           "seconds": 120,
-          "instructions": "Small range, steady hips, no back arching."
+          "instructions": "Keep hips steady and reach only as far as comfortable."
         },
         {
           "name": "Dead bugs",
-          "detail": "2 min · 2 × 6 each side",
+          "detail": "2 min · 2 × 6 reps per side",
           "seconds": 120,
-          "instructions": "Keep knees bent and shorten reach if uncomfortable."
+          "instructions": "Keep the lower back comfortable and shorten the leg reach if needed."
         }
-      ],
-      "watchWorkout": "core"
+      ]
     }
   ]
 }

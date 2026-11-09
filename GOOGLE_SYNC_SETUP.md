@@ -18,7 +18,7 @@ The app requests `openid email` to verify the personal account and `https://www.
 
 ## First use (Windows or iPhone)
 
-1. Open the updated private Safari preview and expand **Google backup & sync**. The live GitHub Pages app only changes after its PRs are merged/deployed.
+1. Open https://badgerbalm.github.io/daily-workout/ and expand **Google backup & sync**. Production uses GitHub Pages; the ChatGPT preview is a migration fallback.
 2. Tap **Connect Google** to load Google's library, then tap it again to open the account chooser. This second user tap preserves Safari popup behavior. Choose `onlinesny@gmail.com` and review Google's permissions yourself.
 3. Tap **Sync now**. If no app-created history Sheet exists, select **Create private workout Sheet & sync**. Creation uses your Google account's default private ownership; the app never changes file sharing permissions.
 4. Finish a workout using **Save workout**, then tap **Sync now** again. Current active logs are not uploaded. The Sheet link appears only after a successful verified sync.
@@ -36,7 +36,7 @@ This is a backup and restore feature, not collaborative editing or background sy
 
 ## Validation
 
-`npm ci`, `npm run test:history`, and `npm run test:sync` cover IndexedDB, DOM behavior and synthetic Google REST responses. `tests/run-browser.cjs` also includes a real-browser mobile flow with mocked Google authorization/Sheets. These tests never upload personal health history. The first real account consent and real Sheet write/readback still require the owner to exercise the preview.
+`npm ci`, `npm run test:history`, and `npm run test:sync` cover IndexedDB, DOM behavior and synthetic Google REST responses. `tests/run-browser.cjs` also includes a real-browser mobile flow with mocked Google authorization/Sheets. These tests never upload personal health history. The owner completed real Google consent on November 9; private Sheet creation, header write/readback and an empty sync were verified in the preview. No completed workout record was fabricated. A real finished-workout sync remains to be exercised by the owner.
 
 For browser checks on Windows, install Playwright locally (`npm install --no-save --package-lock=false playwright`), then in PowerShell:
 
