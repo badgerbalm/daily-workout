@@ -1,6 +1,6 @@
 # Google backup & sync
 
-This branch adds optional Google authorization and manual two-way synchronization of **finished daily sessions**. Unfinished sessions, form drafts and isolated interval-practice scenarios remain local. Google authorization is separate from Sites' existing owner-only sign-in. No server, refresh token or client secret is used by this static app.
+This branch adds optional Google authorization and manual two-way synchronization of **finished daily sessions**. Unfinished sessions, form drafts and isolated interval-practice scenarios remain local. Google authorization is separate from Sites' existing owner-only sign-in. GitHub Pages serves the frontend; a dedicated Cloudflare Worker renews Google access and proxies the existing finished-history sync.
 
 ## Configured Google project
 
@@ -8,18 +8,18 @@ This branch adds optional Google authorization and manual two-way synchronizatio
 - Web client: `Daily Workout Web`
 - Client ID: `790497358549-7lg9e6q8jbv08g1l3p4d1grm92o071js.apps.googleusercontent.com`
 - Authorized JavaScript origins: `https://badgerbalm.github.io` and `https://daily-workout-safari-preview.badgerbalm.chatgpt.site`
-- Redirect URIs: none; Google Identity Services uses its browser popup token model.
+- Backend redirect URI to register before releasing this branch: `https://daily-workout-auth.onlinesny.workers.dev/oauth/callback`.
 - Publishing status: Testing, with `onlinesny@gmail.com` as the test user.
 - APIs required: Google Drive API (`drive.googleapis.com`) and Google Sheets API (`sheets.googleapis.com`). Both were enabled in the Cloud console on November 9, 2026.
 
-The downloaded OAuth JSON is a private credential backup. Leave it outside the repository; do not upload it into the app or Sites. Only its public client ID appears in source. Credentials matching `client_secret*.json` are ignored by Git.
+The downloaded OAuth JSON is a private credential backup. Leave it outside the repository; do not upload it into the app or Sites. Only its public client ID appears in source. The owner explicitly approved storing the client secret in Cloudflare encrypted secrets on November 9, 2026; it never enters the frontend. Credentials matching `client_secret*.json` are ignored by Git.
 
-The app requests `openid email` to verify the personal account and `https://www.googleapis.com/auth/drive.file` for app-created files. It does not request access to all Sheets or all Drive files. Google documents this as a supported Sheets scope: https://developers.google.com/workspace/sheets/api/scopes . The configured account is checked against Google's UserInfo response rather than trusting the login hint. The access token stays in memory and must be obtained again after reopening or expiration. Disconnect clears the in-memory connection; it does not delete cloud or local records. Google Account's third-party connections page can revoke the app's grant.
+The app requests `openid email` to verify the personal account and `https://www.googleapis.com/auth/drive.file` for app-created files. It does not request access to all Sheets or all Drive files. Google documents this as a supported Sheets scope: https://developers.google.com/workspace/sheets/api/scopes . The configured account is checked against Google's UserInfo response rather than trusting the login hint. Google access and refresh tokens stay encrypted in the backend database. This browser stores a revocable opaque app session, valid up to 90 days (or the Google grant limit). Disconnect deletes the current browser session without deleting workout records. Google Account's third-party connections page can revoke the app's grant.
 
 ## First use (Windows or iPhone)
 
 1. Open https://badgerbalm.github.io/daily-workout/ and expand **Google backup & sync**. Production uses GitHub Pages; the ChatGPT preview is a migration fallback.
-2. Tap **Connect Google** to load Google's library, then tap it again to open the account chooser. This second user tap preserves Safari popup behavior. Choose `onlinesny@gmail.com` and review Google's permissions yourself.
+2. Tap **Connect Google** once. Google opens in the same window; choose `onlinesny@gmail.com` and review Google's permissions yourself. Safari and a Home Screen app may each need one initial connection. Reopening checks the saved session without a sign-in prompt.
 3. Tap **Sync now**. If no app-created history Sheet exists, select **Create private workout Sheet & sync**. Creation uses your Google account's default private ownership; the app never changes file sharing permissions.
 4. Finish a workout using **Save workout**, then tap **Sync now** again. Current active logs are not uploaded. The Sheet link appears only after a successful verified sync.
 5. On another device or browser origin, connect the same account and tap **Sync now** to restore finished history. A currently active workout is never replaced. Reload the workout to refresh previous-weight suggestions from restored history.
@@ -46,3 +46,11 @@ node tests/run-browser.cjs
 ```
 
 Real iPhone Home Screen popup handling, Shortcuts and Apple Watch behavior remain device-validation tasks.
+
+## Remembered connection deployment
+
+Worker: `daily-workout-auth`, URL `https://daily-workout-auth.onlinesny.workers.dev`. D1 binding `AUTH_DB`; schema `backend/schema.sql`; config `wrangler.jsonc`. Secrets `GOOGLE_CLIENT_SECRET` and `TOKEN_ENCRYPTION_KEY` are configured separately. Never regenerate the encryption key while saved connections exist. Neither Google tokens nor app session tokens are logged. OAuth uses one-time state, server PKCE, and a separate one-time ticket bound to the initiating browser verifier. Only the configured owner can connect.
+
+Before merging this branch, register the exact callback above in Google Auth Platform → Clients → Daily Workout Web. Move the OAuth app out of Testing when ready: external Testing refresh tokens for Drive access expire after seven days. Changing publishing status does not remove the backend owner-account restriction. Complete owner consent, reload, and verify Sync now against the existing private Sheet. Actual iPhone return-to-Home-Screen behavior still needs owner validation; if Google returns to a different browser context the app rejects the handoff safely and asks to reconnect there.
+
+Run `npm run test:auth`, `npm run test:history`, and `npm run test:sync`. Deployment: apply the schema through the Cloudflare D1 query API, then `npx wrangler deploy`. Keep `observability.enabled` false to avoid request logging of OAuth callbacks. Backend health and missing-session checks are safe without Google credentials.

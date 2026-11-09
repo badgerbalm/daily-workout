@@ -8,9 +8,9 @@
  const HEADER=['Format','Session ID','SHA-256','Plan date','Workout','Finished at','Effort','Energy','Discomfort','Notes',...Array.from({length:20},(_,i)=>'Record '+(i+1))];
  const stable=value=>JSON.stringify(value,(_,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);
  async function digest(text){return [...new Uint8Array(await root.crypto.subtle.digest('SHA-256',new TextEncoder().encode(text)))].map(b=>b.toString(16).padStart(2,'0')).join('')}
- function createSync({store,fetch:request=root.fetch.bind(root),history=root.WorkoutHistoryStore,onStatus=()=>{}}){
+ function createSync({store,fetch:request=root.fetch.bind(root),history=root.WorkoutHistoryStore,onStatus=()=>{},connection=null}){
   let token=null,expires=0,epoch=0,running=null,selected=null;
-  const connected=()=>Boolean(token&&Date.now()<expires);
+  const connected=()=>connection?connection.connected():Boolean(token&&Date.now()<expires);
   async function setToken(response){
    if(!response.access_token||!Number.isFinite(Number(response.expires_in))||Number(response.expires_in)<=30)throw Error('Google did not return a valid authorization.');
    disconnect();const generation=epoch;
@@ -23,7 +23,7 @@
   function disconnect(){epoch++;token=null;expires=0;selected=null;onStatus('Disconnected. Workouts remain on this device and in your private Sheet.')}
   async function api(url,options={},generation=epoch){
    if(generation!==epoch||!connected())throw Error('Connect Google again to sync. Your local results are safe.');
-   const response=await request(url,{...options,headers:{Authorization:'Bearer '+token,'Content-Type':'application/json',...options.headers},credentials:'omit',referrerPolicy:'no-referrer'});
+   const response=connection?await connection.google(url,options):await request(url,{...options,headers:{Authorization:'Bearer '+token,'Content-Type':'application/json',...options.headers},credentials:'omit',referrerPolicy:'no-referrer'});
    if(generation!==epoch)throw Error('Connection changed. Sync stopped.');
    if(!response.ok){if(response.status===401){disconnect();throw Error('Google authorization expired. Connect Google again.');}if(response.status===403)throw Error('Google access is unavailable. Enable Google Drive API and Google Sheets API in project daily-workout-514201, and check the test account and consent permissions.');throw Error('Google request failed ('+response.status+'). Retry Sync now; local results are safe.');}
    return response.status===204?{}:response.json();
