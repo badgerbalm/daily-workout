@@ -71,7 +71,7 @@
    const details=element('details','actual-results'),summary=element('summary','','Record results');details.append(summary);
    const badge=element('p','result-outcome',labels[saved?.status||'unfinished']);details.append(badge);entries.set(key,{badge,entry});
    const walking=/treadmill|walking/i.test(entry.section.title);
-   details.append(element('p','result-help',walking?'Suggested settings are ready. Adjust if needed, then confirm what you did.':'Actual performance only. Blank fields mean not recorded. Saving values does not confirm completion.'));
+   details.append(element('p','result-help',walking?'Suggested settings are ready. Adjust if needed. Finish Workout confirms settings for walks marked done.':'Actual performance only. Blank fields mean not recorded. Saving values does not confirm completion.'));
    const form=element('div','results-form');details.append(form);
    let setControls=[],treadmillControls;
    const update=()=>{
@@ -117,6 +117,7 @@
     else{const match=String(entry.item.detail||'').match(/(\d+)\s*[×x]/);for(let i=0;i<Math.min(Number(match?.[1])||1,10);i++)addSet()}
     const add=element('button','secondary','+ Add set');add.type='button';add.onclick=()=>addSet();details.append(add);
    }
+   if(walking)entries.get(key).readWalking=()=>WorkoutHistoryStore.actualResult({sets:[],treadmill:Object.fromEntries(Object.entries(treadmillControls).map(([name,input])=>[name,input.value]))});
    form.addEventListener('input',update);form.addEventListener('change',update);
    const actions=element('div','result-actions');
    const confirm=element('button','','Confirm complete');confirm.type='button';confirm.onclick=()=>{if(!update())return;if(walking){const actual=WorkoutHistoryStore.actualResult({sets:[],treadmill:Object.fromEntries(Object.entries(treadmillControls).map(([name,input])=>[name,input.value]))});queue(key,{actual,draft:null});}entry.check.checked=true;entry.check.onchange()};
@@ -134,11 +135,13 @@
   const energy=field(form,'Energy · 1 low to 5 high','number',draft.energy,{min:'1',max:'5',step:'1'});
   const discomfort=field(form,'Discomfort · 0 none to 10 severe','number',draft.discomfort,{min:'0',max:'10',step:'1'});
   const label=element('label','result-field');label.append(element('span','','Notes · optional'));const notes=element('textarea');notes.maxLength=4000;notes.value=draft.notes||'';label.append(notes);form.append(label);
-  details.append(element('p','result-help','Unfinished and skipped exercises remain as recorded. Timer-inferred completions still need confirmation. Ratings are optional.'));
+  details.append(element('p','result-help','Finish confirms the displayed settings for walks marked done. Skipped and unfinished exercises stay as recorded. Other timer-inferred completions still need confirmation. Ratings are optional.'));
   form.addEventListener('input',()=>{try{const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});invalid.delete('__reviewDraft');queue('__reviewDraft',{review})}catch(reason){invalid.set('__reviewDraft',reason.message);feedback('Review needs correction: '+reason.message)}});
   const finish=element('button','','Finish and save locally');finish.type='button';finish.onclick=async()=>{
    finish.disabled=true;
-   try{if(invalid.size)throw Error('Correct incomplete result fields before finishing.');const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});await flush();session=await store.finish(session.id,review);recovery={};localStorage.removeItem(recoveryKey());feedback('Workout finished and saved on this device · not synced.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
+   try{if(invalid.size)throw Error('Correct incomplete result fields before finishing.');const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});const walks=[];for(const [key,value] of entries){if(value.readWalking&&value.entry.check.checked&&outcomes.get(key)!=='skipped')walks.push([key,value.readWalking()]);}
+    for(const [key,actual] of walks){queue(key,{actual,draft:null});queueStatus(key,'completed','user');}
+    await flush();session=await store.finish(session.id,review);recovery={};localStorage.removeItem(recoveryKey());feedback('Workout finished and saved on this device · not synced.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
     await renderHistory();
     const another=element('button','secondary','Start another workout log');another.type='button';another.onclick=async()=>{const oldDate=session.plan.date;session=null;pending={};invalid.clear();localStorage.removeItem('workout-checks-'+oldDate);localStorage.removeItem('workout-navigation-position'+storageSuffix);localStorage.removeItem('workout-card-view'+storageSuffix);await window.refreshWorkout('top')};host.append(another);
     window.finishRequestedDeviceTracking?.();}
