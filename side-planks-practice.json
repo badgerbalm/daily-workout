@@ -1,0 +1,72 @@
+{
+  "date": "side-planks-practice-v2",
+  "title": "Side-plank interval practice",
+  "note": "One card runs the entire saved Side Planks sequence. The displayed 2:45 includes a 5-second Get ready interval. MultiTimer handles all four holds, switches and the middle rest. This practice does not start Watch workout recording. Check the card only after completing the whole block; the page cannot read device completion.",
+  "sections": [
+    {
+      "title": "Side planks · 2 rounds",
+      "watchWorkout": "none",
+      "items": [
+        {
+          "name": "Side planks",
+          "progressKey": "side-planks-whole-block",
+          "detail": "2 rounds · 30 sec per side · 5 sec to get ready",
+          "instructions": "Left 30 sec → switch 5 sec → right 30 sec → rest 30 sec → left 30 sec → switch 5 sec → right 30 sec. After the final hold, check this card to confirm the entire block is complete.",
+          "intervalBlock": {
+            "type": "side-planks",
+            "stages": [
+              {
+                "label": "Get ready",
+                "phase": "prepare",
+                "seconds": 5
+              },
+              {
+                "label": "Left · round 1",
+                "phase": "hold",
+                "side": "left",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Switch sides",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 1",
+                "phase": "hold",
+                "side": "right",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Rest",
+                "phase": "rest",
+                "seconds": 30
+              },
+              {
+                "label": "Left · round 2",
+                "phase": "hold",
+                "side": "left",
+                "set": 2,
+                "seconds": 30
+              },
+              {
+                "label": "Switch sides",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 2",
+                "phase": "hold",
+                "side": "right",
+                "set": 2,
+                "seconds": 30
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

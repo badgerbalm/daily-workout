@@ -1,0 +1,248 @@
+{
+  "date": "preview-workout-blocks-v1",
+  "title": "Full workout · interval integration preview",
+  "note": "Workout-flow preview with one-card plank and suitcase-carry blocks. Start the first regular exercise in a strength/core section to begin Watch recording; its interval blocks then keep that recording running. This is a testing sequence, not an instruction to add exercise volume today.",
+  "sections": [
+    {
+      "title": "Opening mobility · 5 minutes",
+      "items": [
+        {
+          "name": "Single lean-back quad stretch",
+          "detail": "30 sec each side",
+          "seconds": 60,
+          "instructions": "Sit on the floor with one leg straight. Bend the other knee and place that foot beside your buttock, then slowly lean back with support. Repeat on the other side without forcing the position."
+        },
+        {
+          "name": "Butterfly stretch",
+          "detail": "Hold gently · 1 min",
+          "seconds": 60,
+          "instructions": "Sit with the soles of your feet together. Let your knees relax outward and keep your back comfortably upright. Do not force your knees down."
+        },
+        {
+          "name": "Seated spinal twist",
+          "detail": "30 sec each side",
+          "seconds": 60,
+          "instructions": "Gentle upper-back rotation only."
+        },
+        {
+          "name": "Plow pose with feet suspended",
+          "detail": "Straight legs · feet suspended · 1 min",
+          "seconds": 60,
+          "instructions": "Use your usual straight-leg variation with feet suspended overhead. Do not force a deeper position or turn your head. Stop if uncomfortable."
+        },
+        {
+          "name": "Shoulder rolls and arm circles",
+          "detail": "1 min",
+          "seconds": 60,
+          "instructions": "Slow controlled circles."
+        }
+      ]
+    },
+    {
+      "title": "Treadmill walk · 30 minutes",
+      "items": [
+        {
+          "name": "Easy warm-up",
+          "detail": "5 min · 2.8–3.1 mph · 0% incline",
+          "seconds": 300,
+          "instructions": "Ease into a comfortable pace."
+        },
+        {
+          "name": "Brisk walk",
+          "detail": "20 min · 3.1–3.5 mph · 0–1% incline",
+          "seconds": 1200,
+          "instructions": "Conversational effort, no jogging today. Slow down if needed."
+        },
+        {
+          "name": "Cool-down",
+          "detail": "5 min · 2.7–3.0 mph · 0% incline",
+          "seconds": 300,
+          "instructions": "Gradually slow to comfortable pace."
+        }
+      ]
+    },
+    {
+      "title": "Strength · exercises and carry block",
+      "items": [
+        {
+          "name": "Supported dumbbell rows",
+          "detail": "3 min · 2 × 10 per arm",
+          "seconds": 180,
+          "instructions": "Support torso and keep spine neutral."
+        },
+        {
+          "name": "Dumbbell bench press",
+          "detail": "3 min · 2 × 10",
+          "seconds": 180,
+          "instructions": "Use a stable flat weight bench with feet supported on the floor. Keep wrists over elbows and elbows comfortably angled from your torso. Lower through a comfortable range, then press smoothly. Start lighter when switching from the floor."
+        },
+        {
+          "name": "Bodyweight glute bridges",
+          "detail": "2 min · 2 × 10",
+          "seconds": 120,
+          "instructions": "Controlled movement, avoid back arching and groin strain."
+        },
+        {
+          "name": "Suitcase carries",
+          "progressKey": "suitcase-carries-whole-block",
+          "detail": "2 rounds · 30 sec per hand · 5 sec switches · 30 sec middle rest",
+          "instructions": "Left 30 sec → switch 5 sec → right 30 sec → rest 30 sec → left 30 sec → switch 5 sec → right 30 sec. Walk upright without leaning and breathe normally. Check the card after completing the entire block.",
+          "intervalBlock": {
+            "type": "suitcase-carries",
+            "stages": [
+              {
+                "label": "Left · round 1",
+                "phase": "carry",
+                "side": "left",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Switch hands",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 1",
+                "phase": "carry",
+                "side": "right",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Rest",
+                "phase": "rest",
+                "seconds": 30
+              },
+              {
+                "label": "Left · round 2",
+                "phase": "carry",
+                "side": "left",
+                "set": 2,
+                "seconds": 30
+              },
+              {
+                "label": "Switch hands",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 2",
+                "phase": "carry",
+                "side": "right",
+                "set": 2,
+                "seconds": 30
+              }
+            ]
+          }
+        }
+      ],
+      "watchWorkout": "strength"
+    },
+    {
+      "title": "Core · exercises and plank blocks",
+      "items": [
+        {
+          "name": "Bird dogs",
+          "detail": "2 min · 2 × 6 each side",
+          "seconds": 120,
+          "instructions": "Small range, steady hips, no back arching."
+        },
+        {
+          "name": "Dead bugs",
+          "detail": "2 min · 2 × 6 each side",
+          "seconds": 120,
+          "instructions": "Keep knees bent and shorten reach if uncomfortable."
+        },
+        {
+          "name": "Forearm plank",
+          "progressKey": "planks-whole-block",
+          "detail": "2 × 60 sec holds · 60 sec rest between holds",
+          "instructions": "Hold 60 sec → rest 60 sec → hold 60 sec, then finish. Keep breathing and maintain a comfortable, controlled position. Check the card after completing both holds.",
+          "intervalBlock": {
+            "type": "planks",
+            "stages": [
+              {
+                "label": "Hold 1",
+                "phase": "hold",
+                "set": 1,
+                "seconds": 60
+              },
+              {
+                "label": "Rest",
+                "phase": "rest",
+                "seconds": 60
+              },
+              {
+                "label": "Hold 2",
+                "phase": "hold",
+                "set": 2,
+                "seconds": 60
+              }
+            ]
+          }
+        },
+        {
+          "name": "Side planks",
+          "progressKey": "side-planks-whole-block",
+          "detail": "2 rounds · 30 sec per side · 5 sec to get ready",
+          "instructions": "Left 30 sec → switch 5 sec → right 30 sec → rest 30 sec → left 30 sec → switch 5 sec → right 30 sec. After the final hold, check this card to confirm the entire block is complete.",
+          "intervalBlock": {
+            "type": "side-planks",
+            "stages": [
+              {
+                "label": "Get ready",
+                "phase": "prepare",
+                "seconds": 5
+              },
+              {
+                "label": "Left · round 1",
+                "phase": "hold",
+                "side": "left",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Switch sides",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 1",
+                "phase": "hold",
+                "side": "right",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Rest",
+                "phase": "rest",
+                "seconds": 30
+              },
+              {
+                "label": "Left · round 2",
+                "phase": "hold",
+                "side": "left",
+                "set": 2,
+                "seconds": 30
+              },
+              {
+                "label": "Switch sides",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 2",
+                "phase": "hold",
+                "side": "right",
+                "set": 2,
+                "seconds": 30
+              }
+            ]
+          }
+        }
+      ],
+      "watchWorkout": "core"
+    }
+  ]
+}

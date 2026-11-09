@@ -6,7 +6,7 @@
 
 Continue using the existing workout structure and commands. For registered exercises, only the existing exercise `name` is needed. `/update` can replace `workout.json` without changing or searching for photos. Do not regenerate `index.html`, `exercise-photos.js`, `exercise-photos.json`, or `images/` during routine workout updates. Existing optional image fields remain compatible with the workout schema but do not control the displayed library photograph.
 
-An unrecognized new exercise displays a clean placeholder until a suitable licensed photo is added. Exercise names must match a canonical name or listed alias; case, repeated spaces, and straight/curly apostrophes are normalized.
+An unrecognized new exercise displays a clean placeholder until a suitable licensed photo is added. Exercise names must match a canonical name or listed alias; case, repeated spaces, and straight/curly apostrophes are normalized. The November 9 daily plan's Dumbbell biceps curls are registered as missing and show the clean placeholder; no mismatched exercise photo is substituted.
 
 ## Coverage as reviewed October 20, 2026
 
@@ -82,3 +82,13 @@ The owner supplied `images/lying-quad-stretch.png` on October 24, 2026. The orig
 ## Owner-supplied dead bug movement guide
 
 `images/dead-bug-guide.jpg` replaces the single starting-position thumbnail in the active dead bug entry. The uploaded JPEG is preserved unchanged, including its text and form cues, and expands in the existing photo viewer. Original creator and reuse license were not supplied; no open license is claimed. The earlier `dead-bug-start.jpg` remains available with its original source/license record. Exercise instructions, repetitions, durations, and controls are unchanged.
+
+## November 2026 coverage audit
+
+Run `node scripts/audit-photos.cjs --strict` before claiming full photo coverage for a published plan. It reports unregistered names, registered missing entries, and broken local paths separately; missing photos fail strict mode. Continue running `node tests/verify-photos.cjs` for asset hashes, attribution and renderer regressions.
+
+The November 7 plan has complete coverage on 9 of 13 cards, partial coverage on one, and no photos on three. Bodyweight glute bridges resolve to the existing exact-movement photos. Bird dogs use a PTPioneer CC BY 2.0 photograph. Standing calf stretch uses a verified U.S. Air Force heel-down foot-placement photo. The combined shoulder-roll/arm-circle card has an explicitly labeled arm-circle-only still from a public-domain Marine Corps demonstration; it remains `status: "partial"` until shoulder rolls are pictured too.
+
+Standing hip flexor stretch, supine figure-four stretch, and dumbbell floor press have permanent source demonstration links, but no verified reusable photos. Their source pages reserve copyright; no source media are copied or hotlinked. No prescriptions were changed to obtain photo coverage.
+
+The strict audit rejects partial coverage, missing photos, and corrupted or missing local assets. `node tests/verify-photo-audit.cjs` checks these cases with synthetic plans. `node tests/run-browser.cjs` starts a temporary local server and includes a current-plan loading check that scrolls through every card, decodes every registered image, expands it, and verifies the always-visible Back button. Counts are derived from the actual plan, not a hard-coded day.

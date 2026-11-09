@@ -1,0 +1,67 @@
+{
+  "date": "suitcase-carries-practice-v1",
+  "title": "Suitcase-carry interval practice",
+  "note": "Two rounds of 30 seconds per hand, with 5 seconds to switch hands and 30 seconds between rounds. This 2:40 sequence has no preparation interval or final rest. Your actual carried weight is not recorded here. This test does not start Watch workout recording.",
+  "sections": [
+    {
+      "title": "Suitcase carries · 2 rounds",
+      "watchWorkout": "none",
+      "items": [
+        {
+          "name": "Suitcase carries",
+          "progressKey": "suitcase-carries-whole-block",
+          "detail": "2 rounds · 30 sec per hand · 5 sec switches · 30 sec middle rest",
+          "instructions": "Left 30 sec → switch 5 sec → right 30 sec → rest 30 sec → left 30 sec → switch 5 sec → right 30 sec. Walk upright without leaning and breathe normally. Check the card after completing the entire block.",
+          "intervalBlock": {
+            "type": "suitcase-carries",
+            "stages": [
+              {
+                "label": "Left · round 1",
+                "phase": "carry",
+                "side": "left",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Switch hands",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 1",
+                "phase": "carry",
+                "side": "right",
+                "set": 1,
+                "seconds": 30
+              },
+              {
+                "label": "Rest",
+                "phase": "rest",
+                "seconds": 30
+              },
+              {
+                "label": "Left · round 2",
+                "phase": "carry",
+                "side": "left",
+                "set": 2,
+                "seconds": 30
+              },
+              {
+                "label": "Switch hands",
+                "phase": "switch",
+                "seconds": 5
+              },
+              {
+                "label": "Right · round 2",
+                "phase": "carry",
+                "side": "right",
+                "set": 2,
+                "seconds": 30
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -2,18 +2,19 @@
   "version": 1,
   "exercises": {
     "lying-quad-stretch": {
-      "name": "Lying quad stretch",
+      "name": "Single lean-back quad stretch",
       "aliases": [
-        "Side-lying quad stretch",
-        "Side lying quadriceps stretch"
+        "Single lean back quad stretch",
+        "Lean-back quad stretch",
+        "Lying quad stretch"
       ],
       "status": "ready",
       "photos": [
         {
           "src": "images/lying-quad-stretch.png",
-          "alt": "Man reclining on his side with one knee bent and the heel drawn toward his glutes to stretch the quadriceps; StretchCoach watermark visible.",
-          "caption": "Lying quad stretch · demonstrate on both sides.",
-          "title": "Lying quadriceps stretch (owner-supplied photograph)",
+          "alt": "Man seated on the floor, leaning back on his elbows with one leg straight and the other knee bent so the foot rests beside his buttock; StretchCoach watermark visible.",
+          "caption": "Single lean-back quad stretch · repeat on both sides.",
+          "title": "Single lean-back quad stretch (owner-supplied StretchCoach photograph)",
           "author": "StretchCoach (visible watermark); photographer not identified",
           "source": "https://stretchcoach.com/",
           "license": "User-supplied; reuse license unspecified",
@@ -83,7 +84,7 @@
       "photos": [
         {
           "src": "images/plow-pose.jpg",
-          "alt": "Person lying on shoulders with legs overhead in Halasana",
+          "alt": "Person supported on shoulders with legs overhead and feet resting on the floor in Plow Pose (Halasana).",
           "caption": "",
           "title": "Udi demonstrating Halasana (plough pose)- 2016",
           "author": "Ron Borkin (רון בורקין)",
@@ -209,7 +210,8 @@
       "aliases": [],
       "status": "missing",
       "photos": [],
-      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose."
+      "missingReason": "No accurate real-person photograph with verified reusable licensing found in this research. Do not substitute an unrelated pose.",
+      "demo": "https://na.physitrack.com/home-exercise-video/floor-press-with-dumbbells"
     },
     "supported-row": {
       "name": "Supported one-arm dumbbell row",
@@ -405,7 +407,8 @@
       "aliases": [
         "Glute bridge",
         "Supine bridge",
-        "Weighted glute bridges"
+        "Weighted glute bridges",
+        "Bodyweight glute bridges"
       ],
       "status": "ready",
       "photos": [
@@ -638,6 +641,166 @@
       ],
       "demo": "https://www.youtube.com/watch?v=T31_qyE7Xqw",
       "animationPage": "https://www.calixpert.com/exercises/laying-bent-leg-raises"
+    },
+    "standing-calf-stretch": {
+      "name": "Standing calf stretch",
+      "aliases": [],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/standing-calf-stretch.jpg",
+          "alt": "Close view of staggered legs during a standing calf stretch with the rear heel grounded.",
+          "caption": "Heel-down foot placement; follow the written instructions for upper-body posture.",
+          "title": "Running clinic helps speed up Airmen · calf stretch",
+          "author": "Staff Sgt. Christopher Ruano / U.S. Air Force",
+          "source": "https://commons.wikimedia.org/wiki/File:Running_clinic_helps_speed_up_Airmen_161006-F-VS255-2008.jpg",
+          "license": "Public domain (U.S. federal government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Resized to 1200 × 799 and JPEG optimized; original framing retained.",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.",
+          "width": 1200,
+          "height": 799,
+          "sha256": "717f905575ff0751e7c7504525bd26b13b3147e12c2e0727ed3f33b873089833"
+        }
+      ]
+    },
+    "standing-hip-flexor-stretch": {
+      "name": "Standing hip flexor stretch",
+      "aliases": [],
+      "status": "missing",
+      "reason": "No verified reusable photograph of the exact movement yet.",
+      "photos": [],
+      "demo": "https://us.physitrack.com/home-exercise-video/hip-flexor-stretch-in-standing---version-2-%2528iliopsoas%2529"
+    },
+    "supine-figure-four-stretch": {
+      "name": "Supine figure-four stretch",
+      "aliases": [],
+      "status": "missing",
+      "reason": "No verified reusable photograph of the exact movement yet.",
+      "photos": [],
+      "demo": "https://na.physitrack.com/home-exercise-video/supine-figure-4-stretch"
+    },
+    "shoulder-rolls-and-arm-circles": {
+      "name": "Shoulder rolls and arm circles",
+      "aliases": [],
+      "status": "partial",
+      "reason": "Photo demonstrates arm circles only; shoulder-roll photograph still needed.",
+      "photos": [
+        {
+          "src": "images/arm-circles.jpg",
+          "alt": "Marine standing upright with arms extended to the sides during arm circles.",
+          "caption": "Arm-circle portion only. Shoulder rolls are not pictured.",
+          "title": "Arm Circles · frame at 00:13",
+          "author": "Capt. Matthew Holfinger / U.S. Marine Corps",
+          "source": "https://www.dvidshub.net/video/551356/arm-circles",
+          "license": "Public domain (U.S. federal government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Still extracted at 00:13 from the public-domain demonstration; JPEG optimized; no cropping.",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.",
+          "width": 1024,
+          "height": 576,
+          "sha256": "4509b033684d05fdc4b19c71ac7ba583344f47c1f3a3707a4b13c124f2659a5a"
+        }
+      ],
+      "demo": "https://www.dvidshub.net/video/551356/arm-circles"
+    },
+    "bird-dogs": {
+      "name": "Bird dogs",
+      "aliases": [
+        "Bird dog",
+        "Bird-dog exercise"
+      ],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/bird-dog.jpg",
+          "alt": "Woman on hands and knees extending the opposite arm and leg horizontally in a bird dog exercise.",
+          "caption": "Extend the opposite arm and leg; repeat on both sides.",
+          "title": "Bird dog exercise",
+          "author": "PTPioneer",
+          "source": "https://commons.wikimedia.org/wiki/File:Bird_dog_exercise.jpg",
+          "attributionUrl": "https://www.ptpioneer.com/",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+          "changes": "Resized to 1200 × 800 and JPEG optimized; no cropping.",
+          "width": 1200,
+          "height": 800,
+          "sha256": "6092e8f0388104e73982ee1ac056d482cbadf4f701907a9a3ff123d1fa5a868b"
+        }
+      ]
+    },
+    "plow-pose-feet-suspended": {
+      "name": "Plow pose with feet suspended",
+      "aliases": [
+        "Halasana with feet suspended",
+        "Suspended-feet plow pose"
+      ],
+      "status": "partial",
+      "reason": "Existing reference shows feet on the floor, not the prescribed feet-suspended variation.",
+      "photos": [
+        {
+          "src": "images/plow-pose.jpg",
+          "alt": "Person supported on shoulders with legs overhead and feet resting on the floor in Plow Pose (Halasana).",
+          "caption": "Reference only: this photo shows feet on the floor. This card specifies feet suspended; floor contact is not the goal.",
+          "title": "Udi demonstrating Halasana (plough pose)- 2016",
+          "author": "Ron Borkin (רון בורקין)",
+          "source": "https://commons.wikimedia.org/wiki/File:Udi_demonstrating_Halasana_(plough_pose)-_2016.jpg",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+          "changes": "Resized; JPEG optimized",
+          "width": 1000,
+          "height": 668,
+          "sha256": "483c713f3bb851370d38e5fb7d1e0adf2a889bf2af0dd8ea3856a6391133cd34"
+        }
+      ]
+    },
+    "dumbbell-biceps-curls": {
+      "name": "Dumbbell biceps curls",
+      "aliases": ["Dumbbell biceps curl", "Dumbbell curls", "Biceps curls"],
+      "status": "missing",
+      "reason": "The November 9 plan includes this movement; a suitable licensed local photo has not been added.",
+      "photos": []
+    },
+    "dumbbell-bench-press": {
+      "name": "Dumbbell bench press",
+      "aliases": [
+        "Flat dumbbell bench press",
+        "Dumbbell chest press on bench"
+      ],
+      "status": "ready",
+      "demo": "https://www.dvidshub.net/video/636920/dumbbell-bench-press",
+      "photos": [
+        {
+          "src": "images/dumbbell-bench-press-lowered.jpg",
+          "alt": "Two camera views of a Marine performing a flat dumbbell bench press with feet on the floor, elbows bent and weights lowered.",
+          "caption": "Lowered position · feet on the floor. Tap to enlarge.",
+          "title": "Dumbbell Bench Press · lowered position",
+          "author": "Capt. Matthew Holfinger / U.S. Marine Corps Training and Education Command",
+          "source": "https://www.dvidshub.net/video/636920/dumbbell-bench-press",
+          "license": "Public domain (U.S. federal government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Still extracted at 00:08 from the demonstration; no cropping.",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.",
+          "width": 1024,
+          "height": 576,
+          "sha256": "f1812d91bebfd4e249a8c26b64b13d8abd504cd05d54ba782d8bc13ba5fcc370"
+        },
+        {
+          "src": "images/dumbbell-bench-press-pressed.jpg",
+          "alt": "Two camera views of a Marine performing a flat dumbbell bench press with feet on the floor, arms extended and weights pressed upward.",
+          "caption": "Pressed position · feet on the floor. Tap to enlarge.",
+          "title": "Dumbbell Bench Press · pressed position",
+          "author": "Capt. Matthew Holfinger / U.S. Marine Corps Training and Education Command",
+          "source": "https://www.dvidshub.net/video/636920/dumbbell-bench-press",
+          "license": "Public domain (U.S. federal government)",
+          "licenseUrl": "https://www.dvidshub.net/about/copyright",
+          "changes": "Still extracted at 00:10 from the demonstration; no cropping.",
+          "citation": "The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.",
+          "width": 1024,
+          "height": 576,
+          "sha256": "8edc3c2e75dc68a9e9d4296ef607885de2a5ea0d4b3176f72c05d667ed656988"
+        }
+      ]
     }
   }
 }
