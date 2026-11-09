@@ -70,22 +70,32 @@
    if(saved){outcomes.set(key,saved.status);entry.check.checked=['completed','inferred'].includes(saved.status);}
    const details=element('details','actual-results'),summary=element('summary','','Record results');details.append(summary);
    const badge=element('p','result-outcome',labels[saved?.status||'unfinished']);details.append(badge);entries.set(key,{badge,entry});
-   details.append(element('p','result-help','Actual performance only. Blank fields mean not recorded. Saving values does not confirm completion.'));
+   const walking=/treadmill|walking/i.test(entry.section.title);
+   details.append(element('p','result-help',walking?'Suggested settings are ready. Adjust if needed, then confirm what you did.':'Actual performance only. Blank fields mean not recorded. Saving values does not confirm completion.'));
    const form=element('div','results-form');details.append(form);
    let setControls=[],treadmillControls;
-   const walking=/treadmill|walking/i.test(entry.section.title);
    const update=()=>{
     let actual;
     if(walking){actual={sets:[],treadmill:Object.fromEntries(Object.entries(treadmillControls).map(([name,input])=>[name,input.value]))}}
     else actual={sets:setControls.map(set=>({id:set.id,...Object.fromEntries(Object.entries(set.controls).map(([name,input])=>[name,input.value]))}))};
     const draft=actual;
-    try{actual=WorkoutHistoryStore.actualResult(actual);invalid.delete(key);queue(key,{actual,draft:null});feedback('Saving on this device…');return true}catch(reason){invalid.set(key,reason.message);queue(key,{draft});feedback('Draft saved locally; '+reason.message);return false}
+    try{actual=WorkoutHistoryStore.actualResult(actual);invalid.delete(key);queue(key,walking?{draft}:{actual,draft:null});feedback('Saving on this device…');return true}catch(reason){invalid.set(key,reason.message);queue(key,{draft});feedback('Draft saved locally; '+reason.message);return false}
    };
    if(walking){
-    const t=savedActual?.treadmill||{};treadmillControls={};
-    for(const [name,label,type,options] of [['durationSeconds','Actual seconds','number'],['speed','Speed','number'],['speedUnit','Speed unit','select',[['mph','mph'],['km/h','km/h']]],['inclinePct','Incline %','number'],['distance','Distance','number'],['distanceUnit','Distance unit','select',[['mi','mi'],['km','km']]]]){
-     treadmillControls[name]=field(form,label,type,t[name]??(name==='speedUnit'?'mph':name==='distanceUnit'?'mi':''),options?{options}:{});if(name==='inclinePct')treadmillControls[name].min='-20';
-    }
+    const detail=String(entry.item.detail||'');
+    function upper(unit){const match=detail.match(new RegExp('(\\d+(?:\\.\\d+)?)(?:\\s*[–—-]\\s*(\\d+(?:\\.\\d+)?))?\\s*'+unit,'i'));return match?Number(match[2]||match[1]):''}
+    const t=savedActual?.treadmill||{durationSeconds:entry.item.seconds||'',speed:upper('(?:mph|km/h)'),speedUnit:/km\/h/i.test(detail)?'km/h':'mph',inclinePct:upper('%'),distance:'',distanceUnit:'mi'};
+    treadmillControls={};
+    function choices(min,max,step,value,format){const values=new Set(['',...Array.from({length:Math.round((max-min)/step)+1},(_,i)=>String(Number((min+i*step).toFixed(2))))]);if(value!==undefined&&value!==null)values.add(String(value));return [...values].sort((a,b)=>a===''?-1:b===''?1:Number(a)-Number(b)).map(v=>[v,v===''?'Not recorded':format(Number(v))])}
+    treadmillControls.durationSeconds=field(form,'Duration','select',t.durationSeconds,{options:choices(30,5400,30,t.durationSeconds,n=>n/60+' min')});
+    treadmillControls.speed=field(form,'Speed','select',t.speed,{options:choices(0.5,15,0.1,t.speed,n=>String(n))});
+    treadmillControls.inclinePct=field(form,'Incline %','select',t.inclinePct,{options:choices(-5,20,0.5,t.inclinePct,n=>n+'%')});
+    const more=element('details','walk-more');more.append(element('summary','','Distance & units · optional'));const extra=element('div','results-form');more.append(extra);form.append(more);
+    treadmillControls.speedUnit=field(extra,'Speed unit','select',t.speedUnit||'mph',{options:[['mph','mph'],['km/h','km/h']]});
+    const labelSpeed=()=>{for(const option of treadmillControls.speed.options)if(option.value)option.textContent=option.value+' '+treadmillControls.speedUnit.value};labelSpeed();treadmillControls.speedUnit.addEventListener('input',labelSpeed);treadmillControls.speedUnit.addEventListener('change',labelSpeed);
+    treadmillControls.distance=field(extra,'Distance','number',t.distance);
+    treadmillControls.distanceUnit=field(extra,'Distance unit','select',t.distanceUnit||'mi',{options:[['mi','mi'],['km','km']]});
+
    }else{
     const weighted=/dumbbell|row|press|raise|carr/i.test(entry.item.name);
     const timed=/plank|carr|stretch|pose/i.test(entry.item.name);
@@ -109,7 +119,7 @@
    }
    form.addEventListener('input',update);form.addEventListener('change',update);
    const actions=element('div','result-actions');
-   const confirm=element('button','','Confirm complete');confirm.type='button';confirm.onclick=()=>{if(!update())return;entry.check.checked=true;entry.check.onchange()};
+   const confirm=element('button','','Confirm complete');confirm.type='button';confirm.onclick=()=>{if(!update())return;if(walking){const actual=WorkoutHistoryStore.actualResult({sets:[],treadmill:Object.fromEntries(Object.entries(treadmillControls).map(([name,input])=>[name,input.value]))});queue(key,{actual,draft:null});}entry.check.checked=true;entry.check.onchange()};
    const skip=element('button','secondary','Skip exercise');skip.type='button';skip.onclick=()=>{if(!allowStartingExercise(key))return;entry.done.onclick();entry.check.checked=false;saveExerciseCheck(plan.date,key,false,'skipped')};
    actions.append(confirm,skip);details.append(actions);entry.row.querySelector('.exercise-info').append(details);
   }
