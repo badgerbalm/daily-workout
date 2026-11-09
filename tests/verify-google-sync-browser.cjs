@@ -18,7 +18,7 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
   });
   await page.goto(process.argv[2]);await page.waitForFunction(()=>initialPageLoadComplete);
   assert.equal(googleLoads,0);assert.equal(apiCalls,0);
-  await page.locator('#google-sync summary').click();
+  await page.locator('#open-workout-menu').click();await page.locator('#google-sync summary').click();
   for(const width of [320,390,430]){await page.setViewportSize({width,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'No sync panel overflow at '+width)}
   await page.locator('#google-connect').click();await page.waitForFunction(()=>document.querySelector('#google-sync-status').textContent.includes('ready'));
   await page.locator('#google-connect').click();await page.waitForFunction(()=>document.querySelector('#google-sync-status').textContent.includes('Connected as'));
