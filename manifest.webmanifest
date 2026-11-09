@@ -1,0 +1,11 @@
+{
+  "id": "./",
+  "name": "Daily Workout",
+  "short_name": "Workout",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f1f4f8",
+  "theme_color": "#173f73",
+  "icons": [{"src": "./images/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any"}]
+}
