@@ -1,0 +1,28 @@
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const {JSDOM}=require('jsdom'),{webcrypto}=require('node:crypto');
+const source=fs.readFileSync('remembered-google.js','utf8');
+(async()=>{
+ const dom=new JSDOM('',{url:'https://badgerbalm.github.io/daily-workout/',runScripts:'outside-only'}),w=dom.window;
+ Object.defineProperty(w,'crypto',{value:webcrypto});w.TextEncoder=TextEncoder;
+ let destination,calls=[],revoked=false;
+ const request=async(url,options)=>{calls.push({url,options});const path=new URL(url).pathname;let value={};let status=200;
+  if(path==='/auth/start')value={url:'https://accounts.google.com/synthetic'};
+  if(path==='/auth/complete')value={session:'synthetic-app-session',expires:Math.floor(Date.now()/1000)+3600};
+  if(path==='/session'&&revoked){status=401;value={error:'expired'}};
+  if(path==='/google')value={files:[]};
+  return {ok:status===200,status,json:async()=>value};};
+ w.fetch=request;w.eval(source);const create=()=>w.WorkoutRememberedGoogle.create({request,navigate:url=>destination=url});
+ let c=create();assert.equal(await c.restore(),false);assert.equal(calls.length,0);
+ await c.connect();assert.equal(destination,'https://accounts.google.com/synthetic');
+ const pending=JSON.parse(w.localStorage.getItem('daily-workout-google-pending-v1'));
+ assert.equal(pending.verifier.length,43);const start=JSON.parse(calls[0].options.body);assert.equal(start.state,pending.state);assert.notEqual(start.challenge,pending.verifier);
+ w.location.hash=new URLSearchParams({workout_auth:'synthetic-ticket',workout_state:pending.state});
+ assert(await c.restore());assert.equal(w.location.hash,'');assert(!w.localStorage.getItem('daily-workout-google-pending-v1'));
+ c=create();assert(await c.restore(),'Saved app session survives recreation');
+ const response=await c.google('https://www.googleapis.com/drive/v3/files');assert.deepEqual(await response.json(),{files:[]});
+ assert(calls.every(x=>x.options.credentials==='omit'));assert(calls.at(-1).options.headers.Authorization.includes('synthetic-app-session'));
+ await c.disconnect();assert(!c.connected());assert.equal(w.localStorage.length,0);
+ await c.connect();w.location.hash='workout_auth=wrong&workout_state=wrong';await assert.rejects(c.restore(),/different browser/);assert.equal(w.location.hash,'');
+ w.localStorage.setItem('daily-workout-google-session-v1',JSON.stringify({session:'synthetic',expires:Math.floor(Date.now()/1000)+60}));revoked=true;c=create();await assert.rejects(c.restore(),/renewal/);assert(!c.connected());
+ dom.window.close();console.log('PASS: remembered session reload, PKCE/state, callback removal, wrong-browser rejection, proxy-only credentials, logout and revocation.');
+})().catch(error=>{console.error(error);process.exitCode=1});

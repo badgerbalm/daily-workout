@@ -3,10 +3,12 @@
   "private": true,
   "scripts": {
     "test:history": "node tests/verify-workout-history.cjs && node tests/verify-workout-log-ui.cjs && node tests/verify-day-refresh.cjs",
-    "test:sync": "node tests/verify-google-sync.cjs && node tests/verify-google-sync-ui.cjs"
+    "test:sync": "node tests/verify-google-sync.cjs && node tests/verify-google-sync-ui.cjs",
+    "test:auth": "node tests/verify-auth-backend.mjs && node tests/verify-remembered-google.cjs && node tests/verify-remembered-google-ui.cjs"
   },
   "devDependencies": {
     "fake-indexeddb": "6.2.5",
-    "jsdom": "26.1.0"
+    "jsdom": "26.1.0",
+    "wrangler": "^4.159.0"
   }
 }

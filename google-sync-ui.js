@@ -1,5 +1,6 @@
 (function(){
  'use strict';
+ if(window.WorkoutRememberedGoogle)return;
  const panel=document.querySelector('#google-sync');if(!panel)return;
  const connect=panel.querySelector('#google-connect'),sync=panel.querySelector('#google-sync-now'),create=panel.querySelector('#google-create-sheet'),disconnect=panel.querySelector('#google-disconnect'),status=panel.querySelector('#google-sync-status'),link=panel.querySelector('#google-sheet-link');
  const service=WorkoutGoogleSync.createSync({store:WorkoutLog.store,onStatus:message=>status.textContent=message});
