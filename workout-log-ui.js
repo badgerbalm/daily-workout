@@ -24,6 +24,16 @@
    const restored=JSON.parse(localStorage.getItem(recoveryKey())||'null');
    plan=session?.plan||restored?.plan||incoming;recovery=restored?.changes||{};pending={...recovery};available=true;
    if(Object.keys(pending).length)await flush();
+   // A prior day's unfinished log must not pin an old Safari tab to yesterday.
+   // Preserve it locally, and only roll forward to an actually published plan
+   // for today's local calendar date. Same-day prescription snapshots stay fixed.
+   const date=new Date(),today=date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
+   if(scope==='daily'&&incoming.date===today&&plan.date<incoming.date){
+    if(session)await store.leaveUnfinished(session.id);
+    else if(restored?.plan){await flush();await store.leaveUnfinished(session.id);}
+    session=null;plan=incoming;recovery={};pending={};
+    localStorage.removeItem(recoveryKey());localStorage.removeItem(reviewKey());
+   }
    if(panel)panel.hidden=false;
    feedback(session?(JSON.stringify(session.plan)!==JSON.stringify(incoming)?'Resuming your unfinished workout snapshot; the latest plan is held until you finish. Saved on this device.':'Resuming your saved workout. Saved on this device.'):'Results save on this device. Use Google backup & sync for finished workouts.');
    return plan;

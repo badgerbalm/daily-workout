@@ -56,6 +56,14 @@
   }
   const get=(store,id)=>transaction([store],'readonly',(tx,done)=>{const r=tx.objectStore(store).get(id);r.onsuccess=()=>done(r.result||null)});
   async function active(scope){const meta=await get('meta','active:'+scope);return meta?get('sessions',meta.value):null}
+  function leaveUnfinished(id){return transaction(['sessions','meta'],'readwrite',(tx,done)=>{
+   const sessions=tx.objectStore('sessions'),request=sessions.get(id);
+   request.onsuccess=()=>{const saved=request.result;if(!saved||saved.status!=='in-progress')return;
+    saved.status='unfinished';saved.updatedAt=now();sessions.put(saved);
+    const meta=tx.objectStore('meta'),activeRequest=meta.get('active:'+saved.scope);
+    activeRequest.onsuccess=()=>{if(activeRequest.result?.value===id)meta.delete('active:'+saved.scope)};
+   };done();
+  })}
   function ensure(plan,scope){return transaction(['sessions','meta','outbox'],'readwrite',(tx,done,fail)=>{
    const sessions=tx.objectStore('sessions'),meta=tx.objectStore('meta');const r=meta.get('active:'+scope);
    const create=()=>{
@@ -92,7 +100,7 @@
   function importFinished(records){const validated=records.map(finishedRecord);return transaction(['sessions'],'readwrite',(tx,done,fail)=>{
    for(const record of validated){const r=tx.objectStore('sessions').get(record.id);r.onsuccess=()=>{if(r.result?.status==='in-progress'){fail(Error('A restored record conflicts with an active workout. Local data was preserved.'));return}if(!r.result)tx.objectStore('sessions').add(record)}}done();
   })}
-  return {active,ensure,save,finish,importFinished,getSession:id=>get('sessions',id),listSessions:()=>list('sessions'),pending:()=>list('outbox'),close:async()=>{(await open()).close()}};
+  return {active,ensure,save,finish,leaveUnfinished,importFinished,getSession:id=>get('sessions',id),listSessions:()=>list('sessions'),pending:()=>list('outbox'),close:async()=>{(await open()).close()}};
  }
  if(typeof module!=='undefined')module.exports={createStore,actualResult,reviewResult,finishedRecord};
  else root.WorkoutHistoryStore={createStore,actualResult,reviewResult,finishedRecord};

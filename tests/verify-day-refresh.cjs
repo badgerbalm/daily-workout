@@ -1,0 +1,20 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const {IDBFactory}=require('fake-indexeddb'),history=require('../workout-history.js');
+const localDate=date=>date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
+const today=new Date(),yesterday=new Date(today);yesterday.setDate(today.getDate()-1);
+const plan=date=>({date:localDate(date),title:'Synthetic daily plan',sections:[{title:'Mobility',items:[{name:'Synthetic move',seconds:60}]}]});
+(async()=>{
+ const db=new IDBFactory(),store=history.createStore({indexedDB:db});
+ const old=await store.ensure(plan(yesterday),'daily');
+ const values=new Map([['workout-result-recovery:daily',JSON.stringify({plan:old.plan,sessionId:old.id,changes:{'0-0':{status:'completed',source:'user'}}})],['workout-review-open:daily','1']]);
+ const context={WorkoutHistoryStore:{...history,createStore:()=>store},document:{querySelector:()=>null},localStorage:{getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,v),removeItem:k=>values.delete(k)},Date,console};
+ context.window={addEventListener(){}};vm.createContext(context);vm.runInContext(fs.readFileSync('workout-log-ui.js','utf8'),context);
+ const result=await context.window.WorkoutLog.prepare(plan(today),'');
+ assert.equal(result.date,localDate(today));assert.equal(await store.active('daily'),null);
+ const preserved=await store.getSession(old.id);assert.equal(preserved.status,'unfinished');assert.equal(preserved.exercises['0-0'].status,'completed','Replay saved recovery before changing days');assert.equal(values.has('workout-review-open:daily'),false);
+ await context.window.WorkoutLog.flush();const current=await store.active('daily');assert.equal(current.plan.date,localDate(today));assert.notEqual(current.id,old.id);
+ const changed=plan(today);changed.title='Same-day revised plan';
+ const resumed=await context.window.WorkoutLog.prepare(changed,'');assert.equal(resumed.title,'Synthetic daily plan','Same-day workout snapshot stays stable');
+ const practice=await store.ensure(plan(yesterday),'practice');const retained=await context.window.WorkoutLog.prepare(plan(today),'practice');assert.equal(retained.date,practice.plan.date,'Practice attempts are isolated from daily rollover');
+ await store.close();console.log('PASS: today replaces yesterday on launch/foreground, recovery and unfinished results preserved, same-day snapshot retained, practice isolated.');
+})().catch(error=>{console.error(error);process.exitCode=1});

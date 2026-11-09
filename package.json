@@ -2,7 +2,7 @@
   "name": "daily-workout",
   "private": true,
   "scripts": {
-    "test:history": "node tests/verify-workout-history.cjs && node tests/verify-workout-log-ui.cjs",
+    "test:history": "node tests/verify-workout-history.cjs && node tests/verify-workout-log-ui.cjs && node tests/verify-day-refresh.cjs",
     "test:sync": "node tests/verify-google-sync.cjs && node tests/verify-google-sync-ui.cjs"
   },
   "devDependencies": {
