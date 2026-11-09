@@ -14,7 +14,7 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
  for(const width of [320,390,430,768]){
   await page.setViewportSize({width,height:844});
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`No horizontal overflow at ${width}px`);
-  for(const selector of ['#refresh-workout','.item > button','.settings summary']){
+  for(const selector of ['#refresh-workout','.item > button','.settings > summary']){
    const boxes=await page.locator(selector).evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().height));assert(boxes.every(h=>h>=44),`Touch targets: ${selector}`);
   }
  }
@@ -55,7 +55,7 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
  assert.equal(await page.evaluate(()=>readActiveTimer().key),'0-2','Completing another card retains active timer');
  await page.evaluate(async()=>{const active=readActiveTimer();active.workout='stale plan';active.endsAt=0;localStorage.setItem(activeTimerKey,JSON.stringify(active));await refreshWorkout()});
  assert(!await page.locator('.check').nth(2).isChecked(),'Changed plans invalidate stale timers');
- await page.locator('.settings summary').click();await page.selectOption('#timer-mode','iphone');
+ await page.locator('.settings > summary').click();await page.selectOption('#timer-mode','iphone');
  await page.locator('.item').nth(2).locator('.start-exercise').click();
  await page.evaluate(()=>{const active=readActiveTimer();active.endsAt=0;localStorage.setItem(activeTimerKey,JSON.stringify(active));finishExpiredTimer()});
  assert.equal(await page.evaluate(()=>new URL(launches.at(-1)).searchParams.get('name')),'Workout Timer','iPhone expiry never resets MultiTimer');
