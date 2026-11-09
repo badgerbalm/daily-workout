@@ -12,7 +12,7 @@ const {chromium}=require('playwright');
  page.on('dialog',d=>d.dismiss());
  const base=process.argv[2]||'http://127.0.0.1:8765/';
  async function ready(){await page.goto(base);await page.waitForFunction(()=>document.querySelectorAll('.item').length===6);await page.evaluate(()=>{window.launches=[];openWorkoutShortcut=url=>{window.launches.push(url)}})}
- const start=i=>page.locator('.item').nth(i).locator('button').first().click();
+ const start=i=>page.locator('.item').nth(i).locator('.start-exercise').click();
  const done=i=>page.locator('.item').nth(i).locator('.next-exercise').click();
  const names=()=>page.evaluate(()=>window.launches.map(url=>new URL(url).searchParams.get('name')));
  await ready();
@@ -29,7 +29,12 @@ const {chromium}=require('playwright');
  await ready();assert.deepEqual(await names(),[],'Reload must not repeat starting');
  await start(5);assert.equal((await names()).at(-1),'Workout Timer Watch');
  await page.evaluate(()=>{const a=readActiveTimer();a.endsAt=Date.now()-1;localStorage.setItem(activeTimerKey,JSON.stringify(a));finishExpiredTimer()});
- assert.deepEqual(await names(),['Workout Timer Watch','Workout Walk End'],'Last timer ends section once without a second Timer Stop');
+ assert.deepEqual(await names(),['Workout Timer Watch','Workout Timer Stop'],'Final expiry stops the timer while review waits for an explicit save');
+ await page.getByRole('button',{name:'Save workout',exact:true}).click();
+ await page.waitForFunction(()=>window.launches.some(url=>new URL(url).searchParams.get('name')==='Workout Walk End'));
+ assert.deepEqual(await names(),['Workout Timer Watch','Workout Timer Stop','Workout Walk End'],'Saving the final review ends the Watch workout once');
+ await page.getByRole('button',{name:'Start another workout log',exact:true}).click();
+ await page.waitForFunction(()=>initialPageLoadComplete&&document.querySelectorAll('.item').length===6);
  // Reopen a section, block a competing session, and finish using its final card.
  await start(2);const before=(await names()).length;await start(4);
  assert.equal((await names()).length,before,'No overlapping Watch sections');

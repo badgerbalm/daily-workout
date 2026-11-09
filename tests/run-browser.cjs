@@ -12,7 +12,9 @@ const server=http.createServer((request,response)=>{
 server.listen(0,'127.0.0.1',async()=>{
  try{
   const base=`http://127.0.0.1:${server.address().port}/`;
-  for(const test of ['verify-watch-sections.cjs','verify-mobile.cjs','verify-photo-loading.cjs','verify-navigation.cjs']){
+  const all=['verify-watch-sections.cjs','verify-mobile.cjs','verify-photo-loading.cjs','verify-navigation.cjs','verify-google-sync-browser.cjs'];
+  const selected=process.argv.slice(2);if(selected.some(test=>!all.includes(test)))throw Error('Unknown browser test');
+  for(const test of selected.length?selected:all){
    const code=await new Promise((resolve,reject)=>{const child=spawn(process.execPath,[path.join(__dirname,test),base],{stdio:'inherit'});child.on('error',reject);child.on('exit',code=>resolve(code??1))});
    if(code)process.exitCode=code;
   }

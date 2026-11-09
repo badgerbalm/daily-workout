@@ -23,6 +23,19 @@
   return {sets,treadmill};
  }
  function reviewResult(input){return {effort:number(input.effort,'Effort',{integer:true,min:1,max:10}),energy:number(input.energy,'Energy',{integer:true,min:1,max:5}),discomfort:number(input.discomfort,'Discomfort',{integer:true,max:10}),notes:String(input.notes||'').trim().slice(0,4000)}};
+ function finishedRecord(value){
+  const validText=v=>typeof v==='string'&&v.length>0&&v.length<=200;
+  const validDate=v=>typeof v==='string'&&Number.isFinite(Date.parse(v));
+  if(!value||JSON.stringify(value).length>800000||!validText(value.id)||value.status!=='finished'||value.scope!=='daily'||!Number.isSafeInteger(value.revision)||value.revision<1||![value.startedAt,value.updatedAt,value.finishedAt].every(validDate))throw Error('Invalid finished workout record.');
+  const plan=value.plan;if(!plan||typeof plan.title!=='string'||typeof plan.date!=='string'||!Array.isArray(plan.sections)||plan.sections.length>100)throw Error('Invalid saved workout plan.');
+  const keys=[];plan.sections.forEach((section,s)=>{if(!Array.isArray(section.items)||section.items.length>500)throw Error('Invalid saved exercises.');section.items.forEach((item,i)=>{if(typeof item.name!=='string')throw Error('Invalid exercise name.');keys.push(item.progressKey||s+'-'+i)})});
+  if(!value.exercises||keys.length!==Object.keys(value.exercises).length||new Set(keys).size!==keys.length)throw Error('Invalid saved exercise keys.');
+  const exercises=Object.create(null);
+  for(const key of keys){const e=value.exercises[key];if(!e||!validText(e.id)||e.key!==key||typeof e.name!=='string'||!['unfinished','completed','inferred','skipped'].includes(e.status)||!e.actual)throw Error('Invalid saved exercise result.');
+   exercises[key]={id:e.id,key,name:e.name,prescribed:clone(e.prescribed),status:e.status,completionSource:e.completionSource||null,actual:actualResult(e.actual)};
+  }
+  return {id:value.id,scope:'daily',plan:clone(plan),status:'finished',startedAt:value.startedAt,updatedAt:value.updatedAt,revision:value.revision,exercises,review:reviewResult(value.review||{}),finishedAt:value.finishedAt};
+ }
  function createStore(options={}){
   const idb=options.indexedDB||root.indexedDB,uuid=options.uuid||(()=>root.crypto.randomUUID()),now=options.now||(()=>new Date().toISOString());
   let database;
@@ -75,8 +88,12 @@
    };
   })}
   const list=store=>transaction([store],'readonly',(tx,done)=>{const r=tx.objectStore(store).getAll();r.onsuccess=()=>done(r.result)});
-  return {active,ensure,save,finish,getSession:id=>get('sessions',id),listSessions:()=>list('sessions'),pending:()=>list('outbox'),close:async()=>{(await open()).close()}};
+  // Imported finished records never replace local records or become active workouts.
+  function importFinished(records){const validated=records.map(finishedRecord);return transaction(['sessions'],'readwrite',(tx,done,fail)=>{
+   for(const record of validated){const r=tx.objectStore('sessions').get(record.id);r.onsuccess=()=>{if(r.result?.status==='in-progress'){fail(Error('A restored record conflicts with an active workout. Local data was preserved.'));return}if(!r.result)tx.objectStore('sessions').add(record)}}done();
+  })}
+  return {active,ensure,save,finish,importFinished,getSession:id=>get('sessions',id),listSessions:()=>list('sessions'),pending:()=>list('outbox'),close:async()=>{(await open()).close()}};
  }
- if(typeof module!=='undefined')module.exports={createStore,actualResult,reviewResult};
- else root.WorkoutHistoryStore={createStore,actualResult,reviewResult};
+ if(typeof module!=='undefined')module.exports={createStore,actualResult,reviewResult,finishedRecord};
+ else root.WorkoutHistoryStore={createStore,actualResult,reviewResult,finishedRecord};
 })(typeof window==='undefined'?globalThis:window);

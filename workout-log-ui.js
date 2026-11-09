@@ -1,4 +1,4 @@
-/* Entries remain in this origin's IndexedDB. No upload/sync endpoint is configured. */
+/* Logging is always local first. Google sync is optional and explicitly requested. */
 (function(){
  'use strict';
  const store=WorkoutHistoryStore.createStore();
@@ -25,7 +25,7 @@
    plan=session?.plan||restored?.plan||incoming;recovery=restored?.changes||{};pending={...recovery};available=true;
    if(Object.keys(pending).length)await flush();
    if(panel)panel.hidden=false;
-   feedback(session?(JSON.stringify(session.plan)!==JSON.stringify(incoming)?'Resuming your unfinished workout snapshot; the latest plan is held until you finish. Saved on this device · not synced.':'Resuming your saved workout. Saved on this device · not synced.'):'Results save on this device only · Google Sheet sync is not connected.');
+   feedback(session?(JSON.stringify(session.plan)!==JSON.stringify(incoming)?'Resuming your unfinished workout snapshot; the latest plan is held until you finish. Saved on this device.':'Resuming your saved workout. Saved on this device.'):'Results save on this device. Use Google backup & sync for finished workouts.');
    return plan;
   }catch(reason){available=false;plan=incoming;if(panel)panel.hidden=false;feedback('Workout history unavailable: '+reason.message+' Timers still work, but results cannot be saved.');return incoming}
  }
@@ -43,7 +43,7 @@
    const changes=pending;pending={};const recorded=JSON.stringify(recovery);
    try{if(Object.keys(changes).length)session=await store.save(session.id,changes)}catch(reason){for(const [key,value] of Object.entries(changes))pending[key]={...value,...pending[key]};throw reason}
    if(recorded===JSON.stringify(recovery)){recovery={};localStorage.removeItem(recoveryKey());}
-   feedback(invalid.size?'Draft saved on this device · correct incomplete fields before finishing · not synced.':'Saved on this device · not synced.');
+   feedback(invalid.size?'Draft saved on this device · correct incomplete fields before finishing.':'Saved on this device.');
   });return serial;
  }
  function queueStatus(key,state,source='user'){
@@ -147,8 +147,8 @@
    finish.disabled=true;
    try{if(invalid.size)throw Error('Correct incomplete result fields before finishing.');const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});const walks=[];for(const [key,value] of entries){if(value.readWalking&&value.entry.check.checked&&outcomes.get(key)!=='skipped')walks.push([key,value.readWalking()]);}
     for(const [key,actual] of walks){queue(key,{actual,draft:null});queueStatus(key,'completed','user');}
-    await flush();session=await store.finish(session.id,review);recovery={};localStorage.removeItem(recoveryKey());feedback('Workout finished and saved on this device · not synced.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
-    await renderHistory();closeReview();launch.hidden=true;
+    await flush();session=await store.finish(session.id,review);recovery={};localStorage.removeItem(recoveryKey());feedback('Workout finished and saved on this device. Use Sync now for Google backup.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
+    await renderHistory();window.dispatchEvent(new Event('workout-finished'));closeReview();launch.hidden=true;
     const another=element('button','secondary','Start another workout log');another.type='button';another.onclick=async()=>{const oldDate=session.plan.date;session=null;pending={};invalid.clear();localStorage.removeItem('workout-checks-'+oldDate);localStorage.removeItem('workout-navigation-position'+storageSuffix);localStorage.removeItem('workout-card-view'+storageSuffix);await window.refreshWorkout('top')};host.append(another);
     window.finishRequestedDeviceTracking?.();}
    catch(reason){error(reason);finish.disabled=false}
@@ -160,10 +160,11 @@
   for(const saved of sessions){const details=element('details','saved-session');details.append(element('summary','',new Date(saved.startedAt).toLocaleDateString()+' · '+saved.plan.title+' · '+saved.status));
    for(const exercise of Object.values(saved.exercises)){const p=element('p','',exercise.name+' — '+labels[exercise.status]);details.append(p);if(exercise.actual.sets.length||exercise.actual.treadmill){const values=element('ul','saved-actuals');exercise.actual.sets.forEach((set,index)=>{const parts=[set.side,set.reps===null?null:set.reps+' reps',set.weight===null?null:set.weight+' '+set.weightUnit+' '+set.weightBasis,set.durationSeconds===null?null:set.durationSeconds+' sec'].filter(Boolean);if(parts.length)values.append(element('li','','Set '+(index+1)+': '+parts.join(' · ')))});const t=exercise.actual.treadmill;if(t){const parts=[t.durationSeconds===null?null:t.durationSeconds+' sec',t.speed===null?null:t.speed+' '+t.speedUnit,t.inclinePct===null?null:t.inclinePct+'% incline',t.distance===null?null:t.distance+' '+t.distanceUnit].filter(Boolean);if(parts.length)values.append(element('li','',parts.join(' · ')))}details.append(values)}}
    host.append(details);
+   if(saved.review){const values=[saved.review.effort===null?null:'Effort '+saved.review.effort+'/10',saved.review.energy===null?null:'Energy '+saved.review.energy+'/5',saved.review.discomfort===null?null:'Discomfort '+saved.review.discomfort+'/10'].filter(Boolean);if(values.length)details.append(element('p','',values.join(' · ')));if(saved.review.notes)details.append(element('p','saved-review-notes',saved.review.notes));}
   }
  }
  const exportButton=document.querySelector('#export-local-history');
  if(exportButton)exportButton.onclick=async()=>{try{await serial.catch(()=>{});const data={format:'daily-workout-local-backup',version:1,exportedAt:new Date().toISOString(),sessions:await store.listSessions(),pending:await store.pending()};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='daily-workout-private-backup-'+new Date().toISOString().slice(0,10)+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),30000)}catch(reason){error(reason)}};
- window.WorkoutLog={prepare,mount,flush,checkpoint,queueStatus,openReview};
+ window.WorkoutLog={prepare,mount,flush,checkpoint,queueStatus,openReview,store,renderHistory};
  window.addEventListener('pagehide',()=>{if(Object.keys(pending).length)flush().catch(error)});
 })();

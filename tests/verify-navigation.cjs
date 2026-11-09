@@ -15,7 +15,7 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
   const intercept=()=>page.evaluate(()=>{window.launches=[];openWorkoutShortcut=url=>{shortcutReturnPending=true;launches.push({name:new URL(url).searchParams.get('name'),position:readWorkoutPosition()})}});
   await page.goto(base);await ready();assert.equal(await page.evaluate(()=>scrollY),0,'Fresh plan starts at top');
   await intercept();
-  await row(2).locator('button').first().click();
+  await row(2).locator('.start-exercise').click();
   assert.equal((await stored()).key,'step-2');assert.equal((await stored()).anchor,'timer');
   assert.equal(await page.evaluate(()=>launches[0].position.key),'step-2','Save selected exercise before launching Shortcut');
   assert(!await row(2).locator('.check').isChecked());
@@ -44,13 +44,16 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
   await page.reload();await ready();
   const index=Number(before.key.split('-')[1]);assert(Math.abs(await rowTop(index)-before.offset)<4,'Restore manual browsing offset');
   // A requested-duration expiry still advances and restores the next card.
-  await intercept();await row(3).locator('button').first().click();
+  await intercept();await row(3).locator('.start-exercise').click();
   await page.evaluate(async()=>{const timer=readActiveTimer();timer.endsAt=0;localStorage.setItem(activeTimerKey,JSON.stringify(timer));await refreshWorkout('restore')});
   assert.equal((await stored()).key,'step-4');assert(await row(3).locator('.check').isChecked());
   await page.reload();await ready();assert(Math.abs(await timerTop(4)-140)<4);
-  // New plan contents never reuse a positional bookmark from a different plan.
+  // An unfinished log keeps its plan and bookmark until explicitly finished.
   fixture.sections[0].items[0].detail='Changed prescription';
-  await page.reload();await ready();assert.equal(await page.evaluate(()=>scrollY),0);
+  await page.reload();await ready();assert(Math.abs(await timerTop(4)-140)<4);
+  assert.equal(await row(0).locator('.detail').textContent(),'Step 1','Unfinished snapshot is preserved');
+  await page.evaluate(async()=>{const session=await WorkoutLog.store.active('daily');await WorkoutLog.store.finish(session.id,{})});
+  await page.reload();await ready();assert.equal(await page.evaluate(()=>scrollY),0,'A new plan never reuses the previous snapshot bookmark');
   await page.evaluate(()=>localStorage.setItem('workout-navigation-position','invalid JSON'));
   await page.reload();await ready();assert.equal(await page.evaluate(()=>scrollY),0);
   assert.deepEqual(errors,[]);
