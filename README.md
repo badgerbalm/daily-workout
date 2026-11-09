@@ -116,3 +116,5 @@ Finish Workout saves effort (1–10), energy (1–5), discomfort (0–10) and op
 There is **no Google sign-in, Google Sheet, cloud backup or synchronization yet**. The local outbox uses stable event IDs for future synchronization, but no history is transmitted. Do not add actual entries, exports, measurements or credentials to this repository or workout.json. Measurements, trends and history-informed generation remain future work.
 
 Run `npm ci` and `npm run test:history` for IndexedDB transaction and DOM workflow regressions. These use fake-indexeddb and jsdom, not real iPhone or Watch testing. On-device validation must cover entry, leaving for Shortcuts, reopening, confirming/skipping and finishing before this milestone is considered device-tested.
+
+The final Done · Finish opens a modal review with tap ratings and optional free-text notes. Review drafts survive reopening; final device cleanup runs after saving the review. Notes remain local and are not automatically available to daily or Monday generation until private history access is implemented.
