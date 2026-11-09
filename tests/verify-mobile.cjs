@@ -14,17 +14,24 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
  for(const width of [320,390,430,768]){
   await page.setViewportSize({width,height:844});
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`No horizontal overflow at ${width}px`);
-  for(const selector of ['#refresh-workout','.item > button','#open-workout-menu']){
+  for(const selector of ['.item > button','#open-workout-menu']){
    const boxes=await page.locator(selector).evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().height));assert(boxes.every(h=>h>=44),`Touch targets: ${selector}`);
   }
  }
  await page.setViewportSize({width:390,height:844});
+ await page.evaluate(()=>window.scrollTo(0,500));
+ assert((await page.locator('.app-header').boundingBox()).y===0,'Summary and Menu remain visible while scrolling');
+ assert(await page.locator('.app-header #status').isVisible());
+ await page.evaluate(()=>window.scrollTo(0,0));
+ await page.screenshot({path:require('node:path').join(require('node:os').tmpdir(),'daily-workout-sticky-header.png')});
  await page.evaluate(()=>{window.launches=[];openWorkoutShortcut=url=>window.launches.push(url)});
  await page.locator('.item').nth(0).locator('.start-exercise').click();
  assert.equal(await page.evaluate(()=>new URL(launches.at(-1)).searchParams.get('text')),'30');
  await page.locator('.item').nth(0).locator('.next-exercise').click();
  assert(await page.locator('.check').nth(0).isChecked());
- await page.locator('#refresh-workout').click();assert(await page.locator('.check').nth(0).isChecked());
+ await page.locator('#open-workout-menu').click();
+ assert((await page.locator('#refresh-workout').boundingBox()).height>=44);
+ await page.locator('#refresh-workout').click();await page.locator('#close-workout-menu').click();assert(await page.locator('.check').nth(0).isChecked());
  // Real DOM return events coalesce, preserving checks and refreshing once.
  const before=requests;
  await page.evaluate(async()=>{lastForegroundRefreshAt=0;window.dispatchEvent(new Event('pageshow'));window.dispatchEvent(new Event('focus'));document.dispatchEvent(new Event('visibilitychange'));await refreshInProgress});

@@ -112,3 +112,13 @@ dialog.finish-review{box-sizing:border-box;width:min(94vw,440px);max-height:calc
 .menu-button{min-height:44px;padding:10px 14px;font-size:14px;white-space:nowrap}.app-header{gap:12px}dialog#workout-menu{box-sizing:border-box;width:min(94vw,520px);max-height:90dvh;margin:auto;padding:18px;border:1px solid var(--theme-line);border-radius:18px;color:var(--theme-ink);background:#f1f4f8;overflow:auto;box-shadow:0 18px 60px #0004}#workout-menu::backdrop{background:#101c3288}.menu-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.menu-heading h2{font-size:20px;margin:0}.menu-heading button{min-height:44px}#workout-menu .local-history,#workout-menu .settings,#workout-menu .local-log{margin:12px 0}#workout-menu #workout-notes{padding:0 14px;border:1px solid var(--theme-line);border-radius:12px;background:#fff}#workout-menu #workout-notes>summary{padding:14px 0;min-height:44px;cursor:pointer;font-weight:700;font-size:14px}#workout-menu .notice{font-size:13px;line-height:1.5;margin:0 0 14px;color:var(--theme-ink)}
 /* Compact daily summary; notes and Shortcut setup stay collapsed. */
 .intro{margin:14px 0;padding:14px 16px;border-radius:14px;border-bottom-width:3px}.intro h1{margin:0;font-size:18px;line-height:1.5;letter-spacing:-.015em}.intro #status{font-size:inherit;color:inherit}.intro #workout-notes{margin-top:6px}.intro #workout-notes summary{font-size:12px;cursor:pointer;padding:7px 0}.intro .notice{margin:5px 0 0;font-size:13px;line-height:1.5}.shortcut-settings{margin:14px 0}.shortcut-settings>summary{font-size:13px;font-weight:650;cursor:pointer;min-height:44px;padding:12px 0}.shortcut-settings p,.shortcut-settings a{font-size:13px}
+
+/* Persistent compact session bar, including standalone iPhone safe area. */
+body{padding-top:0}
+.app-header{position:sticky;top:0;z-index:20;gap:10px;margin-bottom:16px;padding:calc(8px + env(safe-area-inset-top,0px)) 0 8px;background:var(--theme-navy);color:#fff;box-shadow:24px 0 var(--theme-navy),-24px 0 var(--theme-navy);border-bottom:3px solid var(--theme-accent)}
+.app-header h1{flex:1;min-width:0;margin:0;font:700 15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.015em}
+.app-header #status{font-size:inherit;overflow-wrap:anywhere}
+.app-header .menu-button{flex:none;min-height:44px;padding:10px 12px}
+.item{scroll-margin-top:110px}
+.menu-refresh{margin-bottom:16px}
+#workout-menu #refresh-feedback{margin:8px 0 0}
