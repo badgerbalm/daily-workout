@@ -8,7 +8,7 @@ This branch adds optional Google authorization and manual two-way synchronizatio
 - Web client: `Daily Workout Web`
 - Client ID: `790497358549-7lg9e6q8jbv08g1l3p4d1grm92o071js.apps.googleusercontent.com`
 - Authorized JavaScript origins: `https://badgerbalm.github.io` and `https://daily-workout-safari-preview.badgerbalm.chatgpt.site`
-- Backend redirect URI to register before releasing this branch: `https://daily-workout-auth.onlinesny.workers.dev/oauth/callback`.
+- Registered backend redirect URI: `https://daily-workout-auth.onlinesny.workers.dev/oauth/callback`.
 - Publishing status: Testing, with `onlinesny@gmail.com` as the test user.
 - APIs required: Google Drive API (`drive.googleapis.com`) and Google Sheets API (`sheets.googleapis.com`). Both were enabled in the Cloud console on November 9, 2026.
 
@@ -51,6 +51,6 @@ Real iPhone Home Screen popup handling, Shortcuts and Apple Watch behavior remai
 
 Worker: `daily-workout-auth`, URL `https://daily-workout-auth.onlinesny.workers.dev`. D1 binding `AUTH_DB`; schema `backend/schema.sql`; config `wrangler.jsonc`. Secrets `GOOGLE_CLIENT_SECRET` and `TOKEN_ENCRYPTION_KEY` are configured separately. Never regenerate the encryption key while saved connections exist. Neither Google tokens nor app session tokens are logged. OAuth uses one-time state, server PKCE, and a separate one-time ticket bound to the initiating browser verifier. Only the configured owner can connect.
 
-Before merging this branch, register the exact callback above in Google Auth Platform → Clients → Daily Workout Web. Move the OAuth app out of Testing when ready: external Testing refresh tokens for Drive access expire after seven days. Changing publishing status does not remove the backend owner-account restriction. Complete owner consent, reload, and verify Sync now against the existing private Sheet. Actual iPhone return-to-Home-Screen behavior still needs owner validation; if Google returns to a different browser context the app rejects the handoff safely and asks to reconnect there.
+The exact callback above was saved in Google Auth Platform → Clients → Daily Workout Web on November 9, 2026. The public homepage and privacy page were also saved. Move the OAuth app out of Testing when ready: external Testing refresh tokens for Drive access expire after seven days. Changing publishing status does not remove the backend owner-account restriction. Complete owner consent, reload, and verify Sync now against the existing private Sheet. Actual iPhone return-to-Home-Screen behavior still needs owner validation; if Google returns to a different browser context the app rejects the handoff safely and asks to reconnect there.
 
 Run `npm run test:auth`, `npm run test:history`, and `npm run test:sync`. Deployment: apply the schema through the Cloudflare D1 query API, then `npx wrangler deploy`. Keep `observability.enabled` false to avoid request logging of OAuth callbacks. Backend health and missing-session checks are safe without Google credentials.
