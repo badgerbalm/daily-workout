@@ -12,7 +12,7 @@
  }
  const panel=document.querySelector('#workout-log');
  const status=document.querySelector('#workout-log-status');
- const feedback=text=>{if(status)status.textContent=text;const message=document.querySelector('.review-message');if(message)message.textContent=text};
+ const feedback=text=>{if(status)status.textContent=text;const message=document.querySelector('.review-message');if(message)message.textContent=/Not saved|correction|could not|unavailable/i.test(text)?text:''};
  const reviewKey=()=> 'workout-review-open:'+scope;
  function openReview(){const dialog=document.querySelector('.finish-review');if(!dialog||!available)return;localStorage.setItem(reviewKey(),'1');if(dialog.open)return;if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');}
  function closeReview(){const dialog=document.querySelector('.finish-review');localStorage.removeItem(reviewKey());if(dialog?.close)dialog.close();else dialog?.removeAttribute('open');}
@@ -135,15 +135,15 @@
   const details=element('dialog','finish-review');details.setAttribute('aria-labelledby','finish-review-title');const title=element('h2','','How was your workout?');title.id='finish-review-title';details.append(title);details.addEventListener('cancel',()=>localStorage.removeItem(reviewKey()));
   const form=element('div','results-form');details.append(form);
   const draft=session?.reviewDraft||{};
-  function rating(label,min,max,value){const group=element('fieldset','review-rating');group.append(element('legend','',label));const choices=element('div','rating-choices');group.append(choices);const result={value:value??''};for(let number=min;number<=max;number++){const button=element('button','rating-choice',String(number));button.type='button';button.setAttribute('aria-pressed',String(String(value)===String(number)));button.onclick=()=>{result.value=String(result.value)===String(number)?'':String(number);for(const choice of choices.children)choice.setAttribute('aria-pressed',String(choice.textContent===result.value));form.dispatchEvent(new Event('input',{bubbles:true}));};choices.append(button)}form.append(group);return result;}
+  function rating(label,min,max,value){const group=element('fieldset','review-rating');if(max-min===10)group.classList.add('rating-eleven');group.append(element('legend','',label));const choices=element('div','rating-choices');group.append(choices);const result={value:value??''};for(let number=min;number<=max;number++){const button=element('button','rating-choice',String(number));button.type='button';button.setAttribute('aria-pressed',String(String(value)===String(number)));button.onclick=()=>{result.value=String(result.value)===String(number)?'':String(number);for(const choice of choices.children)choice.setAttribute('aria-pressed',String(choice.textContent===result.value));form.dispatchEvent(new Event('input',{bubbles:true}));};choices.append(button)}form.append(group);return result;}
   const effort=rating('Effort · 1 easy to 10 hardest',1,10,draft.effort);
   const energy=rating('Energy · 1 low to 5 high',1,5,draft.energy);
   const discomfort=rating('Discomfort · 0 none to 10 severe',0,10,draft.discomfort);
-  const label=element('label','result-field');label.append(element('span','','Notes · optional'));const notes=element('textarea');notes.maxLength=4000;notes.value=draft.notes||'';notes.placeholder='Optional notes for your next workout or Monday review';label.append(notes);form.append(label);
-  details.append(element('p','result-help','Finish confirms the displayed settings for walks marked done. Skipped and unfinished exercises stay as recorded. Other timer-inferred completions still need confirmation. Ratings are optional.'));
+  const label=element('label','result-field');label.append(element('span','','Notes · optional'));const notes=element('textarea');notes.maxLength=4000;notes.value=draft.notes||'';notes.rows=2;notes.placeholder='Anything to adjust next time?';label.append(notes);form.append(label);
+  details.append(element('p','result-help','Optional ratings · Save confirms settings for walks marked done.'));
   form.addEventListener('input',()=>{try{const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});invalid.delete('__reviewDraft');queue('__reviewDraft',{review})}catch(reason){invalid.set('__reviewDraft',reason.message);feedback('Review needs correction: '+reason.message)}});
   const message=element('p','review-message');message.setAttribute('role','status');details.append(message);
-  const finish=element('button','','Finish and save locally');finish.type='button';finish.onclick=async()=>{
+  const finish=element('button','','Save workout');finish.type='button';finish.onclick=async()=>{
    finish.disabled=true;
    try{if(invalid.size)throw Error('Correct incomplete result fields before finishing.');const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});const walks=[];for(const [key,value] of entries){if(value.readWalking&&value.entry.check.checked&&outcomes.get(key)!=='skipped')walks.push([key,value.readWalking()]);}
     for(const [key,actual] of walks){queue(key,{actual,draft:null});queueStatus(key,'completed','user');}
@@ -152,7 +152,7 @@
     const another=element('button','secondary','Start another workout log');another.type='button';another.onclick=async()=>{const oldDate=session.plan.date;session=null;pending={};invalid.clear();localStorage.removeItem('workout-checks-'+oldDate);localStorage.removeItem('workout-navigation-position'+storageSuffix);localStorage.removeItem('workout-card-view'+storageSuffix);await window.refreshWorkout('top')};host.append(another);
     window.finishRequestedDeviceTracking?.();}
    catch(reason){error(reason);finish.disabled=false}
-  };details.append(finish);const back=element('button','secondary','Back to workout');back.type='button';back.onclick=closeReview;details.append(back);host.append(details);if(localStorage.getItem(reviewKey())==='1')openReview();
+  };const actions=element('div','review-actions');const back=element('button','secondary','Back');back.type='button';back.onclick=closeReview;actions.append(back,finish);details.append(actions);host.append(details);if(localStorage.getItem(reviewKey())==='1')openReview();
  }
  async function renderHistory(){
   const host=document.querySelector('#local-history-list');if(!host)return;
