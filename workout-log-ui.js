@@ -115,9 +115,11 @@
     function addSet(data={}){
      const set=element('fieldset','actual-set'),legend=element('legend','','Set '+(setControls.length+1));set.append(legend);
      const controls={};
-     if(!timed)controls.reps=field(set,'Actual reps','number',data.reps,{step:'1'});
-     if(weighted){controls.weight=field(set,'Actual weight','number',data.weight);controls.weightUnit=field(set,'Unit','select',data.weightUnit||'lb',{options:units});controls.weightBasis=field(set,'Weight basis','select',data.weightBasis||'',{options:[['','Choose if entering weight'],['per-dumbbell','Per dumbbell'],['single-hand','One hand'],['total','Total load']]})}
-     controls.side=field(set,'Side','select',data.side||'',{options:[['','Not specified'],['left','Left'],['right','Right'],['both','Both']]});
+     const repRange=String(entry.item.detail||'').match(/(\d+)\s*(?:-|–|to)\s*(\d+)\s*reps?/i);
+     const recommendedReps=repRange?Number(repRange[2]):Number(String(entry.item.detail||'').match(/[×x]\s*(\d+)/i)?.[1]||String(entry.item.detail||'').match(/(\d+)\s*reps?/i)?.[1])||10;
+     if(!timed)controls.reps=weighted?field(set,'Actual reps','select',data.reps??recommendedReps,{options:Array.from({length:30},(_,i)=>[String(i+1),String(i+1)])}):field(set,'Actual reps','number',data.reps,{step:'1'});
+     if(weighted){controls.weight=field(set,'Actual weight','select',data.weight??5,{options:Array.from({length:40},(_,i)=>[String((i+1)*5),String((i+1)*5)+' lb'])});controls.weightUnit=field(set,'Unit','select',data.weightUnit||'lb',{options:units});controls.weightBasis=field(set,'Weight basis','select',data.weightBasis||'per-dumbbell',{options:[['per-dumbbell','Per dumbbell'],['single-hand','One hand'],['total','Total load']]})}
+     controls.side=field(set,'Side','select',data.side||(weighted?'both':''),{options:[['','Not specified'],['left','Left'],['right','Right'],['both','Both']]});
      if(timed)controls.durationSeconds=field(set,'Actual hold/carry seconds','number',data.durationSeconds);
      setControls.push({id:data.id||crypto.randomUUID(),controls});form.append(set);
      if(weighted&&data.weight==null){
