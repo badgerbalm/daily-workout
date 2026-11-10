@@ -229,7 +229,7 @@ function trackExerciseTimer(section,item,key,workout){
 // Photo presentation is local UI state, separate from exercise completion.
 const cardViewKey='workout-card-view'+workoutStorageSuffix;
 function readCardView(){
-  try{const saved=JSON.parse(localStorage.getItem(cardViewKey)||'null');if(saved?.workout===currentWorkoutSignature&&saved.collapsed&&typeof saved.collapsed==='object'){if(!saved.condensed||typeof saved.condensed!=='object')saved.condensed={};if(!saved.started||typeof saved.started!=='object')saved.started={};return saved}}catch{}
+  try{const saved=JSON.parse(localStorage.getItem(cardViewKey)||'null');if(saved?.workout===currentWorkoutSignature&&saved.collapsed&&typeof saved.collapsed==='object'){if(!saved.condensed||typeof saved.condensed!=='object')saved.condensed={};if(!saved.started||typeof saved.started!=='object')saved.started={};saved.started={...saved.condensed,...saved.started};return saved}}catch{}
   return {workout:currentWorkoutSignature,collapsed:{},condensed:{},started:{},current:null};
 }
 function saveCardView(view){try{localStorage.setItem(cardViewKey,JSON.stringify(view))}catch{}}
