@@ -91,12 +91,13 @@
    details.append(element('p','result-help',walking?'Suggested settings are ready. Adjust if needed. Finish Workout confirms settings for walks marked done.':'Actual performance only. Blank fields mean not recorded. Saving values does not confirm completion.'));
    const form=element('div','results-form');details.append(form);
    let setControls=[],treadmillControls;
+   const symptomField=element('label','result-field result-field-wide');symptomField.append(element('span','','Symptoms during this exercise · optional'));const symptoms=element('textarea');symptoms.maxLength=500;symptoms.rows=2;symptoms.placeholder='e.g., tingling in left foot';symptoms.value=saved?.symptoms||savedActual?.symptoms||'';symptomField.append(symptoms);form.append(symptomField);
    const update=()=>{
     let actual;
     if(walking){actual={sets:[],treadmill:Object.fromEntries(Object.entries(treadmillControls).map(([name,input])=>[name,input.value]))}}
-    else actual={sets:setControls.map(set=>({id:set.id,...Object.fromEntries(Object.entries(set.controls).map(([name,input])=>[name,input.value]))}))};
+    else actual={sets:setControls.map(set=>({id:set.id,...Object.fromEntries(Object.entries(set.controls).map(([name,input])=>[name,input.value]))})),treadmill:null};
     const draft=actual;
-    try{actual=WorkoutHistoryStore.actualResult(actual);invalid.delete(key);queue(key,walking?{draft}:{actual,draft:null});feedback('Saving on this device…');return true}catch(reason){invalid.set(key,reason.message);queue(key,{draft});feedback('Draft saved locally; '+reason.message);return false}
+    try{actual=WorkoutHistoryStore.actualResult(actual);invalid.delete(key);queue(key,walking?{draft,symptoms:symptoms.value}:{actual,draft:null,symptoms:symptoms.value});feedback('Saving on this device…');return true}catch(reason){invalid.set(key,reason.message);queue(key,{draft,symptoms:symptoms.value});feedback('Draft saved locally; '+reason.message);return false}
    };
    if(walking){
     const detail=String(entry.item.detail||'');
@@ -140,7 +141,7 @@
    if(walking)entries.get(key).readWalking=()=>WorkoutHistoryStore.actualResult({sets:[],treadmill:Object.fromEntries(Object.entries(treadmillControls).map(([name,input])=>[name,input.value]))});
    form.addEventListener('input',update);form.addEventListener('change',update);
    const actions=element('div','result-actions');
-   const confirm=element('button','','Confirm complete');confirm.type='button';confirm.onclick=()=>{if(!update())return;if(walking){const actual=WorkoutHistoryStore.actualResult({sets:[],treadmill:Object.fromEntries(Object.entries(treadmillControls).map(([name,input])=>[name,input.value]))});queue(key,{actual,draft:null});}entry.check.checked=true;entry.check.onchange()};
+   const confirm=element('button','','Confirm complete');confirm.type='button';confirm.onclick=()=>{if(!update())return;if(walking){const actual=WorkoutHistoryStore.actualResult({sets:[],treadmill:Object.fromEntries(Object.entries(treadmillControls).map(([name,input])=>[name,input.value]))});queue(key,{actual,draft:null,symptoms:symptoms.value});}entry.check.checked=true;entry.check.onchange()};
    const skip=element('button','secondary','Skip exercise');skip.type='button';skip.onclick=()=>{if(!allowStartingExercise(key))return;entry.done.onclick();entry.check.checked=false;saveExerciseCheck(plan.date,key,false,'skipped')};
    actions.append(confirm,skip);details.append(actions);entry.row.querySelector('.exercise-info').append(details);
   }
@@ -175,7 +176,7 @@
   const host=document.querySelector('#local-history-list');if(!host)return;
   const sessions=(await store.listSessions()).sort((a,b)=>b.startedAt.localeCompare(a.startedAt)).slice(0,10);host.replaceChildren();
   for(const saved of sessions){const details=element('details','saved-session');details.append(element('summary','',new Date(saved.startedAt).toLocaleDateString()+' · '+saved.plan.title+' · '+saved.status));
-   for(const exercise of Object.values(saved.exercises)){const p=element('p','',exercise.name+' — '+labels[exercise.status]);details.append(p);if(exercise.actual.sets.length||exercise.actual.treadmill){const values=element('ul','saved-actuals');exercise.actual.sets.forEach((set,index)=>{const parts=[set.side,set.reps===null?null:set.reps+' reps',set.weight===null?null:set.weight+' '+set.weightUnit+' '+set.weightBasis,set.durationSeconds===null?null:set.durationSeconds+' sec'].filter(Boolean);if(parts.length)values.append(element('li','','Set '+(index+1)+': '+parts.join(' · ')))});const t=exercise.actual.treadmill;if(t){const parts=[t.durationSeconds===null?null:t.durationSeconds+' sec',t.speed===null?null:t.speed+' '+t.speedUnit,t.inclinePct===null?null:t.inclinePct+'% incline',t.distance===null?null:t.distance+' '+t.distanceUnit].filter(Boolean);if(parts.length)values.append(element('li','',parts.join(' · ')))}details.append(values)}}
+   for(const exercise of Object.values(saved.exercises)){const p=element('p','',exercise.name+' — '+labels[exercise.status]);details.append(p);if(exercise.actual.sets.length||exercise.actual.treadmill){const values=element('ul','saved-actuals');exercise.actual.sets.forEach((set,index)=>{const parts=[set.side,set.reps===null?null:set.reps+' reps',set.weight===null?null:set.weight+' '+set.weightUnit+' '+set.weightBasis,set.durationSeconds===null?null:set.durationSeconds+' sec'].filter(Boolean);if(parts.length)values.append(element('li','','Set '+(index+1)+': '+parts.join(' · ')))});const t=exercise.actual.treadmill;if(t){const parts=[t.durationSeconds===null?null:t.durationSeconds+' sec',t.speed===null?null:t.speed+' '+t.speedUnit,t.inclinePct===null?null:t.inclinePct+'% incline',t.distance===null?null:t.distance+' '+t.distanceUnit].filter(Boolean);if(parts.length)values.append(element('li','',parts.join(' · ')))}details.append(values)}}if(exercise.symptoms)details.append(element('p','saved-actuals','Symptoms: '+exercise.symptoms));
    host.append(details);
    if(saved.review){const values=[saved.review.effort===null?null:'Effort '+saved.review.effort+'/10',saved.review.energy===null?null:'Energy '+saved.review.energy+'/5',saved.review.discomfort===null?null:'Discomfort '+saved.review.discomfort+'/10'].filter(Boolean);if(values.length)details.append(element('p','',values.join(' · ')));if(saved.review.notes)details.append(element('p','saved-review-notes',saved.review.notes));}
   }

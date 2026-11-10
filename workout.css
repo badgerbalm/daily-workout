@@ -138,3 +138,4 @@ body{padding-top:0}
 .item[data-condensed="true"]>.next-exercise{grid-column:1/-1;grid-row:3;min-height:44px;margin:0;padding:8px 12px}
 .item[data-timer-started="true"]:not([data-condensed="true"])>.next-exercise{grid-row:5}
 .item>.toggle-exercise-details{display:none}
+.result-field-wide{grid-column:1/-1}

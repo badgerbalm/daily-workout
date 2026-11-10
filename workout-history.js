@@ -6,6 +6,7 @@
   if(value===''||value===null||value===undefined)return null;
   const n=Number(value);if(!Number.isFinite(n)||n<min||n>max||(integer&&!Number.isInteger(n)))throw Error(label+' is outside the allowed range.');return n;
  }
+ function exerciseSymptoms(value){const symptoms=String(value||'').trim();if(symptoms.length>500)throw Error('Exercise symptoms must be 500 characters or fewer.');return symptoms}
  function actualResult(input){
   const sets=(input.sets||[]).map((set,index)=>{
    const weight=number(set.weight,'Weight',{max:5000});
@@ -32,7 +33,7 @@
   if(!value.exercises||keys.length!==Object.keys(value.exercises).length||new Set(keys).size!==keys.length)throw Error('Invalid saved exercise keys.');
   const exercises=Object.create(null);
   for(const key of keys){const e=value.exercises[key];if(!e||!validText(e.id)||e.key!==key||typeof e.name!=='string'||!['unfinished','completed','inferred','skipped'].includes(e.status)||!e.actual)throw Error('Invalid saved exercise result.');
-   exercises[key]={id:e.id,key,name:e.name,prescribed:clone(e.prescribed),status:e.status,completionSource:e.completionSource||null,actual:actualResult(e.actual)};
+   const normalized={id:e.id,key,name:e.name,prescribed:clone(e.prescribed),status:e.status,completionSource:e.completionSource||null,actual:actualResult(e.actual)};const symptoms=exerciseSymptoms(e.symptoms??e.actual.symptoms);if(symptoms)normalized.symptoms=symptoms;exercises[key]=normalized;
   }
   return {id:value.id,scope:'daily',plan:clone(plan),status:'finished',startedAt:value.startedAt,updatedAt:value.updatedAt,revision:value.revision,exercises,review:reviewResult(value.review||{}),finishedAt:value.finishedAt};
  }
@@ -42,7 +43,7 @@
   const plan=value.plan;if(!plan||typeof plan.title!=='string'||typeof plan.date!=='string'||!Array.isArray(plan.sections)||plan.sections.length>100)throw Error('Invalid shared workout plan.');
   const keys=[];plan.sections.forEach((section,s)=>{if(!Array.isArray(section.items)||section.items.length>500)throw Error('Invalid saved exercises.');section.items.forEach((item,i)=>{if(typeof item.name!=='string')throw Error('Invalid exercise name.');keys.push(item.progressKey||s+'-'+i)})});
   if(!value.exercises||keys.length!==Object.keys(value.exercises).length||new Set(keys).size!==keys.length)throw Error('Invalid shared workout exercises.');
-  const exercises=Object.create(null);for(const key of keys){const e=value.exercises[key];if(!e||typeof e.id!=='string'||e.key!==key||typeof e.name!=='string'||!['unfinished','completed','inferred','skipped'].includes(e.status)||!e.actual)throw Error('Invalid shared exercise result.');exercises[key]={...clone(e),actual:actualResult(e.actual),...(e.draft===undefined?{}:{draft:clone(e.draft)})}}
+  const exercises=Object.create(null);for(const key of keys){const e=value.exercises[key];if(!e||typeof e.id!=='string'||e.key!==key||typeof e.name!=='string'||!['unfinished','completed','inferred','skipped'].includes(e.status)||!e.actual)throw Error('Invalid shared exercise result.');const normalized={...clone(e),actual:actualResult(e.actual),...(e.draft===undefined?{}:{draft:clone(e.draft)})};const symptoms=exerciseSymptoms(e.symptoms??e.actual.symptoms);if(symptoms)normalized.symptoms=symptoms;else delete normalized.symptoms;exercises[key]=normalized}
   return {...clone(value),exercises};
  }
  function createStore(options={}){
@@ -77,7 +78,7 @@
    const sessions=tx.objectStore('sessions'),meta=tx.objectStore('meta');const r=meta.get('active:'+scope);
    const create=()=>{
     const id=uuid(),timestamp=now(),exercises={};
-    plan.sections.forEach((section,s)=>section.items.forEach((item,i)=>{const key=item.progressKey||s+'-'+i;exercises[key]={id:uuid(),key,name:item.name,prescribed:clone(item),status:'unfinished',completionSource:null,actual:{sets:[],treadmill:null}}}));
+    plan.sections.forEach((section,s)=>section.items.forEach((item,i)=>{const key=item.progressKey||s+'-'+i;exercises[key]={id:uuid(),key,name:item.name,prescribed:clone(item),status:'unfinished',completionSource:null,actual:{sets:[],treadmill:null},symptoms:''}}));
     const session={id,scope,plan:clone(plan),status:'in-progress',startedAt:timestamp,updatedAt:timestamp,revision:0,exercises,review:null};
     sessions.add(session);meta.put({key:'active:'+scope,value:id});tx.objectStore('outbox').put({id:id+':created',sessionId:id,revision:0,state:'pending',type:'session-created'});done(session);
    };
@@ -89,6 +90,7 @@
     for(const [key,change] of Object.entries(changes)){
      if(key==='__reviewDraft'){session.reviewDraft=reviewResult(change.review);session.revision++;tx.objectStore('outbox').put({id:session.id+':review-draft',sessionId:session.id,revision:session.revision,state:'pending',type:'review-draft'});continue}
      const exercise=session.exercises[key];if(!exercise)throw Error('Exercise is not in the saved workout snapshot.');
+     if(change.symptoms!==undefined)exercise.symptoms=exerciseSymptoms(change.symptoms);
      if(change.draft!==undefined)exercise.draft=change.draft===null?null:clone(change.draft);
      if(change.actual)exercise.actual=actualResult(change.actual);
      if(change.status){if(!['completed','skipped','unfinished','inferred'].includes(change.status))throw Error('Invalid exercise status.');if(!(change.status==='inferred'&&['completed','skipped'].includes(exercise.status))){exercise.status=change.status;exercise.completionSource=change.source||'user'}}
