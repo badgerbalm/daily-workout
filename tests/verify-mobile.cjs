@@ -31,7 +31,9 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
  assert(await page.locator('.check').nth(0).isChecked());
  await page.locator('#open-workout-menu').click();
  assert((await page.locator('#refresh-workout').boundingBox()).height>=44);
- await page.locator('#refresh-workout').click();await page.locator('#close-workout-menu').click();assert(await page.locator('.check').nth(0).isChecked());
+ await Promise.all([page.waitForNavigation(),page.locator('#refresh-workout').click()]);
+ await page.waitForFunction(()=>initialPageLoadComplete);
+ assert(await page.locator('.check').nth(0).isChecked(),'Combined refresh reloads the page and preserves checks');
  // Real DOM return events coalesce, preserving checks and refreshing once.
  const before=requests;
  await page.evaluate(async()=>{lastForegroundRefreshAt=0;window.dispatchEvent(new Event('pageshow'));window.dispatchEvent(new Event('focus'));document.dispatchEvent(new Event('visibilitychange'));await refreshInProgress});
