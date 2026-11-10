@@ -139,3 +139,4 @@ body{padding-top:0}
 .item[data-timer-started="true"]:not([data-condensed="true"])>.next-exercise{grid-row:5}
 .item>.toggle-exercise-details{display:none}
 .result-field-wide{grid-column:1/-1}
+.sheet-open-link{display:inline-flex;align-items:center;min-height:48px;padding:12px 16px;border-radius:12px;font-size:14px;font-weight:650;text-decoration:none}
