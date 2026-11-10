@@ -1,10 +1,10 @@
 {
   "date": "2026-11-10",
   "title": "Daily Workout · November 10",
-  "note": "Tuesday · approximately 34-minute low-impact recovery session. Recent recurrent pinpoint right-sided lumbar pain with right heel-strike loading after Sunday golf and yardwork: no jogging, impact intervals, loaded twisting, or painful spinal extension. Only perform movements that are comfortable; stop if sharp pain occurs. No actual completed sets or Oura readiness score assumed. Plow pose with feet suspended is omitted today due to current lumbar symptoms; its reference-only image is not an exact demonstration. Seek assessment for recurring focal pain; urgent evaluation for new weakness, saddle numbness, or bowel/bladder changes.",
+  "note": "Tuesday · approximately 37-minute low-impact recovery session. Recent recurrent pinpoint right-sided lumbar pain with right heel-strike loading after Sunday golf and yardwork: no jogging, impact intervals, loaded twisting, or painful spinal extension. Only perform movements that are comfortable; stop if sharp pain occurs. No actual completed sets or Oura readiness score assumed. Fixed opening routine restored, including plow pose with feet suspended as a listed exercise; do not perform this inversion without medical clearance given current lumbar symptoms. Its floor-contact photograph is reference-only. Arm circles and overhead triceps stretch have provisional 60-second timers pending original timing confirmation. Seek assessment for recurring focal pain; urgent evaluation for new weakness, saddle numbness, or bowel/bladder changes.",
   "sections": [
     {
-      "title": "Opening stretches · 3 minutes",
+      "title": "Opening stretches · 6 minutes",
       "items": [
         {
           "name": "Single lean-back quad stretch",
@@ -19,10 +19,28 @@
           "instructions": "Soles together, sit upright, do not force knees down. One 60-second hold, not separate left/right holds."
         },
         {
-          "name": "Gentle supported breathing",
-          "detail": "1 min · relaxed breathing",
+          "name": "Seated spinal twist",
+          "detail": "1 min · gentle movement",
           "seconds": 60,
-          "instructions": "Sit or lie comfortably with spine supported; avoid twisting or extension."
+          "instructions": "Use comfortable, controlled motion. Do not force rotation or continue if it provokes sharp back pain."
+        },
+        {
+          "name": "Plow pose with feet suspended",
+          "detail": "1 min timer · only if specifically cleared",
+          "seconds": 60,
+          "instructions": "Straight legs with feet suspended, not touching floor. Advanced neck/spine-loading inversion; do not perform without clearance for current lumbar symptoms. Existing photograph showing floor contact is reference-only."
+        },
+        {
+          "name": "Arm circles",
+          "detail": "1 min · easy controlled circles",
+          "seconds": 60,
+          "instructions": "Gentle circles, comfortable range; timing is provisional pending confirmation of original prescribed duration."
+        },
+        {
+          "name": "Overhead triceps stretch",
+          "detail": "1 min · gentle stretch",
+          "seconds": 60,
+          "instructions": "Gentle overhead stretch without forcing the shoulder or arching the back; timing is provisional pending confirmation of original prescribed duration."
         }
       ]
     },
