@@ -126,11 +126,15 @@ body{padding-top:0}
 /* Keep the active exercise compact after its timer starts. */
 .item[data-condensed="true"]{grid-template-columns:minmax(0,1fr) 88px;column-gap:10px;row-gap:8px;padding:10px 12px;margin-bottom:10px}
 .item[data-condensed="true"]>.exercise-media,.item[data-condensed="true"] .exercise-info>*:not(.actual-results),.item[data-condensed="true"] .check,.item[data-condensed="true"] .detail{display:none!important}
-.item[data-condensed="true"]>.exercise-info{display:block;grid-column:1/-1;grid-row:2}
+.item[data-condensed="true"]>.exercise-info{display:block;grid-column:1;grid-row:2}
 .item[data-condensed="true"] .actual-results{margin:0;padding:0 10px}
 .item[data-condensed="true"]>.left{grid-column:1;grid-row:1;align-self:center;gap:0}
 .item[data-condensed="true"]>.left>div{min-width:0}
 .item[data-condensed="true"] .exercise-step{margin:0 0 2px}
 .item[data-condensed="true"] .name{font-size:16px;line-height:1.25}
 .item[data-condensed="true"]>.start-exercise{grid-column:2;grid-row:1;align-self:center;justify-self:end;width:88px;min-height:48px;padding:7px 6px;font-size:14px;line-height:1.2}
+.item[data-timer-started="true"]>.toggle-exercise-details{display:grid;place-items:center;grid-column:1/-1;grid-row:4;justify-self:end;width:44px;min-height:40px;padding:4px;font-size:24px;line-height:1}
+.item[data-condensed="true"]>.toggle-exercise-details{grid-column:2;grid-row:2;align-self:center;justify-self:end}
 .item[data-condensed="true"]>.next-exercise{grid-column:1/-1;grid-row:3;min-height:44px;margin:0;padding:8px 12px}
+.item[data-timer-started="true"]:not([data-condensed="true"])>.next-exercise{grid-row:5}
+.item>.toggle-exercise-details{display:none}
