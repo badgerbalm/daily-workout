@@ -19,7 +19,7 @@
  create.onclick=()=>action(async()=>{await service.createSheet();await syncNow()});
  disconnect.onclick=()=>action(async()=>{await connection.disconnect();link.hidden=true;create.hidden=true;status.textContent='Disconnected in this browser. Saved workouts remain on this device and in Google.'});
  window.addEventListener('pageshow',controls);
- window.addEventListener('workout-finished',()=>{if(connection.connected())status.textContent='Workout saved. Tap Sync now to back it up to Google.'});
+ window.addEventListener('workout-finished',()=>{if(connection.connected())status.textContent='Workout saved across connected browsers. Tap Sync now to back up finished history to Google Sheets.'});
  controls();
  if(window.WorkoutLog)WorkoutLog.setSharedState(connection);
  window.WorkoutSharedStateReady=connection.restore().then(active=>{status.textContent=active?'Connected as onlinesny@gmail.com · workout progress saves across connected browsers. Sync now backs up finished history to Google.':'Connect Google once here. Safari and the Home Screen app may each need their own initial connection.';return active;}).catch(error=>{status.textContent=error.message;return false;}).finally(()=>{busy=false;controls()});
