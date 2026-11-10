@@ -30,10 +30,10 @@ const {chromium}=require('playwright');
  await ready();assert.deepEqual(await names(),[],'Reload must not repeat starting');
  await start(5);assert.equal((await names()).at(-1),'Workout Timer Watch');
  await page.evaluate(()=>{const a=readActiveTimer();a.endsAt=Date.now()-1;localStorage.setItem(activeTimerKey,JSON.stringify(a));finishExpiredTimer()});
- assert.deepEqual(await names(),['Workout Timer Watch','Workout Timer Stop'],'Final expiry stops the timer while review waits for an explicit save');
+ assert.deepEqual(await names(),['Workout Timer Watch'],'Timer expiry completes locally without opening Shortcuts');
  await page.getByRole('button',{name:'Save workout',exact:true}).click();
  await page.waitForFunction(()=>window.launches.some(url=>new URL(url).searchParams.get('name')==='Workout Walk End'));
- assert.deepEqual(await names(),['Workout Timer Watch','Workout Timer Stop','Workout Walk End'],'Saving the final review ends the Watch workout once');
+ assert.deepEqual(await names(),['Workout Timer Watch','Workout Walk End'],'Saving the final review ends the Watch workout once');
  await page.getByRole('button',{name:'Start another workout log',exact:true}).click();
  await page.waitForFunction(()=>initialPageLoadComplete&&document.querySelectorAll('.item').length===6);
  // Reopen a section, block a competing session, and finish using its final card.
