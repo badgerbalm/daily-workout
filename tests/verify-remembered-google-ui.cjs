@@ -6,7 +6,7 @@ const until=async fn=>{for(let i=0;i<100;i++){if(fn())return;await new Promise(r
  const dom=new JSDOM(html,{url:'https://workout.invalid',runScripts:'outside-only'}),w=dom.window;
  let active=false,requests=0,uploads=0,created=0,rendered=0,flushed=0,options;
  const service={connected:()=>active,setToken:async()=>{active=true},disconnect:()=>{active=false},sync:async()=>{uploads++;return created?{count:1,sheetId:'synthetic-sheet'}:{needsSheet:true}},createSheet:async()=>{created++}};
- w.WorkoutLog={store:{},flush:async()=>{flushed++},renderHistory:async()=>{rendered++}};
+ w.WorkoutLog={store:{},flush:async()=>{flushed++},renderHistory:async()=>{rendered++},setSharedState:()=>{}};
  w.WorkoutGoogleSync={createSync:()=>service,CLIENT_ID:'synthetic-client',ACCOUNT:'onlinesny@gmail.com',SCOPE:'drive.file'};
  w.google={accounts:{oauth2:{initTokenClient:config=>{options=config;return {requestAccessToken:()=>requests++}},hasGrantedAllScopes:()=>true}}};
  w.WorkoutRememberedGoogle={create:()=>({connected:()=>active,restore:async()=>false,connect:async()=>{active=true;requests++},disconnect:async()=>{active=false}})};

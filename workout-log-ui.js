@@ -2,7 +2,7 @@
 (function(){
  'use strict';
  const store=WorkoutHistoryStore.createStore();
- let plan,scope='',storageSuffix='',session=null,available=true,pending={},serial=Promise.resolve(),entries=new Map(),invalid=new Map(),outcomes=new Map();
+ let plan,scope='',storageSuffix='',session=null,sharedState=null,available=true,pending={},serial=Promise.resolve(),entries=new Map(),invalid=new Map(),outcomes=new Map();
  let recovery={};
  const recoveryKey=()=> 'workout-result-recovery:'+scope;
  function checkpoint({allowFinished=false}={}){
@@ -19,7 +19,9 @@
  const error=reason=>feedback('Not saved: '+reason.message);
  async function prepare(incoming,selectedScope){
   storageSuffix=selectedScope||'';scope=selectedScope||'daily';
-  try{session=await store.active(scope);const saved=JSON.parse(localStorage.getItem(recoveryKey())||'null');
+  try{try{await window.WorkoutSharedStateReady}catch{}session=await store.active(scope);
+   if(scope==='daily'&&sharedState?.connected()){try{const remote=await sharedState.getWorkout();if(remote){const merged=await store.mergeShared(remote);session=merged.status==='finished'?null:merged}if(session)session=await store.mergeShared(await sharedState.saveWorkout(session));}catch{}}
+   const saved=JSON.parse(localStorage.getItem(recoveryKey())||'null');
    if(saved?.sessionId){const prior=await store.getSession(saved.sessionId);if(prior?.status==='finished'){localStorage.removeItem(recoveryKey());}else if(session&&session.id!==saved.sessionId)throw Error('Another workout is active; saved recovery data was retained.');}
    const restored=JSON.parse(localStorage.getItem(recoveryKey())||'null');
    plan=session?.plan||restored?.plan||incoming;recovery=restored?.changes||{};pending={...recovery};available=true;
@@ -35,7 +37,7 @@
     localStorage.removeItem(recoveryKey());localStorage.removeItem(reviewKey());
    }
    if(panel)panel.hidden=false;
-   feedback(session?(JSON.stringify(session.plan)!==JSON.stringify(incoming)?'Resuming your unfinished workout snapshot; the latest plan is held until you finish. Saved on this device.':'Resuming your saved workout. Saved on this device.'):'Results save on this device. Use Google backup & sync for finished workouts.');
+   feedback(session?(JSON.stringify(session.plan)!==JSON.stringify(incoming)?'Resuming your unfinished workout snapshot; latest plan is held until you finish.':'Resuming your saved workout.'):'Results save as you go.');
    return plan;
   }catch(reason){available=false;plan=incoming;if(panel)panel.hidden=false;feedback('Workout history unavailable: '+reason.message+' Timers still work, but results cannot be saved.');return incoming}
  }
@@ -53,7 +55,8 @@
    const changes=pending;pending={};const recorded=JSON.stringify(recovery);
    try{if(Object.keys(changes).length)session=await store.save(session.id,changes)}catch(reason){for(const [key,value] of Object.entries(changes))pending[key]={...value,...pending[key]};throw reason}
    if(recorded===JSON.stringify(recovery)){recovery={};localStorage.removeItem(recoveryKey());}
-   feedback(invalid.size?'Draft saved on this device · correct incomplete fields before finishing.':'Saved on this device.');
+   let cloudSaved=false;if(scope==='daily'&&sharedState?.connected()){try{const latest=await sharedState.saveWorkout(session);cloudSaved=Boolean(latest);if(latest&&latest.id===session.id&&Date.parse(latest.updatedAt)>Date.parse(session.updatedAt))session=await store.mergeShared(latest)}catch{}}
+   feedback(invalid.size?'Draft saved · correct incomplete fields before finishing.':cloudSaved?'Saved on this device and synced across your connected browsers.':'Saved on this device.');
   });return serial;
  }
  function queueStatus(key,state,source='user'){
@@ -84,6 +87,7 @@
    const details=element('details','actual-results'),summary=element('summary','','Record results');details.append(summary);
    const badge=element('p','result-outcome',labels[saved?.status||'unfinished']);details.append(badge);entries.set(key,{badge,entry});
    const walking=/treadmill|walking/i.test(entry.section.title);
+   const priorExercise=previousSessions.flatMap(saved=>Object.values(saved.exercises||{})).find(exercise=>exercise.name.toLowerCase()===entry.item.name.toLowerCase());
    details.append(element('p','result-help',walking?'Suggested settings are ready. Adjust if needed. Finish Workout confirms settings for walks marked done.':'Actual performance only. Blank fields mean not recorded. Saving values does not confirm completion.'));
    const form=element('div','results-form');details.append(form);
    let setControls=[],treadmillControls;
@@ -97,7 +101,7 @@
    if(walking){
     const detail=String(entry.item.detail||'');
     function upper(unit){const match=detail.match(new RegExp('(\\d+(?:\\.\\d+)?)(?:\\s*[–—-]\\s*(\\d+(?:\\.\\d+)?))?\\s*'+unit,'i'));return match?Number(match[2]||match[1]):''}
-    const t=savedActual?.treadmill||{durationSeconds:entry.item.seconds||'',speed:upper('(?:mph|km/h)'),speedUnit:/km\/h/i.test(detail)?'km/h':'mph',inclinePct:upper('%'),distance:'',distanceUnit:'mi'};
+    const t={durationSeconds:entry.item.seconds||'',speed:upper('(?:mph|km/h)'),speedUnit:/km\/h/i.test(detail)?'km/h':'mph',inclinePct:upper('%'),distance:'',distanceUnit:'mi',...(priorExercise?.actual?.treadmill||{}),...(savedActual?.treadmill||{})};
     treadmillControls={};
     function choices(min,max,step,value,format){const values=new Set(['',...Array.from({length:Math.round((max-min)/step)+1},(_,i)=>String(Number((min+i*step).toFixed(2))))]);if(value!==undefined&&value!==null)values.add(String(value));return [...values].sort((a,b)=>a===''?-1:b===''?1:Number(a)-Number(b)).map(v=>[v,v===''?'Not recorded':format(Number(v))])}
     treadmillControls.durationSeconds=field(form,'Duration','select',t.durationSeconds,{options:choices(30,5400,30,t.durationSeconds,n=>n/60+' min')});
@@ -115,17 +119,14 @@
     function addSet(data={}){
      const set=element('fieldset','actual-set'),legend=element('legend','','Set '+(setControls.length+1));set.append(legend);
      const controls={};
+     const priorSet=priorExercise?.actual?.sets?.[setControls.length]||priorExercise?.actual?.sets?.at(-1)||{};
      const repRange=String(entry.item.detail||'').match(/(\d+)\s*(?:-|–|to)\s*(\d+)\s*reps?/i);
      const recommendedReps=repRange?Number(repRange[2]):Number(String(entry.item.detail||'').match(/[×x]\s*(\d+)/i)?.[1]||String(entry.item.detail||'').match(/(\d+)\s*reps?/i)?.[1])||10;
-     if(!timed)controls.reps=weighted?field(set,'Actual reps','select',data.reps??recommendedReps,{options:Array.from({length:30},(_,i)=>[String(i+1),String(i+1)])}):field(set,'Actual reps','number',data.reps,{step:'1'});
-     if(weighted){controls.weight=field(set,'Actual weight','select',data.weight??5,{options:Array.from({length:40},(_,i)=>[String((i+1)*5),String((i+1)*5)+' lb'])});controls.weightUnit=field(set,'Unit','select',data.weightUnit||'lb',{options:units});controls.weightBasis=field(set,'Weight basis','select',data.weightBasis||'per-dumbbell',{options:[['per-dumbbell','Per dumbbell'],['single-hand','One hand'],['total','Total load']]})}
-     controls.side=field(set,'Side','select',data.side||(weighted?'both':''),{options:[['','Not specified'],['left','Left'],['right','Right'],['both','Both']]});
-     if(timed)controls.durationSeconds=field(set,'Actual hold/carry seconds','number',data.durationSeconds);
+     if(!timed)controls.reps=weighted?field(set,'Actual reps','select',data.reps??priorSet.reps??recommendedReps,{options:Array.from({length:30},(_,i)=>[String(i+1),String(i+1)])}):field(set,'Actual reps','number',data.reps??priorSet.reps,{step:'1'});
+     if(weighted){controls.weight=field(set,'Actual weight','select',data.weight??priorSet.weight??5,{options:Array.from({length:40},(_,i)=>[String((i+1)*5),String((i+1)*5)+' lb'])});controls.weightUnit=field(set,'Unit','select',data.weightUnit||priorSet.weightUnit||'lb',{options:units});controls.weightBasis=field(set,'Weight basis','select',data.weightBasis||priorSet.weightBasis||'per-dumbbell',{options:[['per-dumbbell','Per dumbbell'],['single-hand','One hand'],['total','Total load']]})}
+     controls.side=field(set,'Side','select',data.side||priorSet.side||(weighted?'both':''),{options:[['','Not specified'],['left','Left'],['right','Right'],['both','Both']]});
+     if(timed)controls.durationSeconds=field(set,'Actual hold/carry seconds','number',data.durationSeconds??priorSet.durationSeconds);
      setControls.push({id:data.id||crypto.randomUUID(),controls});form.append(set);
-     if(weighted&&data.weight==null){
-      const match=previousSessions.flatMap(saved=>Object.values(saved.exercises)).filter(exercise=>exercise.name.toLowerCase()===entry.item.name.toLowerCase()).flatMap(exercise=>[...exercise.actual.sets].reverse()).find(previous=>previous.weight!==null);
-      if(match){const use=element('button','secondary','Use last weight: '+match.weight+' '+match.weightUnit+' · '+match.weightBasis);use.type='button';use.onclick=()=>{controls.weight.value=match.weight;controls.weightUnit.value=match.weightUnit;controls.weightBasis.value=match.weightBasis;update()};set.append(use)}
-     }
     }
     const savedSets=savedActual?.sets||[];
     if(savedSets.length)savedSets.forEach(addSet);
@@ -159,7 +160,7 @@
    finish.disabled=true;
    try{if(invalid.size)throw Error('Correct incomplete result fields before finishing.');const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});const walks=[];for(const [key,value] of entries){if(value.readWalking&&value.entry.check.checked&&outcomes.get(key)!=='skipped')walks.push([key,value.readWalking()]);}
     for(const [key,actual] of walks){queue(key,{actual,draft:null});queueStatus(key,'completed','user');}
-    await flush();session=await store.finish(session.id,review);recovery={};localStorage.removeItem(recoveryKey());feedback('Workout finished and saved on this device. Use Sync now for Google backup.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
+    await flush();session=await store.finish(session.id,review);if(scope==='daily'&&sharedState?.connected())try{session=await sharedState.saveWorkout(session)}catch{}recovery={};localStorage.removeItem(recoveryKey());feedback('Workout finished and saved.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
     await renderHistory();window.dispatchEvent(new Event('workout-finished'));closeReview();launch.hidden=true;
     const another=element('button','secondary','Start another workout log');another.type='button';another.onclick=async()=>{const oldDate=session.plan.date;session=null;pending={};invalid.clear();localStorage.removeItem('workout-checks-'+oldDate);localStorage.removeItem('workout-navigation-position'+storageSuffix);localStorage.removeItem('workout-card-view'+storageSuffix);await window.refreshWorkout('top')};host.append(another);
     window.finishRequestedDeviceTracking?.();}
@@ -177,6 +178,6 @@
  }
  const exportButton=document.querySelector('#export-local-history');
  if(exportButton)exportButton.onclick=async()=>{try{await serial.catch(()=>{});const data={format:'daily-workout-local-backup',version:1,exportedAt:new Date().toISOString(),sessions:await store.listSessions(),pending:await store.pending()};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='daily-workout-private-backup-'+new Date().toISOString().slice(0,10)+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),30000)}catch(reason){error(reason)}};
- window.WorkoutLog={prepare,mount,flush,checkpoint,queueStatus,openReview,store,renderHistory};
+ window.WorkoutLog={prepare,mount,flush,checkpoint,queueStatus,openReview,store,renderHistory,setSharedState:value=>{sharedState=value}};
  window.addEventListener('pagehide',()=>{if(Object.keys(pending).length)flush().catch(error)});
 })();

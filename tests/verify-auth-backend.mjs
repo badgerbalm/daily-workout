@@ -32,6 +32,11 @@ const completed=await call('/auth/complete',{ticket,verifier:flow.verifier});ass
 assert.equal((await call('/auth/complete',{ticket,verifier:flow.verifier})).status,401);
 const row=sql.prepare('SELECT * FROM app_sessions').get();assert(!JSON.stringify(row).includes('synthetic-refresh'));assert.notEqual(row.token_hash,session.session);
 assert.equal((await call('/session',undefined,session.session)).status,200);
+const sharedWorkout={id:'shared-workout-1',scope:'daily',status:'in-progress',revision:1,startedAt:new Date().toISOString(),updatedAt:new Date().toISOString(),plan:{title:'Synthetic',date:'2026-11-09',sections:[]},exercises:{}};
+assert.equal((await call('/workout',undefined,session.session)).status,200,'Shared save starts empty');
+assert.equal((await call('/workout',{record:sharedWorkout},session.session)).status,200,'Connected browser can save active progress');
+const sharedResult=await (await call('/workout',undefined,session.session)).json();assert.deepEqual(sharedResult.record,sharedWorkout,'Shared save is stored and restored through encrypted D1 state');
+assert.equal((await call('/workout',{record:{...sharedWorkout,id:'bad',revision:-1}},session.session)).status,400,'Invalid shared workout data is rejected');
 const google={url:'https://www.googleapis.com/drive/v3/files?q=synthetic',method:'GET'};
 assert.equal((await call('/google',google,session.session)).status,200);assert.equal(refreshCalls,1);
 assert.equal((await call('/google',google,session.session)).status,200);assert.equal(refreshCalls,1,'Cached access token avoids redundant refresh');

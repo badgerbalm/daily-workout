@@ -27,6 +27,7 @@ const plan=(date='2099-01-01')=>({date,title:'Synthetic workout',sections:[{titl
  assert.deepEqual((await b.getSession(first.id)).exercises.press.draft,draft,'Incomplete drafts survive reopening without becoming validated actuals');
  await a.save(first.id,{__reviewDraft:{review:{effort:6,energy:4,discomfort:0,notes:'Synthetic review draft'}}});
  assert.equal((await b.getSession(first.id)).reviewDraft.notes,'Synthetic review draft');
+ const otherDevice=createStore({...options,indexedDB:new IDBFactory()});const cloudRecord=await a.getSession(first.id);const restored=await otherDevice.mergeShared(cloudRecord);assert.equal(restored.id,first.id,'Shared state restores the same active workout on another browser');assert.equal((await otherDevice.active('daily')).exercises.press.draft.sets[0].reps,'6','Shared state restores incomplete drafts');assert.equal((await otherDevice.active('daily')).exercises.walk.actual.treadmill.speed,4.2,'Shared state restores actual workout fields');
  const review={effort:6,energy:4,discomfort:0,notes:'Synthetic review'};
  await a.finish(first.id,review);const beforeRepeat=(await a.pending()).length;await b.finish(first.id,review);
  assert.equal((await a.pending()).length,beforeRepeat,'Finishing twice is idempotent');
@@ -38,6 +39,6 @@ const plan=(date='2099-01-01')=>({date,title:'Synthetic workout',sections:[{titl
  assert.equal(actualResult({sets:[{weight:8,weightBasis:'total'}]}).sets[0].perHand,false);
  assert.throws(()=>actualResult({sets:[{reps:-1}]}),/allowed range/);
  assert.equal((await a.listSessions()).length,3);
- await Promise.all([a.close(),b.close()]);
+ await Promise.all([a.close(),b.close(),otherDevice.close()]);
  console.log('PASS: real IndexedDB transactions via emulator, concurrent-session deduplication, immutable plan snapshots, blank actuals, explicit units/basis/side, inference separation, drafts, atomic validation, stable outbox IDs, finish idempotency and isolated practice.');
 })().catch(error=>{console.error(error);process.exitCode=1});

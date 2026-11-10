@@ -36,12 +36,14 @@
    await call('/session');return true;
   }
   async function disconnect(){try{if(connected())await call('/disconnect',{})}finally{clear()}}
+  async function getWorkout(){return (await call('/workout')).record}
+  async function saveWorkout(record){return (await call('/workout',{record})).record}
   // Match fetch's shape so the existing verified Sheet sync protocol is retained.
   async function google(url,options={}){
    const value=await call('/google',{url,method:options.method||'GET',...(options.body?{body:JSON.parse(options.body)}:{})});
    return {ok:true,status:200,json:async()=>value};
   }
-  return {connected,restore,connect,disconnect,google};
+  return {connected,restore,connect,disconnect,google,getWorkout,saveWorkout};
  }
  if(typeof module!=='undefined')module.exports={create,BASE};else root.WorkoutRememberedGoogle={create,BASE};
 })(typeof window==='undefined'?globalThis:window);

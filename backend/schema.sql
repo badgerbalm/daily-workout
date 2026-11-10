@@ -11,3 +11,6 @@ CREATE TABLE IF NOT EXISTS app_sessions (
  access_cipher TEXT, access_expires INTEGER NOT NULL DEFAULT 0,
  expires INTEGER NOT NULL, created INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS shared_workout_state (
+ owner TEXT PRIMARY KEY, state_cipher TEXT NOT NULL, updated_at TEXT NOT NULL, revision INTEGER NOT NULL
+);

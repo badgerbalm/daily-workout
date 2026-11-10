@@ -36,6 +36,15 @@
   }
   return {id:value.id,scope:'daily',plan:clone(plan),status:'finished',startedAt:value.startedAt,updatedAt:value.updatedAt,revision:value.revision,exercises,review:reviewResult(value.review||{}),finishedAt:value.finishedAt};
  }
+ function sharedRecord(value){
+  if(!value||JSON.stringify(value).length>800000||typeof value.id!=='string'||value.scope!=='daily'||!['in-progress','unfinished','finished'].includes(value.status)||!Number.isSafeInteger(value.revision)||value.revision<0||![value.startedAt,value.updatedAt].every(v=>typeof v==='string'&&Number.isFinite(Date.parse(v))))throw Error('Invalid shared workout save.');
+  if(value.status==='finished')return finishedRecord(value);
+  const plan=value.plan;if(!plan||typeof plan.title!=='string'||typeof plan.date!=='string'||!Array.isArray(plan.sections)||plan.sections.length>100)throw Error('Invalid shared workout plan.');
+  const keys=[];plan.sections.forEach((section,s)=>{if(!Array.isArray(section.items)||section.items.length>500)throw Error('Invalid saved exercises.');section.items.forEach((item,i)=>{if(typeof item.name!=='string')throw Error('Invalid exercise name.');keys.push(item.progressKey||s+'-'+i)})});
+  if(!value.exercises||keys.length!==Object.keys(value.exercises).length||new Set(keys).size!==keys.length)throw Error('Invalid shared workout exercises.');
+  const exercises=Object.create(null);for(const key of keys){const e=value.exercises[key];if(!e||typeof e.id!=='string'||e.key!==key||typeof e.name!=='string'||!['unfinished','completed','inferred','skipped'].includes(e.status)||!e.actual)throw Error('Invalid shared exercise result.');exercises[key]={...clone(e),actual:actualResult(e.actual),...(e.draft===undefined?{}:{draft:clone(e.draft)})}}
+  return {...clone(value),exercises};
+ }
  function createStore(options={}){
   const idb=options.indexedDB||root.indexedDB,uuid=options.uuid||(()=>root.crypto.randomUUID()),now=options.now||(()=>new Date().toISOString());
   let database;
@@ -100,8 +109,18 @@
   function importFinished(records){const validated=records.map(finishedRecord);return transaction(['sessions'],'readwrite',(tx,done,fail)=>{
    for(const record of validated){const r=tx.objectStore('sessions').get(record.id);r.onsuccess=()=>{if(r.result?.status==='in-progress'){fail(Error('A restored record conflicts with an active workout. Local data was preserved.'));return}if(!r.result)tx.objectStore('sessions').add(record)}}done();
   })}
-  return {active,ensure,save,finish,leaveUnfinished,importFinished,getSession:id=>get('sessions',id),listSessions:()=>list('sessions'),pending:()=>list('outbox'),close:async()=>{(await open()).close()}};
+  function mergeShared(input){const remote=sharedRecord(input);return transaction(['sessions','meta'],'readwrite',(tx,done)=>{
+   const sessions=tx.objectStore('sessions'),meta=tx.objectStore('meta'),activeRequest=meta.get('active:daily');activeRequest.onsuccess=()=>{
+    const localId=activeRequest.result?.value,localRequest=localId?sessions.get(localId):null;const apply=local=>{
+     const remoteWins=!local||Date.parse(remote.updatedAt)>Date.parse(local.updatedAt)||(remote.updatedAt===local.updatedAt&&remote.id===local.id&&remote.revision>local.revision);
+     if(!remoteWins){done(local);return}
+     const restored=remote.status==='unfinished'?{...remote,status:'in-progress'}:remote;sessions.put(restored);if(restored.status==='in-progress')meta.put({key:'active:daily',value:restored.id});else meta.delete('active:daily');done(restored);
+    };
+    if(localRequest)localRequest.onsuccess=()=>apply(localRequest.result);else apply(null);
+   };
+  })}
+  return {active,ensure,save,finish,leaveUnfinished,importFinished,mergeShared,getSession:id=>get('sessions',id),listSessions:()=>list('sessions'),pending:()=>list('outbox'),close:async()=>{(await open()).close()}};
  }
- if(typeof module!=='undefined')module.exports={createStore,actualResult,reviewResult,finishedRecord};
- else root.WorkoutHistoryStore={createStore,actualResult,reviewResult,finishedRecord};
+ if(typeof module!=='undefined')module.exports={createStore,actualResult,reviewResult,finishedRecord,sharedRecord};
+ else root.WorkoutHistoryStore={createStore,actualResult,reviewResult,finishedRecord,sharedRecord};
 })(typeof window==='undefined'?globalThis:window);

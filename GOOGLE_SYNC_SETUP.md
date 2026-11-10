@@ -1,6 +1,6 @@
 # Google backup & sync
 
-This branch adds optional Google authorization and manual two-way synchronization of **finished daily sessions**. Unfinished sessions, form drafts and isolated interval-practice scenarios remain local. Google authorization is separate from Sites' existing owner-only sign-in. GitHub Pages serves the frontend; a dedicated Cloudflare Worker renews Google access and proxies the existing finished-history sync.
+Google authorization powers two saves. The latest daily workout state (including unfinished exercises and drafts) autosaves to the dedicated Cloudflare D1 database, so Safari and the Home Screen app can load the same current session. **Sync now** separately performs verified two-way backup and restore of finished history in a private Google Sheet. Practice scenarios remain isolated. Google authorization is separate from Sites' existing owner-only sign-in.
 
 ## Configured Google project
 
@@ -19,10 +19,9 @@ The app requests `openid email` to verify the personal account and `https://www.
 ## First use (Windows or iPhone)
 
 1. Open https://badgerbalm.github.io/daily-workout/ and expand **Google backup & sync**. Production uses GitHub Pages; the ChatGPT preview is a migration fallback.
-2. Tap **Connect Google** once. Google opens in the same window; choose `onlinesny@gmail.com` and review Google's permissions yourself. Safari and a Home Screen app may each need one initial connection. Reopening checks the saved session without a sign-in prompt.
-3. Tap **Sync now**. If no app-created history Sheet exists, select **Create private workout Sheet & sync**. Creation uses your Google account's default private ownership; the app never changes file sharing permissions.
-4. Finish a workout using **Save workout**, then tap **Sync now** again. Current active logs are not uploaded. The Sheet link appears only after a successful verified sync.
-5. On another device or browser origin, connect the same account and tap **Sync now** to restore finished history. A currently active workout is never replaced. Reload the workout to refresh previous-weight suggestions from restored history.
+2. Tap **Connect Google** once in Safari and once in the Home Screen app. Google opens in that browser context; choose `onlinesny@gmail.com` and review Google's permissions. Each context remembers its connection.
+3. After connection, the active workout automatically loads from and saves to shared D1 state. Exercise results, drafts and completion status save as you change them. Refreshing/reopening either context retrieves the latest save; conflicting simultaneous edits use the most recently saved version.
+4. **Sync now** separately backs up and restores finished history in Google Sheets. If no app-created history Sheet exists, select **Create private workout Sheet & sync**. Sheet creation is optional for shared autosave.
 
 Back up local data with **Export local backup** before clearing browser storage. Local history existing in a preview cannot be read from the separate live GitHub Pages origin; sync it from the original preview first. An expired/canceled/blocked Google connection never blocks timers or local logging. Reconnect and retry Sync now. If APIs are disabled or access is denied, the app reports the required project/API checks without printing tokens or Google error payloads.
 
@@ -32,7 +31,7 @@ The app discovers Sheets by the Drive `appProperties.dailyWorkoutFormat` marker 
 
 Every sync reads existing IDs before appending missing sessions and reads back the saved records before restoring locally. A lost append response can be retried without appending the same session again. Simultaneous identical appends from separate devices may leave physical duplicate rows; readback collapses these to one logical session. Different contents for the same finished ID, invalid headers, damaged chunks or multiple marked history Sheets stop sync without overwriting records. Resolve these with a local export and a copy of the Sheet; no automatic merge or deletion is attempted. New Sheet creation is rediscoverable after interruption. Two simultaneous first-time creations can produce multiple marked Sheets; create on one device first.
 
-This is a backup and restore feature, not collaborative editing or background sync. Do not edit finished results in Sheets expecting them to update the app. The old local outbox remains reserved for future active-session sync; its pending events are not a cloud acknowledgment or queue for this finished-snapshot protocol. The UI reports cloud success only after explicit readback. Measurements, trends, generation access and unattended daily/Monday use are not implemented.
+The shared current-workout save is autosynced through the authenticated Worker and stored encrypted at rest in D1. Google Sheets remains a finished-history backup; editing Sheet rows does not change the current workout. Cloud saves require an internet connection and a Google connection in each browser context. If the network is unavailable, local IndexedDB remains available and the next app load/field save retries. Measurements, trends, generation access and unattended daily/Monday use are not implemented.
 
 ## Validation
 

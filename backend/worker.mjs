@@ -81,6 +81,17 @@ export function createHandler(requestGoogle=(...args)=>globalThis.fetch(...args)
    return finish(json({session:token,expires,email:EMAIL}));
   }
   if(url.pathname==='/session'&&request.method==='GET'){const row=await session(request,env);return finish(json({connected:true,email:EMAIL,expires:row.expires}))}
+  if(url.pathname==='/workout'&&request.method==='GET'){
+   await session(request,env);const row=await db(env).prepare('SELECT state_cipher FROM shared_workout_state WHERE owner = ?').bind(EMAIL).first();
+   return finish(json({record:row?JSON.parse(await unseal(row.state_cipher,env)):null}));
+  }
+  if(url.pathname==='/workout'&&request.method==='POST'){
+   await session(request,env);const data=await body(request,900000),record=data.record;
+   if(!record||record.scope!=='daily'||!['in-progress','unfinished','finished'].includes(record.status)||typeof record.id!=='string'||record.id.length>200||typeof record.updatedAt!=='string'||!Number.isFinite(Date.parse(record.updatedAt))||!Number.isSafeInteger(record.revision)||record.revision<0||JSON.stringify(record).length>800000)throw new Failure(400,'Invalid workout save.');
+   await db(env).prepare('INSERT INTO shared_workout_state (owner,state_cipher,updated_at,revision) VALUES (?,?,?,?) ON CONFLICT(owner) DO UPDATE SET state_cipher=excluded.state_cipher, updated_at=excluded.updated_at, revision=excluded.revision WHERE shared_workout_state.updated_at < excluded.updated_at OR (shared_workout_state.updated_at = excluded.updated_at AND shared_workout_state.revision <= excluded.revision)').bind(EMAIL,await seal(JSON.stringify(record),env),record.updatedAt,record.revision).run();
+   const row=await db(env).prepare('SELECT state_cipher FROM shared_workout_state WHERE owner = ?').bind(EMAIL).first();
+   return finish(json({record:row?JSON.parse(await unseal(row.state_cipher,env)):null}));
+  }
   if(url.pathname==='/disconnect'&&request.method==='POST'){const row=await session(request,env);await db(env).prepare('DELETE FROM app_sessions WHERE token_hash = ?').bind(row.token_hash).run();return finish(json({disconnected:true}))}
   if(url.pathname==='/google'&&request.method==='POST'){
    const row=await session(request,env),data=await body(request),method=data.method||'GET';
