@@ -125,7 +125,8 @@
      const recommendedReps=repRange?Number(repRange[2]):Number(detail.match(/[×x]\s*(\d+)/i)?.[1]||detail.match(/(\d+)\s*reps?/i)?.[1])||10;
      const recommendedSeconds=Number(detail.match(/[×x]\s*(\d+)\s*(?:seconds?|secs?)/i)?.[1]||detail.match(/(\d+)\s*(?:seconds?|secs?)/i)?.[1]||entry.item.seconds)||'';
      const recommendedSide=weighted||/per\s+(?:side|arm)|each\s+side/i.test(detail)?'both':'';
-     if(!timed)controls.reps=weighted?field(set,'Actual reps','select',data.reps??priorSet.reps??recommendedReps,{options:Array.from({length:30},(_,i)=>[String(i+1),String(i+1)])}):field(set,'Actual reps','number',data.reps??priorSet.reps??recommendedReps,{step:'1'});
+     const repsLabel=/per\s+side|each\s+side/i.test(detail)?'Actual reps per side':/per\s+arm/i.test(detail)?'Actual reps per arm':'Actual reps';
+     if(!timed)controls.reps=weighted?field(set,repsLabel,'select',data.reps??priorSet.reps??recommendedReps,{options:Array.from({length:30},(_,i)=>[String(i+1),String(i+1)])}):field(set,repsLabel,'number',data.reps??priorSet.reps??recommendedReps,{step:'1'});
      if(weighted){controls.weight=field(set,'Actual weight','select',data.weight??priorSet.weight??5,{options:Array.from({length:40},(_,i)=>[String((i+1)*5),String((i+1)*5)+' lb'])});controls.weightUnit=field(set,'Unit','select',data.weightUnit||priorSet.weightUnit||'lb',{options:units});controls.weightBasis=field(set,'Weight basis','select',data.weightBasis||priorSet.weightBasis||'per-dumbbell',{options:[['per-dumbbell','Per dumbbell'],['single-hand','One hand'],['total','Total load']]})}
      controls.side=field(set,'Side','select',data.side||priorSet.side||recommendedSide,{options:[['','Not specified'],['left','Left'],['right','Right'],['both','Both']]});
      if(timed)controls.durationSeconds=field(set,'Actual hold/carry seconds','number',data.durationSeconds??priorSet.durationSeconds??recommendedSeconds);
