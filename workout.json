@@ -1,7 +1,7 @@
 {
   "date": "2026-11-10",
   "title": "Daily Workout · November 10",
-  "note": "Tuesday · approximately 37-minute low-impact recovery session. Recent recurrent pinpoint right-sided lumbar pain with right heel-strike loading after Sunday golf and yardwork: no jogging, impact intervals, loaded twisting, or painful spinal extension. Only perform movements that are comfortable; stop if sharp pain occurs. No actual completed sets or Oura readiness score assumed. Fixed opening routine restored, including plow pose with feet suspended as a listed exercise; do not perform this inversion without medical clearance given current lumbar symptoms. Its floor-contact photograph is reference-only. Arm circles and overhead triceps stretch have provisional 60-second timers pending original timing confirmation. Seek assessment for recurring focal pain; urgent evaluation for new weakness, saddle numbness, or bowel/bladder changes.",
+  "note": "Tuesday · approximately 50-minute workout with calorie-focused brisk walking and incline intervals. Only 4.8 mph jogging has been removed; walking pace and incline remain part of the plan. Treadmill estimated gross calorie burn approximately 230–300 kcal for a ~177 lb person, highly dependent on actual speed, incline and effort; active calories will be lower. Use Apple Watch/Oura for actual recorded calories. With recurrent focal right lumbar pain, avoid any movement that causes sharp pain or painful right heel strikes, and obtain evaluation if symptoms persist. Opening stretches remain fixed; plow pose is listed but should not be performed without clearance for current lumbar symptoms. Arm circles and overhead triceps stretch timers are provisional.",
   "sections": [
     {
       "title": "Opening stretches · 6 minutes",
@@ -45,25 +45,31 @@
       ]
     },
     {
-      "title": "Flat treadmill walk · 22 minutes",
+      "title": "Calorie-burning treadmill walk · 35 minutes",
       "items": [
         {
-          "name": "Easy warm-up",
-          "detail": "5 min · 2.6–3.0 mph · 0% incline",
+          "name": "Warm-up walk",
+          "detail": "5 min · 3.0–3.3 mph · 0–1% incline",
           "seconds": 300,
-          "instructions": "Walk only if no sharp pain on right heel strike."
+          "instructions": "Build gradually to a brisk pace. Walk naturally; stop for sharp back pain or painful right heel strikes."
         },
         {
-          "name": "Comfortable walk",
-          "detail": "12 min · 2.9–3.3 mph · 0% incline",
-          "seconds": 720,
-          "instructions": "No jogging or incline. Keep stride comfortable; stop if focal pain appears."
+          "name": "Brisk incline walk",
+          "detail": "10 min · 3.6–4.0 mph · 2–3% incline",
+          "seconds": 600,
+          "instructions": "Sustained calorie-burning walk, not a jog. Reduce incline or pace if back or knee symptoms appear."
         },
         {
-          "name": "Cool-down",
-          "detail": "5 min · 2.5–2.9 mph · 0% incline",
+          "name": "Incline walking intervals",
+          "detail": "15 min · 3.5–4.0 mph · alternate 2% and 4% incline every 3 min",
+          "seconds": 900,
+          "instructions": "Walking only. Adjust incline to remain comfortable; no 4.8 mph jogging or running. Avoid pushing through sharp pain."
+        },
+        {
+          "name": "Cool-down walk",
+          "detail": "5 min · 3.0–3.3 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Gradually slow down; do not push through pain."
+          "instructions": "Ease down gradually; stop if painful."
         }
       ]
     },
