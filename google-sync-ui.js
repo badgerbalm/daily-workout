@@ -3,7 +3,9 @@
  if(window.WorkoutRememberedGoogle)return;
  const panel=document.querySelector('#google-sync');if(!panel)return;
  const connect=panel.querySelector('#google-connect'),sync=panel.querySelector('#google-sync-now'),create=panel.querySelector('#google-create-sheet'),disconnect=panel.querySelector('#google-disconnect'),status=panel.querySelector('#google-sync-status'),link=panel.querySelector('#google-sheet-link');
- const service=WorkoutGoogleSync.createSync({store:WorkoutLog.store,onStatus:message=>status.textContent=message});\n const sheetKey='workout-google-sheet-id';\n try{const known=localStorage.getItem(sheetKey);if(known)link.href='https://docs.google.com/spreadsheets/d/'+encodeURIComponent(known)+'/edit'}catch{}
+ const service=WorkoutGoogleSync.createSync({store:WorkoutLog.store,onStatus:message=>status.textContent=message});
+ const sheetKey='workout-google-sheet-id';
+ try{const known=localStorage.getItem(sheetKey);if(known)link.href='https://docs.google.com/spreadsheets/d/'+encodeURIComponent(known)+'/edit'}catch{}
  let client=null,loading=null,busy=false;
  const message=text=>{status.textContent=text};
  function controls(){const active=service.connected();connect.disabled=busy;sync.disabled=busy||!active;disconnect.hidden=!active;disconnect.disabled=busy;create.disabled=busy||!active;connect.textContent=active?'Reconnect Google':'Connect Google';}
