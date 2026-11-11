@@ -1,5 +1,13 @@
 # Agent instructions
 
+## Daily Workout Safari Shortcut handoff
+
+- Keep Start and Done Shortcut launches directly inside the user's tap handler. Do not `await` `cardViewSaveTask`, IndexedDB, or another async save before `openWorkoutShortcut(...)`; Safari may lose the user gesture and show an app-opening prompt or fail the Shortcut URL.
+- `openWorkoutShortcut(...)` checkpoints workout state synchronously, launches the Shortcut, then flushes the database asynchronously. Preserve that ordering so state is saved without delaying the handoff.
+- Production (`data-shortcuts="safari"`) must always resolve to the Safari-specific Shortcut names, regardless of any stale `localStorage` profile or lock. Match the exact names in `safari-setup.html`.
+- If a Shortcut is reported invalid, compare the generated name for that route against the device Shortcut's exact name before changing the URL scheme or routing. Butterfly stretch uses the generic `Workout Timer Watch Safari`; walking/strength/core and Done use separate names.
+- Preserve these cases in `tests/verify-safari-shortcuts.cjs`; it checks that Start and Done handoffs happen synchronously and that production routes use Safari names.
+
 ## Donation Log Cloudflare operations
 
 - Use the existing Windows `CLOUDFLARE_API_TOKEN` user environment variable with the already installed Wrangler CLI. This is the deployment route used by the Parley project.
