@@ -1,7 +1,7 @@
 {
   "date": "2026-11-11",
   "title": "Daily Workout · November 11",
-  "note": "Wednesday · approximately 50 minutes. Because tingling recurred with incline walking in New Balance 1080 v15 and was absent in HOKA Clifton 9 Wide, today's treadmill session is flat only, using the comfortable Cliftons for a cautious comparison. Stop for tingling, numbness, sharp lumbar pain, or painful heel strikes; seek medical assessment for recurrent symptoms. The Cliftons have 850+ miles and should be replaced rather than relied on long-term. No jogging. Opening stretches retain established names and timers; plow pose with feet suspended remains listed but should be skipped unless specifically cleared given lumbar history. Reference photograph for plow pose depicts floor contact and is reference-only. No loads or actual performance are assumed.",
+  "note": "Wednesday · approximately 50 minutes. Calorie-focused treadmill walking retains steady and interval inclines, with speed up to 4.2 mph and no 4.8 mph jogging. Use HOKA Clifton 9 Wide (2E); New Balance 1080 v15 is being returned after tingling during inclines. Stop if tingling, numbness, sharp lumbar pain, or painful heel strikes occur, and seek medical assessment for recurrent symptoms. The Cliftons have 850+ miles and are a short-term baseline, not an ideal long-term training shoe. Opening stretches retain established names and timers; plow pose with feet suspended remains listed but should be skipped unless specifically cleared given lumbar history. Reference photograph for plow pose depicts floor contact and is reference-only. No actual performance or loads assumed.",
   "sections": [
     {
       "title": "Opening stretches · 6 minutes",
@@ -45,31 +45,31 @@
       ]
     },
     {
-      "title": "Flat treadmill walk · 35 minutes",
+      "title": "Calorie-burning treadmill walk · 35 minutes",
       "items": [
         {
           "name": "Warm-up walk",
           "detail": "5 min · 3.0–3.3 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Wear symptom-free HOKA Clifton 9 Wide for comparison. Start easy. Stop if tingling, numbness, or sharp back pain appears."
+          "instructions": "Use HOKA Clifton 9 Wide. Warm up comfortably; stop if tingling or sharp pain occurs."
         },
         {
           "name": "Steady brisk walk",
-          "detail": "10 min · 3.5–3.8 mph · 0% incline",
+          "detail": "10 min · 3.8–4.2 mph · fixed 3% incline",
           "seconds": 600,
-          "instructions": "Flat only. Comfortable natural stride; reduce speed if needed."
+          "instructions": "Maintain a steady 3% incline throughout this section. Walk only, no jogging; adjust speed for comfort."
         },
         {
-          "name": "Flat walking intervals",
-          "detail": "15 min · alternate 3.5 and 3.8–4.0 mph every 3 min · 0% incline",
+          "name": "Incline walking intervals",
+          "detail": "15 min · 3.6–4.2 mph · alternate 2% and 4% incline every 3 min",
           "seconds": 900,
-          "instructions": "Walking only, no incline or jogging. If symptoms appear, stop and note elapsed time and speed."
+          "instructions": "Alternate 2% incline for 3 min and 4% for 3 min, repeating; final 3 min at 2%. Keep a walking gait. Stop if tingling or sharp pain returns."
         },
         {
           "name": "Cool-down walk",
-          "detail": "5 min · 2.8–3.2 mph · 0% incline",
+          "detail": "5 min · 3.0–3.3 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Ease down gradually. Stop if symptoms occur."
+          "instructions": "Gradually ease down to a comfortable pace."
         }
       ]
     },
