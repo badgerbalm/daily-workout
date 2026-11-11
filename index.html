@@ -45,7 +45,8 @@ function runDoneShortcut(endsWorkout){
   clearActiveTimer();
   if(endsWorkout){localStorage.removeItem(watchSectionKey);localStorage.removeItem(intervalBlockKey)}
   updateWatchRecovery();
-  openWorkoutShortcut(shortcutURL(endsWorkout?'Workout End':'Workout Timer Stop'));
+  const name=endsWorkout?'Workout End Safari':'Workout Timer Stop Safari';
+  openWorkoutShortcut('shortcuts://run-shortcut?name='+encodeURIComponent(name));
 }
 function timerURL(seconds,mode,startWalk=false){const n=Number(seconds);if(!Number.isSafeInteger(n)||n<=0)throw Error('Timer duration must be a positive whole number of seconds.');const name=mode==='iphone'?'Workout Timer':startWalk?'Workout Walk Start':'Workout Timer Watch';return shortcutURL(name,n)}
 const workoutThemes=['game-day','steelers','bills','giants','colts','classic'];
