@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b7276">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Donation Log</title>
 <link rel="stylesheet" href="style.css">
 <script src="app.js" defer></script>
@@ -62,7 +66,7 @@
 </section>
 <section class="card page" data-page-panel="history" aria-labelledby="history-title" hidden>
 <h2 id="history-title">Visit history</h2>
-<p class="muted">All recorded visits. Blood pressure is plotted when it is available.</p>
+<p class="muted">One panel per measurement, with labeled scales and years. Blood pressure uses mm Hg; weight, hematocrit, and total protein each use their own units.</p>
 <div class="history-chart-wrap"><svg id="history-chart" role="img" aria-label="Blood pressure and donation measurements over time"></svg></div>
 <div class="history-legend"><span>Blood pressure</span><span>Weight</span><span>Hematocrit</span><span>Total protein</span></div>
 <div class="actions">

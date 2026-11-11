@@ -274,23 +274,70 @@ function renderHistoryTable(){
 }
 
 function renderHistoryChart(){
-  const svg=document.querySelector('#history-chart');svg.replaceChildren();svg.setAttribute('viewBox','0 0 760 320');
+  const svg=document.querySelector('#history-chart');
+  svg.replaceChildren();
+  svg.setAttribute('viewBox','0 0 760 640');
   const dated=records.filter(row=>validDate(row.date)).sort((a,b)=>a.date.localeCompare(b.date));
-  if(!dated.length){svg.setAttribute('aria-label','No saved visits yet');return;}
-  const first=Date.parse(dated[0].date+'T00:00:00Z'),last=Date.parse(dated.at(-1).date+'T00:00:00Z');
-  const x=row=>72+(last===first?0:(Date.parse(row.date+'T00:00:00Z')-first)/(last-first)*650);
+  if(!dated.length){
+    svg.setAttribute('aria-label','No saved visits yet');
+    const empty=document.createElementNS('http://www.w3.org/2000/svg','text');
+    empty.setAttribute('x','20');empty.setAttribute('y','42');empty.setAttribute('fill','#4d6364');
+    empty.textContent='No saved visits to chart yet.';
+    svg.append(empty);
+    return;
+  }
   const ns='http://www.w3.org/2000/svg';
-  const series=[{field:'systolic',name:'Systolic BP',color:'#b4422e',min:40,max:220},{field:'diastolic',name:'Diastolic BP',color:'#236a83',min:40,max:220},{field:'weight',name:'Weight',color:'#518250',min:80,max:300},{field:'hematocrit',name:'Hematocrit',color:'#916c25',min:20,max:70},{field:'protein',name:'Total protein',color:'#7654a5',min:5,max:12}];
-  for(const [index,item] of series.entries()){
-    const vals=dated.filter(r=>Number.isFinite(r[item.field]));
-    const low=item.min,high=item.max,top=32+index*68;
-    const points=vals.map(row=>x(row)+','+(top+52-(row[item.field]-low)/(high-low)*48)).join(' ');
-    if(points){const line=document.createElementNS(ns,'polyline');line.setAttribute('points',points);line.setAttribute('fill','none');line.setAttribute('stroke',item.color);line.setAttribute('stroke-width','2.5');svg.append(line);}
+  const first=Date.parse(dated[0].date+'T00:00:00Z');
+  const last=Date.parse(dated.at(-1).date+'T00:00:00Z');
+  const xDate=date=>72+(last===first?0:(Date.parse(date+'T00:00:00Z')-first)/(last-first)*672);
+  const panels=[
+    {name:'Blood pressure',unit:'mm Hg',top:42,bottom:205,fields:[['systolic','Systolic','#b4422e'],['diastolic','Diastolic','#236a83']],low:40,high:200,step:40},
+    {name:'Weight',unit:'lb',top:248,bottom:335,fields:[['weight','Weight','#518250']],low:140,high:220,step:20},
+    {name:'Hematocrit',unit:'%',top:378,bottom:465,fields:[['hematocrit','Hematocrit','#916c25']],low:30,high:65,step:5},
+    {name:'Total protein',unit:'g/dL',top:508,bottom:595,fields:[['protein','Total protein','#7654a5']],low:5,high:10,step:1}
+  ];
+  const allValues=dated.flatMap(row=>panels.flatMap(panel=>panel.fields.map(([field])=>row[field]).filter(Number.isFinite)));
+  svg.setAttribute('aria-label','Historical donation measurements in separate panels: blood pressure, weight, hematocrit, and total protein. Each panel has its own labeled scale.');
+  for(const panel of panels){
+    const values=dated.flatMap(row=>panel.fields.map(([field])=>row[field]).filter(Number.isFinite));
+    let low=panel.low,high=panel.high;
+    if(values.length){
+      low=Math.min(low,Math.floor(Math.min(...values)/panel.step)*panel.step);
+      high=Math.max(high,Math.ceil(Math.max(...values)/panel.step)*panel.step);
+      if(low===high)high=low+panel.step;
+    }
+    const label=document.createElementNS(ns,'text');
+    label.setAttribute('x','8');label.setAttribute('y',String(panel.top+12));label.setAttribute('font-size','13');label.setAttribute('font-weight','700');label.setAttribute('fill','#17252b');
+    label.textContent=panel.name+' ('+panel.unit+')';svg.append(label);
+    for(let value=low;value<=high+panel.step/100;value+=panel.step){
+      const y=panel.bottom-(value-low)/(high-low)*(panel.bottom-panel.top);
+      const grid=document.createElementNS(ns,'line');grid.setAttribute('x1','68');grid.setAttribute('x2','748');grid.setAttribute('y1',String(y));grid.setAttribute('y2',String(y));grid.setAttribute('stroke','#d8e2df');grid.setAttribute('stroke-width','1');svg.append(grid);
+      const tick=document.createElementNS(ns,'text');tick.setAttribute('x','62');tick.setAttribute('y',String(y+4));tick.setAttribute('text-anchor','end');tick.setAttribute('font-size','11');tick.setAttribute('fill','#4d6364');tick.textContent=String(Number(value.toFixed(1)));svg.append(tick);
+    }
+    for(const [field,name,color] of panel.fields){
+      const vals=dated.filter(row=>Number.isFinite(row[field]));
+      if(!vals.length)continue;
+      const points=vals.map(row=>{
+        const y=panel.bottom-(row[field]-low)/(high-low)*(panel.bottom-panel.top);
+        return xDate(row.date)+','+y;
+      }).join(' ');
+      const line=document.createElementNS(ns,'polyline');
+      line.setAttribute('points',points);line.setAttribute('fill','none');line.setAttribute('stroke',color);line.setAttribute('stroke-width',panel.fields.length>1?'2.6':'2.4');line.setAttribute('stroke-linejoin','round');line.setAttribute('stroke-linecap','round');
+      const title=document.createElementNS(ns,'title');title.textContent=name+' trend';line.append(title);svg.append(line);
+    }
   }
-  for(const row of dated.filter(r=>Number.isFinite(r.systolic)&&Number.isFinite(r.diastolic))){
-    const cy=300-(row.systolic-80)*1.3;
-    const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',x(row));dot.setAttribute('cy',Math.max(18,Math.min(305,cy)));dot.setAttribute('r','3');dot.setAttribute('fill','#b4422e');dot.setAttribute('aria-label',row.date+' blood pressure '+row.systolic+'/'+row.diastolic);svg.append(dot);
-  }
+  const yearStart=Number(dated[0].date.slice(0,4)),yearEnd=Number(dated.at(-1).date.slice(0,4));
+  const years=[];
+  for(let year=yearStart;year<=yearEnd;year++)years.push(year);
+  const yearStride=years.length>8?2:1;
+  const axis=document.createElementNS(ns,'line');axis.setAttribute('x1','72');axis.setAttribute('x2','744');axis.setAttribute('y1','615');axis.setAttribute('y2','615');axis.setAttribute('stroke','#617777');axis.setAttribute('stroke-width','1');svg.append(axis);
+  years.forEach((year,index)=>{
+    if(index%yearStride!==0&&year!==yearEnd)return;
+    const x=xDate(year+'-01-01');
+    const mark=document.createElementNS(ns,'line');mark.setAttribute('x1',String(x));mark.setAttribute('x2',String(x));mark.setAttribute('y1','615');mark.setAttribute('y2','620');mark.setAttribute('stroke','#617777');svg.append(mark);
+    const label=document.createElementNS(ns,'text');label.setAttribute('x',String(x));label.setAttribute('y','637');label.setAttribute('text-anchor','middle');label.setAttribute('font-size','11');label.setAttribute('fill','#4d6364');label.textContent=String(year);svg.append(label);
+  });
+  const legend=document.createElementNS(ns,'text');legend.setAttribute('x','748');legend.setAttribute('y','20');legend.setAttribute('text-anchor','end');legend.setAttribute('font-size','11');legend.setAttribute('fill','#4d6364');legend.textContent=allValues.length+' measurements';svg.append(legend);
 }
 
 form.addEventListener('submit', async event => {
