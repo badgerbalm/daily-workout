@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-10",
-  "title": "Daily Workout · November 10",
-  "note": "Tuesday · approximately 50-minute workout with calorie-focused brisk walking and incline intervals. Only 4.8 mph jogging has been removed; walking pace up to 4.2 mph and incline remain part of the plan. Treadmill estimated gross calorie burn approximately 230–320 kcal for a ~177 lb person, highly dependent on actual speed, incline and effort; active calories will be lower. Use Apple Watch/Oura for actual recorded calories. With recurrent focal right lumbar pain, avoid any movement that causes sharp pain or painful right heel strikes, and obtain evaluation if symptoms persist. Opening stretches remain fixed; plow pose is listed but should not be performed without clearance for current lumbar symptoms. Arm circles and overhead triceps stretch timers are provisional.",
+  "date": "2026-11-11",
+  "title": "Daily Workout · November 11",
+  "note": "Wednesday · approximately 50 minutes. Because tingling recurred with incline walking in New Balance 1080 v15 and was absent in HOKA Clifton 9 Wide, today's treadmill session is flat only, using the comfortable Cliftons for a cautious comparison. Stop for tingling, numbness, sharp lumbar pain, or painful heel strikes; seek medical assessment for recurrent symptoms. The Cliftons have 850+ miles and should be replaced rather than relied on long-term. No jogging. Opening stretches retain established names and timers; plow pose with feet suspended remains listed but should be skipped unless specifically cleared given lumbar history. Reference photograph for plow pose depicts floor contact and is reference-only. No loads or actual performance are assumed.",
   "sections": [
     {
       "title": "Opening stretches · 6 minutes",
@@ -45,31 +45,31 @@
       ]
     },
     {
-      "title": "Calorie-burning treadmill walk · 35 minutes",
+      "title": "Flat treadmill walk · 35 minutes",
       "items": [
         {
           "name": "Warm-up walk",
-          "detail": "5 min · 3.0–3.3 mph · 0–1% incline",
+          "detail": "5 min · 3.0–3.3 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Build gradually to a brisk pace. Walk naturally; stop for sharp back pain or painful right heel strikes."
+          "instructions": "Wear symptom-free HOKA Clifton 9 Wide for comparison. Start easy. Stop if tingling, numbness, or sharp back pain appears."
         },
         {
-          "name": "Brisk incline walk",
-          "detail": "10 min · 3.8–4.2 mph · 3% incline",
+          "name": "Steady brisk walk",
+          "detail": "10 min · 3.5–3.8 mph · 0% incline",
           "seconds": 600,
-          "instructions": "Maintain a steady 3% incline throughout this segment for sustained calorie-burning walking. Adjust speed for comfort; stop if sharp pain occurs."
+          "instructions": "Flat only. Comfortable natural stride; reduce speed if needed."
         },
         {
-          "name": "Incline walking intervals",
-          "detail": "15 min · 3.6–4.2 mph · alternate 2% and 4% incline every 3 min",
+          "name": "Flat walking intervals",
+          "detail": "15 min · alternate 3.5 and 3.8–4.0 mph every 3 min · 0% incline",
           "seconds": 900,
-          "instructions": "Walking only. Adjust incline to remain comfortable; no 4.8 mph jogging or running. Avoid pushing through sharp pain."
+          "instructions": "Walking only, no incline or jogging. If symptoms appear, stop and note elapsed time and speed."
         },
         {
           "name": "Cool-down walk",
-          "detail": "5 min · 3.0–3.3 mph · 0% incline",
+          "detail": "5 min · 2.8–3.2 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Ease down gradually; stop if painful."
+          "instructions": "Ease down gradually. Stop if symptoms occur."
         }
       ]
     },
