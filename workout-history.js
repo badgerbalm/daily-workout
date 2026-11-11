@@ -99,6 +99,9 @@
     session.updatedAt=now();tx.objectStore('sessions').put(session);done(session);
    }catch(error){fail(error)}};
   })}
+  function saveCardView(id,view){return transaction(['sessions'],'readwrite',(tx,done,fail)=>{
+   const r=tx.objectStore('sessions').get(id);r.onsuccess=()=>{try{const session=r.result;if(!session||session.status!=='in-progress')throw Error('This workout has already been finished.');session.cardView=clone(view);session.revision++;session.updatedAt=now();tx.objectStore('sessions').put(session);done(session)}catch(error){fail(error)}};
+  })}
   function finish(id,review){const validated=reviewResult(review);return transaction(['sessions','meta','outbox'],'readwrite',(tx,done,fail)=>{
    const r=tx.objectStore('sessions').get(id);r.onsuccess=()=>{const session=r.result;if(!session){fail(Error('Workout not found.'));return}if(session.status==='finished'){done(session);return}
     session.status='finished';session.finishedAt=now();session.updatedAt=session.finishedAt;session.review=validated;session.revision++;
@@ -121,7 +124,7 @@
     if(localRequest)localRequest.onsuccess=()=>apply(localRequest.result);else apply(null);
    };
   })}
-  return {active,ensure,save,finish,leaveUnfinished,importFinished,mergeShared,getSession:id=>get('sessions',id),listSessions:()=>list('sessions'),pending:()=>list('outbox'),close:async()=>{(await open()).close()}};
+  return {active,ensure,save,saveCardView,finish,leaveUnfinished,importFinished,mergeShared,getSession:id=>get('sessions',id),listSessions:()=>list('sessions'),pending:()=>list('outbox'),close:async()=>{(await open()).close()}};
  }
  if(typeof module!=='undefined')module.exports={createStore,actualResult,reviewResult,finishedRecord,sharedRecord};
  else root.WorkoutHistoryStore={createStore,actualResult,reviewResult,finishedRecord,sharedRecord};

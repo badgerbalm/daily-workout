@@ -2,7 +2,7 @@
 (function(){
  'use strict';
  const store=WorkoutHistoryStore.createStore();
- let plan,scope='',storageSuffix='',session=null,sharedState=null,available=true,pending={},serial=Promise.resolve(),entries=new Map(),invalid=new Map(),outcomes=new Map();
+ let plan,scope='',storageSuffix='',session=null,sharedState=null,available=true,pending={},serial=Promise.resolve(),cardViewSerial=Promise.resolve(),entries=new Map(),invalid=new Map(),outcomes=new Map();
  let recovery={};
  const recoveryKey=()=> 'workout-result-recovery:'+scope;
  function checkpoint({allowFinished=false}={}){
@@ -59,6 +59,15 @@
    feedback(invalid.size?'Draft saved · correct incomplete fields before finishing.':cloudSaved?'Saved on this device and synced across your connected browsers.':'Saved on this device.');
   });return serial;
  }
+ function saveCardViewState(view){
+  cardViewSerial=cardViewSerial.catch(()=>{}).then(async()=>{
+   if(!available||!plan||session?.status==='finished'||(!session&&!Object.values(view.started||{}).some(Boolean)))return null;
+   await flush({allowFinished:true});if(!session||session.status!=='in-progress')return null;
+   session=await store.saveCardView(session.id,view);
+   if(scope==='daily'&&sharedState?.connected()){try{const remote=await sharedState.saveWorkout(session);if(remote?.id===session.id)session=await store.mergeShared(remote)}catch{}}
+   return session?.cardView||view;
+  });return cardViewSerial;
+ }
  function queueStatus(key,state,source='user'){
   const actualState=state==='completed'&&source!=='user'?'inferred':state;
   if(actualState==='inferred'&&['completed','skipped'].includes(outcomes.get(key)))return;
@@ -67,6 +76,7 @@
   const badge=entries.get(key)?.badge;if(badge)badge.textContent=labels[actualState];
  }
  const labels={unfinished:'Unfinished',completed:'Confirmed complete',skipped:'Skipped',inferred:'Needs confirmation · navigation/timer only'};
+ const personalLastLoads={'dumbbell bench press':{weight:25,weightUnit:'lb',weightBasis:'per-dumbbell'}};
  function element(tag,className,text){const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node}
  function field(parent,label,type,value,attributes={}){
   const wrapper=element('label','result-field'),input=element(type==='select'?'select':'input');wrapper.append(element('span','',label));
@@ -116,13 +126,13 @@
 
    }else{
     const weighted=/dumbbell|row|press|raise|carr/i.test(entry.item.name);
-    const previousSets=priorExercise?.actual?.sets||[];const previousLoad=[...previousSets].reverse().find(set=>Number.isFinite(set.weight));
+    const previousSets=priorExercise?.actual?.sets||[];const previousLoad=[...previousSets].reverse().find(set=>Number.isFinite(set.weight))||personalLastLoads[entry.item.name.toLowerCase()];
     if(weighted&&previousLoad){const unit=previousLoad.weightUnit==='lb'?'lbs':previousLoad.weightUnit;const basis=previousLoad.weightBasis==='per-dumbbell'?' per dumbbell':previousLoad.weightBasis==='total'?' total load':'';const prescription=entry.row.querySelector('.detail');if(prescription)prescription.textContent=(entry.item.detail||'')+' · '+previousLoad.weight+' '+unit+basis}
     const timed=/plank|carr|stretch|pose/i.test(entry.item.name);
     function addSet(data={}){
      const set=element('fieldset','actual-set'),legend=element('legend','','Set '+(setControls.length+1));set.append(legend);
      const controls={};
-     const priorSets=priorExercise?.actual?.sets||[];const priorSet=priorSets[setControls.length]||priorSets.at(-1)||{};const priorWeightedSet=priorSet.weight!==null&&priorSet.weight!==undefined?priorSet:[...priorSets].reverse().find(set=>set.weight!==null&&set.weight!==undefined)||{};
+     const priorSets=priorExercise?.actual?.sets||[];const priorSet=priorSets[setControls.length]||priorSets.at(-1)||{};const priorWeightedSet=priorSet.weight!==null&&priorSet.weight!==undefined?priorSet:[...priorSets].reverse().find(set=>set.weight!==null&&set.weight!==undefined)||personalLastLoads[entry.item.name.toLowerCase()]||{};
      const detail=String(entry.item.detail||'');
      const repRange=detail.match(/(\d+)\s*(?:-|–|to)\s*(\d+)\s*reps?/i);
      const recommendedReps=repRange?Number(repRange[2]):Number(detail.match(/[×x]\s*(\d+)/i)?.[1]||detail.match(/(\d+)\s*reps?/i)?.[1])||10;
@@ -185,6 +195,6 @@
  }
  const exportButton=document.querySelector('#export-local-history');
  if(exportButton)exportButton.onclick=async()=>{try{await serial.catch(()=>{});const data={format:'daily-workout-local-backup',version:1,exportedAt:new Date().toISOString(),sessions:await store.listSessions(),pending:await store.pending()};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='daily-workout-private-backup-'+new Date().toISOString().slice(0,10)+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),30000)}catch(reason){error(reason)}};
- window.WorkoutLog={prepare,mount,flush,checkpoint,queueStatus,openReview,store,renderHistory,setSharedState:value=>{sharedState=value}};
+ window.WorkoutLog={prepare,mount,flush,checkpoint,queueStatus,openReview,store,renderHistory,saveCardViewState,cardViewState:()=>session?.cardView||null,setSharedState:value=>{sharedState=value}};
  window.addEventListener('pagehide',()=>{if(Object.keys(pending).length)flush().catch(error)});
 })();
