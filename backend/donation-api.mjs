@@ -1,3 +1,4 @@
+Attempting to perform the InitializeDefaultDrives operation on the 'FileSystem' provider failed.
 const APP_ORIGIN = 'https://badgerbalm.github.io';
 const AUTH_URL = 'https://daily-workout-auth.onlinesny.workers.dev/session';
 const OWNER_EMAIL = 'onlinesny@gmail.com';
@@ -53,7 +54,8 @@ function cleanRecord(input) {
   if (!input || !validDate(input.date) || (input.time && !/^([01]\d|2[0-3]):[0-5]\d$/.test(input.time))) throw new HttpError(400, 'A visit has an invalid date or time.');
   const row = {
     id: String(input.id || (input.date + ' ' + (input.time || ''))), date: input.date, time: input.time || '',
-    visitType: input.visitType || 'CSL donation', arm: input.arm || '', notes: input.notes || '', source: input.source || 'Manual entry'
+    visitType: input.visitType || (input.source === 'Personal BP log' ? 'Other BP reading' : 'CSL donation'),
+    arm: input.arm || '', notes: input.notes || '', source: input.source || 'Manual entry'
   };
   if (row.id.length > 200 || !['CSL donation', 'Doctor / clinic', 'Home reading', 'Other BP reading', 'Other'].includes(row.visitType) || !['', 'Left', 'Right', 'Both'].includes(row.arm) || typeof row.notes !== 'string' || row.notes.length > 2000) throw new HttpError(400, 'A visit has invalid type, arm, or notes.');
   for (const field of ['systolic', 'diastolic', 'pulse', 'weight', 'temperature', 'hematocrit', 'protein', 'duration']) {
