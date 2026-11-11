@@ -372,7 +372,7 @@ document.querySelector('#csv').onclick = () => {
 };
 
 document.querySelector('#backup').onclick = () => {
-  download('donation-backup.json', JSON.stringify({version:1, records}, null, 2), 'application/json');
+  download('donation-backup.json', JSON.stringify({version:1, records, medications:medicationEvents}, null, 2), 'application/json');
 };
 
 const fileInput = document.querySelector('#file');
@@ -417,8 +417,25 @@ fileInput.onchange = async () => {
         added++;
       }
     }
+    let medicationsAdded = 0;
+    if (Array.isArray(backup.medications)) {
+      const mergedMedications = new Map(medicationEvents.map(event => [event.date + '|' + event.label, event]));
+      for (const event of backup.medications) {
+        if (!event || !validDate(event.date) || typeof event.label !== 'string' || !event.label.trim() || event.label.length > 500) {
+          throw new Error('A medication change in this backup has an invalid date or label.');
+        }
+        const normalizedEvent = {date:event.date, label:event.label.trim()};
+        const key = normalizedEvent.date + '|' + normalizedEvent.label;
+        if (!mergedMedications.has(key)) medicationsAdded++;
+        mergedMedications.set(key, normalizedEvent);
+      }
+      medicationEvents = [...mergedMedications.values()].sort((a,b)=>a.date.localeCompare(b.date));
+      await apiRequest('/medications', {method:'PUT', headers:{'content-type':'application/json'}, body:JSON.stringify({events:medicationEvents})});
+      drawReport();
+    }
     await save([...next.values()]);
-    historyStatus.textContent = 'Import complete: ' + added + ' new, ' + updated + ' updated, ' + unchanged + ' unchanged, ' + conflicts + ' conflicts skipped.';
+    historyStatus.textContent = 'Import complete: ' + added + ' new, ' + updated + ' updated, ' + unchanged + ' unchanged, ' + conflicts + ' conflicts skipped' +
+      (Array.isArray(backup.medications) ? ', ' + medicationsAdded + ' new medication changes' : '') + '.';
   } catch (error) { historyStatus.textContent = error instanceof SyntaxError ? 'The backup is not valid JSON.' : error.message; }
   finally { fileInput.value = ''; }
 };
