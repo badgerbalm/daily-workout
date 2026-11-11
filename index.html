@@ -126,7 +126,7 @@ function trackShortcutProfile(url){
 }
 let photoLibraryPromise;
 function getPhotoLibrary(){
-  return photoLibraryPromise??=fetch('./exercise-photos.json', {cache:'no-cache'})
+  return photoLibraryPromise??=fetch('./exercise-photos.json?v=photos-20261111', {cache:'no-store'})
     .then(r=>{if(!r.ok)throw Error('Photo library HTTP '+r.status);return r.json()})
     .catch(error=>{console.warn(error);photoLibraryPromise=null;return {exercises:{}}});
 }
