@@ -38,7 +38,7 @@ button.secondary{background:white;color:#155447;border-color:#a5bbb6}
 #history-table th{position:sticky;top:0;background:#f1f6f5}
 .table-scroll{overflow:auto;max-height:62vh;margin-top:12px}
 .history-chart-wrap{overflow:auto}
-#history-chart{display:block;width:100%;min-width:520px;height:320px}
+#history-chart{display:block;width:100%;min-width:600px;height:650px}
 .history-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem}
 #status,#history-status{margin-bottom:0}
 .report{grid-column:1/-1}
