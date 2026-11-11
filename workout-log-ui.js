@@ -116,11 +116,13 @@
 
    }else{
     const weighted=/dumbbell|row|press|raise|carr/i.test(entry.item.name);
+    const previousLoads=(priorExercise?.actual?.sets||[]).filter(set=>Number.isFinite(set.weight));
+    if(weighted&&previousLoads.length){const loads=[...new Set(previousLoads.map(set=>String(set.weight)+' '+set.weightUnit))];const basis=previousLoads.every(set=>set.weightBasis==='per-dumbbell')?' per dumbbell':'';const summary=loads.length===1?loads[0]+basis:loads.join(', ')+basis;const prescription=entry.row.querySelector('.detail');if(prescription)prescription.textContent=(entry.item.detail||'')+' · last workout '+summary}
     const timed=/plank|carr|stretch|pose/i.test(entry.item.name);
     function addSet(data={}){
      const set=element('fieldset','actual-set'),legend=element('legend','','Set '+(setControls.length+1));set.append(legend);
      const controls={};
-     const priorSet=priorExercise?.actual?.sets?.[setControls.length]||priorExercise?.actual?.sets?.at(-1)||{};
+     const priorSets=priorExercise?.actual?.sets||[];const priorSet=priorSets[setControls.length]||priorSets.at(-1)||{};const priorWeightedSet=priorSet.weight!==null&&priorSet.weight!==undefined?priorSet:[...priorSets].reverse().find(set=>set.weight!==null&&set.weight!==undefined)||{};
      const detail=String(entry.item.detail||'');
      const repRange=detail.match(/(\d+)\s*(?:-|–|to)\s*(\d+)\s*reps?/i);
      const recommendedReps=repRange?Number(repRange[2]):Number(detail.match(/[×x]\s*(\d+)/i)?.[1]||detail.match(/(\d+)\s*reps?/i)?.[1])||10;
@@ -128,7 +130,7 @@
      const recommendedSide=weighted||/per\s+(?:side|arm)|each\s+side/i.test(detail)?'both':'';
      const repsLabel=/per\s+side|each\s+side/i.test(detail)?'Actual reps per side':/per\s+arm/i.test(detail)?'Actual reps per arm':'Actual reps';
      if(!timed)controls.reps=weighted?field(set,repsLabel,'select',data.reps??priorSet.reps??recommendedReps,{options:Array.from({length:30},(_,i)=>[String(i+1),String(i+1)])}):field(set,repsLabel,'number',data.reps??priorSet.reps??recommendedReps,{step:'1'});
-     if(weighted){controls.weight=field(set,'Actual weight · recommended 5 lb per dumbbell','select',data.weight??priorSet.weight??5,{options:Array.from({length:40},(_,i)=>[String((i+1)*5),String((i+1)*5)+' lb'])});controls.weightUnit=field(set,'Unit','select',data.weightUnit||priorSet.weightUnit||'lb',{options:units});controls.weightBasis=field(set,'Weight basis','select',data.weightBasis||priorSet.weightBasis||'per-dumbbell',{options:[['per-dumbbell','Per dumbbell'],['single-hand','One hand'],['total','Total load']]})}
+     if(weighted){const lastWeight=data.weight??priorSet.weight??priorWeightedSet.weight??null;const lastUnit=data.weightUnit||priorSet.weightUnit||priorWeightedSet.weightUnit||'lb';const weightLabel=lastWeight===null?'Actual weight':'Actual weight · last workout '+lastWeight+' '+lastUnit+(priorWeightedSet.weightBasis==='per-dumbbell'?' per dumbbell':'');controls.weight=field(set,weightLabel,'select',data.weight??priorSet.weight??priorWeightedSet.weight??5,{options:Array.from({length:40},(_,i)=>[String((i+1)*5),String((i+1)*5)+' lb'])});controls.weightUnit=field(set,'Unit','select',data.weightUnit||priorSet.weightUnit||priorWeightedSet.weightUnit||'lb',{options:units});controls.weightBasis=field(set,'Weight basis','select',data.weightBasis||priorSet.weightBasis||'per-dumbbell',{options:[['per-dumbbell','Per dumbbell'],['single-hand','One hand'],['total','Total load']]})}
      controls.side=field(set,'Side','select',data.side||priorSet.side||recommendedSide,{options:[['','Not specified'],['left','Left'],['right','Right'],['both','Both']]});
      if(timed)controls.durationSeconds=field(set,'Actual hold/carry seconds','number',data.durationSeconds??priorSet.durationSeconds??recommendedSeconds);
      setControls.push({id:data.id||crypto.randomUUID(),controls});form.append(set);
