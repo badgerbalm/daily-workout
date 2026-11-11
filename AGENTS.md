@@ -2,10 +2,13 @@
 
 ## Donation Log Cloudflare operations
 
-- Deploy or manage only the Donation Log API Worker with Wrangler and the existing Windows user environment variable `CLOUDFLARE_API_TOKEN`. This is the working path used by the Parley project.
-- The existing Cloudflare MCP connection has a separate OAuth grant that may lack Worker write scopes. Do not toggle, uninstall, reconnect, or edit that MCP connection for Donation Log deployment. Do not create or request a replacement API token unless the user explicitly asks.
+- Use the existing Windows `CLOUDFLARE_API_TOKEN` user environment variable with the already installed Wrangler CLI. This is the deployment route used by the Parley project.
+- The Cloudflare MCP connection has a separate OAuth grant and may lack Worker write scopes. Do not toggle, uninstall, reconnect, or edit it for this project. Do not create or request a replacement API token unless the user asks.
 - Never print the Cloudflare token, put it in source, include it in command-line arguments, or send it through chat. Read it from the existing user environment variable in the local shell.
-- Use the already installed Wrangler binary at `C:\Projects\parley-pickem-live\node_modules\wrangler\bin\wrangler.js` when available. If shell network access is blocked, request network access for Wrangler rather than changing Cloudflare MCP settings.
-- Deploy only `donation-log-api` with `backend/donation-log.wrangler.jsonc`. Its D1 database is `donation-log-db`. Do not change `daily-workout-auth`, `parley-pickem`, or other production Workers.
-- Keep `DONATION_DATA_KEY` as a Cloudflare Worker secret and retain its backup in a persistent, access-restricted local directory outside the repository. Never commit the key, health records, exports, screenshots, or database dumps.
-- Keep the former private Donation Log Site and database as rollback copies until the new hosting path and all migrated records are verified.
+- Use `C:\\Projects\\parley-pickem-live\\node_modules\\wrangler\\bin\\wrangler.js` when available. If shell network access is blocked, request network access for Wrangler instead of changing Cloudflare MCP settings.
+- Deploy `donation-log-api` from `backend/donation-log.wrangler.jsonc`; it uses the separate `donation-log-db` database and the `AUTH_SERVICE` binding to `daily-workout-auth`.
+- The Donation Log requires the existing `daily-workout-auth` `/session` endpoint. It returned HTTP 404 before the current auth source was deployed. If that endpoint returns 404 again, inspect `backend/worker.mjs` and `wrangler.jsonc`; deploy only `daily-workout-auth` from that config after confirming the existing D1 binding and required secret names. This Worker is shared with Daily Workout sign-in, so make only reviewed, source-backed changes.
+- Do not change `parley-pickem`, `parley-pickem-staging`, or other Workers.
+- Preserve the existing `AUTH_DB`, `donation-log-db`, `GOOGLE_CLIENT_SECRET`, `TOKEN_ENCRYPTION_KEY`, and `DONATION_DATA_KEY`. Never recreate databases or rotate encryption keys during routine deployments.
+- Keep the `DONATION_DATA_KEY` backup and all personal health data in persistent access-restricted local storage outside the repository. Never commit health records, exports, screenshots, database dumps, tokens, or key material.
+- Keep the former private Donation Log Site and database as rollback copies until the user explicitly retires them.
