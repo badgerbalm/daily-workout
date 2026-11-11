@@ -120,3 +120,8 @@ Google connection enables shared autosave for the current workout. **Sync now** 
 Run `npm ci` and `npm run test:history` for IndexedDB transaction and DOM workflow regressions. These use fake-indexeddb and jsdom, not real iPhone or Watch testing. On-device validation must cover entry, leaving for Shortcuts, reopening, confirming/skipping and finishing before this milestone is considered device-tested.
 
 The final Done · Finish opens a modal review with tap ratings and optional free-text notes. Review drafts survive reopening; final device cleanup runs after saving the review. Finished notes are included when you explicitly sync. Daily and Monday generation do not automatically read the private Sheet.
+
+
+## Donation Log
+
+The private Donation Log is available at [Donation Log](https://badgerbalm.github.io/daily-workout/donation-log/). It shares this site's GitHub Pages origin and owner-only Google sign-in, while its encrypted visit and medication data use an isolated Cloudflare Worker and D1 database. See [DONATION_LOG_DEPLOYMENT.md](DONATION_LOG_DEPLOYMENT.md) for architecture and deployment details.
