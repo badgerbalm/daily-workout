@@ -90,7 +90,7 @@ const shortcutProfileKey='workout-shortcut-profile'+workoutStorageSuffix;
 const shortcutProfileLockKey='workout-shortcut-profile-lock'+workoutStorageSuffix;
 let shortcutProfile=intervalPractice||safariProduction?'safari':'normal';
 function readShortcutProfileLock(){try{const lock=JSON.parse(localStorage.getItem(shortcutProfileLockKey)||'null');if(lock?.kind==='timer'&&!localStorage.getItem('workout-active-exercise-timer'+workoutStorageSuffix)){localStorage.removeItem(shortcutProfileLockKey);return null}return lock}catch{return null}}
-function currentShortcutProfile(){return safariShortcuts?(readShortcutProfileLock()?.profile||shortcutProfile):'normal'}
+function currentShortcutProfile(){return safariProduction||intervalPractice?'safari':safariShortcuts?(readShortcutProfileLock()?.profile||shortcutProfile):'normal'}
 function updateShortcutProfileControls(message){
   const panel=document.querySelector('#safari-preview');if(!panel)return;
   panel.hidden=!safariShortcuts;
@@ -100,7 +100,7 @@ function updateShortcutProfileControls(message){
   document.querySelector('#shortcut-profile-status').textContent=message||(select.disabled?'Finish the current timer or workout before changing Shortcut sets.':shortcutProfile==='safari'?'Uses Shortcuts ending in Safari. Each one returns to the workout URL saved in its final action.':'Uses your existing Shortcuts. Tap the app icon after Go to Home Screen.');
 }
 if(safariShortcuts){
-  try{const saved=localStorage.getItem(shortcutProfileKey);shortcutProfile=saved==='normal'?'normal':saved==='safari'||intervalPractice||safariProduction?'safari':'normal'}catch{}
+  try{const saved=localStorage.getItem(shortcutProfileKey);shortcutProfile=safariProduction||intervalPractice?'safari':saved==='normal'?'normal':saved==='safari'?'safari':'normal'}catch{}
   const select=document.querySelector('#shortcut-profile');
   if(select)select.onchange=()=>{
     if(readShortcutProfileLock()||readActiveTimer()){updateShortcutProfileControls();return}
