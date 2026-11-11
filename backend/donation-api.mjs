@@ -12,10 +12,10 @@ const json = (body, status = 200, headers = {}) => new Response(JSON.stringify(b
 
 class HttpError extends Error { constructor(status, message) { super(message); this.status = status; } }
 
-async function ownerSession(request) {
+async function ownerSession(request, env) {
   const token = request.headers.get('Authorization');
   if (!token || !/^Bearer [A-Za-z0-9_-]{43}$/.test(token)) throw new HttpError(401, 'Connect Google in Daily Workout to view your private donation log.');
-  const checked = await fetch(AUTH_URL, { headers: { Authorization: token, Origin: APP_ORIGIN }, redirect: 'manual' });
+  const checked = await env.AUTH_SERVICE.fetch(AUTH_URL, { headers: { Authorization: token, Origin: APP_ORIGIN } });
   if (!checked.ok) throw new HttpError(401, 'Your Google connection needs renewal. Reconnect in Daily Workout.');
   const identity = await checked.json();
   if (identity.email !== OWNER_EMAIL) throw new HttpError(403, 'This donation log is private to its owner.');
@@ -136,8 +136,8 @@ export default {
     if (origin !== APP_ORIGIN) return json({ error: 'Origin not allowed.' }, 403);
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     try {
-      if (!env.DONATION_DB || !env.DONATION_DATA_KEY) throw new HttpError(503, 'Donation data service is not configured.');
-      await ownerSession(request);
+      if (!env.DONATION_DB || !env.DONATION_DATA_KEY || !env.AUTH_SERVICE) throw new HttpError(503, 'Donation data service is not configured.');
+      await ownerSession(request, env);
       const url = new URL(request.url);
       if (url.pathname === '/health' && request.method === 'GET') return json({ ok: true, service: 'donation-log-api' }, 200, cors);
       if (url.pathname === '/api/visits') return await visits(request, env).then(result => { for (const [key, value] of Object.entries(cors)) result.headers.set(key, value); return result; });
