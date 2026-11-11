@@ -101,7 +101,8 @@
     "easy-warm-up": {
       "name": "Easy warm-up",
       "aliases": [
-        "Gentle warm-up walk"
+        "Gentle warm-up walk",
+        "Warm-up walk"
       ],
       "status": "ready",
       "photos": [
@@ -129,6 +130,7 @@
         "Recovery walking intervals",
         "Recovery walk",
         "Steady walking",
+        "Steady brisk walk",
         "Comfortable treadmill walk",
         "Easy steady walk",
         "Incline walk",
@@ -160,6 +162,7 @@
       "aliases": [
         "Brisk walking interval",
         "Brisk walking intervals",
+        "Incline walking intervals",
         "Jog interval"
       ],
       "status": "ready",
@@ -184,7 +187,8 @@
     "cool-down": {
       "name": "Cool-down",
       "aliases": [
-        "Gentle cool-down"
+        "Gentle cool-down",
+        "Cool-down walk"
       ],
       "status": "ready",
       "photos": [
@@ -682,7 +686,9 @@
     },
     "shoulder-rolls-and-arm-circles": {
       "name": "Shoulder rolls and arm circles",
-      "aliases": [],
+      "aliases": [
+        "Arm circles"
+      ],
       "status": "partial",
       "reason": "Photo demonstrates arm circles only; shoulder-roll photograph still needed.",
       "photos": [
