@@ -1,0 +1,15 @@
+{
+  "name": "donation-log-api",
+  "main": "donation-api.mjs",
+  "compatibility_date": "2026-11-11",
+  "workers_dev": true,
+  "observability": { "enabled": false },
+  "d1_databases": [
+    {
+      "binding": "DONATION_DB",
+      "database_name": "donation-log-db",
+      "database_id": "2b89e0e3-0b84-4095-b7ec-b4943aebc9f4"
+    }
+  ]
+}
+

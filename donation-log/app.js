@@ -1,0 +1,538 @@
+'use strict';
+
+const storageKey = 'csl-donation-visits-v1';
+const apiBase = 'https://donation-log-api.onlinesny.workers.dev/api';
+const workoutSessionKey = 'daily-workout-google-session-v1';
+const fields = ['systolic', 'diastolic', 'pulse', 'weight', 'temperature', 'hematocrit', 'protein', 'duration'];
+const columns = ['date', 'time', 'visitType', ...fields, 'arm', 'notes', 'source'];
+const form = document.querySelector('#visit');
+const status = document.querySelector('#status');
+const historyStatus = document.querySelector('#history-status');
+const history = document.querySelector('#history');
+const cancel = document.querySelector('#cancel');
+const heading = document.querySelector('#form-title');
+let editing = null;
+let creatingNew = false;
+let records = [];
+let canWrite = true;
+let medicationEvents = [];
+
+function savedSession() {
+  try {
+    const value = JSON.parse(localStorage.getItem(workoutSessionKey) || 'null');
+    return value?.expires * 1000 > Date.now() && typeof value.session === 'string' ? value : null;
+  } catch { return null; }
+}
+
+async function apiRequest(path, options = {}) {
+  const session = savedSession();
+  if (!session) throw new Error('Connect Google in Daily Workout, then return here and refresh.');
+  const response = await fetch(apiBase + path, {
+    ...options,
+    cache: 'no-store',
+    headers: { ...(options.headers || {}), Authorization: 'Bearer ' + session.session }
+  });
+  if (!response.ok) {
+    const detail = await response.json().catch(() => ({}));
+    throw new Error(detail.error || (response.status === 401 ? 'Your Google connection needs renewal. Reconnect in Daily Workout.' : 'The shared database is unavailable.'));
+  }
+  return response;
+}
+
+function validDate(date) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return false;
+  const parsed = new Date(date);
+  return Number.isFinite(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === date;
+}
+
+function normalize(input) {
+  if (!input || !validDate(input.date) || (input.time && !/^([01]\d|2[0-3]):[0-5]\d$/.test(input.time))) {
+    throw new Error('Enter a valid visit date and time.');
+  }
+  const defaultVisitType = input.source === 'Personal BP log' ? 'Other BP reading' : 'CSL donation';
+  const row = { id: input.id || (input.date + ' ' + (input.time || '')), date: input.date, time: input.time || '', visitType: input.visitType || defaultVisitType, arm: input.arm || '', notes: input.notes || '', source: input.source || 'Manual entry' };
+  if (!['CSL donation', 'Doctor / clinic', 'Home reading', 'Other BP reading', 'Other'].includes(row.visitType) || !['', 'Left', 'Right', 'Both'].includes(row.arm) || typeof row.notes !== 'string' || row.notes.length > 2000) {
+    throw new Error('Check the arm and visit notes.');
+  }
+  for (const field of fields) {
+    const value = input[field];
+    const number = value === '' || value == null ? null : Number(value);
+    const whole = ['systolic', 'diastolic', 'pulse'].includes(field);
+    if (number !== null && (!['string','number'].includes(typeof value) || !Number.isFinite(number) ||
+      number < 0 || (whole && (!Number.isInteger(number) || number < 1 || number > 400)) ||
+      (field === 'hematocrit' && number > 100) || (field === 'protein' && (number < 5.5 || number > 9.5)) || (['weight','temperature'].includes(field) && number <= 0))) {
+      throw new Error('Check the value for ' + field + '.');
+    }
+    row[field] = number;
+  }
+  if (row.systolic !== null && row.diastolic !== null && row.systolic <= row.diastolic) {
+    throw new Error('Systolic pressure must be higher than diastolic pressure.');
+  }
+  return row;
+}
+
+function visitKey(row) { return row.id || row.date + ' ' + row.time; }
+function dateTimeKey(row) { return row.date + ' ' + (row.time || ''); }
+function localToday() {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().slice(0, 10);
+}
+function defaultArm() {
+  const latest = records.filter(row => row.visitType === 'CSL donation' && (row.arm === 'Left' || row.arm === 'Right')).sort((a,b) => dateTimeKey(b).localeCompare(dateTimeKey(a)))[0];
+  if (latest?.arm === 'Left') return 'Right';
+  if (latest?.arm === 'Right') return 'Left';
+  return '';
+}
+
+async function save(next, options = {}) {
+  if (!canWrite) throw new Error('Existing browser storage could not be read. Changes are disabled.');
+  await apiRequest('/visits',{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({records:next,replace:options.replace===true})});
+  try { localStorage.setItem(storageKey, JSON.stringify(next)); } catch {}
+  records = next;
+  render();
+  if (typeof drawReport === 'function') drawReport();
+}
+
+async function deleteVisit(row) {
+  const key = visitKey(row);
+  const label = new Date(row.date + 'T12:00:00').toLocaleDateString() + (row.time ? ' at ' + row.time : '') + ' · ' + row.visitType;
+  if (!window.confirm('Permanently delete this visit?\n\n' + label)) return;
+  try {
+    const result = await apiRequest('/visits', {method:'DELETE', headers:{'content-type':'application/json'}, body:JSON.stringify({id:key})});
+    const detail = await result.json().catch(() => ({}));
+    if (!result.ok) throw new Error(detail.error || 'Could not delete this visit from the shared database.');
+    if (!detail.deleted) throw new Error('This visit was not found in the shared database. Refresh the visit list and try again.');
+    records = records.filter(item => visitKey(item) !== key);
+    try { localStorage.setItem(storageKey, JSON.stringify(records)); } catch {}
+    render();
+    if (typeof drawReport === 'function') drawReport();
+    const message = 'Deleted visit for ' + label + '.';
+    historyStatus.textContent = message;
+    if (!document.querySelector('#pending-visits').hidden) document.querySelector('#dashboard-status').textContent = message;
+  } catch (error) {
+    historyStatus.textContent = error.message;
+  }
+}
+
+async function loadSharedRecords(data) {
+  if(!Array.isArray(data.records))throw new Error('The database returned an invalid visit list.');
+  const loaded=data.records.map(normalize);
+  let correctedLabels=0;
+  for(const row of loaded){
+    const legacyHematocrit=Number.isFinite(row.iron)&&row.iron>=35&&row.iron<=60;
+    if(row.source==='workbook'&&row.hematocrit===null&&legacyHematocrit){
+      row.hematocrit=row.iron;
+      row.iron=null;
+      correctedLabels++;
+    } else if(row.source==='workbook'&&row.protein===null&&Number.isFinite(row.iron)&&row.iron>=6&&row.iron<=9){
+      row.protein=row.iron;
+      row.iron=null;
+      correctedLabels++;
+    }
+  }
+  const importedKeys=new Set(loaded.filter(row=>row.source!=='Manual entry').map(dateTimeKey));
+  const cleaned=loaded.filter(row=>!(row.source==='Manual entry'&&row.id===dateTimeKey(row)&&importedKeys.has(dateTimeKey(row))));
+  records=cleaned;render();drawReport();
+  if(!editing) form.elements.arm.value=defaultArm();
+  if(cleaned.length!==loaded.length||correctedLabels){
+    const removed=loaded.length-cleaned.length;
+    await save(cleaned,{replace:true});
+    const messages=['Loaded '+cleaned.length+' visits'];
+    if(correctedLabels)messages.push('corrected Hematocrit and Total protein labels on '+correctedLabels+' spreadsheet rows');
+    if(removed)messages.push('removed '+removed+' duplicate legacy copies');
+    historyStatus.textContent=messages.join('; ')+'.';
+  }
+}
+
+function resetForm() {
+  form.reset();
+  editing = null;
+  heading.textContent = 'New visit';
+  cancel.hidden = true;
+  form.elements.arm.value = defaultArm();
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  form.elements.date.value = now.toISOString().slice(0, 10);
+  form.elements.visitType.value = 'CSL donation';
+  renderEntryDashboard();
+}
+
+function startEditing(row) {
+  editing = visitKey(row);
+  creatingNew = false;
+  for (const field of columns) if (form.elements[field]) form.elements[field].value = row[field] ?? '';
+  heading.textContent = needsDonationDetails(row) ? 'Complete visit' : 'Edit visit';
+  cancel.hidden = false;
+  status.textContent = 'Add the donation time and any readings from the CSL screenshot, then save to update this same visit.';
+  document.querySelectorAll('[data-page-panel]').forEach(panel => panel.hidden = panel.dataset.pagePanel !== 'entry');
+  document.querySelectorAll('.menu-link').forEach(link => link.classList.toggle('active', link.dataset.page === 'entry'));
+  form.elements.time.focus();
+  renderEntryDashboard();
+}
+
+function needsDonationDetails(row) {
+  return row.visitType === 'CSL donation' && !row.time && row.arm && (row.hematocrit !== null || row.protein !== null) &&
+    row.systolic === null && row.diastolic === null && row.pulse === null && row.weight === null && row.temperature === null;
+}
+
+function renderEntryDashboard() {
+  const panel = document.querySelector('#pending-visits');
+  if (!panel) return;
+  const todaysVisits = records.filter(row => row.date === localToday()).sort((a,b) => dateTimeKey(b).localeCompare(dateTimeKey(a)));
+  const showDashboard = editing === null && !creatingNew;
+  panel.hidden = !showDashboard;
+  document.querySelector('#entry-editor').hidden = !editing && !creatingNew;
+  const list = document.querySelector('#pending-list');
+  list.replaceChildren();
+  if (!todaysVisits.length) {
+    const empty = document.createElement('p');
+    empty.className = 'muted';
+    empty.textContent = 'No visits recorded today.';
+    list.append(empty);
+  }
+  for (const row of todaysVisits) {
+    const item = document.createElement('div');
+    item.className = 'pending-visit';
+    const summary = document.createElement('p');
+    const details = [row.time || 'Time not entered', row.visitType];
+    if (row.arm) details.push('Arm ' + row.arm);
+    if (row.hematocrit !== null) details.push('Hematocrit ' + row.hematocrit);
+    if (row.protein !== null) details.push('Total protein ' + row.protein + ' g/dL');
+    if (row.systolic !== null && row.diastolic !== null) details.push('BP ' + row.systolic + '/' + row.diastolic);
+    if (row.pulse !== null) details.push('Pulse ' + row.pulse);
+    if (row.weight !== null) details.push('Weight ' + row.weight + ' lb');
+    if (row.temperature !== null) details.push('Temp ' + row.temperature + ' °F');
+    details.unshift(new Date(row.date + 'T12:00:00').toLocaleDateString());
+    summary.textContent = details.join(' · ');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = needsDonationDetails(row) ? 'Add additional details' : 'Edit visit';
+    button.addEventListener('click', () => startEditing(row));
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'secondary';
+    remove.textContent = 'Delete';
+    remove.setAttribute('aria-label', 'Delete visit ' + row.date + (row.time ? ' at ' + row.time : ''));
+    remove.addEventListener('click', () => deleteVisit(row));
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    actions.append(button, remove);
+    item.append(summary, actions);
+    list.append(item);
+  }
+}
+
+function render() {
+  history.replaceChildren();
+  renderHistoryTable();
+  renderHistoryChart();
+  renderEntryDashboard();
+  if (!records.length) {
+    if (canWrite) historyStatus.textContent = 'No visits saved yet.';
+    return;
+  }
+  historyStatus.textContent = records.length + (records.length === 1 ? ' visit saved' : ' visits saved');
+  for (const row of [...records].sort((a,b) => visitKey(b).localeCompare(visitKey(a)))) {
+    const item = document.createElement('li');
+    const text = document.createElement('div');
+    const title = document.createElement('strong');
+    const details = document.createElement('span');
+    title.textContent = visitKey(row).trim();
+    const readings = [];
+    if (row.systolic !== null || row.diastolic !== null) readings.push((row.systolic ?? '—') + '/' + (row.diastolic ?? '—') + ' mm Hg');
+    if (row.pulse !== null) readings.push(row.pulse + ' bpm');
+    if (row.weight !== null) readings.push(row.weight + ' lb');
+    details.textContent = readings.join(' · ') || 'Visit details';
+    text.append(title, details);
+    const edit = document.createElement('button');
+    edit.textContent = needsDonationDetails(row) ? 'Add donation details' : 'Edit';
+    edit.className = 'secondary';
+    edit.setAttribute('aria-label', 'Edit visit ' + title.textContent);
+    edit.addEventListener('click', () => startEditing(row));
+    const remove = document.createElement('button');
+    remove.textContent = 'Delete';
+    remove.className = 'secondary';
+    remove.setAttribute('aria-label', 'Delete visit ' + title.textContent);
+    remove.addEventListener('click', () => deleteVisit(row));
+    const actions = document.createElement('div');
+    actions.className = 'actions';
+    actions.append(edit, remove);
+    item.append(text, actions);
+    history.append(item);
+  }
+}
+
+function renderHistoryTable(){
+  const body=document.querySelector('#history-table tbody');body.replaceChildren();
+  for(const row of [...records].sort((a,b)=>visitKey(b).localeCompare(visitKey(a)))){
+    const tr=document.createElement('tr');
+    const values=[row.date,row.visitType,(row.systolic??'')+'/'+(row.diastolic??''),row.pulse,row.weight,row.temperature,row.hematocrit,row.protein,[row.arm,row.duration===null?'':row.duration+' min'].filter(Boolean).join(' · '),row.notes];
+    for(const value of values){const td=document.createElement('td');td.textContent=value===null?'':String(value);tr.append(td);}
+    body.append(tr);
+  }
+}
+
+function renderHistoryChart(){
+  const svg=document.querySelector('#history-chart');svg.replaceChildren();svg.setAttribute('viewBox','0 0 760 320');
+  const dated=records.filter(row=>validDate(row.date)).sort((a,b)=>a.date.localeCompare(b.date));
+  if(!dated.length){svg.setAttribute('aria-label','No saved visits yet');return;}
+  const first=Date.parse(dated[0].date+'T00:00:00Z'),last=Date.parse(dated.at(-1).date+'T00:00:00Z');
+  const x=row=>72+(last===first?0:(Date.parse(row.date+'T00:00:00Z')-first)/(last-first)*650);
+  const ns='http://www.w3.org/2000/svg';
+  const series=[{field:'systolic',name:'Systolic BP',color:'#b4422e',min:40,max:220},{field:'diastolic',name:'Diastolic BP',color:'#236a83',min:40,max:220},{field:'weight',name:'Weight',color:'#518250',min:80,max:300},{field:'hematocrit',name:'Hematocrit',color:'#916c25',min:20,max:70},{field:'protein',name:'Total protein',color:'#7654a5',min:5,max:12}];
+  for(const [index,item] of series.entries()){
+    const vals=dated.filter(r=>Number.isFinite(r[item.field]));
+    const low=item.min,high=item.max,top=32+index*68;
+    const points=vals.map(row=>x(row)+','+(top+52-(row[item.field]-low)/(high-low)*48)).join(' ');
+    if(points){const line=document.createElementNS(ns,'polyline');line.setAttribute('points',points);line.setAttribute('fill','none');line.setAttribute('stroke',item.color);line.setAttribute('stroke-width','2.5');svg.append(line);}
+  }
+  for(const row of dated.filter(r=>Number.isFinite(r.systolic)&&Number.isFinite(r.diastolic))){
+    const cy=300-(row.systolic-80)*1.3;
+    const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',x(row));dot.setAttribute('cy',Math.max(18,Math.min(305,cy)));dot.setAttribute('r','3');dot.setAttribute('fill','#b4422e');dot.setAttribute('aria-label',row.date+' blood pressure '+row.systolic+'/'+row.diastolic);svg.append(dot);
+  }
+}
+
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  try {
+    const input=Object.fromEntries(new FormData(form));
+    if(editing){const original=records.find(record=>visitKey(record)===editing);input.id=original?.id;input.source=original?.source;}
+    const row = normalize(input);
+    const next = records.filter(record => visitKey(record) !== editing);
+    if (next.some(record => visitKey(record) === visitKey(row))) {
+      throw new Error('A visit already uses this date and time. Edit that visit or enter a different time.');
+    }
+    const wasEditing = editing !== null;
+    const isPreDonationScreen = !row.time && row.visitType === 'CSL donation' && row.arm && (row.hematocrit !== null || row.protein !== null) && row.systolic === null && row.diastolic === null && row.pulse === null && row.weight === null && row.temperature === null;
+    await save([...next, row]);
+    creatingNew = false;
+    resetForm();
+    const saveMessage = wasEditing ? 'Updated visit for ' + row.date + '.' :
+      (isPreDonationScreen
+        ? 'Pre-donation screening saved. Add additional details here after the donation.'
+        : 'Saved visit for ' + row.date + '.');
+    status.textContent = saveMessage;
+    document.querySelector('#dashboard-status').textContent = document.querySelector('#pending-visits').hidden ? '' : saveMessage;
+  } catch (error) { status.textContent = error.message; }
+});
+
+cancel.addEventListener('click', () => {
+  resetForm();
+  status.textContent = '';
+  form.elements.date.focus();
+});
+
+form.elements.visitType.addEventListener('change', () => {
+  if (form.elements.visitType.value === 'CSL donation') {
+    form.elements.arm.value = defaultArm();
+    status.textContent = 'CSL donation selected. Enter the screening values for this visit.';
+    return;
+  }
+  for (const name of ['time', 'systolic', 'diastolic', 'pulse', 'weight', 'temperature', 'hematocrit', 'protein', 'duration', 'arm', 'notes']) {
+    form.elements[name].value = '';
+  }
+  const preview = document.querySelector('#scan-preview');
+  if (preview.src.startsWith('blob:')) URL.revokeObjectURL(preview.src);
+  preview.removeAttribute('src');
+  preview.hidden = true;
+  document.querySelector('#scan-status').textContent = '';
+  document.querySelector('#scan-image').value = '';
+  status.textContent = 'Non-CSL visit selected. Other fields were cleared; the date was kept.';
+});
+
+document.querySelector('#add-new-visit').addEventListener('click', () => {
+  creatingNew = true;
+  resetForm();
+  document.querySelector('#pending-visits').hidden = true;
+  document.querySelector('#entry-editor').hidden = false;
+  form.elements.date.focus();
+});
+
+function download(name, body, type) {
+  const url = URL.createObjectURL(new Blob([body], {type}));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = name;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function csvValue(value) {
+  let text = String(value ?? '');
+  if (/^\s*[=+@-]/.test(text)) text = "'" + text;
+  return '"' + text.replaceAll('"','""') + '"';
+}
+
+document.querySelector('#csv').onclick = () => {
+  const rows = [...records].sort((a,b) => visitKey(a).localeCompare(visitKey(b)));
+  const headers={date:'Date',time:'Time',visitType:'Visit type',systolic:'Systolic BP',diastolic:'Diastolic BP',pulse:'Pulse (bpm)',weight:'Weight (lb)',temperature:'Temperature (°F)',hematocrit:'Hematocrit',protein:'Total protein (g/dL)',duration:'Duration (min)',arm:'Arm',notes:'Notes',source:'Source'};
+  const lines = [columns.map(key=>csvValue(headers[key]||key)).join(','), ...rows.map(row => columns.map(key => csvValue(row[key])).join(','))];
+  download('donation-visits.csv', lines.join('\r\n') + '\r\n', 'text/csv');
+};
+
+document.querySelector('#backup').onclick = () => {
+  download('donation-backup.json', JSON.stringify({version:1, records}, null, 2), 'application/json');
+};
+
+const fileInput = document.querySelector('#file');
+document.querySelector('#import').onclick = () => fileInput.click();
+fileInput.onchange = async () => {
+  try {
+    const file = fileInput.files[0];
+    if (!file) return;
+    if (file.size > 5000000) throw new Error('Select a backup smaller than 5 MB.');
+    const backup = JSON.parse(await file.text());
+    if (backup?.version !== 1 || !Array.isArray(backup.records)) throw new Error('Choose a Donation Log JSON backup.');
+    const next = new Map(records.map(row => [visitKey(row), row]));
+    let added = 0;
+    let updated = 0;
+    let unchanged = 0;
+    let conflicts = 0;
+    const migratedLegacyKeys = new Set();
+    for (const raw of backup.records) {
+      const row = normalize(raw);
+      const key = visitKey(row);
+      let existing = next.get(key);
+      const legacyKey = row.date + ' ' + row.time;
+      if (!existing && !migratedLegacyKeys.has(legacyKey)) {
+        const legacy = next.get(legacyKey);
+        if (legacy && (legacy.source === 'Manual entry' || legacy.id === legacyKey)) {
+          existing = legacy;
+          next.delete(legacyKey);
+          migratedLegacyKeys.add(legacyKey);
+        }
+      }
+      if (existing) {
+        if (columns.every(field => (existing[field] ?? '') === (row[field] ?? ''))) {
+          unchanged++;
+        } else if (existing.source === 'Manual entry' || existing.source === row.source || existing.id === legacyKey) {
+          next.set(key, row);
+          updated++;
+        } else {
+          conflicts++;
+        }
+      } else {
+        next.set(key, row);
+        added++;
+      }
+    }
+    await save([...next.values()]);
+    historyStatus.textContent = 'Import complete: ' + added + ' new, ' + updated + ' updated, ' + unchanged + ' unchanged, ' + conflicts + ' conflicts skipped.';
+  } catch (error) { historyStatus.textContent = error instanceof SyntaxError ? 'The backup is not valid JSON.' : error.message; }
+  finally { fileInput.value = ''; }
+};
+
+resetForm();
+render();
+historyStatus.textContent='Loading your shared visits…';
+apiRequest('/visits').then(async response=>{
+  const data=await response.json();
+  await loadSharedRecords(data);
+  document.querySelector('#connection-help').hidden=true;
+}).catch(error=>{historyStatus.textContent=error.message;document.querySelector('#connection-help').hidden=false;});
+apiRequest('/medications').then(async response=>{
+  const data=await response.json();
+  medicationEvents=Array.isArray(data.events)?data.events:[];
+  drawReport();
+}).catch(()=>{medicationEvents=[];drawReport();});
+document.querySelector('#visit-refresh').addEventListener('click',async()=>{
+  historyStatus.textContent='Refreshing…';
+  try{const response=await apiRequest('/visits');const data=await response.json();await loadSharedRecords(data);historyStatus.textContent='History refreshed.';}
+  catch(error){historyStatus.textContent=error.message;}
+});
+function drawReport() {
+  const medications = document.querySelector('#medications');
+  medications.replaceChildren();
+  for (const event of medicationEvents) {
+    const item = document.createElement('div');
+    item.className = 'medication';
+    item.textContent = new Date(event.date + 'T12:00:00').toLocaleDateString() + ' · ' + event.label;
+    medications.append(item);
+  }
+  const readings = records.filter(row => row.systolic !== null && row.diastolic !== null).sort((a,b)=>a.date.localeCompare(b.date));
+  const svg = document.querySelector('#bp-chart');
+  svg.replaceChildren();
+  svg.setAttribute('viewBox','0 0 760 300');
+  if (!readings.length) {
+    document.querySelector('#period-summary').textContent = 'Add blood pressure readings to see the trend.';
+    return;
+  }
+  const ns='http://www.w3.org/2000/svg';
+  const x=i=>62+(readings.length===1?0:i*640/(readings.length-1));
+  const y=v=>250-(v-60)*2.1;
+  for (const tick of [60,80,100,120,140,160,180]) {
+    const line=document.createElementNS(ns,'line'); line.setAttribute('x1',55);line.setAttribute('x2',720);line.setAttribute('y1',y(tick));line.setAttribute('y2',y(tick));line.setAttribute('stroke','#d8e2df');svg.append(line);
+    const label=document.createElementNS(ns,'text');label.setAttribute('x',8);label.setAttribute('y',y(tick)+4);label.setAttribute('font-size','12');label.textContent=String(tick);svg.append(label);
+  }
+  const addSeries=(field,color,title)=>{
+    const points=readings.map((row,i)=>x(i)+','+y(row[field])).join(' ');
+    const poly=document.createElementNS(ns,'polyline');poly.setAttribute('points',points);poly.setAttribute('fill','none');poly.setAttribute('stroke',color);poly.setAttribute('stroke-width','2.5');svg.append(poly);
+    readings.forEach((row,i)=>{const dot=document.createElementNS(ns,'circle');dot.setAttribute('cx',x(i));dot.setAttribute('cy',y(row[field]));dot.setAttribute('r','3.5');dot.setAttribute('fill',color);dot.setAttribute('aria-label',row.date+' '+title+' '+row[field]);svg.append(dot);});
+  };
+  addSeries('systolic','#b4422e','Systolic');addSeries('diastolic','#236a83','Diastolic');
+  for (const event of medicationEvents) {
+    const index=readings.findIndex(row=>row.date>=event.date);
+    if(index<0) continue;
+    const line=document.createElementNS(ns,'line');line.setAttribute('x1',x(index));line.setAttribute('x2',x(index));line.setAttribute('y1',15);line.setAttribute('y2',250);line.setAttribute('stroke','#7d5b9b');line.setAttribute('stroke-dasharray','5 4');svg.append(line);
+  }
+  const legend=document.createElementNS(ns,'text');legend.setAttribute('x',565);legend.setAttribute('y',20);legend.setAttribute('font-size','13');legend.textContent='● Systolic   ● Diastolic   ⋮ Medication';svg.append(legend);
+  const periods=[['Before Feb 25, 2026',r=>r.date<'2026-02-25'],['Feb 25–May 31, 2026',r=>r.date>='2026-02-25'&&r.date<'2026-06-01'],['Jun 1, 2026 onward',r=>r.date>='2026-06-01']];
+  const summary=document.querySelector('#period-summary');summary.replaceChildren();
+  for(const [name,include] of periods){const subset=readings.filter(include);const box=document.createElement('div');if(subset.length){const mean=key=>Math.round(subset.reduce((total,row)=>total+row[key],0)/subset.length);box.textContent=name+' · '+subset.length+' readings · average '+mean('systolic')+'/'+mean('diastolic')+' mm Hg';}else box.textContent=name+' · no readings';summary.append(box);}
+}
+drawReport();
+document.querySelector('#print-report').addEventListener('click',()=>window.print());
+const menu=document.querySelector('#app-menu');
+const menuButton=document.querySelector('#menu-open');
+const backdrop=document.querySelector('#menu-backdrop');
+function closeMenu(){menu.classList.remove('open');menu.setAttribute('aria-hidden','true');menuButton.setAttribute('aria-expanded','false');backdrop.hidden=true;}
+menuButton.addEventListener('click',()=>{menu.classList.add('open');menu.setAttribute('aria-hidden','false');menuButton.setAttribute('aria-expanded','true');backdrop.hidden=false;document.querySelector('#menu-close').focus();});
+document.querySelector('#menu-close').addEventListener('click',()=>{closeMenu();menuButton.focus();});
+backdrop.addEventListener('click',closeMenu);
+document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMenu();});
+document.querySelectorAll('.menu-link').forEach(link=>link.addEventListener('click',()=>{
+  const selected=link.dataset.page;
+  document.querySelectorAll('[data-page-panel]').forEach(panel=>panel.hidden=panel.dataset.pagePanel!==selected);
+  document.querySelectorAll('.menu-link').forEach(item=>item.classList.toggle('active',item===link));
+  closeMenu();
+}));
+const chartToggle=document.querySelector('#toggle-bp-chart');
+chartToggle.addEventListener('click',()=>{
+  const panel=document.querySelector('#bp-chart-panel');
+  panel.hidden=!panel.hidden;
+  chartToggle.setAttribute('aria-expanded',String(!panel.hidden));
+  chartToggle.textContent=panel.hidden?'Show BP graph':'Hide BP graph';
+});
+
+const scanImage=document.querySelector('#scan-image');
+scanImage.addEventListener('change',async()=>{
+  const file=scanImage.files?.[0]; if(!file)return;
+  const preview=document.querySelector('#scan-preview');
+  if(preview.src.startsWith('blob:'))URL.revokeObjectURL(preview.src);
+  preview.src=URL.createObjectURL(file);preview.hidden=false;
+  const message=document.querySelector('#scan-status');
+  message.textContent='Screenshot opened for review. Fill the visit fields from the image, then save the visit.';
+  const Detector=window.TextDetector;
+  if(Detector){
+    try{
+      const detector=new Detector();const text=await detector.detect(preview);
+      const combined=text.map(part=>part.rawValue).join(' ');
+      const bp=combined.match(/(\d{2,3})\s*[\/]\s*(\d{2,3})/);
+      const date=combined.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s+\d{4}/i);
+      const weight=combined.match(/(\d{2,3})\s*lbs?/i);
+      const pulse=combined.match(/(\d{2,3})\s*beats?\s*\/\s*min/i);
+      const temperature=combined.match(/(\d{2,3}(?:\.\d)?)\s*°?\s*F\b/i);
+      const time=combined.match(/\b(\d{1,2}):(\d{2})\s*(AM|PM)\b/i);
+      if(bp){form.elements.systolic.value=bp[1];form.elements.diastolic.value=bp[2];}
+      if(weight)form.elements.weight.value=weight[1];
+      if(pulse)form.elements.pulse.value=pulse[1];
+      if(temperature)form.elements.temperature.value=temperature[1];
+      if(time){let hour=Number(time[1])%12;if(time[3].toUpperCase()==='PM')hour+=12;form.elements.time.value=String(hour).padStart(2,'0')+':'+time[2];}
+      if(date){const parsed=new Date(date[0]);if(!Number.isNaN(parsed.valueOf()))form.elements.date.value=parsed.toISOString().slice(0,10);}
+      message.textContent=bp?'Possible readings filled in. Check every field against the screenshot before saving.':'Screenshot opened. Check the date and readings in the image and enter them in the form.';
+    }catch{message.textContent='Screenshot opened. Check the date and readings in the image and enter them in the form.';}
+  }
+  scanImage.value='';
+});
+
