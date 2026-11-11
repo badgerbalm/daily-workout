@@ -3,7 +3,10 @@ const AUTH_URL = 'https://daily-workout-auth.onlinesny.workers.dev/session';
 const OWNER_EMAIL = 'onlinesny@gmail.com';
 const enc = new TextEncoder();
 const b64 = bytes => btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
-const unb64 = value => Uint8Array.from(atob(value.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+const unb64 = value => {
+  const encoded = value.replace(/-/g, '+').replace(/_/g, '/');
+  return Uint8Array.from(atob(encoded + '='.repeat((4 - encoded.length % 4) % 4)), c => c.charCodeAt(0));
+};
 const json = (body, status = 200, headers = {}) => new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', ...headers } });
 
 class HttpError extends Error { constructor(status, message) { super(message); this.status = status; } }
