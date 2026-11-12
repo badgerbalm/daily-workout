@@ -14,9 +14,9 @@ class HttpError extends Error { constructor(status, message) { super(message); t
 
 async function ownerSession(request, env) {
   const token = request.headers.get('Authorization');
-  if (!token || !/^Bearer [A-Za-z0-9_-]{43}$/.test(token)) throw new HttpError(401, 'Connect Google in Daily Workout to view your private donation log.');
+  if (!token || !/^Bearer [A-Za-z0-9_-]{43}$/.test(token)) throw new HttpError(401, 'Sign in to Donation Log to view your private donation data.');
   const checked = await env.AUTH_SERVICE.fetch(AUTH_URL, { headers: { Authorization: token, Origin: APP_ORIGIN } });
-  if (!checked.ok) throw new HttpError(401, 'Your Google connection needs renewal. Reconnect in Daily Workout.');
+  if (!checked.ok) throw new HttpError(401, 'Your Donation Log sign-in needs renewal. Sign in again here.');
   const identity = await checked.json();
   if (identity.email !== OWNER_EMAIL) throw new HttpError(403, 'This donation log is private to its owner.');
 }
