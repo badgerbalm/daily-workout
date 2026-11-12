@@ -2,6 +2,7 @@
 const CLIENT='790497358549-7lg9e6q8jbv08g1l3p4d1grm92o071js.apps.googleusercontent.com';
 const EMAIL='onlinesny@gmail.com',SCOPE='https://www.googleapis.com/auth/drive.file';
 const APP='https://badgerbalm.github.io/daily-workout/';
+const DONATION_APP='https://badgerbalm.github.io/donation-log/';
 const ORIGIN=new URL(APP).origin;
 const enc=new TextEncoder(),dec=new TextDecoder();
 const b64=bytes=>btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
@@ -52,17 +53,18 @@ export function createHandler(requestGoogle=(...args)=>globalThis.fetch(...args)
   if(request.method==='OPTIONS')return finish(new Response(null,{status:204}));
   if(!env.GOOGLE_CLIENT_SECRET||!env.TOKEN_ENCRYPTION_KEY||!env.AUTH_DB)throw new Failure(503,'Google connection setup is not complete.');
   if(url.pathname==='/auth/start'&&request.method==='POST'){
-   const data=await body(request,2000);if(!valid(data.challenge)||!valid(data.state))throw new Failure(400,'Invalid connection request.');
+   const data=await body(request,2000),app=data.app||'workout';if(!valid(data.challenge)||!valid(data.state)||!['workout','donation'].includes(app))throw new Failure(400,'Invalid connection request.');
    const state=random(),verifier=random();
-   await db(env).prepare('INSERT INTO oauth_pending VALUES (?, ?, ?, ?, ?)').bind(await hash(state),data.challenge,data.state,verifier,now()+600).run();
+   await db(env).prepare('INSERT INTO oauth_pending VALUES (?, ?, ?, ?, ?)').bind(await hash(state),data.challenge,app+':'+data.state,verifier,now()+600).run();
    const params=new URLSearchParams({client_id:CLIENT,redirect_uri:url.origin+'/oauth/callback',response_type:'code',scope:'openid email '+SCOPE,access_type:'offline',prompt:'consent',login_hint:EMAIL,state,code_challenge:await hash(verifier),code_challenge_method:'S256'});
    return finish(json({url:'https://accounts.google.com/o/oauth2/v2/auth?'+params}));
   }
   if(url.pathname==='/oauth/callback'&&request.method==='GET'){
-   const state=url.searchParams.get('state');if(!valid(state))throw new Failure(400,'Invalid OAuth state. Return to Daily Workout and reconnect.');
+   const state=url.searchParams.get('state');if(!valid(state))throw new Failure(400,'Invalid OAuth state. Return to the app and reconnect.');
    step='oauth-state';const pending=await db(env).prepare('DELETE FROM oauth_pending WHERE state_hash = ? AND expires > ? RETURNING *').bind(await hash(state),now()).first();if(!pending)throw new Failure(400,'This connection link expired or was already used.');
-   const back=new URL(APP);
-   if(url.searchParams.has('error')){back.hash=new URLSearchParams({workout_auth_error:'cancelled',workout_state:pending.client_state});return finish(Response.redirect(back.href,303))}
+   const route=/^(workout|donation):([A-Za-z0-9_-]{43})$/.exec(pending.client_state),app=route?.[1]||'workout',clientState=route?.[2]||pending.client_state;if(!valid(clientState))throw new Failure(400,'Invalid connection destination.');
+   const back=new URL(app==='donation'?DONATION_APP:APP);
+   if(url.searchParams.has('error')){back.hash=new URLSearchParams({[app+'_auth_error']:'cancelled',[app+'_state']:clientState});return finish(Response.redirect(back.href,303))}
    const code=url.searchParams.get('code');if(!code||code.length>4096)throw new Failure(400,'Missing Google authorization code.');
    step='google-exchange';const data=await googleToken({grant_type:'authorization_code',code,redirect_uri:url.origin+'/oauth/callback',code_verifier:pending.google_verifier},env,requestGoogle);
    if(!data.scope?.split(' ').includes(SCOPE)||!data.refresh_token)throw new Failure(401,'Google did not grant renewable Drive access. Return to Daily Workout and connect again.');
@@ -71,7 +73,7 @@ export function createHandler(requestGoogle=(...args)=>globalThis.fetch(...args)
    if(identity.email!==EMAIL||identity.email_verified!==true)throw new Failure(403,'Only the configured Daily Workout owner may connect.');
    step='save-connection';const ticket=random(),expires=data.refresh_token_expires_in?now()+Number(data.refresh_token_expires_in):null;
    await db(env).prepare('INSERT INTO oauth_tickets VALUES (?, ?, ?, ?, ?)').bind(await hash(ticket),pending.challenge,await seal(data.refresh_token,env),expires,now()+300).run();
-   step='return-to-app';back.hash=new URLSearchParams({workout_auth:ticket,workout_state:pending.client_state});return finish(Response.redirect(back.href,303));
+   step='return-to-app';back.hash=new URLSearchParams({[app+'_auth']:ticket,[app+'_state']:clientState});return finish(Response.redirect(back.href,303));
   }
   if(url.pathname==='/auth/complete'&&request.method==='POST'){
    const data=await body(request,2000);if(!valid(data.ticket)||!valid(data.verifier))throw new Failure(400,'Invalid connection completion.');
