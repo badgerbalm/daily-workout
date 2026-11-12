@@ -49,10 +49,10 @@ Never store the health dataset, sanitized imports, or encryption key in the scri
 
 ## Publish the website
 
-Publish the repository's `main` branch to GitHub Pages using the current Daily Workout Pages configuration. The app is self-contained under `donation-log/` and uses relative asset links, so its files do not interfere with the Workout app's root routes. The Workout home page links to the Donation Log subpath.
+Publish the standalone frontend from the `badgerbalm/donation-log` repository to its own `/donation-log/` site. Do not copy the application into the Daily Workout project. Keep `/daily-workout/donation-log/` as a redirect for existing bookmarks.
 
 ## Authentication and privacy
 
-The browser reuses the same-origin owner session created by Daily Workout. If its session expires, open Daily Workout, reconnect Google, return to the Donation Log, and refresh. The API accepts calls only from `https://badgerbalm.github.io`, verifies the bearer session against the existing auth Worker, and rejects any identity other than the configured owner. All API responses disable caching. Donation data is stored only in the separate encrypted Cloudflare D1 database, not Google Sheets.
+Donation Log has its own Google sign-in button and session key. It starts OAuth from `https://badgerbalm.github.io/donation-log/`, and the shared auth Worker returns the completed session directly to that URL. Users should not need to open the Workout screen. The API accepts calls only from `https://badgerbalm.github.io`, verifies the bearer session against the auth Worker, and rejects any identity other than the configured owner. All API responses disable caching. Donation data stays in the separate encrypted `donation-log-db`, not Google Sheets.
 
 The former private Donation Log Site and database remain untouched as rollback copies. Do not remove them unless the user explicitly asks.
