@@ -141,3 +141,16 @@ body{padding-top:0}
 .item>.toggle-exercise-details{display:none}
 .result-field-wide{grid-column:1/-1}
 .sheet-open-link{display:inline-flex;align-items:center;min-height:48px;padding:12px 16px;border-radius:12px;font-size:14px;font-weight:650;text-decoration:none}
+.google-sheet-viewer{box-sizing:border-box;width:min(96vw,1000px);height:min(92dvh,900px);max-height:92dvh;padding:0;border:1px solid var(--theme-line);border-radius:18px;background:#fff;color:var(--theme-ink);overflow:hidden;box-shadow:0 24px 90px #0005}
+.google-sheet-viewer[open]{display:flex;flex-direction:column}
+.google-sheet-viewer::backdrop{background:#101c32aa}
+.google-sheet-viewer>header{position:static;flex:none;padding:14px 18px;border-bottom:3px solid var(--theme-accent);background:var(--theme-navy);color:#fff}
+.google-sheet-viewer h2{margin:0;font-size:20px}
+.google-sheet-viewer-tools{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px 0}
+.google-sheet-viewer-tools a,.google-sheet-viewer-tools button{width:auto;min-height:44px;margin:0;padding:10px 14px;font-size:14px;text-decoration:none}
+.google-sheet-viewer-note,.google-sheet-viewer-status{flex:none;margin:10px 16px 0;font-size:13px;line-height:1.4}
+.google-sheet-viewer-status{color:var(--theme-muted);margin-bottom:10px}
+.google-sheet-viewer iframe{display:block;width:100%;flex:1;min-height:80px;border:0;background:#f1f4f8}
+.google-sheet-viewer>footer{flex:none;display:flex;justify-content:flex-end;padding:10px 16px;border-top:1px solid var(--theme-line);background:#fff}
+.google-sheet-viewer>footer button{min-height:44px;margin:0;padding:10px 14px}
+@media(max-width:520px){.google-sheet-viewer{width:96vw;height:92dvh}.google-sheet-viewer>header{padding:13px 15px}}

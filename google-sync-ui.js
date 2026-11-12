@@ -3,6 +3,9 @@
  if(window.WorkoutRememberedGoogle)return;
  const panel=document.querySelector('#google-sync');if(!panel)return;
  const connect=panel.querySelector('#google-connect'),sync=panel.querySelector('#google-sync-now'),create=panel.querySelector('#google-create-sheet'),disconnect=panel.querySelector('#google-disconnect'),status=panel.querySelector('#google-sync-status'),link=panel.querySelector('#google-sheet-link');
+ const viewer=document.querySelector('#google-sheet-viewer'),frame=viewer?.querySelector('iframe'),viewerStatus=viewer?.querySelector('#google-sheet-viewer-status'),openInGoogle=viewer?.querySelector('#open-google-sheet');let viewerTimeout;
+ function refreshSheetPreview(){if(!link||!frame||!viewerStatus)return;clearTimeout(viewerTimeout);viewerStatus.textContent='Loading Google Spreadsheet…';const url=new URL(link.href);url.pathname=url.pathname.replace(/\/edit\/?$/,'/preview');url.searchParams.set('gid','0');url.searchParams.set('refresh',String(Date.now()));frame.src=url.href;viewerTimeout=setTimeout(()=>{viewerStatus.textContent='If the sheet has not appeared, use Open in Google.'},12000)}
+ if(viewer&&link){frame.onload=()=>{clearTimeout(viewerTimeout);viewerStatus.textContent='Use Refresh sheet to check for the latest changes.'};link.onclick=event=>{event.preventDefault();openInGoogle.href=link.href;viewer.showModal();refreshSheetPreview()};viewer.querySelector('#refresh-google-sheet').onclick=refreshSheetPreview;viewer.querySelector('#close-google-sheet-viewer').onclick=()=>viewer.close();viewer.addEventListener('close',()=>{clearTimeout(viewerTimeout);frame.src='about:blank'})}
  const service=WorkoutGoogleSync.createSync({store:WorkoutLog.store,onStatus:message=>status.textContent=message});
  const sheetKey='workout-google-sheet-id';
  try{const known=localStorage.getItem(sheetKey);if(known)link.href='https://docs.google.com/spreadsheets/d/'+encodeURIComponent(known)+'/edit'}catch{}
