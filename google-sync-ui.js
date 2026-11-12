@@ -34,7 +34,13 @@
  sync.onclick=async()=>{busy=true;controls();try{await WorkoutLog.flush({allowFinished:true});await performSync()}catch(error){fail(error)}finally{busy=false;controls()}};
  create.onclick=async()=>{busy=true;controls();try{await service.createSheet();await performSync()}catch(error){fail(error)}finally{busy=false;controls()}};
  disconnect.onclick=()=>{service.disconnect();create.hidden=true;controls()};
- window.addEventListener('workout-finished',()=>{if(service.connected())message('New workout saved on this device. Tap Sync now to back it up to Google.')});
+ window.addEventListener('workout-finished',async()=>{
+  if(!service.connected()){message('Workout saved on this device. Connect Google to back it up to your Sheet.');return;}
+  busy=true;controls();message('Workout saved. Syncing to Google…');
+  try{await WorkoutLog.flush({allowFinished:true});await performSync()}
+  catch(error){fail(error)}
+  finally{busy=false;controls()}
+ });
  window.addEventListener('pageshow',controls);
  controls();
 })();
