@@ -2,7 +2,7 @@
 (function(){
  'use strict';
  const store=WorkoutHistoryStore.createStore();
- let plan,scope='',storageSuffix='',session=null,sharedState=null,available=true,pending={},serial=Promise.resolve(),cardViewSerial=Promise.resolve(),entries=new Map(),invalid=new Map(),outcomes=new Map();
+ let plan,scope='',storageSuffix='',session=null,sharedState=null,sharedStateChecked=false,available=true,pending={},serial=Promise.resolve(),cardViewSerial=Promise.resolve(),entries=new Map(),invalid=new Map(),outcomes=new Map();
  let recovery={};
  const recoveryKey=()=> 'workout-result-recovery:'+scope;
  function checkpoint({allowFinished=false}={}){
@@ -19,8 +19,8 @@
  const error=reason=>feedback('Not saved: '+reason.message);
  async function prepare(incoming,selectedScope){
   storageSuffix=selectedScope||'';scope=selectedScope||'daily';
-  try{try{await window.WorkoutSharedStateReady}catch{}session=await store.active(scope);
-   if(scope==='daily'&&sharedState?.connected()){try{const remote=await sharedState.getWorkout();if(remote){const merged=await store.mergeShared(remote);session=merged.status==='finished'?null:merged}if(session)session=await store.mergeShared(await sharedState.saveWorkout(session));}catch{}}
+  try{try{await window.WorkoutSharedStateReady}catch{}session=await store.active(scope);sharedStateChecked=false;
+   if(scope==='daily'&&sharedState?.connected()){try{const remote=await sharedState.getWorkout();if(remote){const merged=await store.mergeShared(remote);session=merged.status==='finished'?null:merged}sharedStateChecked=true;if(session)session=await store.mergeShared(await sharedState.saveWorkout(session));}catch{}}
    const saved=JSON.parse(localStorage.getItem(recoveryKey())||'null');
    if(saved?.sessionId){const prior=await store.getSession(saved.sessionId);if(prior?.status==='finished'){localStorage.removeItem(recoveryKey());}else if(session&&session.id!==saved.sessionId)throw Error('Another workout is active; saved recovery data was retained.');}
    const restored=JSON.parse(localStorage.getItem(recoveryKey())||'null');
@@ -67,6 +67,25 @@
    if(scope==='daily'&&sharedState?.connected()){try{const remote=await sharedState.saveWorkout(session);if(remote?.id===session.id)session=await store.mergeShared(remote)}catch{}}
    return session?.cardView||view;
   });return cardViewSerial;
+ }
+ function persistCardViewForShortcut(view){
+  if(scope!=='daily'||!sharedState?.connected()||(!session&&!sharedStateChecked)||session?.status==='finished'||!plan)return;
+  const timestamp=new Date().toISOString();let snapshot=session?JSON.parse(JSON.stringify(session)):null;
+  if(!snapshot){
+   const exercises={};
+   plan.sections.forEach((section,s)=>section.items.forEach((item,i)=>{const key=item.progressKey||s+'-'+i;exercises[key]={id:crypto.randomUUID(),key,name:item.name,prescribed:item,status:'unfinished',completionSource:null,actual:{sets:[],treadmill:null},symptoms:''}}));
+   snapshot={id:crypto.randomUUID(),scope:'daily',plan,status:'in-progress',startedAt:timestamp,updatedAt:timestamp,revision:0,exercises,review:null};
+  }
+  for(const [key,change] of Object.entries(pending)){
+   if(key==='__reviewDraft'){snapshot.reviewDraft=change.review;continue}
+   const exercise=snapshot.exercises?.[key];if(!exercise)continue;
+   if(change.symptoms!==undefined)exercise.symptoms=change.symptoms;
+   if(change.draft!==undefined){if(change.draft===null)delete exercise.draft;else exercise.draft=change.draft}
+   if(change.actual)exercise.actual=change.actual;
+   if(change.status&&!(change.status==='inferred'&&['completed','skipped'].includes(exercise.status))){exercise.status=change.status;exercise.completionSource=change.source||'user'}
+  }
+  snapshot={...snapshot,cardView:JSON.parse(JSON.stringify(view)),updatedAt:timestamp,revision:snapshot.revision+Object.keys(pending).length+1};
+  sharedState.saveWorkout(snapshot,{keepalive:true}).catch(()=>{});
  }
  function queueStatus(key,state,source='user'){
   const actualState=state==='completed'&&source!=='user'?'inferred':state;
@@ -195,6 +214,6 @@
  }
  const exportButton=document.querySelector('#export-local-history');
  if(exportButton)exportButton.onclick=async()=>{try{await serial.catch(()=>{});const data={format:'daily-workout-local-backup',version:1,exportedAt:new Date().toISOString(),sessions:await store.listSessions(),pending:await store.pending()};const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const link=document.createElement('a');link.href=url;link.download='daily-workout-private-backup-'+new Date().toISOString().slice(0,10)+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),30000)}catch(reason){error(reason)}};
- window.WorkoutLog={prepare,mount,flush,checkpoint,queueStatus,openReview,store,renderHistory,saveCardViewState,cardViewState:()=>session?.cardView||null,setSharedState:value=>{sharedState=value}};
+ window.WorkoutLog={prepare,mount,flush,checkpoint,queueStatus,openReview,store,renderHistory,saveCardViewState,persistCardViewForShortcut,cardViewState:()=>session?.cardView||null,setSharedState:value=>{sharedState=value}};
  window.addEventListener('pagehide',()=>{if(Object.keys(pending).length)flush().catch(error)});
 })();

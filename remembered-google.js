@@ -10,9 +10,9 @@
   try{const value=JSON.parse(storage.getItem(KEY)||'null');if(value?.expires*1000>Date.now())saved=value;else storage.removeItem(KEY)}catch{}
   const connected=()=>Boolean(saved?.expires*1000>Date.now());
   const clear=()=>{saved=null;storage.removeItem(KEY)};
-  async function call(path,data,authenticated=true){
+  async function call(path,data,authenticated=true,{keepalive=false}={}){
    if(authenticated&&!connected()){clear();throw Error('Connect Google to continue.');}
-   const response=await request(BASE+path,{method:data===undefined?'GET':'POST',headers:{'Content-Type':'application/json',...(authenticated?{Authorization:'Bearer '+saved.session}:{})},...(data===undefined?{}:{body:JSON.stringify(data)}),credentials:'omit',referrerPolicy:'no-referrer'});
+   const response=await request(BASE+path,{method:data===undefined?'GET':'POST',headers:{'Content-Type':'application/json',...(authenticated?{Authorization:'Bearer '+saved.session}:{})},...(data===undefined?{}:{body:JSON.stringify(data)}),credentials:'omit',referrerPolicy:'no-referrer',...(keepalive?{keepalive:true}:{})});
    if(response.status===401){clear();throw Error('Your saved Google connection needs renewal. Connect Google again.');}
    const value=await response.json();if(!response.ok)throw Error(value.error||'Google connection service is unavailable.');return value;
   }
@@ -37,7 +37,7 @@
   }
   async function disconnect(){try{if(connected())await call('/disconnect',{})}finally{clear()}}
   async function getWorkout(){return (await call('/workout')).record}
-  async function saveWorkout(record){return (await call('/workout',{record})).record}
+  async function saveWorkout(record,{keepalive=false}={}){return (await call('/workout',{record},true,{keepalive})).record}
   // Match fetch's shape so the existing verified Sheet sync protocol is retained.
   async function google(url,options={}){
    const value=await call('/google',{url,method:options.method||'GET',...(options.body?{body:JSON.parse(options.body)}:{})});
