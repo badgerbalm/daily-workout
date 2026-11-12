@@ -1,6 +1,6 @@
-# Donation Log on Daily Workout hosting
+# Donation Log deployment and storage
 
-The Donation Log static files live at `/daily-workout/donation-log/` on the existing GitHub Pages origin. Its data API is a separate Cloudflare Worker (`donation-log-api`) with a separate D1 database (`donation-log-db`). The API validates the owner-only Daily Workout session through a Cloudflare Service Binding to `daily-workout-auth`. The Workout and Donation Log databases remain separate.
+The standalone Donation Log website is published from `badgerbalm/donation-log` at `https://badgerbalm.github.io/donation-log/`. `/daily-workout/donation-log/` is only a redirect for old bookmarks. The data API is a separate Cloudflare Worker (`donation-log-api`) with its own D1 database (`donation-log-db`). It checks owner identity through the shared `daily-workout-auth` OAuth/session broker. Donation Log starts its own Google sign-in and the callback returns to Donation Log. The Workout app, Sheet sync, and Workout database are not used to store or load donation records.
 
 Donation visit and medication JSON payloads are AES-GCM encrypted before they are written to D1. A Cloudflare secret named `DONATION_DATA_KEY` holds the encryption key. Deterministic record identifiers are HMAC-derived, so D1 does not need to store dates, names, measurements, notes, medication labels, Google credentials, or session tokens in searchable columns. Do not commit the encryption key, exports, screenshots, database dumps, or personal records to GitHub.
 
