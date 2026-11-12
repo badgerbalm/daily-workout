@@ -14,6 +14,9 @@
   status.textContent=result.count+' finished workout'+(result.count===1?'':'s')+' backed up · synced '+new Date().toLocaleTimeString()+'. Google connection remembered in this browser.';
   await WorkoutLog.renderHistory();
  }
+ const viewer=document.querySelector('#google-sheet-viewer'),frame=viewer?.querySelector('iframe'),viewerStatus=viewer?.querySelector('#google-sheet-viewer-status'),openInGoogle=viewer?.querySelector('#open-google-sheet');let viewerTimeout;
+ function refreshSheetPreview(){if(!link||!frame||!viewerStatus)return;clearTimeout(viewerTimeout);viewerStatus.textContent='Loading Google Spreadsheet…';const url=new URL(link.href);url.pathname=url.pathname.replace(/\/edit\/?$/,'/preview');url.searchParams.set('gid','0');url.searchParams.set('refresh',String(Date.now()));frame.src=url.href;viewerTimeout=setTimeout(()=>{viewerStatus.textContent='If the sheet has not appeared, use Open in Google.'},12000)}
+ if(viewer&&link){frame.onload=()=>{clearTimeout(viewerTimeout);viewerStatus.textContent='Use Refresh sheet to check for the latest changes.'};link.onclick=event=>{event.preventDefault();openInGoogle.href=link.href;viewer.showModal();refreshSheetPreview()};viewer.querySelector('#refresh-google-sheet').onclick=refreshSheetPreview;viewer.querySelector('#close-google-sheet-viewer').onclick=()=>viewer.close();viewer.addEventListener('close',()=>{clearTimeout(viewerTimeout);frame.src='about:blank'})}
  connect.onclick=()=>action(async()=>{status.textContent='Opening Google…';await connection.connect()});
  sync.onclick=()=>action(syncNow);
  create.onclick=()=>action(async()=>{await service.createSheet();await syncNow()});
