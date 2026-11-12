@@ -154,3 +154,33 @@ body{padding-top:0}
 .google-sheet-viewer>footer{flex:none;display:flex;justify-content:flex-end;padding:10px 16px;border-top:1px solid var(--theme-line);background:#fff}
 .google-sheet-viewer>footer button{min-height:44px;margin:0;padding:10px 14px}
 @media(max-width:520px){.google-sheet-viewer{width:96vw;height:92dvh}.google-sheet-viewer>header{padding:13px 15px}}
+
+/* Roomy themed side drawer for the workout controls. */
+dialog#workout-menu{position:fixed;inset:0 0 0 auto;width:min(92vw,440px);height:100dvh;max-height:100dvh;margin:0;padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(14px + env(safe-area-inset-bottom,0px));border:0;border-left:4px solid var(--theme-accent);border-radius:0;background:linear-gradient(180deg,#071426f5,#071426ed),var(--theme-navy);color:#fff;box-shadow:-16px 0 48px #07142655}
+dialog#workout-menu[open]{display:flex;flex-direction:column;gap:10px;animation:workout-menu-enter .18s ease-out}
+@keyframes workout-menu-enter{from{transform:translateX(18px);opacity:.7}to{transform:translateX(0);opacity:1}}
+#workout-menu::backdrop{background:#071426aa}
+#workout-menu .menu-heading{flex:none;margin:0;padding:4px 0 12px;border-bottom:1px solid #ffffff35}
+#workout-menu .menu-heading h2{color:#fff;font-size:19px;letter-spacing:.01em}
+#workout-menu .menu-heading button{min-height:42px;padding:8px 13px}
+#workout-menu .menu-refresh{flex:none;padding:2px 0 10px;border-bottom:2px solid var(--theme-accent)}
+#workout-menu .menu-refresh button{width:100%;min-height:50px;border-radius:10px;background:var(--theme-blue);color:#fff;text-align:left;font-size:15px}
+#workout-menu #refresh-feedback{margin:8px 2px 0;color:#d3dcea;line-height:1.45}
+#workout-menu .local-log,#workout-menu .local-history,#workout-menu .settings,#workout-menu #workout-notes{flex:none;margin:0;padding:0 12px;border:1px solid #ffffff25;border-radius:11px;background:#ffffff0c;color:#fff}
+#workout-menu .local-history>summary,#workout-menu .settings>summary,#workout-menu #workout-notes>summary{min-height:52px;padding:13px 0;color:#fff;font-size:14px;font-weight:700;cursor:pointer;list-style:none}
+#workout-menu .local-history>summary::-webkit-details-marker,#workout-menu .settings>summary::-webkit-details-marker,#workout-menu #workout-notes>summary::-webkit-details-marker{display:none}
+#workout-menu .local-history>summary::after,#workout-menu .settings>summary::after,#workout-menu #workout-notes>summary::after{content:'＋';float:right;color:#fff;font-size:18px;line-height:1.2}
+#workout-menu .local-history[open]>summary::after,#workout-menu .settings[open]>summary::after,#workout-menu #workout-notes[open]>summary::after{content:'−'}
+#workout-menu .local-history[open],#workout-menu .settings[open],#workout-menu #workout-notes[open]{background:#ffffff14}
+#workout-menu .local-history>p,#workout-menu .settings-content,#workout-menu #workout-notes .notice,#workout-menu #google-sync p{color:#d3dcea;font-size:13px;line-height:1.5}
+#workout-menu .settings-content{padding:0 0 12px}
+#workout-menu .settings-content select{max-width:none}
+#workout-menu .result-actions{display:grid;grid-template-columns:1fr;gap:8px;margin:12px 0}
+#workout-menu .result-actions button,#workout-menu #google-create-sheet,#workout-menu .sheet-open-link,#workout-menu #export-local-history{width:100%;min-height:48px;margin:0;text-align:left}
+#workout-menu #google-sync .sheet-open-link{display:flex}
+#workout-menu #google-sync a:not(.sheet-open-link),#workout-menu .shortcut-settings a{color:#dce9ff}
+#workout-menu .local-log{padding:12px}
+#workout-menu .local-log strong{color:#fff}
+#workout-menu .local-log p{color:#d3dcea}
+@media(max-width:520px){dialog#workout-menu{width:min(92vw,440px);padding-left:14px;padding-right:14px}}
+@media(prefers-reduced-motion:reduce){dialog#workout-menu[open]{animation:none}}
