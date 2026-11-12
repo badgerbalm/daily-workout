@@ -17,7 +17,40 @@
  const viewer=document.querySelector('#google-sheet-viewer'),viewerStatus=viewer?.querySelector('#google-sheet-viewer-status'),viewerData=viewer?.querySelector('#google-sheet-data'),openInGoogle=viewer?.querySelector('#open-google-sheet');
  const cell=(tag,text)=>{const node=document.createElement(tag);node.textContent=text;return node};
  function actualText(exercise){const actual=exercise.actual||{},parts=[];for(const [index,set] of (actual.sets||[]).entries()){const values=['Set '+(index+1),set.side,set.reps===null||set.reps===undefined?null:set.reps+' reps',set.weight===null||set.weight===undefined?null:set.weight+' '+(set.weightUnit||'lb')+(set.weightBasis==='per-dumbbell'?' per dumbbell':set.weightBasis==='single-hand'?' in one hand':set.weightBasis==='total'?' total':''),set.durationSeconds===null||set.durationSeconds===undefined?null:set.durationSeconds+' sec'].filter(Boolean);if(values.length>1)parts.push(values.join(' · '))}const t=actual.treadmill;if(t){const values=[t.durationSeconds==null?null:Math.round(t.durationSeconds/60)+' min',t.speed==null?null:t.speed+' '+(t.speedUnit||'mph'),t.inclinePct==null?null:t.inclinePct+'% incline',t.distance==null?null:t.distance+' '+(t.distanceUnit||'mi')].filter(Boolean);if(values.length)parts.push(values.join(' · '))}return parts.join('\n')||'—'}
- function renderHistory(records){viewerData.replaceChildren();if(!records.length){viewerData.append(cell('p','No finished workouts are saved in the Google Sheet yet.'));return}const table=document.createElement('table');table.className='google-sheet-history-table';const head=document.createElement('thead'),header=document.createElement('tr');for(const label of ['Date','Workout','Exercise','Status','Recorded results','Symptoms'])header.append(cell('th',label));head.append(header);table.append(head);const body=document.createElement('tbody');for(const record of records){const review=record.review||{};for(const exercise of Object.values(record.exercises||{})){const row=document.createElement('tr'),date=record.plan?.date||'—',reviewParts=[review.effort==null?null:'Effort '+review.effort+'/10',review.energy==null?null:'Energy '+review.energy+'/5',review.discomfort==null?null:'Discomfort '+review.discomfort+'/10'].filter(Boolean);row.append(cell('td',date),cell('td',record.plan?.title||'Workout'),cell('td',exercise.name||'Exercise'),cell('td',(exercise.status||'unfinished').replace(/\b\w/g,c=>c.toUpperCase())),cell('td',actualText(exercise)),cell('td',exercise.symptoms||''));if(reviewParts.length||review.notes){const details=document.createElement('details');details.className='sheet-review';const summary=cell('summary','Workout review');details.append(summary);if(reviewParts.length)details.append(cell('p',reviewParts.join(' · ')));if(review.notes)details.append(cell('p',review.notes));const td=document.createElement('td');td.colSpan=6;td.append(details);const reviewRow=document.createElement('tr');reviewRow.className='sheet-review-row';reviewRow.append(td);body.append(row,reviewRow)}else body.append(row)}}table.append(body);viewerData.append(table)}
+ function renderHistory(records){
+  viewerData.replaceChildren();
+  if(!records.length){viewerData.append(cell('p','No finished workouts are saved in the Google Sheet yet.'));return}
+  const table=document.createElement('table');table.className='google-sheet-history-table';
+  const head=document.createElement('thead'),header=document.createElement('tr');
+  for(const label of ['Date','Workout','Exercise','Status','Recorded results','Symptoms'])header.append(cell('th',label));
+  head.append(header);table.append(head);
+  const body=document.createElement('tbody');
+  for(const record of records){
+   for(const exercise of Object.values(record.exercises||{})){
+    const row=document.createElement('tr');
+    row.append(
+     cell('td',record.plan?.date||'—'),
+     cell('td',record.plan?.title||'Workout'),
+     cell('td',exercise.name||'Exercise'),
+     cell('td',(exercise.status||'unfinished').replace(/\b\w/g,c=>c.toUpperCase())),
+     cell('td',actualText(exercise)),
+     cell('td',exercise.symptoms||'')
+    );
+    body.append(row);
+   }
+   const review=record.review||{};
+   const reviewParts=[review.effort==null?null:'Effort '+review.effort+'/10',review.energy==null?null:'Energy '+review.energy+'/5',review.discomfort==null?null:'Discomfort '+review.discomfort+'/10'].filter(Boolean);
+   if(reviewParts.length||review.notes){
+    const details=document.createElement('details');details.className='sheet-review';
+    details.append(cell('summary','Workout review'));
+    if(reviewParts.length)details.append(cell('p',reviewParts.join(' · ')));
+    if(review.notes)details.append(cell('p',review.notes));
+    const reviewCell=document.createElement('td');reviewCell.colSpan=6;reviewCell.append(details);
+    const reviewRow=document.createElement('tr');reviewRow.className='sheet-review-row';reviewRow.append(reviewCell);body.append(reviewRow);
+   }
+  }
+  table.append(body);viewerData.append(table);
+ }
  async function refreshSheetPreview(){if(!viewerStatus||!viewerData)return;viewerStatus.textContent='Loading workout history…';viewerData.replaceChildren();try{const result=await service.preview();if(result.needsSheet){viewerStatus.textContent='No Daily Workout Sheet was found for this Google account.';return}renderHistory(result.records);viewerStatus.textContent=result.records.length+' finished workout'+(result.records.length===1?'':'s')+' · refreshed '+new Date().toLocaleTimeString()+'.'}catch(error){viewerStatus.textContent=error.message||'Could not load workout history. Your data in Google is unchanged.'}}
  if(viewer&&link){link.onclick=event=>{event.preventDefault();openInGoogle.href=link.href;viewer.showModal();refreshSheetPreview()};viewer.querySelector('#refresh-google-sheet').onclick=refreshSheetPreview;viewer.querySelector('#close-google-sheet-viewer').onclick=()=>viewer.close()}
  connect.onclick=()=>action(async()=>{status.textContent='Opening Google…';await connection.connect()});
