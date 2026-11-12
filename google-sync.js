@@ -42,15 +42,15 @@
   async function encode(record){const text=stable(history.finishedRecord(record));if(text.length>799980)throw Error('Workout is too large to sync. Export a local backup.');const normalized=JSON.parse(text),chunks=[];let offset=0;
    for(let i=0;i<20;i++){let end=Math.min(offset+40000,text.length);if(end<text.length&&/[\uD800-\uDBFF]/.test(text[end-1]))end--;chunks.push(text.slice(offset,end));offset=end;}
    return [FORMAT,normalized.id,await digest(text),normalized.plan.date,normalized.plan.title,normalized.finishedAt,normalized.review.effort??'',normalized.review.energy??'',normalized.review.discomfort??'',normalized.review.notes,...chunks]}
-  async function read(id,generation){
+  async function read(id,generation,{repair=true}={}){
    const base='https://sheets.googleapis.com/v4/spreadsheets/'+encodeURIComponent(id);
    const info=await api(base+'?fields=sheets(properties(sheetId,title,gridProperties(columnCount)))',{},generation);
    const properties=info.sheets?.[0]?.properties,title=properties?.title;if(!title)throw Error('The history Sheet has no worksheet. Restore its first tab before syncing.');
-   if(properties.gridProperties?.columnCount<HEADER.length)await api(base+':batchUpdate',{method:'POST',body:JSON.stringify({requests:[{updateSheetProperties:{properties:{sheetId:properties.sheetId,gridProperties:{columnCount:HEADER.length}},fields:'gridProperties.columnCount'}}]})},generation);
+   if(repair&&properties.gridProperties?.columnCount<HEADER.length)await api(base+':batchUpdate',{method:'POST',body:JSON.stringify({requests:[{updateSheetProperties:{properties:{sheetId:properties.sheetId,gridProperties:{columnCount:HEADER.length}},fields:'gridProperties.columnCount'}}]})},generation);
    const range="'"+title.replace(/'/g,"''")+"'!A:AD";
    const url='https://sheets.googleapis.com/v4/spreadsheets/'+encodeURIComponent(id)+'/values/'+encodeURIComponent(range);
    const data=await api(url,{},generation),rows=data.values||[];
-   if(!rows.length){await api(url+'?valueInputOption=RAW',{method:'PUT',body:JSON.stringify({values:[HEADER]})},generation);return {url,records:new Map()}}
+   if(!rows.length){if(repair)await api(url+'?valueInputOption=RAW',{method:'PUT',body:JSON.stringify({values:[HEADER]})},generation);return {url,records:new Map()}}
    if(rows[0].length!==HEADER.length||rows[0].some((v,i)=>v!==HEADER[i]))throw Error('The history Sheet headers changed. Sync stopped without overwriting it.');
    const records=new Map();
    for(const row of rows.slice(1)){
@@ -80,9 +80,18 @@
    await store.importFinished([...verified.records.values()].map(v=>v.record));
    return {count:verified.records.size,sheetId:selected};
   }
+  async function preview(){
+   const generation=epoch;
+   if(!connected())throw Error('Connect Google to view your private workout history.');
+   const files=await discover(generation);
+   if(!files.length)return {needsSheet:true,records:[]};
+   if(files.length>1)throw Error('More than one Daily Workout history Sheet exists.');
+   const result=await read(files[0].id,generation,{repair:false});
+   return {sheetId:files[0].id,records:[...result.records.values()].map(value=>value.record).sort((a,b)=>b.plan.date.localeCompare(a.plan.date)||b.finishedAt.localeCompare(a.finishedAt))};
+  }
   function sync(){if(running)return running;running=run().finally(()=>{running=null});return running}
   function createSheet(){if(running)return Promise.reject(Error('Wait for the current sync to finish.'));running=makeSheet().finally(()=>{running=null});return running}
-  return {setToken,disconnect,connected,sync,createSheet,encode};
+  return {setToken,disconnect,connected,sync,createSheet,preview,encode};
  }
  if(typeof module!=='undefined')module.exports={createSync,HEADER,FORMAT,stable,SCOPE,CLIENT_ID,ACCOUNT};
  else root.WorkoutGoogleSync={createSync,HEADER,FORMAT,SCOPE,CLIENT_ID,ACCOUNT};
