@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-12",
-  "title": "Daily Workout · November 12",
-  "note": "Thursday · approximately 50 minutes. Calorie-focused walking with steady and interval inclines, no jogging. Use HOKA Clifton 9 Wide (2E), which did not cause tingling; avoid specifically New Balance Fresh Foam X 1080 v15 (being returned), not all New Balance shoes. The Cliftons have 850+ miles and should be replaced soon. Do not push through tingling, numbness, painful heel strikes, or sharp back pain; seek evaluation if symptoms recur. Preserve the six established opening stretches and timing. Plow pose with feet suspended is an advanced neck/spine-loading inversion and remains listed only as a user preference, not an endorsement; skip without clearance. Its existing floor-contact image is reference-only and does not depict the specified variation. No completed performance or dumbbell loads assumed.",
+  "date": "2026-11-13",
+  "title": "Daily Workout · November 13",
+  "note": "Friday · approximately 55 minutes: six established opening stretches (6 min), calorie-focused incline treadmill walking (35 min), supported upper-body strength (9 min), and introductory posture practice (5 min). Inclines remain: fixed 3% steady, alternating 2%/4% every 3 minutes; walking only, up to 4.2 mph, no jogging. Use HOKA Clifton 9 Wide (2E) as a comfortable short-term comparison; the 850+ mile pair is due for replacement. Avoid only New Balance Fresh Foam X 1080 v15 due to tingling, not the whole brand. Stop for tingling, numbness, painful heel strikes, or sharp lumbar pain. Do not force lumbar extension in posture work. Preserve all six opening stretches and original timers; plow pose with feet suspended remains listed as preference but skip unless medically cleared due to neck/spine loading. Its existing floor-contact photograph is reference-only, not an exact depiction. No actual exercise performance or dumbbell loads assumed.",
   "sections": [
     {
       "title": "Opening stretches · 6 minutes",
@@ -55,7 +55,7 @@
         },
         {
           "name": "Steady brisk walk",
-          "detail": "10 min · 3.8–4.1 mph · fixed 3% incline",
+          "detail": "10 min · 3.8–4.2 mph · fixed 3% incline",
           "seconds": 600,
           "instructions": "Maintain a constant 3% incline for this entire steady segment; walk with a natural stride and reduce speed if needed."
         },
@@ -94,6 +94,35 @@
           "detail": "3 min · 2 × 10 reps",
           "seconds": 180,
           "instructions": "Light-to-moderate weight; stand or sit supported, no swinging or back extension."
+        }
+      ]
+    },
+    {
+      "title": "Posture practice · 5 minutes",
+      "items": [
+        {
+          "name": "Band pull-aparts",
+          "detail": "90 sec · 2 × 12 controlled reps",
+          "seconds": 90,
+          "instructions": "Use a light band at chest height, elbows soft, shoulder blades move gently together. Keep ribs stacked over pelvis; no backward lean."
+        },
+        {
+          "name": "Chin tucks",
+          "detail": "60 sec · 8–10 reps, 3 sec each",
+          "seconds": 60,
+          "instructions": "Eyes level, draw chin straight back gently without tipping head up or down; relax between repetitions."
+        },
+        {
+          "name": "Doorway chest stretch",
+          "detail": "60 sec · 2 × 30 sec comfortable holds",
+          "seconds": 60,
+          "instructions": "Forearms on doorway, step forward only enough for a gentle chest stretch; keep neutral spine, no forced lumbar arch."
+        },
+        {
+          "name": "Wall angels",
+          "detail": "90 sec · 6–8 slow reps",
+          "seconds": 90,
+          "instructions": "Stand comfortably against wall, slide arms up only within pain-free range; avoid arching lower back. Skip if shoulder or back discomfort occurs."
         }
       ]
     }
