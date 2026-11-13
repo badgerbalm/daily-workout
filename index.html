@@ -173,9 +173,9 @@ function clearSavedWatchTracking(){
   blockedWatchExerciseKey=null;
 }
 function sectionTimerURL(section,sectionIndex,itemIndex,seconds){
-  const type=watchSectionType(section),active=readWatchSection();
+  const type=watchSectionType(section),active=readWatchSection(),startsWatch=!!type||walkBoundary(section,itemIndex).start;
   if(timerMode.value!=='watch')return timerURL(seconds,timerMode.value,false);
-  if(active&&(active.workout!==currentWorkoutSignature||active.sectionIndex!==sectionIndex)){
+  if(startsWatch&&active&&(active.workout!==currentWorkoutSignature||active.sectionIndex!==sectionIndex)){
     offerWatchRecovery(sectionIndex,itemIndex,section);return null;
   }
   const fallback=timerURL(seconds,'watch',walkBoundary(section,itemIndex).start);
