@@ -45,7 +45,7 @@ export function createHandler(requestGoogle=(...args)=>globalThis.fetch(...args)
  let step='request';
  const url=new URL(request.url),origin=request.headers.get('Origin');
  const headers={'Cache-Control':'no-store','Pragma':'no-cache','Referrer-Policy':'no-referrer','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; frame-ancestors 'none'; base-uri 'none'",'Vary':'Origin'};
- if(origin===ORIGIN)Object.assign(headers,{'Access-Control-Allow-Origin':ORIGIN,'Access-Control-Allow-Headers':'Authorization,Content-Type','Access-Control-Allow-Methods':'GET,POST,OPTIONS'});
+ if(origin===ORIGIN)Object.assign(headers,{'Access-Control-Allow-Origin':ORIGIN,'Access-Control-Allow-Headers':'Authorization,Content-Type','Access-Control-Allow-Methods':'GET,POST,OPTIONS','Access-Control-Max-Age':'86400'});
  function finish(response){const result=new Response(response.body,response);for(const [key,value] of Object.entries(headers))result.headers.set(key,value);return result}
  try{
   if(url.pathname==='/health'&&request.method==='GET')return finish(json({ok:true,service:'daily-workout-auth'}));
@@ -88,7 +88,9 @@ export function createHandler(requestGoogle=(...args)=>globalThis.fetch(...args)
    return finish(json({record:row?JSON.parse(await unseal(row.state_cipher,env)):null}));
   }
   if(url.pathname==='/workout'&&request.method==='POST'){
-   await session(request,env);const data=await body(request,900000),record=data.record;
+   await session(request,env);const data=await body(request,900000);
+   if(data.handoffReady===true&&Object.keys(data).length===1)return finish(json({ready:true}));
+   const record=data.record;
    if(!record||record.scope!=='daily'||!['in-progress','unfinished','finished'].includes(record.status)||typeof record.id!=='string'||record.id.length>200||typeof record.updatedAt!=='string'||!Number.isFinite(Date.parse(record.updatedAt))||!Number.isSafeInteger(record.revision)||record.revision<0||JSON.stringify(record).length>800000)throw new Failure(400,'Invalid workout save.');
    await db(env).prepare('INSERT INTO shared_workout_state (owner,state_cipher,updated_at,revision) VALUES (?,?,?,?) ON CONFLICT(owner) DO UPDATE SET state_cipher=excluded.state_cipher, updated_at=excluded.updated_at, revision=excluded.revision WHERE shared_workout_state.updated_at < excluded.updated_at OR (shared_workout_state.updated_at = excluded.updated_at AND shared_workout_state.revision <= excluded.revision)').bind(EMAIL,await seal(JSON.stringify(record),env),record.updatedAt,record.revision).run();
    const row=await db(env).prepare('SELECT state_cipher FROM shared_workout_state WHERE owner = ?').bind(EMAIL).first();

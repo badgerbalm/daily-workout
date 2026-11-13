@@ -33,7 +33,11 @@
     storage.setItem(KEY,JSON.stringify(value));saved=value;storage.removeItem(PENDING);
    }
    if(!connected())return false;
-   await call('/session');return true;
+   await call('/session');
+   // Prime the exact cross-origin POST preflight used by the keep-alive save
+   // before a timer tap hands Safari off to Shortcuts.
+   try{await call('/workout',{handoffReady:true})}catch{}
+   return true;
   }
   async function disconnect(){try{if(connected())await call('/disconnect',{})}finally{clear()}}
   async function getWorkout(){return (await call('/workout')).record}
