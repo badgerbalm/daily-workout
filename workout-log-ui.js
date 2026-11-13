@@ -146,7 +146,8 @@
    }else{
     const weighted=/dumbbell|row|press|raise|carr/i.test(entry.item.name);
     const previousSets=priorExercise?.actual?.sets||[];const previousLoad=[...previousSets].reverse().find(set=>Number.isFinite(set.weight))||personalLastLoads[entry.item.name.toLowerCase()];
-    if(weighted&&previousLoad){const unit=previousLoad.weightUnit==='lb'?'lbs':previousLoad.weightUnit;const basis=previousLoad.weightBasis==='per-dumbbell'?' per dumbbell':previousLoad.weightBasis==='total'?' total load':'';const prescription=entry.row.querySelector('.detail');if(prescription)prescription.textContent=(entry.item.detail||'')+' · '+previousLoad.weight+' '+unit+basis}
+    const displayLoad=previousLoad||(/dumbbell/i.test(entry.item.name)?{weight:5,weightUnit:'lb',weightBasis:'per-dumbbell',isDefault:true}:null);
+    if(weighted&&displayLoad){const unit=displayLoad.weightUnit==='lb'?'lbs':displayLoad.weightUnit;const basis=displayLoad.weightBasis==='per-dumbbell'?' per dumbbell':displayLoad.weightBasis==='total'?' total load':'';const qualifier=displayLoad.isDefault?' (default)':'';const prescription=entry.row.querySelector('.detail');if(prescription)prescription.textContent=(entry.item.detail||'')+' · '+displayLoad.weight+' '+unit+basis+qualifier}
     const timed=/plank|carr|stretch|pose/i.test(entry.item.name);
     function addSet(data={}){
      const set=element('fieldset','actual-set'),legend=element('legend','','Set '+(setControls.length+1));set.append(legend);
