@@ -104,7 +104,7 @@
           "name": "Band pull-aparts",
           "detail": "90 sec · 2 × 12 controlled reps",
           "seconds": 90,
-          "instructions": "Use your light rubber resistance band from physical therapy, held freely in both hands at chest height (not wall-anchored). Keep elbows softly bent, pull hands apart with controlled movement, gently squeeze shoulder blades, then return slowly. Keep ribs stacked over pelvis; do not shrug or lean backward. Stop if shoulder or back pain occurs."
+          "instructions": "Use a light band at chest height, elbows soft, shoulder blades move gently together. Keep ribs stacked over pelvis; no backward lean."
         },
         {
           "name": "Chin tucks",
@@ -113,10 +113,10 @@
           "instructions": "Eyes level, draw chin straight back gently without tipping head up or down; relax between repetitions."
         },
         {
-          "name": "Wall-anchored band chest stretch",
-          "detail": "60 sec · 30 sec each side · light tension",
+          "name": "Doorway chest stretch",
+          "detail": "60 sec · 2 × 30 sec comfortable holds",
           "seconds": 60,
-          "instructions": "With a securely mounted band anchor near shoulder height, stand facing away and hold the band with one hand. Gently step forward until a mild chest stretch is felt. Keep ribs stacked over pelvis, shoulder relaxed and lumbar spine neutral; avoid forced shoulder extension. Switch sides after 30 seconds. Stop if painful."
+          "instructions": "Forearms on doorway, step forward only enough for a gentle chest stretch; keep neutral spine, no forced lumbar arch."
         },
         {
           "name": "Wall angels",
