@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-13",
-  "title": "Daily Workout · November 13",
-  "note": "Friday · approximately 55 minutes: six established opening stretches (6 min), calorie-focused incline treadmill walking (35 min), supported upper-body strength (9 min), and introductory posture practice (5 min). Inclines remain: fixed 3% steady, alternating 2%/4% every 3 minutes; walking only, up to 4.2 mph, no jogging. Use HOKA Clifton 9 Wide (2E) as a comfortable short-term comparison; the 850+ mile pair is due for replacement. Avoid only New Balance Fresh Foam X 1080 v15 due to tingling, not the whole brand. Stop for tingling, numbness, painful heel strikes, or sharp lumbar pain. Do not force lumbar extension in posture work. Preserve all six opening stretches and original timers; plow pose with feet suspended remains listed as preference but skip unless medically cleared due to neck/spine loading. Its existing floor-contact photograph is reference-only, not an exact depiction. No actual exercise performance or dumbbell loads assumed.",
+  "date": "2026-11-14",
+  "title": "Daily Workout · November 14",
+  "note": "Saturday · approximately 47 minutes: six established opening stretches (6 min), incline treadmill walking (35 min), and gentle neutral-spine core work (6 min). Recovery-oriented day after Friday upper-body strength and posture; posture mini-routine rests today (target 3–4 days weekly, not daily). Treadmill inclines remain fixed 3% steady and alternating 2%/4% every 3 min; walking only up to 4.2 mph, no jogging. Use older HOKA Clifton 9 Wide (2E) only temporarily; replace high-mileage shoes soon. Avoid New Balance Fresh Foam X 1080 v15 specifically due to tingling, not all New Balance models. Stop for tingling, numbness, sharp lumbar or knee pain. Six opening stretches and timers unchanged; plow pose with feet suspended is listed as preference but SKIP unless medically cleared due to neck/spine loading; existing floor-contact photograph is reference-only. No actual completed performance or dumbbell loads assumed. On future posture days use separate PT rubber band for pull-aparts and wall-mounted bands for chest stretch; no doorway stretch.",
   "sections": [
     {
       "title": "Opening stretches · 6 minutes",
@@ -74,55 +74,20 @@
       ]
     },
     {
-      "title": "Supported upper body · 9 minutes",
-      "watchWorkout": "strength",
+      "title": "Gentle neutral-spine core · 6 minutes",
+      "watchWorkout": "core",
       "items": [
         {
-          "name": "Dumbbell bench press",
-          "detail": "3 min · 2 × 10 reps",
+          "name": "Dead bugs",
+          "detail": "3 min · 2 × 8 controlled alternating reps",
           "seconds": 180,
-          "instructions": "Flat bench, feet supported on floor. Light manageable weight; avoid arching back or breath-holding. Skip if painful."
+          "instructions": "Lie on back, knees bent above hips, arms toward ceiling. Slowly extend opposite arm and leg only as far as you can keep pelvis and lumbar spine comfortable and steady. Exhale gently, no straining. Shorten range or skip if back pain."
         },
         {
-          "name": "Supported dumbbell rows",
-          "detail": "3 min · 2 × 10 reps per arm",
+          "name": "Bird dogs",
+          "detail": "3 min · 2 × 6 alternating reps per side",
           "seconds": 180,
-          "instructions": "Keep chest supported and lumbar spine neutral; avoid trunk rotation. Skip if painful."
-        },
-        {
-          "name": "Dumbbell biceps curls",
-          "detail": "3 min · 2 × 10 reps",
-          "seconds": 180,
-          "instructions": "Light-to-moderate weight; stand or sit supported, no swinging or back extension."
-        }
-      ]
-    },
-    {
-      "title": "Posture practice · 5 minutes",
-      "items": [
-        {
-          "name": "Band pull-aparts",
-          "detail": "90 sec · 2 × 12 controlled reps",
-          "seconds": 90,
-          "instructions": "Use a light band at chest height, elbows soft, shoulder blades move gently together. Keep ribs stacked over pelvis; no backward lean."
-        },
-        {
-          "name": "Chin tucks",
-          "detail": "60 sec · 8–10 reps, 3 sec each",
-          "seconds": 60,
-          "instructions": "Eyes level, draw chin straight back gently without tipping head up or down; relax between repetitions."
-        },
-        {
-          "name": "Wall-anchored band chest stretch",
-          "detail": "60 sec · 30 sec each side · light tension",
-          "seconds": 60,
-          "instructions": "With a securely mounted resistance band anchor near shoulder height, stand facing away and hold the band in one hand at shoulder level. Gently step forward until you feel a mild chest stretch. Keep ribs stacked over pelvis, shoulder relaxed, and lower back neutral; do not force the arm behind you. Switch sides after 30 seconds. Stop if painful."
-        },
-        {
-          "name": "Wall angels",
-          "detail": "90 sec · 6–8 slow reps",
-          "seconds": 90,
-          "instructions": "Stand with your back, shoulders, head, and buttocks at the wall, feet 6–8 in (15–20 cm) forward. Gently draw your ribs down and tuck your chin; keep a neutral spine without forcing your lower back flat. Start with arms in a V and hands on the wall. Slowly bend your elbows and slide your hands down to a W just above shoulder height. Pause for a count of 5, then return to the V. Use only a comfortable, pain-free range and stop if you cannot maintain alignment."
+          "instructions": "On hands and knees, brace gently and extend opposite arm and leg only to body level, keeping hips square and lumbar spine neutral. Pause briefly and return slowly. Use arm-only or leg-only movements if needed; skip if painful."
         }
       ]
     }
