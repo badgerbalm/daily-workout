@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">Wall-anchored band chest stretch</title>
+  <desc id="desc">Two side views show a secure shoulder-height wall anchor and a person facing away from it, holding the band at shoulder height and gently stepping forward while keeping an upright torso.</desc>
+  <rect width="960" height="600" fill="#f1f4f8"/>
+  <g font-family="system-ui, sans-serif" text-anchor="middle" fill="#102039">
+    <g transform="translate(18 18)">
+      <rect width="450" height="564" rx="22" fill="#fff" stroke="#dbe1e9" stroke-width="3"/>
+      <text x="225" y="48" font-size="22" font-weight="700" letter-spacing="2">SET UP</text>
+      <g transform="translate(225 76)">
+        <path d="M-150 35v394M-150 429h340" fill="none" stroke="#bcc8d6" stroke-width="17" stroke-linecap="round"/>
+        <path d="M-145 203h19v16h-19" fill="#8e9daf" stroke="#66758a" stroke-width="4"/>
+        <circle cx="-123" cy="211" r="8" fill="#d72d3c"/>
+        <path d="M-123 211h83" fill="none" stroke="#d72d3c" stroke-width="9" stroke-linecap="round"/>
+        <path d="M-48 199q-9 12 0 24" fill="none" stroke="#d8b79e" stroke-width="15" stroke-linecap="round"/>
+        <circle cx="59" cy="117" r="34" fill="#d8b79e"/>
+        <path d="M27 111q4-37 34-37 29 0 33 34l-11-2-7-9-9 6-20-2-17 14z" fill="#283449"/>
+        <path d="M91 119l9 5-9 4" fill="#d8b79e"/>
+        <rect x="45" y="150" width="28" height="24" rx="8" fill="#d8b79e"/>
+        <path d="M18 170q42-19 84 0l19 143q-61 22-122 0z" fill="#173f73"/>
+        <path d="M25 185-4 187-40 211" fill="none" stroke="#d8b79e" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-39 211h-8" fill="none" stroke="#d8b79e" stroke-width="15" stroke-linecap="round"/>
+        <path d="M95 185q20 24 22 56" fill="none" stroke="#d8b79e" stroke-width="19" stroke-linecap="round"/>
+        <path d="M32 309 27 385 22 421m62-112 11 75 22 37" fill="none" stroke="#243248" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M21 423h-30m123 0h29" fill="none" stroke="#d8b79e" stroke-width="14" stroke-linecap="round"/>
+      </g>
+      <text x="225" y="548" font-size="18" fill="#5d6b80">Stand facing away; band at shoulder height</text>
+    </g>
+    <g transform="translate(492 18)">
+      <rect width="450" height="564" rx="22" fill="#fff" stroke="#dbe1e9" stroke-width="3"/>
+      <text x="225" y="48" font-size="22" font-weight="700" letter-spacing="2">GENTLE STEP</text>
+      <g transform="translate(225 76)">
+        <path d="M-150 35v394M-150 429h340" fill="none" stroke="#bcc8d6" stroke-width="17" stroke-linecap="round"/>
+        <path d="M-145 203h19v16h-19" fill="#8e9daf" stroke="#66758a" stroke-width="4"/>
+        <circle cx="-123" cy="211" r="8" fill="#d72d3c"/>
+        <path d="M-123 211h109" fill="none" stroke="#d72d3c" stroke-width="9" stroke-linecap="round"/>
+        <path d="M-20 199q-9 12 0 24" fill="none" stroke="#d8b79e" stroke-width="15" stroke-linecap="round"/>
+        <circle cx="78" cy="117" r="34" fill="#d8b79e"/>
+        <path d="M46 111q4-37 34-37 29 0 33 34l-11-2-7-9-9 6-20-2-17 14z" fill="#283449"/>
+        <path d="M110 119l9 5-9 4" fill="#d8b79e"/>
+        <rect x="64" y="150" width="28" height="24" rx="8" fill="#d8b79e"/>
+        <path d="M37 170q42-19 84 0l19 143q-61 22-122 0z" fill="#173f73"/>
+        <path d="M44 185 15 187-20 211" fill="none" stroke="#d8b79e" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-19 211h-8" fill="none" stroke="#d8b79e" stroke-width="15" stroke-linecap="round"/>
+        <path d="M114 185q20 24 22 56" fill="none" stroke="#d8b79e" stroke-width="19" stroke-linecap="round"/>
+        <path d="M51 309 46 385 41 421m62-112 10 75 22 37" fill="none" stroke="#243248" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M40 423h-30m123 0h29" fill="none" stroke="#d8b79e" stroke-width="14" stroke-linecap="round"/>
+        <path d="M16 457h76m-8-10 10 10-10 10" fill="none" stroke="#d72d3c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="225" y="548" font-size="18" fill="#5d6b80">Step forward gently; keep your back neutral</text>
+    </g>
+  </g>
+</svg>

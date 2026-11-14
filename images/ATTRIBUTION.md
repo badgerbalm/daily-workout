@@ -256,5 +256,5 @@ The appearance of U.S. Department of War (DoW) visual information does not imply
 ## Original posture exercise illustrations (November 13, 2026)
 
 - `band-pull-aparts.svg` is an original, hand-authored two-position vector illustration. It shows a separate flat resistance band held at chest height and pulled outward, with no anchor, handles, or machine.
-- `doorway-chest-stretch.svg` is an original, hand-authored two-position vector illustration. It shows forearms against a doorway and a gentle forward step with an upright torso, matching the existing exercise card.
-- Both files use original vector shapes and contain no third-party image assets. They are project illustrations, not licensed photographs. The workout data, names, timers, reps, and instructions are unchanged.
+- `wall-anchored-band-chest-stretch.svg` is an original, hand-authored two-position vector illustration. It shows a shoulder-height wall anchor, the person facing away from the anchor, and a controlled forward step with an upright torso.
+- Both files use original vector shapes and contain no third-party image assets. They are project illustrations, not licensed photographs.

@@ -25,7 +25,7 @@ assert.equal(api.findExercise(lib,'Single lean-back quad stretch'),api.findExerc
 assert.equal(api.findExercise(lib,'Single lean-back quad stretch').photos[0].src,'images/lying-quad-stretch.png');
 assert.equal(api.findExercise(lib,'Side-lying quad stretch'),undefined,'Do not conflate distinct stretch variations');
 assert(api.findExercise(lib,'Band pull-aparts').photos.every(photo=>photo.src.endsWith('.svg')),'Band pull-aparts use local exercise illustrations');
-assert(api.findExercise(lib,'Doorway chest stretch').photos.every(photo=>photo.src.endsWith('.svg')),'Doorway chest stretch uses its matching local illustration');
+assert(api.findExercise(lib,'Wall-anchored band chest stretch').photos.every(photo=>photo.src.endsWith('.svg')),'Wall-anchored band chest stretch uses its matching local illustration');
 assert.equal(api.exerciseDemo({exercises:{unsafe:{name:'Unsafe',demo:'javascript:alert(1)'}}},'Unsafe'),undefined);
 assert(api.localPhotoPath('images/valid-illustration.svg'));
 for(const bad of ['https://x/a.jpg','images/../x.jpg','//x/a.jpg','images/x.jpg?foo'])assert(!api.localPhotoPath(bad));

@@ -49,25 +49,25 @@
         }
       ]
     },
-    "doorway-chest-stretch": {
-      "name": "Doorway chest stretch",
+    "wall-anchored-band-chest-stretch": {
+      "name": "Wall-anchored band chest stretch",
       "aliases": [],
       "status": "ready",
       "photos": [
         {
-          "src": "images/doorway-chest-stretch.svg",
-          "alt": "Two frames show a person placing both forearms against a doorway frame and gently stepping forward with an upright, neutral back.",
-          "caption": "Forearms on the doorway frame · take a gentle step without arching your lower back.",
-          "title": "Doorway chest stretch · original exercise illustration",
+          "src": "images/wall-anchored-band-chest-stretch.svg",
+          "alt": "Two side views show a securely wall-anchored band attached at shoulder height. The person faces away from the anchor, holds the band with one arm at shoulder height, then takes a gentle forward step while keeping the torso upright.",
+          "caption": "Face away from the shoulder-height anchor · step forward gently, then switch sides after 30 seconds.",
+          "title": "Wall-anchored band chest stretch · original exercise illustration",
           "author": "Daily Workout project",
-          "source": "https://github.com/badgerbalm/daily-workout/blob/main/images/doorway-chest-stretch.svg",
+          "source": "https://github.com/badgerbalm/daily-workout/blob/main/images/wall-anchored-band-chest-stretch.svg",
           "license": "Original project vector illustration; no third-party media used",
           "licenseUrl": "",
-          "permissionBasis": "Hand-authored SVG created for this project to match the existing doorway-stretch instructions; no stock image or external artwork used.",
+          "permissionBasis": "Hand-authored SVG created for this project to depict the wall-anchored band chest stretch; no stock image or external artwork used.",
           "changes": "Original vector illustration; no external image assets.",
           "width": 960,
           "height": 600,
-          "sha256": "9d76f14df36c8673d5434a322c16cba32f266b806919c05e720d83785fc99357"
+          "sha256": "2a1daac596e30f474be46e1ceae30426f7459ad388ccbdcdb8be83ace74b779b"
         }
       ]
     },
