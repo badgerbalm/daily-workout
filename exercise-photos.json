@@ -27,6 +27,30 @@
         }
       ]
     },
+    "wall-angels": {
+      "name": "Wall angels",
+      "aliases": ["Wall angel", "Wall angel exercise"],
+      "status": "ready",
+      "demo": "https://www.healthline.com/health/fitness/wall-angels#how-to",
+      "photos": [
+        {
+          "src": "images/wall-angels-healthline.jpg",
+          "alt": "Woman standing against a wall with arms bent in a goalpost position for wall angels.",
+          "caption": "Wall angels · slide your arms between a V and W while keeping a comfortable posture.",
+          "title": "Wall Angels",
+          "author": "Dima Bazak / Healthline",
+          "source": "https://www.healthline.com/health/fitness/wall-angels#how-to",
+          "attributionUrl": "https://www.healthline.com/health/fitness/wall-angels#how-to",
+          "license": "© Healthline Media; all rights reserved; reuse permission not verified",
+          "licenseUrl": "https://permissions.rvohealth.threesai.com/",
+          "permissionBasis": "The site owner supplied this image on November 13, 2026 and requested it for this exercise. The linked article identifies the image by Dima Bazak. No reuse permission or open license was supplied or verified.",
+          "changes": "Original owner-supplied 400 × 400 JPEG copied unchanged.",
+          "width": 400,
+          "height": 400,
+          "sha256": "6a45a50f1c8ed311b28ed66c3f9fb31a2a8bca1d1a79cc4bc812a84a57917f01"
+        }
+      ]
+    },
     "butterfly-stretch": {
       "name": "Butterfly stretch",
       "aliases": [

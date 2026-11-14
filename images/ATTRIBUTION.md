@@ -232,6 +232,13 @@ Changes: still extracted at 00:13, JPEG optimized without cropping. This demonst
 
 The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.
 
+## Wall angels image (owner-supplied, November 13, 2026)
+
+- File: `wall-angels-healthline.jpg`, original 400 × 400 JPEG supplied by the site owner and stored unchanged at their request.
+- The image source is the Healthline Wall Angels article, which credits the image to Dima Bazak: https://www.healthline.com/health/fitness/wall-angels#how-to
+- Healthline's page states © 2026 Healthline Media and all rights reserved. No reuse permission or open license was supplied or verified; do not describe this asset as Creative Commons or public domain.
+- [Request reuse permission](https://permissions.rvohealth.threesai.com/).
+
 ## Opening-stretch identification correction (November 8, 2026)
 
 The existing owner-supplied `lying-quad-stretch.png` depicts a **single lean-back quad stretch**, not a side-lying stretch. The owner confirmed the movement with a StretchCoach reference on November 8. The original image bytes, watermark, attribution and unspecified reuse-license record are unchanged. Only its descriptive metadata and matching exercise name were corrected.
