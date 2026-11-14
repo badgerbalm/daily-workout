@@ -31,6 +31,6 @@ const photoAPI=require('../exercise-photos.js');
    if(entry.demo)assert.equal(await row.locator('.demo').first().getAttribute('href'),entry.demo);
   }
   assert.deepEqual(errors,[]);
-  console.log(`PASS: ${count} local photos in ${items.length} current-plan cards decode, expand and return correctly at iPhone size.`);
+  console.log(`PASS: ${count} local images in ${items.length} current-plan cards decode, expand and return correctly at iPhone size.`);
  }finally{await browser.close()}
 })().catch(error=>{console.error(error);process.exitCode=1});
