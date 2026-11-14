@@ -1,6 +1,6 @@
-# Permanent exercise photograph library
+# Permanent exercise image library
 
-`exercise-photos.json` is the source of truth for photographs, independent of `workout.json` and the workout date. `exercise-photos.js` matches exercise names and aliases and renders at most two local photographs, with visible credits. Unknown exercises and failed files display a text placeholder. Legacy per-workout image URLs are intentionally ignored, so stale hotlinks or SVG illustrations cannot override this library.
+`exercise-photos.json` is the source of truth for exercise images, independent of `workout.json` and the workout date. `exercise-photos.js` matches exercise names and aliases and renders at most two local images, with visible credits. JPEG, PNG, WebP, and local SVG illustrations are supported. Unknown exercises and failed files display a text placeholder. Legacy per-workout image URLs are intentionally ignored, so stale hotlinks or inline drawings cannot override this library.
 
 ## Daily /plan and /update
 
@@ -38,11 +38,11 @@ The original workout had 7 remote image references on 6 entries and 11 entries w
 
 ## Add an exercise later
 
-1. Find a real photograph of the exact movement and verify the source license, author, required attribution, and any reuse restrictions. Do not infer an image license from a software repository's code license.
+1. Find a photograph of the exact movement and verify its source license, author, required attribution, and reuse restrictions, or create an original vector illustration when a suitable licensed photo is unavailable. Do not infer an image license from a software repository's code license.
 2. Save the image under `images/` using a descriptive filename. For two frames, prefer a documented sequence of the same exercise and person. Do not label unrelated poses as start/end.
 3. Add a canonical entry and aliases to `exercise-photos.json`. Retain `status: "missing"`, `photos: []`, and a reason when a suitable photograph cannot be verified.
 4. Each photo needs `src`, `alt`, `title`, `author`, `source`, `license`, `licenseUrl`, `changes`, `width`, `height`, and `sha256`. `caption`, `citation`, and `attributionUrl` are optional. Record cropping/resizing and retain the applicable share-alike license on derivatives.
-5. Add source and license details to `images/ATTRIBUTION.md`. Links to the original source and license also appear beside the workout card. Tap a photograph to expand it in a dialog on that selected image. Swipe left/right, use Previous/Next, or press the left/right arrow keys to cycle through that exercise’s photos. The Back to workout button stays in a non-scrolling toolbar above the image and closes the viewer without reloading or losing your place; Escape also closes it. Single-photo entries hide the navigation controls. Failed full-size images display a clean message and can be navigated past.
+5. Add source and license details to `images/ATTRIBUTION.md`. Links to the original source and license also appear beside the workout card. Tap an image to expand it in a dialog on that selected image. Swipe left/right, use Previous/Next, or press the left/right arrow keys to cycle through that exercise's images. The Back to workout button stays in a non-scrolling toolbar above the image and closes the viewer without reloading or losing your place; Escape also closes it. Single-image entries hide the navigation controls. Failed full-size images display a clean message and can be navigated past.
 6. Run `node tests/verify-photos.cjs` and visually inspect desktop and mobile widths. The checks verify registered current exercises and every local file's SHA-256, as well as timer and completion behavior.
 
 No workout instruction, duration, set, rep, or exercise was changed by this integration. `workout.json` remains byte-for-byte unchanged.

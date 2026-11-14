@@ -252,3 +252,9 @@ Dumbbell Bench Press, Capt. Matthew Holfinger / U.S. Marine Corps Training and E
 Stills extracted at 00:08 and 00:10, with both original camera views retained; no cropping. The demonstrated variation uses a flat bench with feet supported on the floor.
 
 The appearance of U.S. Department of War (DoW) visual information does not imply or constitute DoW endorsement.
+
+## Original posture exercise illustrations (November 13, 2026)
+
+- `band-pull-aparts.svg` is an original, hand-authored two-position vector illustration. It shows a separate flat resistance band held at chest height and pulled outward, with no anchor, handles, or machine.
+- `doorway-chest-stretch.svg` is an original, hand-authored two-position vector illustration. It shows forearms against a doorway and a gentle forward step with an upright torso, matching the existing exercise card.
+- Both files use original vector shapes and contain no third-party image assets. They are project illustrations, not licensed photographs. The workout data, names, timers, reps, and instructions are unchanged.

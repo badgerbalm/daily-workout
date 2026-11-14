@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">Band pull-aparts</title>
+  <desc id="desc">Two positions showing a person holding a separate flat resistance band at chest height and pulling outward with softly bent elbows.</desc>
+  <rect width="960" height="600" fill="#f1f4f8"/>
+  <g font-family="system-ui, sans-serif" text-anchor="middle" fill="#102039">
+    <g transform="translate(18 18)">
+      <rect width="450" height="564" rx="22" fill="#fff" stroke="#dbe1e9" stroke-width="3"/>
+      <text x="225" y="48" font-size="22" font-weight="700" letter-spacing="2">START</text>
+      <g transform="translate(225 82)">
+        <circle cy="64" r="39" fill="#d8b79e"/>
+        <path d="M-37 52q4-41 38-41 32 0 37 39l-8-12-15-10-14 9-18-2-13 12z" fill="#283449"/>
+        <rect x="-16" y="101" width="32" height="31" rx="10" fill="#d8b79e"/>
+        <path d="M-53 128q53-23 106 0l25 166q-78 31-156 0z" fill="#173f73"/>
+        <path d="M-48 145-105 163-137 205" fill="none" stroke="#d8b79e" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M48 145 105 163 137 205" fill="none" stroke="#d8b79e" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-137 205h274" fill="none" stroke="#d72d3c" stroke-width="12" stroke-linecap="round"/>
+        <path d="M-146 193v24m292-24v24" stroke="#a71930" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="-139" cy="205" r="14" fill="#d8b79e"/><circle cx="139" cy="205" r="14" fill="#d8b79e"/>
+        <path d="M-43 291-48 420-54 468m97-177 5 129 6 48" fill="none" stroke="#243248" stroke-width="35" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-55 470h-37m147 0h37" fill="none" stroke="#d8b79e" stroke-width="17" stroke-linecap="round"/>
+        <path d="M-4 154h8" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      </g>
+      <text x="225" y="548" font-size="18" fill="#5d6b80">Band held across the chest</text>
+    </g>
+    <g transform="translate(492 18)">
+      <rect width="450" height="564" rx="22" fill="#fff" stroke="#dbe1e9" stroke-width="3"/>
+      <text x="225" y="48" font-size="22" font-weight="700" letter-spacing="2">PULL APART</text>
+      <g transform="translate(225 82)">
+        <circle cy="64" r="39" fill="#d8b79e"/>
+        <path d="M-37 52q4-41 38-41 32 0 37 39l-8-12-15-10-14 9-18-2-13 12z" fill="#283449"/>
+        <rect x="-16" y="101" width="32" height="31" rx="10" fill="#d8b79e"/>
+        <path d="M-53 128q53-23 106 0l25 166q-78 31-156 0z" fill="#173f73"/>
+        <path d="M-48 145-102 165-173 200" fill="none" stroke="#d8b79e" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M48 145 102 165 173 200" fill="none" stroke="#d8b79e" stroke-width="27" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-173 200h346" fill="none" stroke="#d72d3c" stroke-width="12" stroke-linecap="round"/>
+        <path d="M-182 188v24m364-24v24" stroke="#a71930" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="-175" cy="200" r="14" fill="#d8b79e"/><circle cx="175" cy="200" r="14" fill="#d8b79e"/>
+        <path d="M-43 291-48 420-54 468m97-177 5 129 6 48" fill="none" stroke="#243248" stroke-width="35" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-55 470h-37m147 0h37" fill="none" stroke="#d8b79e" stroke-width="17" stroke-linecap="round"/>
+        <path d="M-208 190l-22 10 22 10m438-20 22 10-22 10" fill="none" stroke="#d72d3c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="225" y="548" font-size="18" fill="#5d6b80">Pull both hands outward; elbows stay soft</text>
+    </g>
+  </g>
+</svg>

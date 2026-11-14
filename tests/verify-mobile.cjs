@@ -9,7 +9,7 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
  let requests=0;await page.route('**/workout.json*',route=>{requests++;return route.fulfill({json:fixture})});
  await page.goto(process.argv[2]||'http://127.0.0.1:8765/');
  await page.waitForFunction(()=>document.querySelectorAll('.item').length===3&&initialPageLoadComplete);
- assert.equal(await page.locator('.image-missing').textContent(),'Photo unavailable');
+ assert.equal(await page.locator('.image-missing').textContent(),'Image unavailable');
  // The two existing side-plank photos retain the complete pose, not cropped thumbnails.
  for(const width of [320,390,430,768]){
   await page.setViewportSize({width,height:844});
@@ -41,7 +41,7 @@ const assert=require('node:assert/strict'),{chromium}=require('playwright');
  await page.locator('.exercise-media').first().evaluate(node=>node.open=true);
  await page.locator('.item .art a').first().click();
  const back=page.locator('.photo-back');await back.waitFor({state:'visible'});
- const backBox=await back.boundingBox();assert(backBox.y>=0&&backBox.y+backBox.height<=844);await page.locator('.photo-next').click();assert.equal(await page.locator('.photo-position').textContent(),'Photo 2 of 2');
+ const backBox=await back.boundingBox();assert(backBox.y>=0&&backBox.y+backBox.height<=844);await page.locator('.photo-next').click();assert.equal(await page.locator('.photo-position').textContent(),'Image 2 of 2');
  await page.screenshot({path:require('node:path').join(require('node:os').tmpdir(),'daily-workout-gallery.png')});await back.click();
  // Expiry, explicit false overriding a legacy check, and invalidated timers use stable fixtures.
  await page.evaluate(async()=>{localStorage.setItem('workout-checks-2099-01-01',JSON.stringify({legacy:true}));await refreshWorkout()});

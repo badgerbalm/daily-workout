@@ -27,6 +27,50 @@
         }
       ]
     },
+    "band-pull-aparts": {
+      "name": "Band pull-aparts",
+      "aliases": ["Band pull apart", "Resistance band pull-aparts"],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/band-pull-aparts.svg",
+          "alt": "Two frames show a person holding a separate, flat red resistance band by its ends at chest height, then pulling both hands outward with elbows slightly bent. No anchor, handles, or machine.",
+          "caption": "Separate handheld band · pull outward at chest height; keep elbows soft.",
+          "title": "Band pull-aparts · original exercise illustration",
+          "author": "Daily Workout project",
+          "source": "https://github.com/badgerbalm/daily-workout/blob/main/images/band-pull-aparts.svg",
+          "license": "Original project vector illustration; no third-party media used",
+          "licenseUrl": "",
+          "permissionBasis": "Hand-authored SVG created for this project from the specified exercise movement; no stock image or external artwork used.",
+          "changes": "Original vector illustration; no external image assets.",
+          "width": 960,
+          "height": 600,
+          "sha256": "61acf20979d93db7a75e4855b6fb97bd7815460689356ab33a5abe7b7edd797f"
+        }
+      ]
+    },
+    "doorway-chest-stretch": {
+      "name": "Doorway chest stretch",
+      "aliases": [],
+      "status": "ready",
+      "photos": [
+        {
+          "src": "images/doorway-chest-stretch.svg",
+          "alt": "Two frames show a person placing both forearms against a doorway frame and gently stepping forward with an upright, neutral back.",
+          "caption": "Forearms on the doorway frame · take a gentle step without arching your lower back.",
+          "title": "Doorway chest stretch · original exercise illustration",
+          "author": "Daily Workout project",
+          "source": "https://github.com/badgerbalm/daily-workout/blob/main/images/doorway-chest-stretch.svg",
+          "license": "Original project vector illustration; no third-party media used",
+          "licenseUrl": "",
+          "permissionBasis": "Hand-authored SVG created for this project to match the existing doorway-stretch instructions; no stock image or external artwork used.",
+          "changes": "Original vector illustration; no external image assets.",
+          "width": 960,
+          "height": 600,
+          "sha256": "9d76f14df36c8673d5434a322c16cba32f266b806919c05e720d83785fc99357"
+        }
+      ]
+    },
     "wall-angels": {
       "name": "Wall angels",
       "aliases": ["Wall angel", "Wall angel exercise"],

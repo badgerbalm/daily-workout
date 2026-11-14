@@ -1,4 +1,4 @@
-/* A day-independent photograph renderer. No workout data or timer state is changed. */
+/* A day-independent exercise image renderer. No workout data or timer state is changed. */
 (function(root){
   'use strict';
   const normalize=name=>String(name??'').normalize('NFKC').toLowerCase()
@@ -9,7 +9,7 @@
       [entry.name,...(entry.aliases||[])].some(alias=>normalize(alias)===key));
   }
   function localPhotoPath(path){
-    return typeof path==='string'&&/^images\/[a-z0-9/_-]+\.(jpe?g|png|webp)$/i.test(path)&&!path.includes('..');
+    return typeof path==='string'&&/^images\/[a-z0-9/_-]+\.(jpe?g|png|webp|svg)$/i.test(path)&&!path.includes('..');
   }
   function exerciseDemo(library,name){
     const url=findExercise(library,name)?.demo;
@@ -28,9 +28,9 @@
       index=(next+photos.length)%photos.length;
       const photo=photos[index];
       full.hidden=false;full.alt=photo.alt||name+' demonstration';
-      status.textContent='Photo '+(index+1)+' of '+photos.length;
+      status.textContent='Image '+(index+1)+' of '+photos.length;
       caption.textContent=photo.caption||'';
-      full.onerror=()=>{full.hidden=true;caption.textContent='Photo unavailable. Try another photograph.'};
+      full.onerror=()=>{full.hidden=true;caption.textContent='Image unavailable. Try another image.'};
       full.src='./'+photo.src;
     }
     nav.hidden=photos.length<2;
@@ -67,15 +67,15 @@
     const photos=(entry?.photos||[]).filter(p=>localPhotoPath(p.src)).slice(0,2);
     function placeholder(){
       const span=doc.createElement('span');span.className='image-missing';
-      span.textContent='Photo unavailable';art.append(span);
+      span.textContent='Image unavailable';art.append(span);
     }
     if(!photos.length){placeholder();return}
     const credits=doc.createElement('details');credits.className='photo-credits';
-    const creditSummary=doc.createElement('summary');creditSummary.textContent='Photo credits';
+    const creditSummary=doc.createElement('summary');creditSummary.textContent='Image credits';
     credits.append(creditSummary);body.append(credits);
     for(const p of photos){
       const figure=doc.createElement('figure'),link=doc.createElement('a'),img=doc.createElement('img');
-      link.href='./'+p.src;link.target='_blank';link.rel='noopener';link.title='Expand photograph';
+      link.href='./'+p.src;link.target='_blank';link.rel='noopener';link.title='Expand image';
       link.onclick=event=>{
         const viewer=doc.querySelector('#photo-viewer');
         if(!viewer?.showModal)return;

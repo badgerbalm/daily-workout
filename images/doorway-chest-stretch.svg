@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="title desc">
+  <title id="title">Doorway chest stretch</title>
+  <desc id="desc">Two positions showing forearms supported on the door frame and a small forward step while keeping the torso upright.</desc>
+  <rect width="960" height="600" fill="#f1f4f8"/>
+  <g font-family="system-ui, sans-serif" text-anchor="middle" fill="#102039">
+    <g transform="translate(18 18)">
+      <rect width="450" height="564" rx="22" fill="#fff" stroke="#dbe1e9" stroke-width="3"/>
+      <text x="225" y="48" font-size="22" font-weight="700" letter-spacing="2">SET UP</text>
+      <g transform="translate(225 72)">
+        <path d="M-126 56v370m252-370v370M-126 56h252" fill="none" stroke="#bcc8d6" stroke-width="17" stroke-linecap="round"/>
+        <path d="M-111 70h222v340h-222z" fill="#f8fafc" stroke="#dbe1e9" stroke-width="3"/>
+        <circle cy="126" r="34" fill="#d8b79e"/>
+        <path d="M-32 121q5-38 34-38 30 0 33 37l-9-10-12-8-13 8-17-2z" fill="#283449"/>
+        <rect x="-13" y="159" width="26" height="25" rx="8" fill="#d8b79e"/>
+        <path d="M-45 181q45-18 90 0l18 150q-63 21-126 0z" fill="#173f73"/>
+        <path d="M-40 197-87 202-126 221M40 197 87 202 126 221" fill="none" stroke="#d8b79e" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-126 221v53m252-53v53" stroke="#d8b79e" stroke-width="20" stroke-linecap="round"/>
+        <path d="M-126 221v-4m252 4v-4" stroke="#d72d3c" stroke-width="7" stroke-linecap="round"/>
+        <path d="M-26 330-30 430-33 466m52-136 4 100 3 36" fill="none" stroke="#243248" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-34 468h-30m90 0h29" fill="none" stroke="#d8b79e" stroke-width="14" stroke-linecap="round"/>
+      </g>
+      <text x="225" y="548" font-size="18" fill="#5d6b80">Forearms rest on the frame</text>
+    </g>
+    <g transform="translate(492 18)">
+      <rect width="450" height="564" rx="22" fill="#fff" stroke="#dbe1e9" stroke-width="3"/>
+      <text x="225" y="48" font-size="22" font-weight="700" letter-spacing="2">GENTLE STEP</text>
+      <g transform="translate(225 72)">
+        <path d="M-126 56v370m252-370v370M-126 56h252" fill="none" stroke="#bcc8d6" stroke-width="17" stroke-linecap="round"/>
+        <path d="M-111 70h222v340h-222z" fill="#f8fafc" stroke="#dbe1e9" stroke-width="3"/>
+        <circle cy="126" r="34" fill="#d8b79e"/>
+        <path d="M-32 121q5-38 34-38 30 0 33 37l-9-10-12-8-13 8-17-2z" fill="#283449"/>
+        <rect x="-13" y="159" width="26" height="25" rx="8" fill="#d8b79e"/>
+        <path d="M-45 181q45-18 90 0l18 150q-63 21-126 0z" fill="#173f73"/>
+        <path d="M-40 197-87 202-126 221M40 197 87 202 126 221" fill="none" stroke="#d8b79e" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-126 221v53m252-53v53" stroke="#d8b79e" stroke-width="20" stroke-linecap="round"/>
+        <path d="M-126 221v-4m252 4v-4" stroke="#d72d3c" stroke-width="7" stroke-linecap="round"/>
+        <path d="M-26 330-29 414-69 456m61-126 10 89 35 36" fill="none" stroke="#243248" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M-71 458h-31m108 0h32" fill="none" stroke="#d8b79e" stroke-width="14" stroke-linecap="round"/>
+        <path d="M-96 407h-30m-2 0 10-9m-10 9 10 9" fill="none" stroke="#d72d3c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+      <text x="225" y="548" font-size="18" fill="#5d6b80">Step through gently; keep your back neutral</text>
+    </g>
+  </g>
+</svg>

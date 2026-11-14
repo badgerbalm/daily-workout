@@ -17,7 +17,7 @@ const photoAPI=require('../exercise-photos.js');
    const row=page.locator('.item').nth(index),entry=photoAPI.findExercise(library,item.name);
    await row.scrollIntoViewIfNeeded();
    const photos=entry?.photos?.filter(photo=>photoAPI.localPhotoPath(photo.src)).slice(0,2)||[];
-   if(!photos.length){assert.equal(await row.locator('.image-missing').textContent(),'Photo unavailable');continue}
+   if(!photos.length){assert.equal(await row.locator('.image-missing').textContent(),'Image unavailable');continue}
    assert.equal(await row.locator('.art img').count(),photos.length,`${item.name}: all photos render`);
    await row.locator('.art img').evaluateAll(imgs=>Promise.all(imgs.map(async img=>{await img.decode();if(!img.naturalWidth)throw Error('Image did not decode: '+img.src)})));
    for(const [photoIndex,photo] of photos.entries()){

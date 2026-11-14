@@ -24,8 +24,11 @@ assert(api.findExercise(lib,'Bird dogs').photos.length>0);
 assert.equal(api.findExercise(lib,'Single lean-back quad stretch'),api.findExercise(lib,'Lying quad stretch'));
 assert.equal(api.findExercise(lib,'Single lean-back quad stretch').photos[0].src,'images/lying-quad-stretch.png');
 assert.equal(api.findExercise(lib,'Side-lying quad stretch'),undefined,'Do not conflate distinct stretch variations');
+assert(api.findExercise(lib,'Band pull-aparts').photos.every(photo=>photo.src.endsWith('.svg')),'Band pull-aparts use local exercise illustrations');
+assert(api.findExercise(lib,'Doorway chest stretch').photos.every(photo=>photo.src.endsWith('.svg')),'Doorway chest stretch uses its matching local illustration');
 assert.equal(api.exerciseDemo({exercises:{unsafe:{name:'Unsafe',demo:'javascript:alert(1)'}}},'Unsafe'),undefined);
-for(const bad of ['https://x/a.jpg','images/x.svg','images/../x.jpg','//x/a.jpg','images/x.jpg?foo'])assert(!api.localPhotoPath(bad));
+assert(api.localPhotoPath('images/valid-illustration.svg'));
+for(const bad of ['https://x/a.jpg','images/../x.jpg','//x/a.jpg','images/x.jpg?foo'])assert(!api.localPhotoPath(bad));
 // Minimal DOM for deterministic renderer and existing control regression tests.
 class Element{
  constructor(tag,doc){this.tagName=tag;this.ownerDocument=doc;this.children=[];this.className='';this.textContent='';this.attributes={};this.checked=false;this.classList={add:()=>{}}}
@@ -43,7 +46,7 @@ const doc={createElement:tag=>new Element(tag,doc),createTextNode:text=>({textCo
 const elements=Object.fromEntries(['timer-mode','status','notice','workout'].map(id=>['#'+id,new Element('div',doc)]));doc.querySelector=s=>elements[s];
 const art=doc.createElement('div'),body=doc.createElement('div');
 api.renderExercisePhotos(art,body,{name:'Lateral raises'},lib);assert.equal(art.children.length,2);
-const credits=body.querySelector('.photo-credits');assert(credits);assert(!credits.open,'Photo credits are collapsed by default');assert.equal(credits.querySelector('summary').textContent,'Photo credits');assert.equal(credits.querySelectorAll('.photo-credit').length,2,'All attribution stays accessible');
+const credits=body.querySelector('.photo-credits');assert(credits);assert(!credits.open,'Image credits are collapsed by default');assert.equal(credits.querySelector('summary').textContent,'Image credits');assert.equal(credits.querySelectorAll('.photo-credit').length,2,'All attribution stays accessible');
 const viewer=doc.createElement('dialog');
 for(const [tag,cls] of [['button','photo-back'],['div','photo-stage'],['span','photo-position'],['p','photo-caption'],['div','photo-nav'],['button','photo-previous'],['button','photo-next']]){const node=doc.createElement(tag);node.className=cls;viewer.append(node)}
 viewer.querySelector('.photo-stage').append(doc.createElement('img'));
@@ -65,6 +68,6 @@ const singleArt=doc.createElement('div');api.renderExercisePhotos(singleArt,doc.
 singleArt.querySelector('a').onclick({preventDefault:()=>{}});assert(viewer.querySelector('.photo-nav').hidden,'Single image hides navigation');
 viewer.querySelector('button').onclick();
 art.children[0].querySelector('img').onerror();assert.equal(art.children.length,1);assert.equal(body.children.length,1);
-art.children[0].querySelector('img').onerror();assert.equal(art.children[0].textContent,'Photo unavailable');assert.equal(body.children.length,0);
-const missing=doc.createElement('div');api.renderExercisePhotos(missing,body,{name:'Unknown',image:'images/x.svg'},lib);assert.equal(missing.children[0].textContent,'Photo unavailable');
-console.log(`PASS: ${ready} photographed registry entries, local hashes and attribution, aliases, missing/broken image handling, expanded gallery, swipe navigation and Back to workout. Controls are tested separately.`);
+art.children[0].querySelector('img').onerror();assert.equal(art.children[0].textContent,'Image unavailable');assert.equal(body.children.length,0);
+const missing=doc.createElement('div');api.renderExercisePhotos(missing,body,{name:'Unknown',image:'images/x.svg'},lib);assert.equal(missing.children[0].textContent,'Image unavailable');
+console.log(`PASS: ${ready} image-ready registry entries, local hashes and attribution, aliases, missing/broken image handling, expanded gallery, swipe navigation and Back to workout. Controls are tested separately.`);
