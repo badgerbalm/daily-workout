@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-14",
-  "title": "Daily Workout · November 14",
-  "note": "Saturday · approximately 47 minutes: six established opening stretches (6 min), incline treadmill walking (35 min), and gentle neutral-spine core work (6 min). Recovery-oriented day after Friday upper-body strength and posture; posture mini-routine rests today (target 3–4 days weekly, not daily). Treadmill inclines remain fixed 3% steady and alternating 2%/4% every 3 min; walking only up to 4.2 mph, no jogging. Use older HOKA Clifton 9 Wide (2E) only temporarily; replace high-mileage shoes soon. Avoid New Balance Fresh Foam X 1080 v15 specifically due to tingling, not all New Balance models. Stop for tingling, numbness, sharp lumbar or knee pain. Six opening stretches and timers unchanged; plow pose with feet suspended is listed as preference but SKIP unless medically cleared due to neck/spine loading; existing floor-contact photograph is reference-only. No actual completed performance or dumbbell loads assumed. On future posture days use separate PT rubber band for pull-aparts and wall-mounted bands for chest stretch; no doorway stretch.",
+  "date": "2026-11-15",
+  "title": "Daily Workout · November 15",
+  "note": "Sunday · approximately 46 minutes: six established opening stretches (6 min), calorie-focused incline treadmill walking (35 min), and gentle posture practice (5 min). Recovery from Saturday core session: no additional core or dumbbell strength today. Maintain steady fixed 3% incline and 2%/4% intervals every 3 minutes, walking only up to 4.2 mph, no jogging. The user is trying Topo Athletic Phantom 4 Men's 10.5 Wide; introduce cautiously at a comfortable pace and watch for tingling, and return to previously comfortable footwear if symptoms appear. Older HOKA Clifton 9 Wide (2E) has 850+ miles and needs replacement; avoid only New Balance Fresh Foam X 1080 v15 due to reported tingling, not the entire brand. Stop for tingling, numbness, painful heel strikes or sharp lumbar pain. Avoid forced lumbar extension. Preserve all six opening stretches and original timers. Plow pose with feet suspended remains listed as user preference but skip unless medically cleared due to neck/spine loading. Its floor-contact photograph is reference-only, not an exact depiction. No actual exercise performance or loads assumed.",
   "sections": [
     {
       "title": "Opening stretches · 6 minutes",
@@ -51,19 +51,19 @@
           "name": "Warm-up walk",
           "detail": "5 min · 3.0–3.3 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Use HOKA Clifton 9 Wide (2E), not the New Balance 1080 v15. Begin comfortably and stop if symptoms recur."
+          "instructions": "For the new Topo Athletic Phantom 4 Men's 10.5 Wide, begin at a comfortable pace and check toe room, pressure, and tingling. If symptoms develop, stop; the older HOKA Clifton 9 Wide (2E) was previously comfortable but is worn out. Avoid the New Balance 1080 v15 specifically, not all New Balance models."
         },
         {
           "name": "Steady brisk walk",
           "detail": "10 min · 3.8–4.2 mph · fixed 3% incline",
           "seconds": 600,
-          "instructions": "Maintain a constant 3% incline for this entire steady segment; walk with a natural stride and reduce speed if needed."
+          "instructions": "Maintain a constant 3% incline for the entire steady segment. If testing the new Topo Phantom 4, first confirm comfort at lower speed and incline before progressing; walk naturally, reduce speed if needed, stop for tingling."
         },
         {
           "name": "Incline walking intervals",
           "detail": "15 min · 3.6–4.2 mph · alternate 2% and 4% incline every 3 min",
           "seconds": 900,
-          "instructions": "Three-minute blocks at 2%, 4%, 2%, 4%, 2%. Brisk walking only, not jogging. Stop if tingling or back pain returns."
+          "instructions": "Three-minute blocks at 2%, 4%, 2%, 4%, 2%. Brisk walking only, no jogging. Progress only if the new shoe feels comfortable; stop if tingling or back pain returns."
         },
         {
           "name": "Cool-down walk",
@@ -74,20 +74,31 @@
       ]
     },
     {
-      "title": "Gentle neutral-spine core · 6 minutes",
-      "watchWorkout": "core",
+      "title": "Posture practice · 5 minutes",
       "items": [
         {
-          "name": "Dead bugs",
-          "detail": "3 min · 2 × 8 controlled alternating reps",
-          "seconds": 180,
-          "instructions": "Lie on back, knees bent above hips, arms toward ceiling. Slowly extend opposite arm and leg only as far as you can keep pelvis and lumbar spine comfortable and steady. Exhale gently, no straining. Shorten range or skip if back pain."
+          "name": "Band pull-aparts",
+          "detail": "90 sec · 2 × 12 controlled reps",
+          "seconds": 90,
+          "instructions": "Use your separate light rubber PT resistance band, held freely in both hands at chest height, not wall anchored. Keep elbows softly bent, gently pull apart and squeeze shoulder blades, return slowly. Keep ribs stacked over pelvis, avoid shrugging or backward lean. Stop if painful."
         },
         {
-          "name": "Bird dogs",
-          "detail": "3 min · 2 × 6 alternating reps per side",
-          "seconds": 180,
-          "instructions": "On hands and knees, brace gently and extend opposite arm and leg only to body level, keeping hips square and lumbar spine neutral. Pause briefly and return slowly. Use arm-only or leg-only movements if needed; skip if painful."
+          "name": "Chin tucks",
+          "detail": "60 sec · 8–10 gentle reps",
+          "seconds": 60,
+          "instructions": "Eyes level, draw chin straight backward gently without tipping head up or down; relax between repetitions."
+        },
+        {
+          "name": "Wall-anchored band chest stretch",
+          "detail": "60 sec · 30 sec each side · light tension",
+          "seconds": 60,
+          "instructions": "Use the securely mounted wall resistance band anchor near shoulder height. Face away from the anchor and hold band with one hand; step forward gently for a mild chest stretch. Keep ribs stacked over pelvis, shoulder relaxed, lumbar spine neutral. Change sides at 30 sec; no doorway needed. Stop if painful."
+        },
+        {
+          "name": "Wall angels",
+          "detail": "90 sec · 6–8 slow reps",
+          "seconds": 90,
+          "instructions": "Back to wall with feet slightly forward; keep neutral spine, chin gently tucked, ribs down. Slowly move arms between comfortable V and W positions without forcing contact or lumbar flattening. Stop for shoulder, neck, or back discomfort."
         }
       ]
     }
