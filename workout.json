@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-15",
-  "title": "Daily Workout · November 15",
-  "note": "Sunday · approximately 46 minutes: six established opening stretches (6 min), calorie-focused incline treadmill walking (35 min), and gentle posture practice (5 min). Recovery from Saturday core session: no additional core or dumbbell strength today. Maintain steady fixed 3% incline and 2%/4% intervals every 3 minutes, walking only up to 4.2 mph, no jogging. The user is trying Topo Athletic Phantom 4 Men's 10.5 Wide; introduce cautiously at a comfortable pace and watch for tingling, and return to previously comfortable footwear if symptoms appear. Older HOKA Clifton 9 Wide (2E) has 850+ miles and needs replacement; avoid only New Balance Fresh Foam X 1080 v15 due to reported tingling, not the entire brand. Stop for tingling, numbness, painful heel strikes or sharp lumbar pain. Avoid forced lumbar extension. Preserve all six opening stretches and original timers. Plow pose with feet suspended remains listed as user preference but skip unless medically cleared due to neck/spine loading. Its floor-contact photograph is reference-only, not an exact depiction. No actual exercise performance or loads assumed.",
+  "date": "2026-11-16",
+  "title": "Daily Workout · November 16",
+  "note": "Monday · approximately 50 minutes prescribed: six established opening stretches (6 min), 35-minute incline treadmill walk, and supported upper-body strength (9 min). Posture rest today after Sunday practice. Recent report: completed full incline treadmill session in Topo Phantom 4 Wide without foot tingling, overheating, or pain during exercise, but intermittent sharp localized lower-right lumbar pain occurs later with right-foot weight bearing and disappears on unloading; user reports it may ease during warm-up. Do not treat warming up or Aleve relief as clearance to exercise through sharp pain. Begin with easy walking and only progress to prescribed 3% steady / 2%-4% intervals if pain-free throughout; stop for sharp back pain, radiating symptoms, weakness, or tingling. Avoid jogging, heavy yard work, forced lumbar extension and painful movements; seek clinician/PT assessment for recurrent sharp weight-bearing pain. Do not infer completed repetitions or weights. Topo Phantom 4 Wide is preferred based on one successful test, not proven long-term tolerance. Preserve six stretches; skip plow pose unless medically cleared (reference-only photo).",
   "sections": [
     {
       "title": "Opening stretches · 6 minutes",
@@ -51,54 +51,49 @@
           "name": "Warm-up walk",
           "detail": "5 min · 3.0–3.3 mph · 0% incline",
           "seconds": 300,
-          "instructions": "For the new Topo Athletic Phantom 4 Men's 10.5 Wide, begin at a comfortable pace and check toe room, pressure, and tingling. If symptoms develop, stop; the older HOKA Clifton 9 Wide (2E) was previously comfortable but is worn out. Avoid the New Balance 1080 v15 specifically, not all New Balance models."
+          "instructions": "Start easy in Topo Athletic Phantom 4 Wide (men's 10.5W), previously comfortable during full treadmill workout. Check right-sided low-back symptoms and foot comfort. If sharp pain is present, do not push through it expecting warm-up to remove it; stop or switch to a comfortable non-provocative activity."
         },
         {
           "name": "Steady brisk walk",
           "detail": "10 min · 3.8–4.2 mph · fixed 3% incline",
           "seconds": 600,
-          "instructions": "Maintain a constant 3% incline for the entire steady segment. If testing the new Topo Phantom 4, first confirm comfort at lower speed and incline before progressing; walk naturally, reduce speed if needed, stop for tingling."
+          "instructions": "Maintain fixed 3% incline only if fully comfortable and pain-free after warm-up. Keep natural stride; reduce intensity or stop if sharp lower-right back pain appears. No jogging."
         },
         {
           "name": "Incline walking intervals",
           "detail": "15 min · 3.6–4.2 mph · alternate 2% and 4% incline every 3 min",
           "seconds": 900,
-          "instructions": "Three-minute blocks at 2%, 4%, 2%, 4%, 2%. Brisk walking only, no jogging. Progress only if the new shoe feels comfortable; stop if tingling or back pain returns."
+          "instructions": "Three-minute blocks at 2%, 4%, 2%, 4%, 2%. Walking only, up to 4.2 mph if comfortable. Do not force prescribed speed or incline if right-sided back pain recurs; stop for sharp pain, tingling or radiating symptoms."
         },
         {
           "name": "Cool-down walk",
           "detail": "5 min · 3.0–3.3 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Gradually ease down to a comfortable pace."
+          "instructions": "Easy pace, 0% incline. Note any pain during walking and later in the day, particularly sharp lower-right lumbar pain with right-foot loading."
         }
       ]
     },
     {
-      "title": "Posture practice · 5 minutes",
+      "title": "Supported upper body · 9 minutes",
+      "watchWorkout": "strength",
       "items": [
         {
-          "name": "Band pull-aparts",
-          "detail": "90 sec · 2 × 12 controlled reps",
-          "seconds": 90,
-          "instructions": "Use your separate light rubber PT resistance band, held freely in both hands at chest height, not wall anchored. Keep elbows softly bent, gently pull apart and squeeze shoulder blades, return slowly. Keep ribs stacked over pelvis, avoid shrugging or backward lean. Stop if painful."
+          "name": "Dumbbell bench press",
+          "detail": "3 min · 2 × 10 · feet supported on floor",
+          "seconds": 180,
+          "instructions": "Flat bench, feet supported on floor, comfortable light dumbbells; keep spine neutral and avoid exaggerated arching or leg drive. Use matching bench-press image registry entry. Skip if back pain occurs; do not assume actual weight lifted."
         },
         {
-          "name": "Chin tucks",
-          "detail": "60 sec · 8–10 gentle reps",
-          "seconds": 60,
-          "instructions": "Eyes level, draw chin straight backward gently without tipping head up or down; relax between repetitions."
+          "name": "Supported dumbbell rows",
+          "detail": "3 min · 2 × 10 per arm",
+          "seconds": 180,
+          "instructions": "One hand and knee supported on bench, neutral spine, light controlled rows. Avoid twisting or loading painful right side; skip if sharp lumbar pain."
         },
         {
-          "name": "Wall-anchored band chest stretch",
-          "detail": "60 sec · 30 sec each side · light tension",
-          "seconds": 60,
-          "instructions": "Use the securely mounted wall resistance band anchor near shoulder height. Face away from the anchor and hold band with one hand; step forward gently for a mild chest stretch. Keep ribs stacked over pelvis, shoulder relaxed, lumbar spine neutral. Change sides at 30 sec; no doorway needed. Stop if painful."
-        },
-        {
-          "name": "Wall angels",
-          "detail": "90 sec · 6–8 slow reps",
-          "seconds": 90,
-          "instructions": "Back to wall with feet slightly forward; keep neutral spine, chin gently tucked, ribs down. Slowly move arms between comfortable V and W positions without forcing contact or lumbar flattening. Stop for shoulder, neck, or back discomfort."
+          "name": "Dumbbell biceps curls",
+          "detail": "3 min · 2 × 10",
+          "seconds": 180,
+          "instructions": "Seated or standing with stable posture, elbows near sides, no swinging or leaning back. Skip if symptoms occur."
         }
       ]
     }
