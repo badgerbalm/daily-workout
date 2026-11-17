@@ -1,7 +1,7 @@
 {
-  "date": "2026-11-16",
-  "title": "Daily Workout · November 16",
-  "note": "Monday · approximately 50 minutes prescribed: six established opening stretches (6 min), 35-minute incline treadmill walk, and supported upper-body strength (9 min). Posture rest today after Sunday practice. Recent report: completed full incline treadmill session in Topo Phantom 4 Wide without foot tingling, overheating, or pain during exercise, but intermittent sharp localized lower-right lumbar pain occurs later with right-foot weight bearing and disappears on unloading; user reports it may ease during warm-up. Do not treat warming up or Aleve relief as clearance to exercise through sharp pain. Begin with easy walking and only progress to prescribed 3% steady / 2%-4% intervals if pain-free throughout; stop for sharp back pain, radiating symptoms, weakness, or tingling. Avoid jogging, heavy yard work, forced lumbar extension and painful movements; seek clinician/PT assessment for recurrent sharp weight-bearing pain. Do not infer completed repetitions or weights. Topo Phantom 4 Wide is preferred based on one successful test, not proven long-term tolerance. Preserve six stretches; skip plow pose unless medically cleared (reference-only photo).",
+  "date": "2026-11-17",
+  "title": "Daily Workout · November 17",
+  "note": "Tuesday recovery-focused session following user-confirmed skipped November 16 workout due to insufficient sleep, work and blood donation. Avoid strenuous activity for at least 24 hours after donation; today's plan is gentle and optional only if rested, hydrated, not dizzy and free of sharp back pain. Recurrent sharp localized lower-right lumbar pain with right-foot loading warrants PT/spine evaluation; do not walk through it even if it sometimes eases after warm-up or Aleve. Keep six established stretches in order, but SKIP plow pose unless specifically medically cleared; reference-only photograph does not match suspended-feet variation. No jogging, forced extension, heavy yard work, or assumptions of actual performance. Topo Phantom 4 Wide preferred based on one good trial; monitor symptoms. Resume established 3% steady / alternating 2%-4% incline sessions only after donation recovery and if consistently pain-free.",
   "sections": [
     {
       "title": "Opening stretches · 6 minutes",
@@ -45,55 +45,60 @@
       ]
     },
     {
-      "title": "Incline treadmill walk · 35 minutes",
+      "title": "Optional easy treadmill walk · 20 minutes",
       "items": [
         {
           "name": "Warm-up walk",
-          "detail": "5 min · 3.0–3.3 mph · 0% incline",
+          "detail": "5 min · 2.7–3.0 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Start easy in Topo Athletic Phantom 4 Wide (men's 10.5W), previously comfortable during full treadmill workout. Check right-sided low-back symptoms and foot comfort. If sharp pain is present, do not push through it expecting warm-up to remove it; stop or switch to a comfortable non-provocative activity."
+          "instructions": "Only begin if well rested, hydrated, at least 24 hours after blood donation and no sharp pain when bearing weight on right foot. Stop if dizziness, weakness, or back pain."
         },
         {
-          "name": "Steady brisk walk",
-          "detail": "10 min · 3.8–4.2 mph · fixed 3% incline",
+          "name": "Easy level walk",
+          "detail": "10 min · 2.8–3.2 mph · 0% incline",
           "seconds": 600,
-          "instructions": "Maintain fixed 3% incline only if fully comfortable and pain-free after warm-up. Keep natural stride; reduce intensity or stop if sharp lower-right back pain appears. No jogging."
-        },
-        {
-          "name": "Incline walking intervals",
-          "detail": "15 min · 3.6–4.2 mph · alternate 2% and 4% incline every 3 min",
-          "seconds": 900,
-          "instructions": "Three-minute blocks at 2%, 4%, 2%, 4%, 2%. Walking only, up to 4.2 mph if comfortable. Do not force prescribed speed or incline if right-sided back pain recurs; stop for sharp pain, tingling or radiating symptoms."
+          "instructions": "Recovery day: no 3% steady or 2%-4% incline intervals today; resume established incline plan on a later symptom-free day. Stop immediately for sharp right lower-back pain rather than warming through it. No jogging."
         },
         {
           "name": "Cool-down walk",
-          "detail": "5 min · 3.0–3.3 mph · 0% incline",
+          "detail": "5 min · 2.5–2.8 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Easy pace, 0% incline. Note any pain during walking and later in the day, particularly sharp lower-right lumbar pain with right-foot loading."
+          "instructions": "Gradually slow and stop if lightheaded or uncomfortable. Topo Phantom 4 Wide as tolerated; no assumptions about longer-term fit."
         }
       ]
     },
     {
-      "title": "Supported upper body · 9 minutes",
-      "watchWorkout": "strength",
+      "title": "Gentle posture practice · 5 minutes",
       "items": [
         {
-          "name": "Dumbbell bench press",
-          "detail": "3 min · 2 × 10 · feet supported on floor",
-          "seconds": 180,
-          "instructions": "Flat bench, feet supported on floor, comfortable light dumbbells; keep spine neutral and avoid exaggerated arching or leg drive. Use matching bench-press image registry entry. Skip if back pain occurs; do not assume actual weight lifted."
+          "name": "Band pull-aparts",
+          "detail": "90 sec · 2 × 12 as tolerated",
+          "seconds": 90,
+          "instructions": "Use separate light rubber PT resistance band held freely in both hands at chest height, not wall-mounted rows. Relax shoulders and keep spine neutral; stop if pain."
         },
         {
-          "name": "Supported dumbbell rows",
-          "detail": "3 min · 2 × 10 per arm",
-          "seconds": 180,
-          "instructions": "One hand and knee supported on bench, neutral spine, light controlled rows. Avoid twisting or loading painful right side; skip if sharp lumbar pain."
+          "name": "Wall angels",
+          "detail": "60 sec · gentle controlled reps",
+          "seconds": 60,
+          "instructions": "Small comfortable range, no forced lumbar extension; skip if sharp back discomfort."
         },
         {
-          "name": "Dumbbell biceps curls",
-          "detail": "3 min · 2 × 10",
-          "seconds": 180,
-          "instructions": "Seated or standing with stable posture, elbows near sides, no swinging or leaning back. Skip if symptoms occur."
+          "name": "Chin tucks",
+          "detail": "60 sec · gentle holds",
+          "seconds": 60,
+          "instructions": "Keep neck neutral, move gently without straining."
+        },
+        {
+          "name": "Wall-anchored band chest stretch",
+          "detail": "60 sec · 30 sec per side",
+          "seconds": 60,
+          "instructions": "Use securely mounted wall bands at shoulder height with light tension; keep spine neutral. No doorway stretch."
+        },
+        {
+          "name": "Posture reset / transition",
+          "detail": "30 sec · relaxed breathing",
+          "seconds": 30,
+          "instructions": "Comfortable standing or seated posture, no back arching; stop for symptoms."
         }
       ]
     }
