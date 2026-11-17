@@ -10,5 +10,8 @@
     "fake-indexeddb": "6.2.5",
     "jsdom": "26.1.0",
     "wrangler": "^4.159.0"
+  },
+  "dependencies": {
+    "@block65/webcrypto-web-push": "2.0.0"
   }
 }

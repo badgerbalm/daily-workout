@@ -1,4 +1,4 @@
-/* Logging is always local first. Google sync is optional and explicitly requested. */
+/* Logging is always local first. Google backup runs automatically when connected. */
 (function(){
  'use strict';
  const store=WorkoutHistoryStore.createStore();
@@ -197,8 +197,8 @@
    finish.disabled=true;
    try{if(invalid.size)throw Error('Correct incomplete result fields before finishing.');const review=WorkoutHistoryStore.reviewResult({effort:effort.value,energy:energy.value,discomfort:discomfort.value,notes:notes.value});const walks=[];for(const [key,value] of entries){if(value.readWalking&&value.entry.check.checked&&outcomes.get(key)!=='skipped')walks.push([key,value.readWalking()]);}
     for(const [key,actual] of walks){queue(key,{actual,draft:null});queueStatus(key,'completed','user');}
-    await flush();session=await store.finish(session.id,review);if(scope==='daily'&&sharedState?.connected())try{session=await sharedState.saveWorkout(session)}catch{}recovery={};localStorage.removeItem(recoveryKey());feedback('Workout finished and saved.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
-    await renderHistory();window.dispatchEvent(new Event('workout-finished'));closeReview();launch.hidden=true;
+    await flush();session=await store.finish(session.id,review);let sharedSaved=null;if(scope==='daily'&&sharedState?.connected()){try{sharedSaved=Boolean(await sharedState.saveWorkout(session))}catch{sharedSaved=false}}recovery={};localStorage.removeItem(recoveryKey());feedback('Workout finished and saved on this device.');for(const {entry} of entries.values())for(const input of entry.row.querySelectorAll('input,select,button'))input.disabled=true;
+    await renderHistory();window.dispatchEvent(new CustomEvent('workout-finished',{detail:{scope,sharedSaved}}));closeReview();launch.hidden=true;
     const another=element('button','secondary','Start another workout log');another.type='button';another.onclick=async()=>{const oldDate=session.plan.date;session=null;pending={};invalid.clear();localStorage.removeItem('workout-checks-'+oldDate);localStorage.removeItem('workout-navigation-position'+storageSuffix);localStorage.removeItem('workout-card-view'+storageSuffix);await window.refreshWorkout('top')};host.append(another);
     window.finishRequestedDeviceTracking?.();}
    catch(reason){error(reason);finish.disabled=false}

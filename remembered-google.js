@@ -42,12 +42,22 @@
   async function disconnect(){try{if(connected())await call('/disconnect',{})}finally{clear()}}
   async function getWorkout(){return (await call('/workout')).record}
   async function saveWorkout(record,{keepalive=false}={}){return (await call('/workout',{record},true,{keepalive})).record}
+  function pushReporterToken(){let value;try{value=storage.getItem('daily-workout-push-reporter-v1')}catch{}if(!valid(value)){value=random();try{storage.setItem('daily-workout-push-reporter-v1',value)}catch{throw Error('This browser cannot save the private notification setting.')}}return value}
+  async function pushConfig(){return call('/push/config',undefined,false)}
+  async function registerPush(subscription,reporterToken){return call('/push/subscribe',{subscription,reporterToken})}
+  async function removePush(endpoint,reporterToken){return call('/push/unsubscribe',{endpoint,reporterToken},false)}
+  async function reportPushProblem(code,reporterToken){return call('/push/problem',{code,reporterToken},false)}
+  async function clearPushProblems(reporterToken){return call('/push/problem',{code:'resolved',reporterToken},false)}
+  async function startOura(){return call('/oura/start',{})}
+  async function ouraStatus(){return call('/oura/status')}
+  async function syncOura(){return call('/oura/sync',{})}
+  async function disconnectOura(){return call('/oura/disconnect',{})}
   // Match fetch's shape so the existing verified Sheet sync protocol is retained.
   async function google(url,options={}){
    const value=await call('/google',{url,method:options.method||'GET',...(options.body?{body:JSON.parse(options.body)}:{})});
    return {ok:true,status:200,json:async()=>value};
   }
-  return {connected,restore,connect,disconnect,google,getWorkout,saveWorkout};
+  return {connected,restore,connect,disconnect,google,getWorkout,saveWorkout,pushReporterToken,pushConfig,registerPush,removePush,reportPushProblem,clearPushProblems,startOura,ouraStatus,syncOura,disconnectOura};
  }
  if(typeof module!=='undefined')module.exports={create,BASE};else root.WorkoutRememberedGoogle={create,BASE};
 })(typeof window==='undefined'?globalThis:window);

@@ -1,9 +1,32 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daily Workout · Privacy</title><style>body{font:18px/1.6 system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#172033;background:#f7f8fa}a{color:#174ca0}h1{line-height:1.2}</style></head><body>
-<main><h1>Daily Workout privacy</h1><p>Updated November 9, 2026</p>
-<p>Daily Workout is a personal workout app for its configured owner. The public website contains exercise plans. Personal workout results, ratings, weights and notes are saved in browser storage on the device where they are entered.</p>
-<h2>Optional Google backup</h2><p>Connecting Google verifies the configured owner's email address and allows access to Google Drive files created or used with this app. It does not request access to all Drive files. Choosing Sync now sends finished workout records to a private Google Sheet and can restore finished history to this browser. Unfinished workouts and practice sessions stay on the device. The app does not change the Sheet's sharing permissions.</p>
-<h2>Remembered connections</h2><p>The remembered-connection backend is hosted on Cloudflare Workers with a D1 database. Google access and refresh tokens are encrypted before database storage. The browser stores a revocable app session; the backend uses Google credentials to renew access and relay requested Drive and Sheets operations. App sessions expire after at most 90 days, and Google may require reconnection earlier. Workout records pass through this backend during sync; the backend does not store a separate workout-history database. Request logging is disabled in the app's Worker configuration.</p>
-<h2>Providers and control</h2><p>GitHub Pages hosts the website, Google hosts account authorization and the private Sheet, and Cloudflare hosts the connection backend. These providers may process service information under their own policies. The app does not include advertising or analytics trackers and does not sell workout data.</p>
-<p>Disconnect Google removes this browser's backend connection. It does not delete workout history. You can revoke the app's Google grant in your Google Account connections, delete the private Sheet in Google Drive, and clear this website's browser storage to remove local records. Export a local backup before clearing storage if you want to keep those records. Separate browsers and Home Screen apps may have separate local storage and connections.</p>
-<p>Contact the owner: <a href="mailto:onlinesny@gmail.com">onlinesny@gmail.com</a>.</p><p><a href="./">Return to Daily Workout</a></p></main></body></html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width,initial-scale=1">
+ <meta name="robots" content="index,follow">
+ <title>Daily Workout · Privacy Policy</title>
+ <style>body{font:18px/1.6 system-ui,sans-serif;max-width:760px;margin:40px auto;padding:0 20px;color:#172033;background:#f7f8fa}a{color:#174ca0}h1{line-height:1.2}</style>
+</head>
+<body>
+<main>
+ <h1>Daily Workout Privacy Policy</h1>
+ <p>Updated November 17, 2026</p>
+ <p>Daily Workout is a personal-use workout application. The public website hosts workout prescriptions, exercise descriptions and images. It is not intended to publish personal workout or Oura records.</p>
+ <h2>Workout information</h2>
+ <p>Workout progress, completed exercises, entered treadmill and strength results, ratings, discomfort notes and drafts are saved in browser storage on the device where they are entered. When Google backup is connected, the current shared workout state is sent through the application backend and stored encrypted in Cloudflare D1. Finished daily workouts and review details are automatically backed up to the existing private Google Sheet when connected. Practice sessions are not included in that history backup.</p>
+ <h2>Optional Google connection and backup</h2>
+ <p>Google sign-in verifies the configured account and grants the app access to files created or used with this app. The app does not request access to all Google Drive files or change the Sheet’s sharing settings. Google access and refresh tokens are encrypted before storage in Cloudflare D1. The browser stores a revocable app session. Workout records pass through the backend during saves and Sheet sync.</p>
+ <h2>Optional Oura connection</h2>
+ <p>If you connect Oura, Daily Workout requests only the <code>daily</code> scope for daily summaries. The backend retrieves Daily Sleep and Daily Readiness scores, their dates and available contributors. Oura access and rotating refresh tokens, and the retrieved score records, are encrypted in Cloudflare D1. Oura update notifications are verified by the backend and used to refresh the records.</p>
+ <p>Daily scores are also written to an “Oura Daily Scores” tab in the existing private workout Google Sheet so your connected ChatGPT workout task can read them. The app does not encrypt cells in Google Sheets or change the Sheet’s sharing settings. The ChatGPT task may process the scores under the connected Google and OpenAI service settings. Scores may be unavailable or delayed if the Oura app has not synced the ring; the stored date is included so older scores can be recognized.</p>
+ <h2>Optional backup problem notifications</h2>
+ <p>If enabled, the app stores your web push subscription encrypted in Cloudflare D1 and sends a generic notification when a backup needs attention. Notifications do not include workout results, Oura scores or health notes. On iPhone and iPad, web push requires adding the app to the Home Screen and granting notification permission.</p>
+ <h2>Service providers</h2>
+ <p>GitHub Pages hosts the public website. Cloudflare hosts the connection backend and D1 database. Google provides account authorization and the private Sheet. Oura provides authorization, daily summaries and update webhooks. OpenAI processes information that your connected ChatGPT task reads from the Sheet. These providers process data under their own policies. The app does not include advertising or analytics trackers and does not sell personal workout or Oura data.</p>
+ <h2>Your choices and data removal</h2>
+ <p>You can disconnect Google or Oura in the app and revoke their grants in the respective account settings. Disconnecting Oura removes its stored tokens, webhook records and score copies from the app’s Cloudflare database. It attempts to cancel Oura webhook subscriptions. Score rows already copied to Google Sheets remain there until you remove them from that Sheet. Disconnecting Google does not delete workout history or Sheet records. Clearing browser storage removes local records from that browser; export a local backup first if you want to keep them.</p>
+ <p>Contact the app owner at <a href="mailto:onlinesny@gmail.com">onlinesny@gmail.com</a>.</p>
+ <p><a href="./terms.html">Terms of Service</a> · <a href="./">Return to Daily Workout</a></p>
+</main>
+</body>
+</html>

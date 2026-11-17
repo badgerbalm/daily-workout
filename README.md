@@ -2,6 +2,8 @@
 
 Personal workout viewer at https://badgerbalm.github.io/daily-workout/.
 
+For secure Oura Sleep and Readiness score integration, see [OURA_SETUP.md](OURA_SETUP.md). The existing Cloudflare Worker stores Oura credentials and scores privately and writes daily scores to the existing private workout Sheet; no Oura data belongs in this public repository.
+
 Production now uses the redesigned workout log, optional private Google Sheets sync and Safari-return Shortcuts with names ending in **Safari**. See [PRODUCTION_RELEASE.md](PRODUCTION_RELEASE.md) and the [Safari setup guide](safari-setup.html). The historical preview notes below describe development milestones; the live root always serves the daily `workout.json`, not the interval walkthrough.
 
 Daily workout data lives in `workout.json`. Continue publishing it with `/update`; exercise photos are selected automatically from the permanent name/alias library.
@@ -115,7 +117,7 @@ The results preview saves entries locally first in IndexedDB. When connected to 
 
 Finish Workout saves effort (1–10), energy (1–5), discomfort (0–10) and optional notes without converting unfinished exercises to completed. Entries and review drafts are saved before Shortcut handoff. Recent results and an Export local backup button are available on the same device. Clearing browser storage can remove these entries; Safari and a standalone app may use different storage contexts.
 
-Google connection enables shared autosave for the current workout. **Sync now** separately backs up finished daily workout history to an app-created private Google Sheet and restores that history on the current browser. Practice scenarios are excluded. See [GOOGLE_SYNC_SETUP.md](GOOGLE_SYNC_SETUP.md) for setup, permissions and recovery. Do not add actual entries, exports, measurements or credentials to this repository or workout.json. Measurements, trends and history-informed generation remain future work.
+Google connection enables shared autosave for the current workout. Saving workout ratings automatically backs up finished daily workout history to the existing app-created private Google Sheet when connected; **Sync now** retries backups and restores history on the current browser. Practice scenarios are excluded. See [GOOGLE_SYNC_SETUP.md](GOOGLE_SYNC_SETUP.md) for setup, permissions and recovery. Do not add actual entries, exports, measurements or credentials to this repository or workout.json. Measurements, trends and history-informed generation remain future work.
 
 Run `npm ci` and `npm run test:history` for IndexedDB transaction and DOM workflow regressions. These use fake-indexeddb and jsdom, not real iPhone or Watch testing. On-device validation must cover entry, leaving for Shortcuts, reopening, confirming/skipping and finishing before this milestone is considered device-tested.
 
