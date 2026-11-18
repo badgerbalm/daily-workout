@@ -1,10 +1,10 @@
 {
-  "date": "2026-11-17",
-  "title": "Daily Workout · November 17",
-  "note": "Tuesday recovery-focused session following user-confirmed skipped November 16 workout due to insufficient sleep, work and blood donation. Avoid strenuous activity for at least 24 hours after donation; today's plan is gentle and optional only if rested, hydrated, not dizzy and free of sharp back pain. Recurrent sharp localized lower-right lumbar pain with right-foot loading warrants PT/spine evaluation; do not walk through it even if it sometimes eases after warm-up or Aleve. Keep six established stretches in order, but SKIP plow pose unless specifically medically cleared; reference-only photograph does not match suspended-feet variation. No jogging, forced extension, heavy yard work, or assumptions of actual performance. Topo Phantom 4 Wide preferred based on one good trial; monitor symptoms. Resume established 3% steady / alternating 2%-4% incline sessions only after donation recovery and if consistently pain-free.",
+  "date": "2026-11-18",
+  "title": "Daily Workout · November 18",
+  "note": "Wednesday conservative recovery plan. Oura Apple Health sleepAnalysis overnight ending 6:55 AM: approximately 6h 54m asleep (4h 28m core, 1h 21m REM, 1h 5m deep), with about 54m awake; stage totals are approximate and may overlap in source records. Oura Readiness Score unavailable. Given recent blood donation and reported sharp right lower-back pain with right-foot weight bearing, do not exercise through pain; seek clinical evaluation if recurrent. Six established opening stretches retained; skip suspended-feet plow pose pending medical clearance. Optional level walking only when fully pain-free, hydrated and without dizziness; no incline intervals or jogging today. Posture practice retained gently. No completed-workout history verified; no assumption of completion.",
   "sections": [
     {
-      "title": "Opening stretches · 6 minutes",
+      "title": "Opening stretches · 6 minutes (plow pose skipped pending clearance)",
       "items": [
         {
           "name": "Single lean-back quad stretch",
@@ -45,30 +45,30 @@
       ]
     },
     {
-      "title": "Optional easy treadmill walk · 20 minutes",
+      "title": "Optional pain-free treadmill walk · 20 minutes",
       "items": [
         {
           "name": "Warm-up walk",
           "detail": "5 min · 2.7–3.0 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Only begin if well rested, hydrated, at least 24 hours after blood donation and no sharp pain when bearing weight on right foot. Stop if dizziness, weakness, or back pain."
+          "instructions": "Start only if sharp back pain with weight bearing is absent, hydrated, no dizziness or weakness. Stop immediately for any recurrent sharp pain; seek evaluation. Do not push through symptoms."
         },
         {
           "name": "Easy level walk",
           "detail": "10 min · 2.8–3.2 mph · 0% incline",
           "seconds": 600,
-          "instructions": "Recovery day: no 3% steady or 2%-4% incline intervals today; resume established incline plan on a later symptom-free day. Stop immediately for sharp right lower-back pain rather than warming through it. No jogging."
+          "instructions": "Recovery day: level walking only if consistently pain-free. Preserve established 3% steady and alternating 2%-4% incline protocol for future recovered days; no 4.8 mph jogging. Stop for pain."
         },
         {
           "name": "Cool-down walk",
           "detail": "5 min · 2.5–2.8 mph · 0% incline",
           "seconds": 300,
-          "instructions": "Gradually slow and stop if lightheaded or uncomfortable. Topo Phantom 4 Wide as tolerated; no assumptions about longer-term fit."
+          "instructions": "Easy cooldown if symptom-free. Topo Phantom 4 Wide preferred based on one successful trial; monitor foot comfort and tingling."
         }
       ]
     },
     {
-      "title": "Gentle posture practice · 5 minutes",
+      "title": "Gentle posture practice · 5 minutes (if pain-free)",
       "items": [
         {
           "name": "Band pull-aparts",
