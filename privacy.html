@@ -10,7 +10,7 @@
 <body>
 <main>
  <h1>Daily Workout Privacy Policy</h1>
- <p>Updated November 17, 2026</p>
+ <p>Updated November 18, 2026</p>
  <p>Daily Workout is a personal-use workout application. The public website hosts workout prescriptions, exercise descriptions and images. It is not intended to publish personal workout or Oura records.</p>
  <h2>Workout information</h2>
  <p>Workout progress, completed exercises, entered treadmill and strength results, ratings, discomfort notes and drafts are saved in browser storage on the device where they are entered. When Google backup is connected, the current shared workout state is sent through the application backend and stored encrypted in Cloudflare D1. Finished daily workouts and review details are automatically backed up to the existing private Google Sheet when connected. Practice sessions are not included in that history backup.</p>
@@ -18,7 +18,7 @@
  <p>Google sign-in verifies the configured account and grants the app access to files created or used with this app. The app does not request access to all Google Drive files or change the Sheet’s sharing settings. Google access and refresh tokens are encrypted before storage in Cloudflare D1. The browser stores a revocable app session. Workout records pass through the backend during saves and Sheet sync.</p>
  <h2>Optional Oura connection</h2>
  <p>If you connect Oura, Daily Workout requests only the <code>daily</code> scope for daily summaries. The backend retrieves Daily Sleep and Daily Readiness scores, their dates and available contributors. Oura access and rotating refresh tokens, and the retrieved score records, are encrypted in Cloudflare D1. Oura update notifications are verified by the backend and used to refresh the records.</p>
- <p>Daily scores are also written to an “Oura Daily Scores” tab in the existing private workout Google Sheet so your connected ChatGPT workout task can read them. The app does not encrypt cells in Google Sheets or change the Sheet’s sharing settings. The ChatGPT task may process the scores under the connected Google and OpenAI service settings. Scores may be unavailable or delayed if the Oura app has not synced the ring; the stored date is included so older scores can be recognized.</p>
+ <p>Daily sleep and readiness scores, score contributors, sleep-session duration and available continuity details are also written to an “Oura Daily Scores” tab in the existing private workout Google Sheet. The app does not encrypt cells in Google Sheets or change the Sheet’s sharing settings. A ChatGPT task can access this information only if its connected Google Sheets access and task instructions allow it; the app does not grant that access automatically. Oura data may be unavailable or delayed until the Oura app syncs the ring, and each row includes the Oura date so older data can be recognized.</p>
  <h2>Optional backup problem notifications</h2>
  <p>If enabled, the app stores your web push subscription encrypted in Cloudflare D1 and sends a generic notification when a backup needs attention. Notifications do not include workout results, Oura scores or health notes. On iPhone and iPad, web push requires adding the app to the Home Screen and granting notification permission.</p>
  <h2>Service providers</h2>

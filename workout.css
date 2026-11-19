@@ -191,3 +191,5 @@ dialog#workout-menu[open]{display:flex;flex-direction:column;gap:10px;animation:
 #workout-menu .local-log p{color:#d3dcea}
 @media(max-width:520px){dialog#workout-menu{width:min(92vw,440px);padding-left:14px;padding-right:14px}}
 @media(prefers-reduced-motion:reduce){dialog#workout-menu[open]{animation:none}}
+.oura-score{margin:.75rem 0;padding:.75rem 1rem;border:1px solid var(--line,#cbd5e1);border-radius:12px;background:var(--panel,#fff)}
+.oura-score p{margin:.35rem 0}

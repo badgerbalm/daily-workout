@@ -26,6 +26,9 @@ CREATE TABLE IF NOT EXISTS oura_daily_scores (
  day TEXT PRIMARY KEY, record_cipher TEXT NOT NULL, updated_at INTEGER NOT NULL,
  sheet_synced_at INTEGER
 );
+CREATE TABLE IF NOT EXISTS oura_sheet_lock (
+ id INTEGER PRIMARY KEY CHECK(id=1), lock_owner TEXT NOT NULL, locked_until INTEGER NOT NULL
+);
 CREATE TABLE IF NOT EXISTS oura_score_documents (
  data_type TEXT NOT NULL, object_id TEXT NOT NULL, day TEXT NOT NULL,
  PRIMARY KEY(data_type, object_id)

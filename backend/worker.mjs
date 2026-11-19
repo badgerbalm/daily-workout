@@ -9,7 +9,7 @@ const OURA_CALLBACK='https://daily-workout-auth.onlinesny.workers.dev/oura/oauth
 const OURA_WEBHOOK='https://daily-workout-auth.onlinesny.workers.dev/oura/webhook';
 const OURA_SCOPE='daily',OURA_AGENT='DailyWorkout/1.0';
 const SHEET_FORMAT='daily-workout-finished-v1',OURA_TAB='Oura Daily Scores';
-const OURA_HEADER=['Date','Sleep Score','Sleep Contributors','Readiness Score','Readiness Contributors','Oura timestamps','Retrieved at'];
+const OURA_HEADER=['Date','Sleep Score','Sleep Contributors','Readiness Score','Readiness Contributors','Oura timestamps','Retrieved at','Total Sleep (seconds)','Sleep Session','Sleep Continuity'];
 const enc=new TextEncoder(),dec=new TextDecoder();
 const b64=bytes=>btoa(String.fromCharCode(...new Uint8Array(bytes))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 const unb64=value=>Uint8Array.from(atob(value.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
@@ -73,10 +73,13 @@ async function ouraAccess(env,attempt=0){
  }catch(error){await db(env).prepare('UPDATE oura_connection SET refresh_lock_until=0 WHERE owner=?').bind(EMAIL).run();throw error}
 }
 async function ouraApi(path,env){
- if(!/^\/v2\/usercollection\/(daily_sleep|daily_readiness)(?:\/[A-Za-z0-9_-]+)?(?:\?.*)?$/.test(path))throw new Failure(400,'Oura data request is not allowed.');
+ if(!/^\/v2\/usercollection\/(sleep|daily_sleep|daily_readiness)(?:\/[A-Za-z0-9_-]+)?(?:\?.*)?$/.test(path))throw new Failure(400,'Oura data request is not allowed.');
  let token=await ouraAccess(env),response=await fetch('https://api.ouraring.com'+path,{headers:{Authorization:'Bearer '+token,'User-Agent':OURA_AGENT},redirect:'manual'});
  if(response.status===401){token=await ouraAccess(env);response=await fetch('https://api.ouraring.com'+path,{headers:{Authorization:'Bearer '+token,'User-Agent':OURA_AGENT},redirect:'manual'})}
  if(!response.ok)throw new Failure(response.status===403?403:502,response.status===403?'Oura daily data is unavailable. Check Oura access and membership.':'Oura could not provide daily scores. Retry after the next Oura app sync.');return response.json();
+}
+async function ouraCollection(path,params,env){
+ const items=[];let next='';for(let page=0;page<10;page++){const query=new URLSearchParams({...params,...(next?{next_token:next}:{})}),result=await ouraApi(path+'?'+query,env);items.push(...(result.data||[]));next=result.next_token||'';if(!next)return items}throw new Failure(502,'Oura returned too many pages. Retry the sync later.');
 }
 async function googleApiForOura(url,env,requestGoogle,method='GET',payload){
  const row=await db(env).prepare('SELECT * FROM app_sessions WHERE expires>? ORDER BY created DESC LIMIT 1').bind(now()).first();if(!row)throw new Failure(401,'Reconnect Google in Daily Workout to sync Oura scores to the private Sheet.');
@@ -91,43 +94,82 @@ async function saveOuraScore(record,env,requestGoogle){
  try{await writeOuraSheet(record,env,requestGoogle);await db(env).prepare('UPDATE oura_daily_scores SET sheet_synced_at=? WHERE day=?').bind(now(),day).run();return true}catch{return false}
 }
 async function writeOuraSheet(record,env,requestGoogle){
+ const owner=random();let acquired=false;
+ for(let attempt=0;attempt<80;attempt++){
+  const lock=await db(env).prepare('INSERT INTO oura_sheet_lock(id,lock_owner,locked_until) VALUES(1,?,?) ON CONFLICT(id) DO UPDATE SET lock_owner=excluded.lock_owner,locked_until=excluded.locked_until WHERE oura_sheet_lock.locked_until<? RETURNING id').bind(owner,now()+30,now()).first();
+  if(lock){acquired=true;break}await sleep(100);
+ }
+ if(!acquired)throw new Failure(503,'The Oura Sheet is busy. Its saved data will retry automatically.');
+ try{return await writeOuraSheetUnlocked(record,env,requestGoogle)}finally{await db(env).prepare('UPDATE oura_sheet_lock SET locked_until=0 WHERE id=1 AND lock_owner=?').bind(owner).run()}
+}
+async function writeOuraSheetUnlocked(record,env,requestGoogle){
  const query="trashed=false and mimeType='application/vnd.google-apps.spreadsheet' and appProperties has { key='dailyWorkoutFormat' and value='"+SHEET_FORMAT+"' }";
  const files=await googleApiForOura('https://www.googleapis.com/drive/v3/files?'+new URLSearchParams({q:query,fields:'files(id,name)',pageSize:'100'}),env,requestGoogle);
  if(!files.files?.length)throw new Failure(404,'The existing workout Sheet is not available yet.');if(files.files.length!==1)throw new Failure(409,'Multiple workout Sheets are marked for this app; Oura scores were not written.');const id=files.files[0].id,base='https://sheets.googleapis.com/v4/spreadsheets/'+encodeURIComponent(id);
  let info=await googleApiForOura(base+'?fields=sheets(properties(sheetId,title))',env,requestGoogle),tab=info.sheets?.find(s=>s.properties?.title===OURA_TAB)?.properties;
  if(!tab){const added=await googleApiForOura(base+':batchUpdate',env,requestGoogle,'POST',{requests:[{addSheet:{properties:{title:OURA_TAB}}}]});tab=added.replies?.[0]?.addSheet?.properties;if(!tab)throw new Failure(502,'Could not add the Oura scores tab to the existing private Sheet.');}
- const range="'"+OURA_TAB.replace(/'/g,"''")+"'!A:G",valuesUrl=base+'/values/'+encodeURIComponent(range),data=await googleApiForOura(valuesUrl,env,requestGoogle),rows=data.values||[];
+ const range="'"+OURA_TAB.replace(/'/g,"''")+"'!A:J",valuesUrl=base+'/values/'+encodeURIComponent(range),data=await googleApiForOura(valuesUrl,env,requestGoogle),rows=data.values||[];
  if(!rows.length)await googleApiForOura(valuesUrl+'?valueInputOption=RAW',env,requestGoogle,'PUT',{values:[OURA_HEADER]});
- else if(OURA_HEADER.some((value,index)=>rows[0][index]!==value)||rows[0].length!==OURA_HEADER.length)throw new Failure(409,'The Oura scores tab has unexpected headers; no rows were changed.');
- const output=[record.day,record.sleep?.score??'',record.sleep?.contributors?JSON.stringify(record.sleep.contributors):'',record.readiness?.score??'',record.readiness?.contributors?JSON.stringify(record.readiness.contributors):'',JSON.stringify({sleep:record.sleep?.timestamp||null,readiness:record.readiness?.timestamp||null}),new Date().toISOString()];
+ else {
+  const oldHeader=['Date','Sleep Score','Sleep Contributors','Readiness Score','Readiness Contributors','Oura timestamps','Retrieved at'];
+  if(oldHeader.some((value,index)=>rows[0][index]!==value)||rows[0].length>OURA_HEADER.length)throw new Failure(409,'The Oura scores tab has unexpected headers; no rows were changed.');
+  if(rows[0].length<OURA_HEADER.length){const from=rows[0].length;await googleApiForOura(base+':batchUpdate',env,requestGoogle,'POST',{requests:[{updateCells:{range:{sheetId:tab.sheetId,startRowIndex:0,endRowIndex:1,startColumnIndex:from,endColumnIndex:OURA_HEADER.length},rows:[{values:OURA_HEADER.slice(from).map(value=>({userEnteredValue:{stringValue:value}}))}],fields:'userEnteredValue'}}]})}
+ }
+ const session=record.sleep?.session||null;
+ const continuity=session?{efficiency:session.efficiency??null,awakeTimeSeconds:session.awake_time??null,restlessPeriods:session.restless_periods??null,deepSleepSeconds:session.deep_sleep_duration??null,remSleepSeconds:session.rem_sleep_duration??null,lightSleepSeconds:session.light_sleep_duration??null}:null;
+ const output=[record.day,record.sleep?.score??'',record.sleep?.contributors?JSON.stringify(record.sleep.contributors):'',record.readiness?.score??'',record.readiness?.contributors?JSON.stringify(record.readiness.contributors):'',JSON.stringify({sleep:record.sleep?.timestamp||null,readiness:record.readiness?.timestamp||null}),new Date().toISOString(),session?.total_sleep_duration??'',session?JSON.stringify({id:session.id||null,type:session.type||null,bedtimeStart:session.bedtime_start||null,bedtimeEnd:session.bedtime_end||null,totalSleepSeconds:session.total_sleep_duration??null}):'',continuity?JSON.stringify(continuity):''];
  const rowIndex=rows.findIndex((row,index)=>index>0&&row[0]===record.day)+1;
- if(rowIndex>0)await googleApiForOura(base+'/values/'+encodeURIComponent("'"+OURA_TAB.replace(/'/g,"''")+"'!A"+rowIndex+':G'+rowIndex)+'?valueInputOption=RAW',env,requestGoogle,'PUT',{values:[output]});
+ if(rowIndex>0)await googleApiForOura(base+'/values/'+encodeURIComponent("'"+OURA_TAB.replace(/'/g,"''")+"'!A"+rowIndex+':J'+rowIndex)+'?valueInputOption=RAW',env,requestGoogle,'PUT',{values:[output]});
  else await googleApiForOura(base+'/values/'+encodeURIComponent(range)+':append?valueInputOption=RAW&insertDataOption=INSERT_ROWS',env,requestGoogle,'POST',{values:[output]});
+}
+async function latestOuraScores(env){
+ const rows=await db(env).prepare('SELECT day,record_cipher FROM oura_daily_scores ORDER BY day DESC LIMIT 60').all();let sleep=null,readiness=null,sleepSession=null;
+ for(const row of rows.results||[]){if(sleep&&readiness&&sleepSession)break;let record;try{record=JSON.parse(await unseal(row.record_cipher,env))}catch{continue}
+  if(!sleep&&record.sleep&&record.sleep.score!==null&&record.sleep.score!==undefined)sleep={date:record.day,score:record.sleep.score,contributors:record.sleep.contributors||{},timestamp:record.sleep.timestamp||null};
+  if(!sleepSession&&record.sleep?.session)sleepSession={sessionDate:record.day,totalSleepSeconds:record.sleep.session.total_sleep_duration??null,sleepStart:record.sleep.session.bedtime_start||null,sleepEnd:record.sleep.session.bedtime_end||null,continuity:{efficiency:record.sleep.session.efficiency??null,awakeTimeSeconds:record.sleep.session.awake_time??null,restlessPeriods:record.sleep.session.restless_periods??null}};
+  if(!readiness&&record.readiness&&record.readiness.score!==null&&record.readiness.score!==undefined)readiness={date:record.day,score:record.readiness.score,contributors:record.readiness.contributors||{},timestamp:record.readiness.timestamp||null};
+ }
+ return {sleep:sleep?{...sleep,...(sleepSession||{})}:sleepSession?{date:null,score:null,contributors:{},...sleepSession}:null,readiness};
 }
 async function mergeOuraDay(day,dataType,doc,env,requestGoogle){
  if(!/^\d{4}-\d{2}-\d{2}$/.test(day)||(doc.score!==null&&doc.score!==undefined&&(!Number.isFinite(Number(doc.score))||Number(doc.score)<0||Number(doc.score)>100)))throw new Failure(502,'Oura returned an invalid daily score.');
  const old=await db(env).prepare('SELECT record_cipher FROM oura_daily_scores WHERE day=?').bind(day).first(),record=old?JSON.parse(await unseal(old.record_cipher,env)):{day,sleep:null,readiness:null};
  const metric={score:doc.score===null||doc.score===undefined?null:Number(doc.score),contributors:doc.contributors&&typeof doc.contributors==='object'?doc.contributors:{},timestamp:doc.timestamp||null,sourceId:doc.id||null};
  record[dataType==='daily_sleep'?'sleep':'readiness']=metric;
+ if(dataType==='daily_sleep'){const session=await overnightSleepForDay(day,env);if(session){record.sleep.session=session;await rememberOuraSleepSession(day,session,env)}}
  if(doc.id)await db(env).prepare('INSERT INTO oura_score_documents(data_type,object_id,day) VALUES(?,?,?) ON CONFLICT(data_type,object_id) DO UPDATE SET day=excluded.day').bind(dataType,doc.id,day).run();
+ await db(env).prepare('UPDATE oura_connection SET last_sync_at=? WHERE owner=?').bind(now(),EMAIL).run();await saveOuraScore(record,env,requestGoogle);
+}
+async function rememberOuraSleepSession(day,session,env){if(session?.id)await db(env).prepare('INSERT INTO oura_score_documents(data_type,object_id,day) VALUES(?,?,?) ON CONFLICT(data_type,object_id) DO UPDATE SET day=excluded.day').bind('sleep',session.id,day).run()}
+async function mergeOuraSleep(day,doc,env,requestGoogle){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(day))throw new Failure(502,'Oura returned an invalid sleep date.');
+ const old=await db(env).prepare('SELECT record_cipher FROM oura_daily_scores WHERE day=?').bind(day).first(),record=old?JSON.parse(await unseal(old.record_cipher,env)):{day,sleep:null,readiness:null};record.sleep=record.sleep||{score:null,contributors:{},timestamp:null};
+ const session=await overnightSleepForDay(day,env);if(session){record.sleep.session=session;await rememberOuraSleepSession(day,session,env)}
  await db(env).prepare('UPDATE oura_connection SET last_sync_at=? WHERE owner=?').bind(now(),EMAIL).run();await saveOuraScore(record,env,requestGoogle);
 }
 async function clearDeletedOuraMetric(dataType,objectId,env,requestGoogle){
  const saved=await db(env).prepare('SELECT day FROM oura_score_documents WHERE data_type=? AND object_id=?').bind(dataType,objectId).first();if(!saved)return;
  const row=await db(env).prepare('SELECT record_cipher FROM oura_daily_scores WHERE day=?').bind(saved.day).first();
- if(row){const record=JSON.parse(await unseal(row.record_cipher,env));record[dataType==='daily_sleep'?'sleep':'readiness']=null;await saveOuraScore(record,env,requestGoogle)}
+ if(row){const record=JSON.parse(await unseal(row.record_cipher,env));if(dataType==='sleep'){const session=await overnightSleepForDay(saved.day,env);record.sleep=record.sleep||{score:null,contributors:{},timestamp:null};record.sleep.session=session;await rememberOuraSleepSession(saved.day,session,env)}else record[dataType==='daily_sleep'?'sleep':'readiness']=null;await saveOuraScore(record,env,requestGoogle)}
  await db(env).prepare('DELETE FROM oura_score_documents WHERE data_type=? AND object_id=?').bind(dataType,objectId).run();
 }
 async function syncOuraWindow(env,requestGoogle){
- const end=todayEastern(),start=shiftDate(end,-7),[sleepData,readinessData]=await Promise.all([
-  ouraApi('/v2/usercollection/daily_sleep?'+new URLSearchParams({start_date:start,end_date:end}),env),
-  ouraApi('/v2/usercollection/daily_readiness?'+new URLSearchParams({start_date:start,end_date:end}),env)
+ const end=todayEastern(),start=shiftDate(end,-7),[sleepData,readinessData,sessions]=await Promise.all([
+  ouraCollection('/v2/usercollection/daily_sleep',{start_date:start,end_date:end},env),
+  ouraCollection('/v2/usercollection/daily_readiness',{start_date:start,end_date:end},env),
+  ouraCollection('/v2/usercollection/sleep',{start_date:start,end_date:end},env)
  ]),records=new Map();
- for(const [type,items] of [['daily_sleep',sleepData.data||[]],['daily_readiness',readinessData.data||[]]])for(const item of items){if(!/^\d{4}-\d{2}-\d{2}$/.test(item.day||''))continue;const base=records.get(item.day)||{day:item.day,sleep:null,readiness:null};base[type==='daily_sleep'?'sleep':'readiness']={score:item.score??null,contributors:item.contributors||{},timestamp:item.timestamp||null,sourceId:item.id||null};records.set(item.day,base);if(item.id)await db(env).prepare('INSERT INTO oura_score_documents(data_type,object_id,day) VALUES(?,?,?) ON CONFLICT(data_type,object_id) DO UPDATE SET day=excluded.day').bind(type,item.id,item.day).run()}
- for(const record of records.values()){const old=await db(env).prepare('SELECT record_cipher FROM oura_daily_scores WHERE day=?').bind(record.day).first();if(old){const prior=JSON.parse(await unseal(old.record_cipher,env));if(!record.sleep)record.sleep=prior.sleep;if(!record.readiness)record.readiness=prior.readiness}await saveOuraScore(record,env,requestGoogle)}
+ const nightlySessions=groupOvernightSleep(sessions);
+ for(const [type,items] of [['daily_sleep',sleepData],['daily_readiness',readinessData]])for(const item of items){if(!/^\d{4}-\d{2}-\d{2}$/.test(item.day||''))continue;const base=records.get(item.day)||{day:item.day,sleep:null,readiness:null};base[type==='daily_sleep'?'sleep':'readiness']={score:item.score??null,contributors:item.contributors||{},timestamp:item.timestamp||null,sourceId:item.id||null};records.set(item.day,base);if(item.id)await db(env).prepare('INSERT INTO oura_score_documents(data_type,object_id,day) VALUES(?,?,?) ON CONFLICT(data_type,object_id) DO UPDATE SET day=excluded.day').bind(type,item.id,item.day).run()}
+ for(const [day,session] of nightlySessions){const record=records.get(day)||{day,sleep:null,readiness:null};record.sleep=record.sleep||{score:null,contributors:{},timestamp:null};record.sleep.session=session;records.set(day,record);await rememberOuraSleepSession(day,session,env)}
+ for(const record of records.values()){const old=await db(env).prepare('SELECT record_cipher FROM oura_daily_scores WHERE day=?').bind(record.day).first();if(old){const prior=JSON.parse(await unseal(old.record_cipher,env));if(!record.sleep)record.sleep=prior.sleep;else if(!record.sleep.session)record.sleep.session=prior.sleep?.session||null;if(!record.readiness)record.readiness=prior.readiness}await saveOuraScore(record,env,requestGoogle)}
  await db(env).prepare('UPDATE oura_connection SET last_sync_at=? WHERE owner=?').bind(now(),EMAIL).run();
  return records.size;
 }
+function groupOvernightSleep(items){
+ const groups=new Map();for(const item of items){if(!/^\d{4}-\d{2}-\d{2}$/.test(item.day||'')||item.type==='nap'||!Number.isFinite(item.total_sleep_duration)||item.total_sleep_duration<0)continue;const current=groups.get(item.day),priority=value=>value?.type==='long_sleep'?2:value?.type==='sleep'?1:0,sort=value=>Date.parse(value?.bedtime_end)||0;if(!current||priority(item)>priority(current)||priority(item)===priority(current)&&sort(item)>sort(current))groups.set(item.day,item)}return groups;
+}
+async function overnightSleepForDay(day,env){const data=await ouraCollection('/v2/usercollection/sleep',{start_date:day,end_date:day},env);return groupOvernightSleep(data).get(day)||null}
 async function ouraWebhookApi(method,path,env,payload){
  const response=await fetch('https://api.ouraring.com'+path,{method,headers:{'x-client-id':env.OURA_CLIENT_ID,'x-client-secret':env.OURA_CLIENT_SECRET,'User-Agent':OURA_AGENT,'Content-Type':'application/json'},...(payload===undefined?{}:{body:JSON.stringify(payload)}),redirect:'manual'});
  if(!response.ok&&response.status!==204)throw new Failure(502,'Oura webhook setup needs attention.');return response.status===204?{}:response.json();
@@ -135,16 +177,16 @@ async function ouraWebhookApi(method,path,env,payload){
 async function ensureOuraWebhooks(env){
  if(!env.OURA_CLIENT_ID||!env.OURA_CLIENT_SECRET)return;
  let existing=await ouraWebhookApi('GET','/v2/webhook/subscription',env);if(!Array.isArray(existing))existing=[];
- for(const dataType of ['daily_sleep','daily_readiness'])for(const eventType of ['create','update']){
+ for(const dataType of ['sleep','daily_sleep','daily_readiness'])for(const eventType of ['create','update','delete']){
   let current=existing.find(item=>item.callback_url===OURA_WEBHOOK&&item.data_type===dataType&&item.event_type===eventType);
   if(!current){const verification=random(),verificationHash=await hash(verification);await db(env).prepare('INSERT OR REPLACE INTO oura_webhooks(id,event_type,data_type,callback_url,verification_hash,expires_at) VALUES(?,?,?,?,?,0)').bind('pending:'+dataType+':'+eventType,eventType,dataType,OURA_WEBHOOK,verificationHash).run();current=await ouraWebhookApi('POST','/v2/webhook/subscription',env,{callback_url:OURA_WEBHOOK,verification_token:verification,event_type:eventType,data_type:dataType});await db(env).prepare('DELETE FROM oura_webhooks WHERE id=?').bind('pending:'+dataType+':'+eventType).run();await db(env).prepare('INSERT OR REPLACE INTO oura_webhooks(id,event_type,data_type,callback_url,verification_hash,expires_at) VALUES(?,?,?,?,?,?)').bind(current.id,eventType,dataType,OURA_WEBHOOK,verificationHash,Math.floor(Date.parse(current.expiration_time)/1000)||0).run();
   }else{const verificationRow=await db(env).prepare('SELECT verification_hash FROM oura_webhooks WHERE id=?').bind(current.id).first();if(!verificationRow){const verification=random(),verificationHash=await hash(verification);await db(env).prepare('INSERT OR REPLACE INTO oura_webhooks(id,event_type,data_type,callback_url,verification_hash,expires_at) VALUES(?,?,?,?,?,?)').bind(current.id,eventType,dataType,OURA_WEBHOOK,verificationHash,Math.floor(Date.parse(current.expiration_time)/1000)||0).run();const updated=await ouraWebhookApi('PUT','/v2/webhook/subscription/'+encodeURIComponent(current.id),env,{verification_token:verification,callback_url:OURA_WEBHOOK,event_type:eventType,data_type:dataType});await db(env).prepare('UPDATE oura_webhooks SET expires_at=? WHERE id=?').bind(Math.floor(Date.parse(updated.expiration_time)/1000)||0,current.id).run();}}
  }
 }
 async function processOuraWebhook(payload,env,requestGoogle){
- if(!['daily_sleep','daily_readiness'].includes(payload.data_type)||!['create','update','delete'].includes(payload.event_type)||typeof payload.object_id!=='string'||payload.object_id.length>200)return;
+ if(!['sleep','daily_sleep','daily_readiness'].includes(payload.data_type)||!['create','update','delete'].includes(payload.event_type)||typeof payload.object_id!=='string'||payload.object_id.length>200)return;
  if(payload.event_type==='delete'){await clearDeletedOuraMetric(payload.data_type,payload.object_id,env,requestGoogle);return}
- const path='/v2/usercollection/'+payload.data_type+'/'+encodeURIComponent(payload.object_id),data=await ouraApi(path,env);if(data?.day)await mergeOuraDay(data.day,payload.data_type,data,env,requestGoogle);
+ const path='/v2/usercollection/'+payload.data_type+'/'+encodeURIComponent(payload.object_id),data=await ouraApi(path,env);if(data?.day){if(payload.data_type==='sleep')await mergeOuraSleep(data.day,data,env,requestGoogle);else await mergeOuraDay(data.day,payload.data_type,data,env,requestGoogle)}
 }
 async function flushOuraEvents(env,requestGoogle){
  const rows=await db(env).prepare('SELECT event_hash,payload_cipher FROM oura_pending_events ORDER BY created_at LIMIT 20').all();
@@ -234,7 +276,7 @@ export function createHandler(requestGoogle=(...args)=>globalThis.fetch(...args)
    const params=new URLSearchParams({client_id:env.OURA_CLIENT_ID,redirect_uri:OURA_CALLBACK,response_type:'code',scope:OURA_SCOPE,state,code_challenge:challenge,code_challenge_method:'S256'});return finish(json({authorizationUrl:'https://cloud.ouraring.com/oauth/authorize?'+params}));
   }
   if(url.pathname==='/oura/status'&&request.method==='GET'){
-   await session(request,env);const row=await ouraConnection(env),pending=await db(env).prepare('SELECT COUNT(*) AS count FROM oura_daily_scores WHERE sheet_synced_at IS NULL').first(),latest=await db(env).prepare('SELECT day FROM oura_daily_scores ORDER BY day DESC LIMIT 1').first();return finish(json({connected:Boolean(row),lastSyncAt:row?.last_sync_at?new Date(row.last_sync_at*1000).toISOString():null,latestScoreDate:latest?.day||null,pendingSheetRows:Number(pending?.count||0)}));
+   await session(request,env);const row=await ouraConnection(env),pending=await db(env).prepare('SELECT COUNT(*) AS count FROM oura_daily_scores WHERE sheet_synced_at IS NULL').first(),scores=await latestOuraScores(env),latestScoreDate=[scores.sleep?.date,scores.readiness?.date].filter(Boolean).sort().at(-1)||null;return finish(json({configured:Boolean(env.OURA_CLIENT_ID&&env.OURA_CLIENT_SECRET),connected:Boolean(row),lastSyncAt:row?.last_sync_at?new Date(row.last_sync_at*1000).toISOString():null,latestScoreDate,latestSleep:scores.sleep,latestReadiness:scores.readiness,pendingSheetRows:Number(pending?.count||0)}));
   }
   if(url.pathname==='/oura/sync'&&request.method==='POST'){
    await session(request,env);if(!await ouraConnection(env))throw new Failure(401,'Connect Oura first.');const count=await syncOuraWindow(env,requestGoogle);await flushOuraSheet(env,requestGoogle);return finish(json({synced:count}));
