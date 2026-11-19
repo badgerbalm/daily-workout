@@ -71,4 +71,4 @@ The ChatGPT task does not receive Oura credentials or a direct Oura access token
 
 ## Recovery
 
-If Oura scores stop updating, sync the ring in the Oura mobile app, then select **Refresh Oura scores** in Daily Workout. Check that the existing Google connection can still access the marked private workout Sheet. If the Oura consent was revoked or the refresh token is rejected, reconnect Oura. Never create a second workout spreadsheet to resolve a sync issue.
+If Oura scores stop updating, sync the ring in the Oura mobile app, then select **Sync Now** in Daily Workout. Check that the existing Google connection can still access the marked private workout Sheet. If the Oura consent was revoked or the refresh token is rejected, reconnect Oura. Never create a second workout spreadsheet to resolve a sync issue.
