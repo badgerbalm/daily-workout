@@ -1,10 +1,10 @@
 {
-  "date": "2026-11-20",
-  "title": "Daily Workout · November 20",
-  "note": "Friday recovery-focused plan. Oura sleepAnalysis synced through Apple Health for overnight November 19–20, ending approximately 6:10 AM: 5h 36m 30s asleep (core 190m, deep 76m, REM 70.5m), with approximately 38.5m awake. Shorter than November 18 and 19 overnight sessions; Oura Readiness Score unavailable. Treat sleep as a recovery signal, not a diagnosis. Previously reported sharp right lower-back pain with weight bearing remains unconfirmed as resolved; no exercise through sharp pain and seek clinical evaluation if it recurs or persists. Optional level walking only if entirely pain-free, hydrated, and without dizziness. Keep the established six opening stretches but skip suspended-feet plow pose pending medical clearance. Gentle posture routine as tolerated; no incline intervals, jogging, or strenuous strength work today. Topo Phantom 4 Wide preferred while monitoring symptoms. Private completed-workout history not verified, so prior completion is not assumed.",
+  "date": "2026-11-21",
+  "title": "Daily Workout · November 21",
+  "note": "Saturday recovery-focused plan. Oura sleepAnalysis synced via Apple Health from Oura for November 20–21, ending 6:50 AM: 5h 33m asleep (core 181.5m, deep 94m, REM 57.5m) with 86.5m awake during the overnight session. Sleep was fragmented and total sleep was shorter than ideal; Oura Readiness Score unavailable. These are wellness estimates, not diagnoses. Previously reported sharp right lower-back weight-bearing pain is not confirmed resolved. Do not exercise through sharp pain; seek clinical evaluation if pain recurs or persists. Optional level walking only if entirely pain-free, hydrated, and without dizziness. Keep all six established opening stretches in the app, but skip suspended-feet plow pose pending medical clearance. Gentle posture exercises only as tolerated, with no forced lumbar extension. No incline intervals, jogging, or strenuous strength today. Topo Phantom 4 Wide preferred while monitoring foot symptoms. Private completed-workout history was not verified; do not assume previous workouts were completed.",
   "sections": [
     {
-      "title": "Opening stretches · 6 minutes (plow pose skipped pending clearance)",
+      "title": "Opening stretches · 6 minutes scheduled (skip plow pose pending clearance)",
       "items": [
         {
           "name": "Single lean-back quad stretch",
@@ -45,7 +45,7 @@
       ]
     },
     {
-      "title": "Optional pain-free treadmill walk · 20 minutes",
+      "title": "Optional pain-free level treadmill walk · 20 minutes",
       "items": [
         {
           "name": "Warm-up walk",
@@ -68,7 +68,7 @@
       ]
     },
     {
-      "title": "Gentle posture practice · 5 minutes (if pain-free)",
+      "title": "Gentle posture practice · 5 minutes (only if pain-free)",
       "items": [
         {
           "name": "Band pull-aparts",
